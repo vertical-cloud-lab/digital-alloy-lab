@@ -1,0 +1,73 @@
+1. (bidare2017anopenarchitecturemetal pages 2-3): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+2. (bidare2017anopenarchitecturemetal pages 3-5): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+3. (bidare2017anopenarchitecturemetal pages 5-7): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+4. (bidare2017anopenarchitecturemetal pages 7-9): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+5. (grantham2016opticaldesignand pages 8-9): Steven Grantham, Brandon Lane, Jorge Neira, Sergey Mekhontsev, Mihaela Vlasea, and Leonard Hanssen. Optical design and initial results from nist's ammt/temps facility. SPIE Proceedings, 9738:97380S, May 2016. URL: https://doi.org/10.1117/12.2214246, doi:10.1117/12.2214246. This article has 20 citations.
+
+6. (lane2020processmonitoringdataset pages 4-6): Brandon Lane and Ho Yeung. Process monitoring dataset from the additive manufacturing metrology testbed (ammt): overhang part x4. Journal of Research of the National Institute of Standards and Technology, Sep 2020. URL: https://doi.org/10.6028/jres.125.027, doi:10.6028/jres.125.027. This article has 85 citations and is from a peer-reviewed journal.
+
+7. (grantham2016opticaldesignand pages 2-4): Steven Grantham, Brandon Lane, Jorge Neira, Sergey Mekhontsev, Mihaela Vlasea, and Leonard Hanssen. Optical design and initial results from nist's ammt/temps facility. SPIE Proceedings, 9738:97380S, May 2016. URL: https://doi.org/10.1117/12.2214246, doi:10.1117/12.2214246. This article has 20 citations.
+
+8. (grantham2016opticaldesignand pages 4-5): Steven Grantham, Brandon Lane, Jorge Neira, Sergey Mekhontsev, Mihaela Vlasea, and Leonard Hanssen. Optical design and initial results from nist's ammt/temps facility. SPIE Proceedings, 9738:97380S, May 2016. URL: https://doi.org/10.1117/12.2214246, doi:10.1117/12.2214246. This article has 20 citations.
+
+9. (grantham2016opticaldesignand pages 5-7): Steven Grantham, Brandon Lane, Jorge Neira, Sergey Mekhontsev, Mihaela Vlasea, and Leonard Hanssen. Optical design and initial results from nist's ammt/temps facility. SPIE Proceedings, 9738:97380S, May 2016. URL: https://doi.org/10.1117/12.2214246, doi:10.1117/12.2214246. This article has 20 citations.
+
+10. (andersen2022aunifiedsystem pages 3-7): S.A. Andersen, K.Æ. Meinert, M.B. Kjer, V.K. Nadimpalli, and D.B. Pedersen. A unified system controller for open-source powder bed fusion systems. Jan 2022. URL: https://doi.org/10.26153/tsw/44600, doi:10.26153/tsw/44600. This article has 9 citations.
+
+11. (andersen2022aunifiedsystem pages 7-12): S.A. Andersen, K.Æ. Meinert, M.B. Kjer, V.K. Nadimpalli, and D.B. Pedersen. A unified system controller for open-source powder bed fusion systems. Jan 2022. URL: https://doi.org/10.26153/tsw/44600, doi:10.26153/tsw/44600. This article has 9 citations.
+
+12. (aagaard2023legacylaserpowder pages 2-3): S Aagaard, MB Kjer, and DB Pedersen. Legacy laser powder bed fusion systems and obsolescence: upgrading control systems. Unknown journal, 2023.
+
+13. (goonawardena2025laserbasedmetal pages 8-13): I Goonawardena. Laser based metal 3d printer. Unknown journal, 2025.
+
+14. (calta2018aninstrumentfor pages 1-3): Nicholas P. Calta, Jenny Wang, Andrew M. Kiss, Aiden A. Martin, Philip J. Depond, Gabriel M. Guss, Vivek Thampy, Anthony Y. Fong, Johanna Nelson Weker, Kevin H. Stone, Christopher J. Tassone, Matthew J. Kramer, Michael F. Toney, Anthony Van Buuren, and Manyalibo J. Matthews. An instrument for in situ time-resolved x-ray imaging and diffraction of laser powder bed fusion additive manufacturing processes. The Review of scientific instruments, 89 5:055101, May 2018. URL: https://doi.org/10.1063/1.5017236, doi:10.1063/1.5017236. This article has 200 citations.
+
+15. (calta2018aninstrumentfor pages 3-4): Nicholas P. Calta, Jenny Wang, Andrew M. Kiss, Aiden A. Martin, Philip J. Depond, Gabriel M. Guss, Vivek Thampy, Anthony Y. Fong, Johanna Nelson Weker, Kevin H. Stone, Christopher J. Tassone, Matthew J. Kramer, Michael F. Toney, Anthony Van Buuren, and Manyalibo J. Matthews. An instrument for in situ time-resolved x-ray imaging and diffraction of laser powder bed fusion additive manufacturing processes. The Review of scientific instruments, 89 5:055101, May 2018. URL: https://doi.org/10.1063/1.5017236, doi:10.1063/1.5017236. This article has 200 citations.
+
+16. (calta2018aninstrumentfor pages 4-5): Nicholas P. Calta, Jenny Wang, Andrew M. Kiss, Aiden A. Martin, Philip J. Depond, Gabriel M. Guss, Vivek Thampy, Anthony Y. Fong, Johanna Nelson Weker, Kevin H. Stone, Christopher J. Tassone, Matthew J. Kramer, Michael F. Toney, Anthony Van Buuren, and Manyalibo J. Matthews. An instrument for in situ time-resolved x-ray imaging and diffraction of laser powder bed fusion additive manufacturing processes. The Review of scientific instruments, 89 5:055101, May 2018. URL: https://doi.org/10.1063/1.5017236, doi:10.1063/1.5017236. This article has 200 citations.
+
+17. (calta2018aninstrumentfor pages 5-7): Nicholas P. Calta, Jenny Wang, Andrew M. Kiss, Aiden A. Martin, Philip J. Depond, Gabriel M. Guss, Vivek Thampy, Anthony Y. Fong, Johanna Nelson Weker, Kevin H. Stone, Christopher J. Tassone, Matthew J. Kramer, Michael F. Toney, Anthony Van Buuren, and Manyalibo J. Matthews. An instrument for in situ time-resolved x-ray imaging and diffraction of laser powder bed fusion additive manufacturing processes. The Review of scientific instruments, 89 5:055101, May 2018. URL: https://doi.org/10.1063/1.5017236, doi:10.1063/1.5017236. This article has 200 citations.
+
+18. (leung2018xrayimagingof pages 69-73): CLA Leung. X-ray imaging of powder consolidation during laser additive manufacturing. Unknown journal, 2018.
+
+19. (leung2018xrayimagingof pages 73-77): CLA Leung. X-ray imaging of powder consolidation during laser additive manufacturing. Unknown journal, 2018.
+
+20. (lhuissier2022miniaturelaserpowder pages 3-4): Pierre Lhuissier, Louis Hébrard, Xavier Bataillon, Pierre Lapouge, Frédéric Coste, Patrice Peyre, Elodie Boller, Jean-Jacques Blandin, Luc Salvo, and Guilhem Martin. Miniature laser powder bed fusion system for in situ synchrotron x-ray micro-computed tomography experiments at the european synchrotron radiation facility. The Review of scientific instruments, 93 8:083701, Aug 2022. URL: https://doi.org/10.1063/5.0090623, doi:10.1063/5.0090623. This article has 9 citations.
+
+21. (lhuissier2022miniaturelaserpowder pages 1-3): Pierre Lhuissier, Louis Hébrard, Xavier Bataillon, Pierre Lapouge, Frédéric Coste, Patrice Peyre, Elodie Boller, Jean-Jacques Blandin, Luc Salvo, and Guilhem Martin. Miniature laser powder bed fusion system for in situ synchrotron x-ray micro-computed tomography experiments at the european synchrotron radiation facility. The Review of scientific instruments, 93 8:083701, Aug 2022. URL: https://doi.org/10.1063/5.0090623, doi:10.1063/5.0090623. This article has 9 citations.
+
+22. (lhuissier2022miniaturelaserpowder pages 7-9): Pierre Lhuissier, Louis Hébrard, Xavier Bataillon, Pierre Lapouge, Frédéric Coste, Patrice Peyre, Elodie Boller, Jean-Jacques Blandin, Luc Salvo, and Guilhem Martin. Miniature laser powder bed fusion system for in situ synchrotron x-ray micro-computed tomography experiments at the european synchrotron radiation facility. The Review of scientific instruments, 93 8:083701, Aug 2022. URL: https://doi.org/10.1063/5.0090623, doi:10.1063/5.0090623. This article has 9 citations.
+
+23. (lhuissier2022miniaturelaserpowder pages 9-10): Pierre Lhuissier, Louis Hébrard, Xavier Bataillon, Pierre Lapouge, Frédéric Coste, Patrice Peyre, Elodie Boller, Jean-Jacques Blandin, Luc Salvo, and Guilhem Martin. Miniature laser powder bed fusion system for in situ synchrotron x-ray micro-computed tomography experiments at the european synchrotron radiation facility. The Review of scientific instruments, 93 8:083701, Aug 2022. URL: https://doi.org/10.1063/5.0090623, doi:10.1063/5.0090623. This article has 9 citations.
+
+24. (uhlmann2020alaserpowder pages 4-6): Eckart Uhlmann, Erwin Krohmer, Felix Schmeiser, Norbert Schell, and Walter Reimers. A laser powder bed fusion system for in situ x-ray diffraction with high-energy synchrotron radiation. Text, Jul 2020. URL: https://doi.org/10.14279/depositonce-16115, doi:10.14279/depositonce-16115. This article has 46 citations and is from a peer-reviewed journal.
+
+25. (uhlmann2020alaserpowder pages 6-8): Eckart Uhlmann, Erwin Krohmer, Felix Schmeiser, Norbert Schell, and Walter Reimers. A laser powder bed fusion system for in situ x-ray diffraction with high-energy synchrotron radiation. Text, Jul 2020. URL: https://doi.org/10.14279/depositonce-16115, doi:10.14279/depositonce-16115. This article has 46 citations and is from a peer-reviewed journal.
+
+26. (maddison2022insitumonitoringand pages 66-74): G Maddison. In-situ monitoring and control during laser powder bed fusion of nickel superalloys. Unknown journal, 2022.
+
+27. (maddison2022insitumonitoringand pages 61-66): G Maddison. In-situ monitoring and control during laser powder bed fusion of nickel superalloys. Unknown journal, 2022.
+
+28. (maddison2022insitumonitoringanda pages 61-66): G Maddison. In-situ monitoring and control during laser powder bed fusion of nickel superalloys. Unknown journal, 2022.
+
+29. (friedo2026developmentofintelligent pages 1-3): M. H. Friedo, M. T. Hauschultz, T. Doehler, T. Erhardt, H. Jacobs, M. Richetta, A. Boehme, and R. Krenz-Baath. Development of intelligent process automation strategies to enhance selective laser melting performance and resource efficiency. In Mechatronische Systeme für die Automatisierung: Fortschritt durch Präzision und Qualität, AALE 2026. Hochschule für Technik, Wirtschaft und Kultur Leipzig, Mar 2026. URL: https://doi.org/10.33968/2026.29, doi:10.33968/2026.29. This article has 0 citations.
+
+30. (aagaard2023legacylaserpowder pages 1-2): S Aagaard, MB Kjer, and DB Pedersen. Legacy laser powder bed fusion systems and obsolescence: upgrading control systems. Unknown journal, 2023.
+
+31. (lane2020processmonitoringdataset pages 1-4): Brandon Lane and Ho Yeung. Process monitoring dataset from the additive manufacturing metrology testbed (ammt): overhang part x4. Journal of Research of the National Institute of Standards and Technology, Sep 2020. URL: https://doi.org/10.6028/jres.125.027, doi:10.6028/jres.125.027. This article has 85 citations and is from a peer-reviewed journal.
+
+32. (kjer2023experimentalanalysisand pages 1-2): Magnus Bolt Kjer, Zhihao Pan, Venkata Karthik Nadimpalli, and David Bue Pedersen. Experimental analysis and spatial component impact of the inert cross flow in open-architecture laser powder bed fusion. Journal of Manufacturing and Materials Processing, 7:143, Aug 2023. URL: https://doi.org/10.3390/jmmp7040143, doi:10.3390/jmmp7040143. This article has 13 citations.
+
+33. (kjer2023experimentalanalysisand pages 2-4): Magnus Bolt Kjer, Zhihao Pan, Venkata Karthik Nadimpalli, and David Bue Pedersen. Experimental analysis and spatial component impact of the inert cross flow in open-architecture laser powder bed fusion. Journal of Manufacturing and Materials Processing, 7:143, Aug 2023. URL: https://doi.org/10.3390/jmmp7040143, doi:10.3390/jmmp7040143. This article has 13 citations.
+
+34. (lane2020quasistaticpositioncalibration pages 8-11): Brandon Lane, Shawn Moylan, Ho Yeung, Jorge Neira, and Josephine Chavez-Chao. Quasi-static position calibration of the galvanometer scanner on the additive manufacturing metrology testbed. ArXiv, Jun 2020. URL: https://doi.org/10.6028/nist.tn.2099, doi:10.6028/nist.tn.2099. This article has 12 citations.
+
+35. (lane2020quasistaticpositioncalibration pages 5-8): Brandon Lane, Shawn Moylan, Ho Yeung, Jorge Neira, and Josephine Chavez-Chao. Quasi-static position calibration of the galvanometer scanner on the additive manufacturing metrology testbed. ArXiv, Jun 2020. URL: https://doi.org/10.6028/nist.tn.2099, doi:10.6028/nist.tn.2099. This article has 12 citations.
+
+36. (lane2020quasistaticpositioncalibration pages 1-5): Brandon Lane, Shawn Moylan, Ho Yeung, Jorge Neira, and Josephine Chavez-Chao. Quasi-static position calibration of the galvanometer scanner on the additive manufacturing metrology testbed. ArXiv, Jun 2020. URL: https://doi.org/10.6028/nist.tn.2099, doi:10.6028/nist.tn.2099. This article has 12 citations.
+
+37. (kantonen2023processingofnovel pages 1-5): T Kantonen. Processing of novel nickel free stainless steel by laser powder bed fusion additive manufacturing. Unknown journal, 2023.

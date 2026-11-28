@@ -1,0 +1,48 @@
+{
+ "video": "/tmp/robotbuild/frames/10-parts/%05d.png at 12 fps (raw 3-D frames, no panels), scaled to 640 x 360",
+ "tag": "",
+ "fps": 12.0,
+ "frames": 2064,
+ "seconds": 172.0,
+ "limits": {
+  "jumps_per_min": 10.0,
+  "jump_frame_share": 0.03,
+  "median_run_s": 4.0,
+  "short_run_share": 0.15,
+  "p95_speed_fw_s": 0.143
+ },
+ "method": "320x180 grey, picture area only; jump = large change with lost corner tracks (a cut or a change too large to follow), consecutive jump frames merged; camera speed = shift of the RANSAC similarity fitted to tracked corners, in frame-widths per second",
+ "overall": {
+  "seconds": 172.0,
+  "jumps": 27,
+  "jumps_per_min": 9.4,
+  "jump_frame_share": 0.013,
+  "median_run_s": 5.8,
+  "min_run_s": 5.67,
+  "short_run_share": 0.0,
+  "moving_share": 0.195,
+  "mean_speed_fw_s": 0.0157,
+  "p95_speed_fw_s": 0.054,
+  "fails": [],
+  "pass": true
+ },
+ "chapters": [
+  {
+   "chapter": "whole video",
+   "start_s": 0,
+   "seconds": 172.0,
+   "jumps": 27,
+   "jumps_per_min": 9.4,
+   "jump_frame_share": 0.013,
+   "median_run_s": 5.8,
+   "min_run_s": 5.67,
+   "short_run_share": 0.0,
+   "moving_share": 0.195,
+   "mean_speed_fw_s": 0.0157,
+   "p95_speed_fw_s": 0.054,
+   "fails": [],
+   "pass": true
+  }
+ ],
+ "note": "video_qa.py on the chapter frames before compose.py (W3, round 8); the composed MP4 is measured by the lead"
+}

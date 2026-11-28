@@ -1,0 +1,53 @@
+{
+ "note": "Round 10 (W3): asm_render.py's person fixes tested on scratch recordings before run 15: only the frames with the person (ASM_PICK_PERSON=1, and the frame before each run of them) drawn with ROBOTBUILD_AUDIT=1, then scene_audit.py (1.5 mm) and walk.py on them. Round 9's full chapters: 40 had stance slip up to 34 mm a stance, 41 up to 383 mm and the person's hand 28 mm in the chamber body.",
+ "tests": {
+  "m5": {
+   "chapter": "40-assembly-module",
+   "recording": "W1's round-9-code recording of chapter 40 (/tmp/r10/w1/base), every person job",
+   "frames_audited": 454,
+   "pairs_over_1_5mm": 0,
+   "worst_mm": 0.0,
+   "person_frames": 451,
+   "walked_mm": 10792,
+   "stances": 53,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "gliding_frames": 0
+  },
+  "b1d": {
+   "chapter": "41-assembly-chamber",
+   "recording": "W2's scratch recording F15-F27 at round 9's planner (/tmp/r10/w2/base1): F15, F18, F26, F27 failed there, so the person sets parts and drives screws",
+   "frames_audited": 730,
+   "pairs_over_1_5mm": 0,
+   "worst_mm": 0.0,
+   "person_frames": 724,
+   "walked_mm": 16596,
+   "stances": 85,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "gliding_frames": 0
+  },
+  "b57c": {
+   "chapter": "41-assembly-chamber",
+   "recording": "W2's scratch recording of F57 at round 9's planner (/tmp/r10/w2/base57): three beam tubes left off their seats, set by the person",
+   "frames_audited": 109,
+   "pairs_over_1_5mm": 0,
+   "worst_mm": 0.0,
+   "person_frames": 108,
+   "walked_mm": 0,
+   "stances": 2,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "gliding_frames": 0
+  }
+ }
+}

@@ -1,0 +1,301 @@
+{
+ "module": "M50",
+ "automation_parts": [
+  "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)",
+  "Door drive: pneumatic rotary actuator on the hinge axis, SMC CRQ2 size 20 class (~1.8 N m at 0.5 MPa, stroke set to 95 deg, meter-out flow controls; envelope 47 x 47 x 42 mm). Passive alternative: McMaster 6597K124 one-way damper, same envelope",
+  "Door drive bracket (6061, 4 mm, flanged onto the chamber's left side face)",
+  "Door drive shaft and disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
+  "Draw-latch actuators: 2 x \u00d820 compact air cylinders (SMC CJ2/CQ2 class, 157 N at 0.5 MPa) that throw the latch levers",
+  "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+  "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+  "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+  "Liner pull tab, left (316L, 2 mm hanger: a web from the left side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)",
+  "Liner pull tab, right (316L, 2 mm hanger: a web from the right side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)",
+  "AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-registration)"
+ ],
+ "states": [
+  {
+   "state": "closed, parked, piston up",
+   "pose": {},
+   "pairs_checked": 54,
+   "interferences": []
+  },
+  {
+   "state": "plate exchange: doors open, plate up 8 mm",
+   "pose": {
+    "door": 95.0,
+    "gdoor": 515.0,
+    "piston": 8.0
+   },
+   "pairs_checked": 52,
+   "interferences": []
+  },
+  {
+   "state": "doors open, reservoir and drawer out",
+   "pose": {
+    "door": 95.0,
+    "gdoor": 515.0,
+    "cartridge": -125.0,
+    "drawer": -120.0
+   },
+   "pairs_checked": 48,
+   "interferences": []
+  },
+  {
+   "state": "recoater at the end, piston at the bottom stop",
+   "pose": {
+    "recoater": 206.0,
+    "piston": -42.0
+   },
+   "pairs_checked": 54,
+   "interferences": []
+  },
+  {
+   "state": "module swap: arm released, module dropped",
+   "pose": {
+    "zstage": -45.0,
+    "module": 40.0,
+    "gdoor": 515.0
+   },
+   "pairs_checked": 54,
+   "interferences": []
+  }
+ ],
+ "sweeps": [
+  {
+   "group": "door",
+   "range": [
+    0.0,
+    95.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "drawer",
+   "range": [
+    -120.0,
+    0.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "gdoor",
+   "range": [
+    0.0,
+    515.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "recoater",
+   "range": [
+    0.0,
+    206.0
+   ],
+   "steps": 25,
+   "interferences": []
+  }
+ ],
+ "clearances": [
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door drive shaft and disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
+   "other": "Door drive: pneumatic rotary actuator on the hinge axis, SMC CRQ2 size 20 class (~1.8 N m at 0.5 MPa, stroke set to 95 deg, meter-out flow controls; envelope 47 x 47 x 42 mm). Passive alternative: McMaster 6597K124 one-way damper, same envelope",
+   "gap_mm": 0.0
+  },
+  {
+   "group": "door",
+   "at": 7.92,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+   "other": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "gap_mm": 10.308
+  },
+  {
+   "group": "door",
+   "at": 7.92,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+   "other": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "gap_mm": 10.308
+  },
+  {
+   "group": "door",
+   "at": 43.54,
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "other": "Door drive: pneumatic rotary actuator on the hinge axis, SMC CRQ2 size 20 class (~1.8 N m at 0.5 MPa, stroke set to 95 deg, meter-out flow controls; envelope 47 x 47 x 42 mm). Passive alternative: McMaster 6597K124 one-way damper, same envelope",
+   "gap_mm": 10.552
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door drive shaft and disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 12.1
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door drive shaft and disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
+   "other": "Hinge pins (\u00d85, 316)",
+   "gap_mm": 12.1
+  },
+  {
+   "group": "door",
+   "at": 87.08,
+   "moving": "Door drive shaft and disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 13.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw-latch actuators: 2 x \u00d820 compact air cylinders (SMC CJ2/CQ2 class, 157 N at 0.5 MPa) that throw the latch levers",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Drawer-closed sensor (inductive M12, on the lid's front face, sees the plate's end)",
+   "gap_mm": 2.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "gap_mm": 11.5
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Drawer latch receptacles in the lid (2 x quarter-turn latch)",
+   "gap_mm": 11.5
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "gap_mm": 11.5
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Drawer latch receptacles in the lid (2 x quarter-turn latch)",
+   "gap_mm": 11.5
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "gap_mm": 12.971
+  },
+  {
+   "group": "gdoor",
+   "at": 493.54,
+   "moving": "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 6.0
+  },
+  {
+   "group": "gdoor",
+   "at": 493.54,
+   "moving": "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)",
+   "other": "Guard-position switch IDEC HS6B-12B05 (2NC + 1NO, tongue actuator on the door; separate from the guard lock, ISO 14119)",
+   "gap_mm": 11.006
+  },
+  {
+   "group": "gdoor",
+   "at": 515.0,
+   "moving": "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 82.344
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 191.158
+  },
+  {
+   "group": "recoater",
+   "at": 8.58,
+   "moving": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 4.243
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "gap_mm": 22.091
+  },
+  {
+   "group": "recoater",
+   "at": 85.83,
+   "moving": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
+   "gap_mm": 35.114
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "other": "Draw-latch strikes on the chamber's side faces (1807A61 strike plates)",
+   "gap_mm": 48.374
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
+   "gap_mm": 49.09
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 93.744
+  },
+  {
+   "group": "recoater",
+   "at": 17.17,
+   "moving": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 100.661
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 207.239
+  }
+ ],
+ "runtime_s": 640.6
+}

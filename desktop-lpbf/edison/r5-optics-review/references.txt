@@ -1,0 +1,61 @@
+1. (laskin2022ontheselection pages 9-12): Alexander V. Laskin and Joerg Volpp. On the selection of materials for high-power laser optics with reduced thermal lensing. High-Power Laser Materials Processing: Applications, Diagnostics, and Systems XI, 11994:1199408-1199408-12, Mar 2022. URL: https://doi.org/10.1117/12.2607931, doi:10.1117/12.2607931. This article has 5 citations.
+
+2. (faas2018determinationofthe pages 5-7): Sebastian Faas, Daniel J. Foerster, Rudolf Weber, and Thomas Graf. Determination of the thermally induced focal shift of processing optics for ultrafast lasers with average powers of up to 525 w. Optics express, 26 20:26020-26029, Sep 2018. URL: https://doi.org/10.1364/oe.26.026020, doi:10.1364/oe.26.026020. This article has 21 citations and is from a peer-reviewed journal.
+
+3. (laskin2021ontheselection pages 22-25): Alexander Laskin. On the selection of materials for high-power laser optics based on analysis of focus shift and aberration induced by thermal gradient. Nov 2021. URL: https://doi.org/10.1117/1.oe.60.11.115105, doi:10.1117/1.oe.60.11.115105. This article has 11 citations and is from a peer-reviewed journal.
+
+4. (laskin2021ontheselection pages 25-26): Alexander Laskin. On the selection of materials for high-power laser optics based on analysis of focus shift and aberration induced by thermal gradient. Nov 2021. URL: https://doi.org/10.1117/1.oe.60.11.115105, doi:10.1117/1.oe.60.11.115105. This article has 11 citations and is from a peer-reviewed journal.
+
+5. (stoll2020processdevelopmentfor pages 9-13): Thomas Stoll, Pascal Trautnitz, Samuel Schmiedeke, Joerg Ernst Franke, and Nahum Travitzky. Process development for laser powder bed fusion of pure copper. Laser 3D Manufacturing VII, 11271:112710I-112710I-15, Mar 2020. URL: https://doi.org/10.1117/12.2563870, doi:10.1117/12.2563870. This article has 33 citations.
+
+6. (canacoo2026laseradditivemanufacturing pages 6-8): Sampson Canacoo, Dong Hee Kang, Md Nazmus Sakib, and Jihoon Jeong. Laser additive manufacturing of copper and its alloys: challenges, process innovations, and future perspectives. International Journal of Precision Engineering and Manufacturing-Green Technology, Sep 2026. URL: https://doi.org/10.1007/s40684-026-00928-z, doi:10.1007/s40684-026-00928-z. This article has 0 citations.
+
+7. (rivera2018nextgenerationfiberlasers pages 3-5): C. Rivera, K. Kennedy, S. Hampton, E. Soukup, A. Brown, D. Dawson, W. Urbanek, M. DeVito, L. DeVito, L. Bao, J. Koponen, K. Gross, Dahv A. Kliner, B. Victor, G. Fanning, D. Balsley, R. L. Farrow, R. Hawke, M. Reynolds, A. Hodges, J. Emery, K. Almonte, M. Nelson, B. Foley, and D. M. Hemenway. Next-generation fiber lasers enabled by high-performance components. Components and Packaging for Laser Systems IV, 10513:27, Feb 2018. URL: https://doi.org/10.1117/12.2292271, doi:10.1117/12.2292271. This article has 8 citations.
+
+8. (stanisz2026angulardependenceof pages 9-11): Dawid Stanisz, Sławomir Parzych, Marek Hebda, Małgorzata Cichowlas, Joanna Szkudlarek, and Małgorzata Okrasa. Angular dependence of reflected laser radiation intensity during handheld laser welding of structural steel and aluminum alloys. Advances in Science and Technology Research Journal, 20:213-226, Apr 2026. URL: https://doi.org/10.12913/22998624/214942, doi:10.12913/22998624/214942. This article has 1 citations.
+
+9. (naeem2013laserprocessingof pages 3-3): Mohammed Naeem. Laser processing of reflective materials. Laser Technik Journal, 10:18-20, Jan 2013. URL: https://doi.org/10.1002/latj.201390001, doi:10.1002/latj.201390001. This article has 70 citations.
+
+10. (reijonen2020ontheeffect pages 5-6): Joni Reijonen, Alejandro Revuelta, Tuomas Riipinen, Kimmo Ruusuvuori, and Pasi Puukko. On the effect of shielding gas flow on porosity and melt pool geometry in laser powder bed fusion additive manufacturing. Additive Manufacturing, 32:101030, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.101030, doi:10.1016/j.addma.2019.101030. This article has 285 citations and is from a highest quality peer-reviewed journal.
+
+11. (reijonen2020ontheeffect pages 4-5): Joni Reijonen, Alejandro Revuelta, Tuomas Riipinen, Kimmo Ruusuvuori, and Pasi Puukko. On the effect of shielding gas flow on porosity and melt pool geometry in laser powder bed fusion additive manufacturing. Additive Manufacturing, 32:101030, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.101030, doi:10.1016/j.addma.2019.101030. This article has 285 citations and is from a highest quality peer-reviewed journal.
+
+12. (sing2020laserpowderbed pages 13-19): S. L. Sing and W. Y. Yeong. Laser powder bed fusion for metal additive manufacturing: perspectives on recent developments. Virtual and Physical Prototyping, 15:359-370, Jun 2020. URL: https://doi.org/10.1080/17452759.2020.1779999, doi:10.1080/17452759.2020.1779999. This article has 478 citations and is from a peer-reviewed journal.
+
+13. (revanur2024novelscanstrategies pages 51-53): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+14. (EP3321003B1 pages 4-5): Isabell HÜBINGER. Apparatus and method for producing a three-dimensional work piece with improved …. Patent (WO,EP,US,CN,JP,BR,CA), 2019.
+
+15. (EP3147047B1 pages 3-5): Jan Wilkes. Apparatus for producing a three-dimensional workpiece with improved gas flow …. Patent (EP,US,CN,JP), 2023.
+
+16. (hernandez2023designandimplementation pages 74-79): A Hernandez. Design and implementation of laser beam measurements at the extents of the build platform: impact of beam location on melt pool geometry. Unknown journal, 2023.
+
+17. (hernandez2023designandimplementation pages 79-84): A Hernandez. Design and implementation of laser beam measurements at the extents of the build platform: impact of beam location on melt pool geometry. Unknown journal, 2023.
+
+18. (grantham2016opticaldesignand pages 2-4): Steven Grantham, Brandon Lane, Jorge Neira, Sergey Mekhontsev, Mihaela Vlasea, and Leonard Hanssen. Optical design and initial results from nist's ammt/temps facility. SPIE Proceedings, 9738:97380S, May 2016. URL: https://doi.org/10.1117/12.2214246, doi:10.1117/12.2214246. This article has 20 citations.
+
+19. (hernandez2023designandimplementation pages 15-21): A Hernandez. Design and implementation of laser beam measurements at the extents of the build platform: impact of beam location on melt pool geometry. Unknown journal, 2023.
+
+20. (hooper2018meltpooltemperature pages 4-6): Paul A. Hooper. Melt pool temperature and cooling rates in laser powder bed fusion. Additive Manufacturing, 22:548-559, Aug 2018. URL: https://doi.org/10.1016/j.addma.2018.05.032, doi:10.1016/j.addma.2018.05.032. This article has 1138 citations and is from a highest quality peer-reviewed journal.
+
+21. (fox2024inprocessmonitoringand pages 44-47): Jason Fox, Felix Kim, Brandon Lane, Maxwell Praniewicz, Vipin Tondare, Jordan Weaver, and Paul Witherell. In-process monitoring and non-destructive evaluation for metal additive manufacturing processes. ArXiv, Sep 2024. URL: https://doi.org/10.6028/nist.ir.8538, doi:10.6028/nist.ir.8538. This article has 16 citations.
+
+22. (lafirenza2025developmentofinsitu pages 35-37): M Lafirenza. Development of in-situ optical sensor-based monitoring methodologies for additive manufacturing processes. Unknown journal, 2025.
+
+23. (sun2019computationalfluiddynamics pages 53-56): Z Sun. Computational fluid dynamics modelling of powder-based laser additive manufacturing processes. Unknown journal, 2019.
+
+24. (ozgoren2011highpowerallfiber pages 65-70): K Özgören. High power all-fiber laser-amplifier systems for materials processing. Unknown journal, 2011.
+
+25. (laskin2022ontheselection pages 6-8): Alexander V. Laskin and Joerg Volpp. On the selection of materials for high-power laser optics with reduced thermal lensing. High-Power Laser Materials Processing: Applications, Diagnostics, and Systems XI, 11994:1199408-1199408-12, Mar 2022. URL: https://doi.org/10.1117/12.2607931, doi:10.1117/12.2607931. This article has 5 citations.
+
+26. (faas2018determinationofthe pages 3-5): Sebastian Faas, Daniel J. Foerster, Rudolf Weber, and Thomas Graf. Determination of the thermally induced focal shift of processing optics for ultrafast lasers with average powers of up to 525 w. Optics express, 26 20:26020-26029, Sep 2018. URL: https://doi.org/10.1364/oe.26.026020, doi:10.1364/oe.26.026020. This article has 21 citations and is from a peer-reviewed journal.
+
+27. (faas2018determinationofthe pages 1-3): Sebastian Faas, Daniel J. Foerster, Rudolf Weber, and Thomas Graf. Determination of the thermally induced focal shift of processing optics for ultrafast lasers with average powers of up to 525 w. Optics express, 26 20:26020-26029, Sep 2018. URL: https://doi.org/10.1364/oe.26.026020, doi:10.1364/oe.26.026020. This article has 21 citations and is from a peer-reviewed journal.
+
+28. (naeem2013laserprocessingof pages 1-2): Mohammed Naeem. Laser processing of reflective materials. Laser Technik Journal, 10:18-20, Jan 2013. URL: https://doi.org/10.1002/latj.201390001, doi:10.1002/latj.201390001. This article has 70 citations.
+
+29. (yakubov2022laserpowderbed pages 103-108): Vladislav Yakubov. Laser powder bed fusion fabrication of cerium-containing aluminium alloys: solidification behaviour, microstructure evolution and mechanical properties. Dissertation, Jan 2022. URL: https://doi.org/10.26190/unsworks/24548, doi:10.26190/unsworks/24548. This article has 0 citations.
+
+30. (revanur2024novelscanstrategies pages 36-38): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+31. (grantham2016opticaldesignand pages 1-2): Steven Grantham, Brandon Lane, Jorge Neira, Sergey Mekhontsev, Mihaela Vlasea, and Leonard Hanssen. Optical design and initial results from nist's ammt/temps facility. SPIE Proceedings, 9738:97380S, May 2016. URL: https://doi.org/10.1117/12.2214246, doi:10.1117/12.2214246. This article has 20 citations.

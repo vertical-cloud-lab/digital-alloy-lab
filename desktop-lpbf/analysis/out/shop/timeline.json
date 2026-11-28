@@ -1,0 +1,124 @@
+{
+ "dfm_json_mtime_utc": "2026-11-20T23:30Z",
+ "assumptions": {
+  "cam_h": 35.0,
+  "hand_setup_min": 20.0,
+  "hand_saw_min": 5.0,
+  "hand_deburr_min": 10.0,
+  "hand_wash_min": 5.0,
+  "hand_measure_min": 10.0,
+  "hand_unbox_min": 10.0,
+  "hand_kit_min": 2.0,
+  "mir_leg_s": 25.0,
+  "dock_s": 30.0,
+  "register_s": 15.0,
+  "door_s": 6.0,
+  "air_blast_s": 20.0,
+  "seat_check_s": 5.0,
+  "probe_s": 60.0,
+  "supervise_new_min": 8.0,
+  "robot_saw_min": 3.0,
+  "robot_deburr_min": 4.0,
+  "robot_wash_min": 6.0,
+  "robot_measure_min": 4.0,
+  "robot_kit_min": 1.0,
+  "robot_unbox_min": 8.0,
+  "hours_per_day_hand": 8.0,
+  "hours_per_day_shop": 20.0
+ },
+ "n_parts": 48,
+ "n_pieces": 67,
+ "setups": 118,
+ "cut_h": 27.7,
+ "setup_h_hand": 41.0,
+ "robot_changeover_s": 184.0,
+ "lathe_load_plan_s": 23.5,
+ "rows": [
+  {
+   "step": "CAM programming and simulation",
+   "hand_person_h": 35.0,
+   "shop_machine_or_robot_h": 0.0,
+   "shop_person_h": 35.0,
+   "note": "unchanged: a person writes and proves every program"
+  },
+  {
+   "step": "unboxing and receiving (11 shipments)",
+   "hand_person_h": 1.8,
+   "shop_machine_or_robot_h": 1.1,
+   "shop_person_h": 1.0,
+   "note": "3 shipments over 22 kg (block, plate bundle, laser crate) need a person and a pallet jack"
+  },
+  {
+   "step": "stock prep (saw, about 20 blanks)",
+   "hand_person_h": 1.7,
+   "shop_machine_or_robot_h": 1.0,
+   "shop_person_h": 0.5,
+   "note": "bar blanks only; the chamber block and plates are bought cut to size"
+  },
+  {
+   "step": "spindle time (rough, finish, holes)",
+   "hand_person_h": 27.7,
+   "shop_machine_or_robot_h": 27.7,
+   "shop_person_h": 0.0,
+   "note": "27.7 h of cutting at machining.md's removal rates, the same in both cases"
+  },
+  {
+   "step": "setups and part flips",
+   "hand_person_h": 41.0,
+   "shop_machine_or_robot_h": 6.0,
+   "shop_person_h": 17.2,
+   "note": "118 setups; robot changeover 184 s each (P1 plan 11.3 s x2 + door, chips, probing, MiR leg, dock, re-register); a person watches each new setup's first run and loads the heavy pieces"
+  },
+  {
+   "step": "deburr",
+   "hand_person_h": 11.2,
+   "shop_machine_or_robot_h": 4.5,
+   "shop_person_h": 2.2,
+   "note": "robot: edges on the brush and a compliant deburring tool; a person checks and touches up (2 min a part)"
+  },
+  {
+   "step": "wash",
+   "hand_person_h": 5.6,
+   "shop_machine_or_robot_h": 6.7,
+   "shop_person_h": 0.0,
+   "note": "basket in the ultrasonic tank"
+  },
+  {
+   "step": "measure",
+   "hand_person_h": 11.2,
+   "shop_machine_or_robot_h": 4.5,
+   "shop_person_h": 4.5,
+   "note": "robot places parts; gauging of seal faces and bores stays with a person (bore gauge, height gauge)"
+  },
+  {
+   "step": "kitting",
+   "hand_person_h": 2.2,
+   "shop_machine_or_robot_h": 1.1,
+   "shop_person_h": 0.0,
+   "note": "totes on the rack's upper shelves"
+  }
+ ],
+ "total_hand_person_h": 137.4,
+ "total_shop_person_h": 60.4,
+ "shop_machine_h": 33.7,
+ "days_hand": 17.2,
+ "days_shop": 6.9,
+ "vmc_share": 0.9,
+ "cautious_extra_person_h": 18.0,
+ "total_shop_person_h_cautious": 78.4,
+ "not_included": [
+  "commissioning the cell: fixtures and soft jaws, station AprilTag cubes and registration, teaching and proving every robot task, the risk assessment and interlocks (likely months for the first machine)",
+  "welding, honing (outsourced), heat treatment, bead blasting",
+  "assembly (see the assembly study in this PR)",
+  "queue time at BYU's shops"
+ ],
+ "heavy_parts": [
+  "Chamber frame (version B): 13 x 9.5 x 5.5 in. plate as delivered"
+ ],
+ "two_arm_parts": [
+  "Base plate, process module (MIC-6, 15 mm)",
+  "Base plate, gas module (MIC-6, 15 mm)",
+  "Chamber frame (version B): its 274 x 184 mm core, cut out as one slug",
+  "Optics bridge (6061, 25 mm)"
+ ]
+}

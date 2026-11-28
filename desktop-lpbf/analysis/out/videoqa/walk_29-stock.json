@@ -1,0 +1,219 @@
+{
+ "chapter": "29-stock",
+ "frames_recorded": 275,
+ "recordings": [
+  "/tmp/robotbuild/frames/29-stock/audit"
+ ],
+ "people": [
+  {
+   "person": "op",
+   "frames": 275,
+   "walked_mm": 4470,
+   "stances": 28,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "worst_stances": [
+    {
+     "foot": "R",
+     "start": 0,
+     "end": 6,
+     "frames": 7,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 6,
+     "end": 15,
+     "frames": 10,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 13,
+     "end": 22,
+     "frames": 10,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 22,
+     "end": 29,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 29,
+     "end": 35,
+     "frames": 7,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 35,
+     "end": 41,
+     "frames": 7,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 41,
+     "end": 48,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 48,
+     "end": 56,
+     "frames": 9,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 55,
+     "end": 64,
+     "frames": 10,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 63,
+     "end": 71,
+     "frames": 9,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    }
+   ],
+   "slipping_frames": 0,
+   "slipping_frame_list": [],
+   "gliding_frames": 0,
+   "gliding_ranges": [],
+   "gliding_worst": [],
+   "jumps": []
+  },
+  {
+   "person": "op2",
+   "frames": 275,
+   "walked_mm": 4336,
+   "stances": 28,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "worst_stances": [
+    {
+     "foot": "R",
+     "start": 0,
+     "end": 6,
+     "frames": 7,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 6,
+     "end": 15,
+     "frames": 10,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 13,
+     "end": 21,
+     "frames": 9,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 21,
+     "end": 28,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 28,
+     "end": 35,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 35,
+     "end": 41,
+     "frames": 7,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 41,
+     "end": 48,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 48,
+     "end": 56,
+     "frames": 9,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 55,
+     "end": 64,
+     "frames": 10,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 63,
+     "end": 71,
+     "frames": 9,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    }
+   ],
+   "slipping_frames": 0,
+   "slipping_frame_list": [],
+   "gliding_frames": 0,
+   "gliding_ranges": [],
+   "gliding_worst": [],
+   "jumps": []
+  }
+ ],
+ "mirs": [],
+ "limits": {
+  "foot_down_mm": 4.0,
+  "contact_mm": 2.0,
+  "slip_frame_mm": 5.0,
+  "glide_mm": 1.0,
+  "glide_deg": 0.3,
+  "legs_still_mm": 0.5,
+  "jump_mm": 250.0,
+  "mir_jump_mm": 150.0
+ },
+ "seconds": 0.7
+}

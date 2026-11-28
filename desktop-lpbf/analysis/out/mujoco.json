@@ -1,0 +1,346 @@
+{
+ "model": {
+  "bodies": 107,
+  "geoms": 5693,
+  "meshes": 5693
+ },
+ "sweep": {
+  "recoater": [
+   {
+    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+    "at": 206.0,
+    "depth_mm": 3.73,
+    "verdict": "designed joint (e.g. rod in its seal bore); exact check clear"
+   },
+   {
+    "other": "Recoater ball screw (M12, 10 mm lead)",
+    "at": 0.0,
+    "depth_mm": 1.6,
+    "verdict": "designed joint (e.g. rod in its seal bore); exact check clear"
+   }
+  ],
+  "piston": [
+   {
+    "other": "zstage",
+    "at": -25.33,
+    "depth_mm": 10.58,
+    "verdict": "convex-decomposition artefact; exact B-rep check clear"
+   }
+  ],
+  "door": [],
+  "gdoor": [],
+  "cartridge": [
+   {
+    "other": "Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring)",
+    "at": -93.75,
+    "depth_mm": 1.79,
+    "verdict": "designed joint (e.g. rod in its seal bore); exact check clear"
+   }
+  ],
+  "drawer": [
+   {
+    "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+    "at": 0.0,
+    "depth_mm": 6.98,
+    "verdict": "designed joint (e.g. rod in its seal bore); exact check clear"
+   }
+  ],
+  "zstage": []
+ },
+ "dynamics": {
+  "recoater": {
+   "moving_mass_kg": 0.824,
+   "move": "0 to 0.206 m in 2 s (quintic)",
+   "peak": 0.36,
+   "hold_at_end": 0.0,
+   "unit": "N",
+   "final_error": -0.0
+  },
+  "piston": {
+   "moving_mass_kg": 0.413,
+   "move": "0 to -0.04 m in 2 s (quintic)",
+   "peak": 5.12,
+   "hold_at_end": 4.06,
+   "unit": "N",
+   "final_error": -2e-05
+  },
+  "door": {
+   "moving_mass_kg": 1.462,
+   "move": "0 to 1.65806 rad in 3 s (quintic)",
+   "peak": 0.92,
+   "hold_at_end": 0.29,
+   "unit": "N\u00b7m",
+   "final_error": 0.00143
+  },
+  "gdoor": {
+   "moving_mass_kg": 1.179,
+   "move": "0 to 0.47 m in 2 s (quintic)",
+   "peak": 1.06,
+   "hold_at_end": 0.0,
+   "unit": "N",
+   "final_error": -0.0
+  },
+  "cartridge": {
+   "moving_mass_kg": 0.432,
+   "move": "0 to -0.125 m in 2 s (quintic)",
+   "peak": 0.15,
+   "hold_at_end": 0.0,
+   "unit": "N",
+   "final_error": 0.0
+  },
+  "drawer": {
+   "moving_mass_kg": 0.223,
+   "move": "0 to -0.12 m in 2 s (quintic)",
+   "peak": 0.11,
+   "hold_at_end": 0.0,
+   "unit": "N",
+   "final_error": -0.0
+  },
+  "zstage": {
+   "moving_mass_kg": 0.3,
+   "move": "0 to -0.045 m in 2 s (quintic)",
+   "peak": 3.66,
+   "hold_at_end": 2.85,
+   "unit": "N",
+   "final_error": -1.4e-05
+  }
+ },
+ "door_drop": {
+  "self_closing_until_deg": 11.0,
+  "door_mass_kg": 1.462,
+  "peak_speed_rad_s": 13.66,
+  "tip_speed_m_s": 1.71,
+  "peak_stop_torque_Nm": 13.4,
+  "t_s": 0.492,
+  "note": "contacts off, hinge friction and damping zero (worst case); MuJoCo's soft joint limit stands in for a hard stop, so the stop torque depends on its stiffness"
+ },
+ "mass_by_module": {
+  "process": {
+   "mass_kg": 87.7,
+   "com_mm": [
+    -23.8,
+    -4.3,
+    63.6
+   ]
+  },
+  "gas": {
+   "mass_kg": 60.6,
+   "com_mm": [
+    718.9,
+    47.4,
+    -68.9
+   ]
+  },
+  "rack": {
+   "mass_kg": 107.5,
+   "com_mm": [
+    -704.5,
+    -24.4,
+    7.9
+   ]
+  },
+  "tray": {
+   "mass_kg": 12.4,
+   "com_mm": [
+    657.8,
+    352.5,
+    -153.6
+   ]
+  }
+ },
+ "transit": [
+  {
+   "tray_accel_m_s2": [
+    0.0,
+    0.0,
+    3.0
+   ],
+   "result": {
+    "rack": {
+     "slide_mm": 0.0,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    },
+    "process": {
+     "slide_mm": 0.0,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    },
+    "gas": {
+     "slide_mm": 0.0,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    }
+   }
+  },
+  {
+   "tray_accel_m_s2": [
+    0.0,
+    0.0,
+    -3.0
+   ],
+   "result": {
+    "rack": {
+     "slide_mm": 0.0,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    },
+    "process": {
+     "slide_mm": 0.0,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    },
+    "gas": {
+     "slide_mm": 0.0,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    }
+   }
+  },
+  {
+   "tray_accel_m_s2": [
+    2.0,
+    0.0,
+    0.0
+   ],
+   "result": {
+    "rack": {
+     "slide_mm": 0.0,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    },
+    "process": {
+     "slide_mm": 0.001,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    },
+    "gas": {
+     "slide_mm": 0.0,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    }
+   }
+  },
+  {
+   "tray_accel_m_s2": [
+    0.0,
+    2.0,
+    0.0
+   ],
+   "result": {
+    "rack": {
+     "slide_mm": 0.001,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    },
+    "process": {
+     "slide_mm": 0.004,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    },
+    "gas": {
+     "slide_mm": 0.0,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 4
+    }
+   }
+  },
+  {
+   "tray_accel_m_s2": [
+    2.0,
+    2.0,
+    -3.0
+   ],
+   "result": {
+    "rack": {
+     "slide_mm": 1.31,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 1
+    },
+    "process": {
+     "slide_mm": 1.374,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 1
+    },
+    "gas": {
+     "slide_mm": 1.046,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 1
+    }
+   }
+  },
+  {
+   "tray_accel_m_s2": [
+    4.0,
+    0.0,
+    0.0
+   ],
+   "result": {
+    "rack": {
+     "slide_mm": 0.013,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 3
+    },
+    "process": {
+     "slide_mm": 0.041,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 2
+    },
+    "gas": {
+     "slide_mm": 0.01,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 3
+    }
+   }
+  },
+  {
+   "tray_accel_m_s2": [
+    0.0,
+    4.0,
+    0.0
+   ],
+   "result": {
+    "rack": {
+     "slide_mm": 0.043,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 2
+    },
+    "process": {
+     "slide_mm": 0.067,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 2
+    },
+    "gas": {
+     "slide_mm": 0.012,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 3
+    }
+   }
+  },
+  {
+   "tray_accel_m_s2": [
+    0.0,
+    6.0,
+    0.0
+   ],
+   "result": {
+    "rack": {
+     "slide_mm": 0.571,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 0
+    },
+    "process": {
+     "slide_mm": 0.561,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 0
+    },
+    "gas": {
+     "slide_mm": 0.135,
+     "tilt_deg": 0.0,
+     "min_feet_in_contact": 0
+    }
+   }
+  }
+ ],
+ "runtime_s": 3444.3
+}

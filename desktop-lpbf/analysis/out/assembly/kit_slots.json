@@ -1,0 +1,12434 @@
+{
+"note": "kit_table.py: every item's slot on common.LONG_TABLE (hall frame, mm); T maps the item's machine-frame geometry onto the table",
+"table": {
+"x0": 2600.0,
+"x1": 14600.0,
+"y0": -450.0,
+"y1": 450.0,
+"top": 860.0,
+"t": 40.0,
+"note": "12 m x 0.9 m, phenolic top on steel legs, 860 mm high: in line with the assembly bench, so both MiRs reach it from their own lane (a UR12e reaches 1300 mm)"
+},
+"zones": [
+{
+"category": "stock",
+"x0": 2630.0,
+"x1": 6751.957249402505
+},
+{
+"category": "sheet",
+"x0": 6851.957249402505,
+"x1": 7675.912774215031
+},
+{
+"category": "motion",
+"x0": 7775.912774215031,
+"x1": 8723.212774215031
+},
+{
+"category": "gas",
+"x0": 8823.212774215031,
+"x1": 10026.392774215032
+},
+{
+"category": "optics",
+"x0": 10126.392774215032,
+"x1": 10831.392774215032
+},
+{
+"category": "elec",
+"x0": 10931.392774215032,
+"x1": 11671.392774215032
+},
+{
+"category": "seal",
+"x0": 11771.392774215032,
+"x1": 13098.392774215032
+},
+{
+"category": "frame",
+"x0": 13088.392774215032,
+"x1": 13153.392774215032
+}
+],
+"pallets": [
+{
+"key": "PALLET-1",
+"x0": 3000.0,
+"x1": 4482.729864874524,
+"y0": 1250.0,
+"y1": 2050.0,
+"top": 144.0,
+"items": [
+"P182"
+]
+},
+{
+"key": "PALLET-2",
+"x0": 4782.729864874524,
+"x1": 5982.729864874524,
+"y0": 1250.0,
+"y1": 2050.0,
+"top": 144.0,
+"items": [
+"P010",
+"P256",
+"P259",
+"P165"
+]
+},
+{
+"key": "PALLET-3",
+"x0": 6282.729864874524,
+"x1": 7482.729864874524,
+"y0": 1250.0,
+"y1": 2050.0,
+"top": 144.0,
+"items": [
+"P005",
+"P007",
+"P192",
+"P273",
+"P258",
+"P171",
+"P162",
+"P164",
+"P167",
+"P168",
+"P257#1",
+"P257#2",
+"P274",
+"P004#1"
+]
+},
+{
+"key": "PALLET-4",
+"x0": 7782.729864874524,
+"x1": 8982.729864874524,
+"y0": 1250.0,
+"y1": 2050.0,
+"top": 144.0,
+"items": [
+"P003",
+"P008",
+"P169",
+"P170",
+"P187",
+"P004#2",
+"P004#3",
+"P004#4",
+"P188",
+"P189",
+"P190",
+"P191",
+"P275#1",
+"P275#2"
+]
+},
+{
+"key": "PALLET-5",
+"x0": 9282.729864874524,
+"x1": 10482.729864874524,
+"y0": 1250.0,
+"y1": 2050.0,
+"top": 144.0,
+"items": [
+"P009",
+"P006",
+"P166",
+"F54"
+]
+},
+{
+"key": "PALLET-6",
+"x0": 10782.729864874524,
+"x1": 11982.729864874524,
+"y0": 1250.0,
+"y1": 2050.0,
+"top": 144.0,
+"items": [
+"P181",
+"P194",
+"P195",
+"P196",
+"P163"
+]
+},
+{
+"key": "PALLET-7",
+"x0": 12282.729864874524,
+"x1": 13482.729864874524,
+"y0": 1250.0,
+"y1": 2050.0,
+"top": 144.0,
+"items": [
+"P161",
+"P185"
+]
+},
+{
+"key": "PALLET-8",
+"x0": 13782.729864874524,
+"x1": 16661.528877367895,
+"y0": 1250.0,
+"y1": 2050.0,
+"top": 144.0,
+"items": [
+"P193"
+]
+},
+{
+"key": "PALLET-9",
+"x0": 16961.528877367895,
+"x1": 19923.92727594397,
+"y0": 1250.0,
+"y1": 2050.0,
+"top": 144.0,
+"items": [
+"P183"
+]
+}
+],
+"slots": [
+{
+"key": "M01",
+"step": "M01",
+"name": "Heater block M50",
+"part_indices": [
+29
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2656.99
+],
+[
+0.0,
+1.0,
+0.0,
+-393.01
+],
+[
+0.0,
+0.0,
+-1.0,
+895.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2631.89,
+2682.09,
+-418.11,
+-367.91,
+905.0,
+919.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.069,
+"two_arm": false,
+"heavy": false,
+"label": "Heater block M50"
+},
+{
+"key": "M05#1",
+"step": "M05",
+"name": "Macor standoff rings M50",
+"part_indices": [
+32
+],
+"solids": [
+[
+32,
+0
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2667.35
+],
+[
+0.0,
+1.0,
+0.0,
+-303.26
+],
+[
+0.0,
+0.0,
+-1.0,
+833.52
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2654.35,
+2662.35,
+-291.67,
+-283.67,
+863.0,
+865.52
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Macor standoff rings M50"
+},
+{
+"key": "M05#2",
+"step": "M05",
+"name": "Macor standoff rings M50",
+"part_indices": [
+32
+],
+"solids": [
+[
+32,
+1
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2667.35
+],
+[
+0.0,
+1.0,
+0.0,
+-196.56
+],
+[
+0.0,
+0.0,
+-1.0,
+836.18
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2654.35,
+2662.35,
+-184.97,
+-176.97,
+863.0,
+865.37
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Macor standoff rings M50"
+},
+{
+"key": "M05#3",
+"step": "M05",
+"name": "Macor standoff rings M50",
+"part_indices": [
+32
+],
+"solids": [
+[
+32,
+2
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2667.35
+],
+[
+0.0,
+1.0,
+0.0,
+-89.86
+],
+[
+0.0,
+0.0,
+-1.0,
+839.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2654.35,
+2662.35,
+-78.28,
+-70.28,
+863.0,
+865.52
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Macor standoff rings M50"
+},
+{
+"key": "M05#4",
+"step": "M05",
+"name": "Macor standoff rings M50",
+"part_indices": [
+32
+],
+"solids": [
+[
+32,
+3
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2747.05
+],
+[
+0.0,
+1.0,
+0.0,
+-391.65
+],
+[
+0.0,
+0.0,
+-1.0,
+833.52
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2761.05,
+2769.05,
+-395.65,
+-387.65,
+863.0,
+865.52
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Macor standoff rings M50"
+},
+{
+"key": "M05#5",
+"step": "M05",
+"name": "Macor standoff rings M50",
+"part_indices": [
+32
+],
+"solids": [
+[
+32,
+4
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2747.05
+],
+[
+0.0,
+1.0,
+0.0,
+-284.95
+],
+[
+0.0,
+0.0,
+-1.0,
+836.18
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2761.05,
+2769.05,
+-288.95,
+-280.95,
+863.0,
+865.37
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Macor standoff rings M50"
+},
+{
+"key": "M05#6",
+"step": "M05",
+"name": "Macor standoff rings M50",
+"part_indices": [
+32
+],
+"solids": [
+[
+32,
+5
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2747.05
+],
+[
+0.0,
+1.0,
+0.0,
+-178.25
+],
+[
+0.0,
+0.0,
+-1.0,
+839.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2761.05,
+2769.05,
+-182.25,
+-174.25,
+863.0,
+865.52
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Macor standoff rings M50"
+},
+{
+"key": "M05#7",
+"step": "M05",
+"name": "Macor standoff rings M50",
+"part_indices": [
+32
+],
+"solids": [
+[
+32,
+6
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2774.05
+],
+[
+0.0,
+1.0,
+0.0,
+-55.96
+],
+[
+0.0,
+0.0,
+-1.0,
+833.52
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2761.05,
+2769.05,
+-75.55,
+-67.55,
+863.0,
+865.52
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Macor standoff rings M50"
+},
+{
+"key": "M05#8",
+"step": "M05",
+"name": "Macor standoff rings M50",
+"part_indices": [
+32
+],
+"solids": [
+[
+32,
+7
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2880.75
+],
+[
+0.0,
+1.0,
+0.0,
+-376.06
+],
+[
+0.0,
+0.0,
+-1.0,
+836.18
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2867.75,
+2875.75,
+-395.65,
+-387.65,
+863.0,
+865.37
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Macor standoff rings M50"
+},
+{
+"key": "M05#9",
+"step": "M05",
+"name": "Macor standoff rings M50",
+"part_indices": [
+32
+],
+"solids": [
+[
+32,
+8
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2880.75
+],
+[
+0.0,
+1.0,
+0.0,
+-269.36
+],
+[
+0.0,
+0.0,
+-1.0,
+839.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2867.75,
+2875.75,
+-288.95,
+-280.95,
+863.0,
+865.52
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Macor standoff rings M50"
+},
+{
+"key": "M06",
+"step": "M06",
+"name": "Piston head M50",
+"part_indices": [
+34
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2870.39
+],
+[
+0.0,
+1.0,
+0.0,
+-179.61
+],
+[
+0.0,
+0.0,
+-1.0,
+873.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2845.29,
+2895.49,
+-204.71,
+-154.51,
+905.0,
+923.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.075,
+"two_arm": false,
+"heavy": false,
+"label": "Piston head M50"
+},
+{
+"key": "M11",
+"step": "M11",
+"name": "Module M50 bottom flange: gland plate",
+"part_indices": [
+21
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2992.96
+],
+[
+0.0,
+1.0,
+0.0,
+-377.14
+],
+[
+0.0,
+0.0,
+-1.0,
+813.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2952.56,
+3033.36,
+-417.54,
+-336.74,
+905.0,
+919.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.528,
+"two_arm": false,
+"heavy": false,
+"label": "Module M50 bottom flange: gland plate"
+},
+{
+"key": "M13",
+"step": "M13",
+"name": "Rod (its rod end welded on by the shop: a 316L block with seven weld-in feedthroughs) lowe",
+"part_indices": [
+36,
+37,
+38
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+3012.96
+],
+[
+0.0,
+1.0,
+0.0,
+-205.41
+],
+[
+0.0,
+0.0,
+-1.0,
+830.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2972.46,
+3053.46,
+-248.41,
+-194.41,
+872.0,
+970.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.337,
+"two_arm": false,
+"heavy": false,
+"label": "Rod (its rod end welded on by the shop: "
+},
+{
+"key": "M16",
+"step": "M16",
+"name": "Build module M50: spigot, flange, honed 316L cylinder",
+"part_indices": [
+19
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3192.82
+],
+[
+0.0,
+0.0,
+1.0,
+-323.2
+],
+[
+0.0,
+-1.0,
+0.0,
+919.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3128.82,
+3256.82,
+-415.2,
+-323.2,
+860.0,
+979.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 1.781,
+"two_arm": false,
+"heavy": false,
+"label": "Build module M50: spigot, flange, honed "
+},
+{
+"key": "M21",
+"step": "M21",
+"name": "Module M50 handle",
+"part_indices": [
+24
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+3177.57
+],
+[
+0.0,
+1.0,
+0.0,
+-89.4
+],
+[
+0.0,
+0.0,
+-1.0,
+847.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3149.57,
+3205.57,
+-245.4,
+-117.8,
+872.0,
+957.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.255,
+"two_arm": false,
+"heavy": false,
+"label": "Module M50 handle"
+},
+{
+"key": "M23",
+"step": "M23",
+"name": "Striker disc M50",
+"part_indices": [
+39
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+2857.69
+],
+[
+0.0,
+1.0,
+0.0,
+-88.34
+],
+[
+0.0,
+0.0,
+-1.0,
+769.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2844.99,
+2870.39,
+-101.04,
+-75.64,
+905.0,
+910.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.018,
+"two_arm": false,
+"heavy": false,
+"label": "Striker disc M50"
+},
+{
+"key": "M27",
+"step": "M27",
+"name": "Rim wiper onto the plate; plate into the bore onto the bayonet, turned 60 deg (piston at +",
+"part_indices": [
+27,
+28
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+2977.09
+],
+[
+0.0,
+1.0,
+0.0,
+-81.56
+],
+[
+0.0,
+0.0,
+1.0,
+919.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2951.69,
+3002.49,
+-106.96,
+-56.16,
+905.0,
+919.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.053,
+"two_arm": false,
+"heavy": false,
+"label": "Rim wiper onto the plate; plate into the"
+},
+{
+"key": "M29",
+"step": "M29",
+"name": "Right zero-point arm with its clamping pin (SPC mini 20 class, screwed in on the bench) on",
+"part_indices": [
+25,
+26
+],
+"solids": [
+[
+25,
+0
+],
+[
+26,
+0
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+3446.82
+],
+[
+0.0,
+1.0,
+0.0,
+-423.4
+],
+[
+0.0,
+0.0,
+-1.0,
+842.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3332.82,
+3416.96,
+-397.4,
+-364.5,
+872.0,
+959.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.124,
+"two_arm": false,
+"heavy": false,
+"label": "Right zero-point arm with its clamping p"
+},
+{
+"key": "M30",
+"step": "M30",
+"name": "Left zero-point arm with its clamping pin onto the flange's ear at 135 deg",
+"part_indices": [
+25,
+26
+],
+"solids": [
+[
+25,
+1
+],
+[
+26,
+1
+]
+],
+"category": "stock",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+3285.65
+],
+[
+0.0,
+1.0,
+0.0,
+-248.9
+],
+[
+0.0,
+0.0,
+-1.0,
+830.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3319.6,
+3401.65,
+-288.9,
+-195.16,
+860.0,
+947.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.124,
+"two_arm": false,
+"heavy": false,
+"label": "Left zero-point arm with its clamping pi"
+},
+{
+"key": "C00",
+"step": "C00",
+"name": "Overflow funnel: its 2-042 in the block's groove, the block (KF-40 stub welded on) and its",
+"part_indices": [
+40,
+41,
+42
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+2563.72
+],
+[
+0.0,
+1.0,
+0.0,
+358.22
+],
+[
+0.0,
+0.0,
+1.0,
+942.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2630.28,
+2685.72,
+284.78,
+417.22,
+860.0,
+922.0
+],
+"support": "table",
+"side": "B",
+"actor": "person",
+"tool": "hand",
+"mass_kg": 0.859,
+"two_arm": false,
+"heavy": false,
+"label": "Overflow funnel: its 2-042 in the block'"
+},
+{
+"key": "C00a",
+"step": "C00a",
+"name": "Floor plate (inserts, the two frame dowels and the overflow funnel already on) onto Fixtur",
+"part_indices": [
+54,
+200,
+201,
+225,
+227,
+236,
+238,
+241
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3648.96
+],
+[
+0.0,
+1.0,
+0.0,
+-306.0
+],
+[
+0.0,
+0.0,
+1.0,
+880.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3492.96,
+3804.96,
+-417.0,
+-195.0,
+860.0,
+886.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 3.034,
+"two_arm": false,
+"heavy": false,
+"label": "Floor plate (inserts, the two frame dowe"
+},
+{
+"key": "C00c",
+"step": "C00c",
+"name": "Frame lowered onto the floor plate's dowels, one arm on each side wall",
+"part_indices": [
+53,
+198,
+222,
+229,
+232
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+4016.96
+],
+[
+0.0,
+1.0,
+0.0,
+0.0
+],
+[
+0.0,
+0.0,
+1.0,
+863.9
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3860.96,
+4172.96,
+-111.0,
+111.0,
+860.0,
+983.9
+],
+"support": "table",
+"side": "C",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 4.296,
+"two_arm": true,
+"heavy": false,
+"label": "Frame lowered onto the floor plate's dow"
+},
+{
+"key": "C12",
+"step": "C12",
+"name": "Z mounting flange",
+"part_indices": [
+12
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3357.82
+],
+[
+0.0,
+-1.0,
+0.0,
+-31.16
+],
+[
+0.0,
+0.0,
+-1.0,
+885.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3312.82,
+3405.82,
+-139.16,
+-91.16,
+905.0,
+915.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.115,
+"two_arm": false,
+"heavy": false,
+"label": "Z mounting flange"
+},
+{
+"key": "C09b#1",
+"step": "C09b",
+"name": "Zero-point posts",
+"part_indices": [
+49
+],
+"solids": [
+[
+49,
+0
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3455.48
+],
+[
+0.0,
+-1.0,
+0.0,
+-71.0
+],
+[
+0.0,
+0.0,
+-1.0,
+852.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3511.48,
+3527.48,
+-119.0,
+-103.0,
+872.0,
+931.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.041,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point posts"
+},
+{
+"key": "C09b#2",
+"step": "C09b",
+"name": "Zero-point posts",
+"part_indices": [
+49
+],
+"solids": [
+[
+49,
+1
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3751.48
+],
+[
+0.0,
+-1.0,
+0.0,
+-349.0
+],
+[
+0.0,
+0.0,
+-1.0,
+852.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3879.48,
+3895.48,
+-397.0,
+-381.0,
+872.0,
+931.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.041,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point posts"
+},
+{
+"key": "C09b#3",
+"step": "C09b",
+"name": "Zero-point posts",
+"part_indices": [
+49
+],
+"solids": [
+[
+49,
+2
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3967.48
+],
+[
+0.0,
+-1.0,
+0.0,
+-322.0
+],
+[
+0.0,
+0.0,
+-1.0,
+852.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3879.48,
+3895.48,
+-285.0,
+-269.0,
+872.0,
+931.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.041,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point posts"
+},
+{
+"key": "C09b#4",
+"step": "C09b",
+"name": "Zero-point posts",
+"part_indices": [
+49
+],
+"solids": [
+[
+49,
+3
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+4393.48
+],
+[
+0.0,
+-1.0,
+0.0,
+-417.0
+],
+[
+0.0,
+0.0,
+-1.0,
+852.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4247.48,
+4263.48,
+-397.0,
+-381.0,
+872.0,
+931.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.041,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point posts"
+},
+{
+"key": "C09c#1",
+"step": "C09c",
+"name": "Zero-point module plates",
+"part_indices": [
+48
+],
+"solids": [
+[
+48,
+0
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+4176.96
+],
+[
+0.0,
+-1.0,
+0.0,
+-221.0
+],
+[
+0.0,
+0.0,
+-1.0,
+781.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4228.96,
+4324.96,
+-305.0,
+-217.0,
+860.0,
+870.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 0.169,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point module plates"
+},
+{
+"key": "C09c#2",
+"step": "C09c",
+"name": "Zero-point module plates",
+"part_indices": [
+48
+],
+"solids": [
+[
+48,
+1
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+4378.96
+],
+[
+0.0,
+-1.0,
+0.0,
+-143.0
+],
+[
+0.0,
+0.0,
+-1.0,
+781.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4228.96,
+4320.96,
+-161.0,
+-73.0,
+860.0,
+870.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 0.169,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point module plates"
+},
+{
+"key": "C14#1",
+"step": "C14",
+"name": "Chamber legs",
+"part_indices": [
+11
+],
+"solids": [
+[
+11,
+0
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+4548.83
+],
+[
+0.0,
+-1.0,
+0.0,
+-472.0
+],
+[
+0.0,
+0.0,
+-1.0,
+852.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4398.83,
+4428.83,
+-397.0,
+-367.0,
+872.0,
+1012.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.281,
+"two_arm": false,
+"heavy": false,
+"label": "Chamber legs"
+},
+{
+"key": "C14#2",
+"step": "C14",
+"name": "Chamber legs",
+"part_indices": [
+11
+],
+"solids": [
+[
+11,
+1
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+4548.83
+],
+[
+0.0,
+-1.0,
+0.0,
+-166.0
+],
+[
+0.0,
+0.0,
+-1.0,
+852.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4398.83,
+4428.83,
+-271.0,
+-241.0,
+872.0,
+1012.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.281,
+"two_arm": false,
+"heavy": false,
+"label": "Chamber legs"
+},
+{
+"key": "C14#3",
+"step": "C14",
+"name": "Chamber legs",
+"part_indices": [
+11
+],
+"solids": [
+[
+11,
+2
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+4263.66
+],
+[
+0.0,
+-1.0,
+0.0,
+-220.0
+],
+[
+0.0,
+0.0,
+-1.0,
+852.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4401.66,
+4419.66,
+-145.0,
+-109.0,
+872.0,
+1012.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.281,
+"two_arm": false,
+"heavy": false,
+"label": "Chamber legs"
+},
+{
+"key": "C14#4",
+"step": "C14",
+"name": "Chamber legs",
+"part_indices": [
+11
+],
+"solids": [
+[
+11,
+3
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+4394.58
+],
+[
+0.0,
+-1.0,
+0.0,
+-286.0
+],
+[
+0.0,
+0.0,
+-1.0,
+852.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4520.58,
+4550.58,
+-397.0,
+-367.0,
+872.0,
+1012.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.281,
+"two_arm": false,
+"heavy": false,
+"label": "Chamber legs"
+},
+{
+"key": "F01",
+"step": "F01",
+"name": "Base plate, process module",
+"part_indices": [
+1
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5044.46
+],
+[
+0.0,
+1.0,
+0.0,
+25.0
+],
+[
+0.0,
+0.0,
+1.0,
+1080.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4624.46,
+5354.46,
+-240.0,
+240.0,
+905.0,
+920.0
+],
+"support": "riser",
+"side": "C",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 11.795,
+"two_arm": true,
+"heavy": false,
+"label": "Base plate, process module"
+},
+{
+"key": "F22",
+"step": "F22",
+"name": "Feedthrough spacer, its two 2-024 O-rings, the Ferrotec unit and the coupling on the left ",
+"part_indices": [
+84,
+85,
+86,
+87
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+0.0,
+0.0,
+1.0,
+4630.46
+],
+[
+0.0,
+1.0,
+0.0,
+-443.0
+],
+[
+-1.0,
+0.0,
+0.0,
+729.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4644.46,
+4696.46,
+-397.0,
+-345.0,
+872.0,
+961.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.507,
+"two_arm": false,
+"heavy": false,
+"label": "Feedthrough spacer, its two 2-024 O-ring"
+},
+{
+"key": "F23",
+"step": "F23",
+"name": "Blind bearing cap and its 2-019 O-ring onto the right wall's two dowels (it hangs there; r",
+"part_indices": [
+88,
+89
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+0.0,
+0.0,
+-1.0,
+4561.93
+],
+[
+0.0,
+1.0,
+0.0,
+-343.78
+],
+[
+1.0,
+0.0,
+0.0,
+749.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4501.93,
+4541.93,
+-291.77,
+-251.77,
+905.0,
+919.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.043,
+"two_arm": false,
+"heavy": false,
+"label": "Blind bearing cap and its 2-019 O-ring o"
+},
+{
+"key": "F25",
+"step": "F25",
+"name": "Recoater motor standoff",
+"part_indices": [
+90
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+0.0,
+0.0,
+1.0,
+4491.46
+],
+[
+0.0,
+1.0,
+0.0,
+-239.8
+],
+[
+-1.0,
+0.0,
+0.0,
+673.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4501.46,
+4561.46,
+-197.8,
+-137.8,
+905.0,
+930.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.048,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater motor standoff"
+},
+{
+"key": "F25b",
+"step": "F25b",
+"name": "Recoater motor bracket",
+"part_indices": [
+92
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5777.46
+],
+[
+0.0,
+1.0,
+0.0,
+-440.25
+],
+[
+0.0,
+0.0,
+1.0,
+1032.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5430.46,
+5520.46,
+-398.25,
+-338.25,
+872.0,
+1042.4
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 2.484,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater motor bracket"
+},
+{
+"key": "F26",
+"step": "F26",
+"name": "Blade holder and blade, in through the door opening and up under the recoater arm",
+"part_indices": [
+82,
+83
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5545.41
+],
+[
+0.0,
+0.0,
+1.0,
+-245.05
+],
+[
+0.0,
+-1.0,
+0.0,
+933.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5430.41,
+5449.91,
+-245.0,
+-211.05,
+872.0,
+986.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.192,
+"two_arm": false,
+"heavy": false,
+"label": "Blade holder and blade, in through the d"
+},
+{
+"key": "F30",
+"step": "F30",
+"name": "Lid (inserts in) onto the cord, by the vacuum gripper",
+"part_indices": [
+93,
+105,
+217,
+220
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5752.46
+],
+[
+0.0,
+1.0,
+0.0,
+-306.0
+],
+[
+0.0,
+0.0,
+1.0,
+740.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5596.46,
+5908.46,
+-417.0,
+-195.0,
+860.0,
+876.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 2.648,
+"two_arm": false,
+"heavy": false,
+"label": "Lid (inserts in) onto the cord, by the v"
+},
+{
+"key": "F33",
+"step": "F33",
+"name": "Field-stop aperture, M50 insert",
+"part_indices": [
+100
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+4529.87
+],
+[
+0.0,
+1.0,
+0.0,
+-55.89
+],
+[
+0.0,
+0.0,
+1.0,
+774.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4501.97,
+4557.77,
+-83.79,
+-27.99,
+905.0,
+910.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.015,
+"two_arm": false,
+"heavy": false,
+"label": "Field-stop aperture, M50 insert"
+},
+{
+"key": "F33b",
+"step": "F33b",
+"name": "Window flange",
+"part_indices": [
+94
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5459.84
+],
+[
+0.0,
+1.0,
+0.0,
+-87.16
+],
+[
+0.0,
+0.0,
+1.0,
+724.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5409.84,
+5509.84,
+-137.16,
+-37.16,
+860.0,
+882.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 0.348,
+"two_arm": false,
+"heavy": false,
+"label": "Window flange"
+},
+{
+"key": "F37b",
+"step": "F37b",
+"name": "Window retaining ring",
+"part_indices": [
+99
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5645.84
+],
+[
+0.0,
+1.0,
+0.0,
+-89.61
+],
+[
+0.0,
+0.0,
+1.0,
+703.25
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5595.84,
+5695.84,
+-139.61,
+-39.61,
+860.0,
+866.25
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 0.086,
+"two_arm": false,
+"heavy": false,
+"label": "Window retaining ring"
+},
+{
+"key": "F39",
+"step": "F39",
+"name": "Cover-slide drawer (2-033 in its half-dovetail, put in on the bench) into the lid's front ",
+"part_indices": [
+101,
+102,
+103,
+104
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6048.46
+],
+[
+0.0,
+0.0,
+1.0,
+-514.3
+],
+[
+0.0,
+-1.0,
+0.0,
+905.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5984.46,
+6112.46,
+-396.3,
+-378.3,
+872.0,
+1036.5
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.207,
+"two_arm": false,
+"heavy": false,
+"label": "Cover-slide drawer (2-033 in its half-do"
+},
+{
+"key": "F43",
+"step": "F43",
+"name": "Metering base",
+"part_indices": [
+109
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6070.51
+],
+[
+0.0,
+1.0,
+0.0,
+-229.6
+],
+[
+0.0,
+0.0,
+1.0,
+769.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5963.51,
+5997.51,
+-301.6,
+-157.6,
+905.0,
+949.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.471,
+"two_arm": false,
+"heavy": false,
+"label": "Metering base"
+},
+{
+"key": "F48",
+"step": "F48",
+"name": "Camera viewport adapter + boss",
+"part_indices": [
+127
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5921.46
+],
+[
+0.0,
+1.0,
+0.0,
+-24.6
+],
+[
+0.0,
+0.0,
+1.0,
+769.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5964.46,
+6032.41,
+-101.6,
+-37.6,
+905.0,
+949.42
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.113,
+"two_arm": false,
+"heavy": false,
+"label": "Camera viewport adapter + boss"
+},
+{
+"key": "F48c#1",
+"step": "F48c",
+"name": "Camera window retaining ring",
+"part_indices": [
+132
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+0.88,
+0.07,
+-0.46,
+6208.72
+],
+[
+0.07,
+0.96,
+0.28,
+-396.71
+],
+[
+0.46,
+-0.28,
+0.84,
+721.73
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6189.48,
+6228.25,
+-416.22,
+-377.24,
+905.0,
+945.38
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.004,
+"two_arm": false,
+"heavy": false,
+"label": "Camera window retaining ring"
+},
+{
+"key": "F51",
+"step": "F51",
+"name": "Door (cord rolled into its half-dovetail on the bench) brought in, knuckles in line",
+"part_indices": [
+136,
+137,
+138,
+141,
+142,
+144
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6363.21
+],
+[
+0.0,
+0.0,
+1.0,
+-305.46
+],
+[
+0.0,
+-1.0,
+0.0,
+749.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6185.46,
+6540.96,
+-323.46,
+-191.46,
+860.0,
+957.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 2.052,
+"two_arm": false,
+"heavy": false,
+"label": "Door (cord rolled into its half-dovetail"
+},
+{
+"key": "F03#1",
+"step": "F03",
+"name": "Optics bridge posts",
+"part_indices": [
+146
+],
+"solids": [
+[
+146,
+0
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3316.85
+],
+[
+0.0,
+1.0,
+0.0,
+522.0
+],
+[
+0.0,
+0.0,
+1.0,
+1032.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2971.85,
+3031.85,
+337.0,
+397.0,
+872.0,
+1243.11
+],
+"support": "nest",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 1.234,
+"two_arm": false,
+"heavy": false,
+"label": "Optics bridge posts"
+},
+{
+"key": "F03#2",
+"step": "F03",
+"name": "Optics bridge posts",
+"part_indices": [
+146
+],
+"solids": [
+[
+146,
+1
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3316.85
+],
+[
+0.0,
+1.0,
+0.0,
+66.0
+],
+[
+0.0,
+0.0,
+1.0,
+1032.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2971.85,
+3031.85,
+181.0,
+241.0,
+872.0,
+1243.11
+],
+"support": "nest",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 1.234,
+"two_arm": false,
+"heavy": false,
+"label": "Optics bridge posts"
+},
+{
+"key": "F03#3",
+"step": "F03",
+"name": "Optics bridge posts",
+"part_indices": [
+146
+],
+"solids": [
+[
+146,
+2
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+2967.57
+],
+[
+0.0,
+1.0,
+0.0,
+522.0
+],
+[
+0.0,
+0.0,
+1.0,
+1032.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3147.57,
+3207.57,
+337.0,
+397.0,
+872.0,
+1243.11
+],
+"support": "nest",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 1.234,
+"two_arm": false,
+"heavy": false,
+"label": "Optics bridge posts"
+},
+{
+"key": "F03#4",
+"step": "F03",
+"name": "Optics bridge posts",
+"part_indices": [
+146
+],
+"solids": [
+[
+146,
+3
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+2967.57
+],
+[
+0.0,
+1.0,
+0.0,
+66.0
+],
+[
+0.0,
+0.0,
+1.0,
+1032.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3147.57,
+3207.57,
+181.0,
+241.0,
+872.0,
+1243.11
+],
+"support": "nest",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 1.234,
+"two_arm": false,
+"heavy": false,
+"label": "Optics bridge posts"
+},
+{
+"key": "F54",
+"step": "F54",
+"name": "Optics bridge",
+"part_indices": [
+145
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9905.73
+],
+[
+0.0,
+0.0,
+1.0,
+1636.26
+],
+[
+0.0,
+-1.0,
+0.0,
+324.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9545.73,
+10150.73,
+1847.38,
+1872.38,
+144.0,
+514.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 13.317,
+"two_arm": false,
+"heavy": true,
+"label": "Optics bridge"
+},
+{
+"key": "F56",
+"step": "F56",
+"name": "Galvo riser plate",
+"part_indices": [
+151
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6651.11
+],
+[
+0.0,
+1.0,
+0.0,
+-345.25
+],
+[
+0.0,
+0.0,
+1.0,
+623.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6593.96,
+6748.96,
+-417.0,
+-287.0,
+860.0,
+865.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 0.239,
+"two_arm": false,
+"heavy": false,
+"label": "Galvo riser plate"
+},
+{
+"key": "F57#4",
+"step": "F57",
+"name": "Enclosed beam tubes",
+"part_indices": [
+152
+],
+"solids": [
+[
+152,
+0
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3259.87
+],
+[
+0.0,
+1.0,
+0.0,
+-10.55
+],
+[
+0.0,
+0.0,
+1.0,
+642.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3125.82,
+3202.72,
+-44.8,
+-26.8,
+905.0,
+923.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.009,
+"two_arm": false,
+"heavy": false,
+"label": "Enclosed beam tubes"
+},
+{
+"key": "F57#5",
+"step": "F57",
+"name": "Enclosed beam tubes",
+"part_indices": [
+152
+],
+"solids": [
+[
+152,
+1
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3473.82
+],
+[
+0.0,
+1.0,
+0.0,
+-33.86
+],
+[
+0.0,
+0.0,
+1.0,
+642.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3309.82,
+3327.82,
+-38.16,
+-29.11,
+905.0,
+923.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.009,
+"two_arm": false,
+"heavy": false,
+"label": "Enclosed beam tubes"
+},
+{
+"key": "F57#6",
+"step": "F57",
+"name": "Enclosed beam tubes",
+"part_indices": [
+152
+],
+"solids": [
+[
+152,
+2
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3653.96
+],
+[
+0.0,
+1.0,
+0.0,
+-94.75
+],
+[
+0.0,
+0.0,
+1.0,
+642.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3489.96,
+3507.96,
+-30.0,
+-20.95,
+905.0,
+923.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.009,
+"two_arm": false,
+"heavy": false,
+"label": "Enclosed beam tubes"
+},
+{
+"key": "P003",
+"step": "",
+"name": "Base plate, gas module",
+"part_indices": [
+3
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7405.73
+],
+[
+0.0,
+1.0,
+0.0,
+1523.0
+],
+[
+0.0,
+0.0,
+1.0,
+319.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7805.73,
+8395.73,
+1273.0,
+1823.0,
+144.0,
+159.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 12.891,
+"two_arm": false,
+"heavy": true,
+"label": "Base plate, gas module"
+},
+{
+"key": "P244",
+"step": "",
+"name": "Guard-door handle for the robot",
+"part_indices": [
+244
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+2969.94
+],
+[
+0.0,
+1.0,
+0.0,
+481.5
+],
+[
+0.0,
+0.0,
+1.0,
+832.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2651.94,
+2663.94,
+157.0,
+209.0,
+872.0,
+1002.0
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.057,
+"two_arm": false,
+"heavy": false,
+"label": "Guard-door handle for the robot"
+},
+{
+"key": "P246",
+"step": "",
+"name": "Door drive bracket",
+"part_indices": [
+246
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+2833.0
+],
+[
+0.0,
+1.0,
+0.0,
+162.38
+],
+[
+0.0,
+0.0,
+1.0,
+892.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2633.0,
+2677.0,
+53.88,
+82.38,
+860.0,
+896.0
+],
+"support": "table",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.023,
+"two_arm": false,
+"heavy": false,
+"label": "Door drive bracket"
+},
+{
+"key": "P247",
+"step": "",
+"name": "Door drive shaft and disc",
+"part_indices": [
+247
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3133.1
+],
+[
+0.0,
+1.0,
+0.0,
+208.48
+],
+[
+0.0,
+0.0,
+1.0,
+883.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2975.1,
+3009.0,
+68.47,
+84.47,
+863.0,
+879.0
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.004,
+"two_arm": false,
+"heavy": false,
+"label": "Door drive shaft and disc"
+},
+{
+"key": "P251",
+"step": "",
+"name": "Blade-cartridge grip fin",
+"part_indices": [
+251
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+2867.88
+],
+[
+0.0,
+1.0,
+0.0,
+448.0
+],
+[
+0.0,
+0.0,
+1.0,
+845.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+2759.88,
+2763.88,
+375.0,
+395.0,
+863.0,
+879.0
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.003,
+"two_arm": false,
+"heavy": false,
+"label": "Blade-cartridge grip fin"
+},
+{
+"key": "P254",
+"step": "",
+"name": "AprilTag plates",
+"part_indices": [
+254
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3576.82
+],
+[
+0.0,
+1.0,
+0.0,
+352.32
+],
+[
+0.0,
+0.0,
+1.0,
+932.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3148.82,
+3204.82,
+83.82,
+85.82,
+872.0,
+1188.0
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.02,
+"two_arm": false,
+"heavy": false,
+"label": "AprilTag plates"
+},
+{
+"key": "P257#1",
+"step": "",
+"name": "PB1 stand",
+"part_indices": [
+257
+],
+"solids": [
+[
+257,
+0
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8128.13
+],
+[
+0.0,
+1.0,
+0.0,
+2193.0
+],
+[
+0.0,
+0.0,
+1.0,
+356.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6977.73,
+7110.13,
+1913.0,
+1943.0,
+144.0,
+159.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.161,
+"two_arm": false,
+"heavy": true,
+"label": "PB1 stand"
+},
+{
+"key": "P257#2",
+"step": "",
+"name": "PB1 stand",
+"part_indices": [
+257
+],
+"solids": [
+[
+257,
+1
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8306.53
+],
+[
+0.0,
+1.0,
+0.0,
+1958.2
+],
+[
+0.0,
+0.0,
+1.0,
+356.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7156.13,
+7288.53,
+1913.0,
+1943.0,
+144.0,
+159.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.161,
+"two_arm": false,
+"heavy": true,
+"label": "PB1 stand"
+},
+{
+"key": "P263",
+"step": "",
+"name": "Z sensor bracket",
+"part_indices": [
+263
+],
+"solids": null,
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3376.02
+],
+[
+0.0,
+1.0,
+0.0,
+303.0
+],
+[
+0.0,
+0.0,
+1.0,
+1072.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3332.02,
+3353.02,
+360.0,
+397.0,
+872.0,
+955.0
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.032,
+"two_arm": false,
+"heavy": false,
+"label": "Z sensor bracket"
+},
+{
+"key": "P267#1",
+"step": "",
+"name": "Recoater sensor clamps",
+"part_indices": [
+267
+],
+"solids": [
+[
+267,
+0
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3454.52
+],
+[
+0.0,
+1.0,
+0.0,
+111.0
+],
+[
+0.0,
+0.0,
+1.0,
+813.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3334.52,
+3354.52,
+223.0,
+262.0,
+863.0,
+887.0
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.039,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater sensor clamps"
+},
+{
+"key": "P267#2",
+"step": "",
+"name": "Recoater sensor clamps",
+"part_indices": [
+267
+],
+"solids": [
+[
+267,
+1
+]
+],
+"category": "stock",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3234.52
+],
+[
+0.0,
+1.0,
+0.0,
+-28.0
+],
+[
+0.0,
+0.0,
+1.0,
+813.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3334.52,
+3354.52,
+84.0,
+123.0,
+863.0,
+887.0
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.039,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater sensor clamps"
+},
+{
+"key": "M05#10",
+"step": "M05",
+"name": "Radiation shields M50",
+"part_indices": [
+33
+],
+"solids": [
+[
+33,
+0
+]
+],
+"category": "sheet",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+6876.06
+],
+[
+0.0,
+1.0,
+0.0,
+-395.9
+],
+[
+0.0,
+0.0,
+-1.0,
+830.82
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6851.96,
+6900.16,
+-420.0,
+-371.8,
+860.0,
+860.3
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.004,
+"two_arm": false,
+"heavy": false,
+"label": "Radiation shields M50"
+},
+{
+"key": "M05#11",
+"step": "M05",
+"name": "Radiation shields M50",
+"part_indices": [
+33
+],
+"solids": [
+[
+33,
+1
+]
+],
+"category": "sheet",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+6876.06
+],
+[
+0.0,
+1.0,
+0.0,
+-297.7
+],
+[
+0.0,
+0.0,
+-1.0,
+833.48
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6851.96,
+6900.16,
+-321.8,
+-273.6,
+860.0,
+860.3
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.004,
+"two_arm": false,
+"heavy": false,
+"label": "Radiation shields M50"
+},
+{
+"key": "C04",
+"step": "C04",
+"name": "Outlet plenum with its O-ring and KF-25 port onto the floor",
+"part_indices": [
+60,
+62
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7034.0
+],
+[
+0.0,
+-1.0,
+0.0,
+-268.15
+],
+[
+0.0,
+0.0,
+-1.0,
+852.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6928.06,
+7118.0,
+-198.09,
+-158.21,
+872.0,
+943.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.596,
+"two_arm": false,
+"heavy": false,
+"label": "Outlet plenum with its O-ring and KF-25 "
+},
+{
+"key": "F14",
+"step": "F14",
+"name": "Inlet plenum with its O-ring and KF-25 port onto the back wall's two dowels by arm B (it h",
+"part_indices": [
+57,
+59
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6993.57
+],
+[
+0.0,
+0.0,
+-1.0,
+411.06
+],
+[
+0.0,
+1.0,
+0.0,
+749.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6915.57,
+7071.57,
+371.06,
+420.0,
+860.0,
+912.0
+],
+"support": "table",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 0.644,
+"two_arm": false,
+"heavy": false,
+"label": "Inlet plenum with its O-ring and KF-25 p"
+},
+{
+"key": "F28#1",
+"step": "F28",
+"name": "Gas knife",
+"part_indices": [
+107
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6898.26
+],
+[
+0.0,
+1.0,
+0.0,
+-39.35
+],
+[
+0.0,
+0.0,
+1.0,
+799.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6866.26,
+6930.26,
+-81.35,
+-75.35,
+905.0,
+911.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.018,
+"two_arm": false,
+"heavy": false,
+"label": "Gas knife"
+},
+{
+"key": "F28#2",
+"step": "F28",
+"name": "Dose chute",
+"part_indices": [
+108
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7550.01
+],
+[
+0.0,
+1.0,
+0.0,
+-350.0
+],
+[
+0.0,
+0.0,
+1.0,
+835.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7454.01,
+7466.01,
+-400.0,
+-300.0,
+872.0,
+955.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.217,
+"two_arm": false,
+"heavy": false,
+"label": "Dose chute"
+},
+{
+"key": "F46",
+"step": "F46",
+"name": "Reservoir M slid onto the dovetail dock (about 94 N to seat on the dock O-ring)",
+"part_indices": [
+120,
+121,
+122,
+123,
+124,
+125,
+234
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7489.47
+],
+[
+0.0,
+1.0,
+0.0,
+-110.0
+],
+[
+0.0,
+0.0,
+1.0,
+692.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7384.47,
+7414.47,
+-210.0,
+-53.8,
+872.0,
+950.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.385,
+"two_arm": false,
+"heavy": false,
+"label": "Reservoir M slid onto the dovetail dock "
+},
+{
+"key": "P010",
+"step": "",
+"name": "Rack side panels",
+"part_indices": [
+10
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5936.9
+],
+[
+0.0,
+1.0,
+0.0,
+1668.72
+],
+[
+0.0,
+0.0,
+1.0,
+336.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+4944.9,
+5508.9,
+1368.72,
+1968.72,
+144.0,
+704.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 3.628,
+"two_arm": false,
+"heavy": true,
+"label": "Rack side panels"
+},
+{
+"key": "P182",
+"step": "",
+"name": "Laser guard panels",
+"part_indices": [
+182
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+3796.36
+],
+[
+0.0,
+1.0,
+0.0,
+1770.33
+],
+[
+0.0,
+0.0,
+1.0,
+304.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+3374.86,
+4107.86,
+1503.83,
+1986.83,
+144.0,
+671.61
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 5.52,
+"two_arm": false,
+"heavy": true,
+"label": "Laser guard panels"
+},
+{
+"key": "P183",
+"step": "",
+"name": "Sliding guard door",
+"part_indices": [
+183
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+18512.73
+],
+[
+0.0,
+1.0,
+0.0,
+1551.74
+],
+[
+0.0,
+0.0,
+1.0,
+294.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+18182.73,
+18702.73,
+1279.24,
+1283.24,
+144.0,
+650.11
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.626,
+"two_arm": false,
+"heavy": true,
+"label": "Sliding guard door"
+},
+{
+"key": "P187",
+"step": "",
+"name": "Operator panel box",
+"part_indices": [
+187
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8691.86
+],
+[
+0.0,
+1.0,
+0.0,
+2245.44
+],
+[
+0.0,
+0.0,
+1.0,
+216.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8221.86,
+8271.86,
+1913.44,
+1945.44,
+144.0,
+444.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 1.285,
+"two_arm": false,
+"heavy": true,
+"label": "Operator panel box"
+},
+{
+"key": "P193",
+"step": "",
+"name": "Umbilical duct along the back edge",
+"part_indices": [
+193
+],
+"solids": null,
+"category": "sheet",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+15160.63
+],
+[
+0.0,
+1.0,
+0.0,
+960.89
+],
+[
+0.0,
+0.0,
+1.0,
+356.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+14180.63,
+16263.63,
+1280.89,
+1340.89,
+144.0,
+194.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 4.0,
+"two_arm": false,
+"heavy": true,
+"label": "Umbilical duct along the back edge"
+},
+{
+"key": "C09f#1",
+"step": "C09f",
+"name": "Door hinge knuckles on the chamber",
+"part_indices": [
+139
+],
+"solids": [
+[
+139,
+0
+]
+],
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7887.91
+],
+[
+0.0,
+-0.0,
+1.0,
+426.0
+],
+[
+0.0,
+-1.0,
+-0.0,
+794.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7775.91,
+7787.41,
+406.0,
+420.0,
+905.0,
+932.0
+],
+"support": "riser",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 0.021,
+"two_arm": false,
+"heavy": false,
+"label": "Door hinge knuckles on the chamber"
+},
+{
+"key": "C09f#2",
+"step": "C09f",
+"name": "Door hinge knuckles on the chamber",
+"part_indices": [
+139
+],
+"solids": [
+[
+139,
+1
+]
+],
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7855.41
+],
+[
+0.0,
+-0.0,
+1.0,
+362.0
+],
+[
+0.0,
+-1.0,
+-0.0,
+794.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7775.91,
+7787.41,
+342.0,
+356.0,
+905.0,
+932.0
+],
+"support": "riser",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 0.021,
+"two_arm": false,
+"heavy": false,
+"label": "Door hinge knuckles on the chamber"
+},
+{
+"key": "C09f#3",
+"step": "C09f",
+"name": "Door hinge knuckles on the chamber",
+"part_indices": [
+139
+],
+"solids": [
+[
+139,
+2
+]
+],
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7707.91
+],
+[
+0.0,
+-0.0,
+1.0,
+298.0
+],
+[
+0.0,
+-1.0,
+-0.0,
+794.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7775.91,
+7787.41,
+278.0,
+292.0,
+905.0,
+932.0
+],
+"support": "riser",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 0.021,
+"two_arm": false,
+"heavy": false,
+"label": "Door hinge knuckles on the chamber"
+},
+{
+"key": "C09f#4",
+"step": "C09f",
+"name": "Door hinge knuckles on the chamber",
+"part_indices": [
+139
+],
+"solids": [
+[
+139,
+3
+]
+],
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7675.41
+],
+[
+0.0,
+-0.0,
+1.0,
+234.0
+],
+[
+0.0,
+-1.0,
+-0.0,
+794.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7775.91,
+7787.41,
+214.0,
+228.0,
+905.0,
+932.0
+],
+"support": "riser",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 0.021,
+"two_arm": false,
+"heavy": false,
+"label": "Door hinge knuckles on the chamber"
+},
+{
+"key": "C13b",
+"step": "C13b",
+"name": "Z actuator, belt fold, servo, carriage, arm and magnet (pre-assembled) onto the flange",
+"part_indices": [
+13,
+14,
+15,
+16,
+17,
+18
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7848.21
+],
+[
+0.0,
+-1.0,
+0.0,
+-240.0
+],
+[
+0.0,
+0.0,
+-1.0,
+842.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7795.91,
+7878.21,
+-400.0,
+-218.0,
+872.0,
+1043.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 3.432,
+"two_arm": false,
+"heavy": false,
+"label": "Z actuator, belt fold, servo, carriage, "
+},
+{
+"key": "F10a",
+"step": "F10a",
+"name": "Lift-out wall liner, back lower left",
+"part_indices": [
+71
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7906.41
+],
+[
+0.0,
+0.0,
+1.0,
+-164.0
+],
+[
+0.0,
+-1.0,
+0.0,
+954.9
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7775.91,
+7905.91,
+-148.0,
+-132.0,
+860.0,
+860.5
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "wand",
+"mass_kg": 0.008,
+"two_arm": false,
+"heavy": false,
+"label": "Lift-out wall liner, back lower left"
+},
+{
+"key": "F10b",
+"step": "F10b",
+"name": "Lift-out wall liner, back upper left",
+"part_indices": [
+69
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7906.41
+],
+[
+0.0,
+0.0,
+1.0,
+-130.0
+],
+[
+0.0,
+-1.0,
+0.0,
+954.9
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7775.91,
+7905.91,
+-82.0,
+-58.0,
+860.0,
+860.5
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "wand",
+"mass_kg": 0.012,
+"two_arm": false,
+"heavy": false,
+"label": "Lift-out wall liner, back upper left"
+},
+{
+"key": "F10d",
+"step": "F10d",
+"name": "Lift-out wall liner, back lower right",
+"part_indices": [
+72
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7955.41
+],
+[
+0.0,
+0.0,
+1.0,
+-436.0
+],
+[
+0.0,
+-1.0,
+0.0,
+954.9
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7955.91,
+8085.91,
+-420.0,
+-404.0,
+860.0,
+860.5
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "wand",
+"mass_kg": 0.008,
+"two_arm": false,
+"heavy": false,
+"label": "Lift-out wall liner, back lower right"
+},
+{
+"key": "F10e",
+"step": "F10e",
+"name": "Lift-out wall liner, back upper right",
+"part_indices": [
+70
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7955.41
+],
+[
+0.0,
+0.0,
+1.0,
+-402.0
+],
+[
+0.0,
+-1.0,
+0.0,
+954.9
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7955.91,
+8085.91,
+-354.0,
+-330.0,
+860.0,
+860.5
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "wand",
+"mass_kg": 0.012,
+"two_arm": false,
+"heavy": false,
+"label": "Lift-out wall liner, back upper right"
+},
+{
+"key": "F18",
+"step": "F18",
+"name": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assemble",
+"part_indices": [
+76,
+77,
+78,
+80,
+81
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8110.21
+],
+[
+0.0,
+1.0,
+0.0,
+300.6
+],
+[
+0.0,
+0.0,
+1.0,
+858.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7975.91,
+8240.21,
+353.6,
+395.6,
+872.0,
+957.0
+],
+"support": "nest",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 1.001,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater rail with its carriage, carriag"
+},
+{
+"key": "F21",
+"step": "F21",
+"name": "Recoater ball screw",
+"part_indices": [
+79
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+0.0,
+0.0,
+-1.0,
+8021.91
+],
+[
+0.0,
+1.0,
+0.0,
+-326.0
+],
+[
+1.0,
+0.0,
+0.0,
+1022.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7975.91,
+7987.91,
+-260.0,
+-248.0,
+872.0,
+1183.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.265,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater ball screw"
+},
+{
+"key": "F25c",
+"step": "F25c",
+"name": "Recoater servo",
+"part_indices": [
+91
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+0.0,
+0.0,
+1.0,
+7965.46
+],
+[
+0.0,
+1.0,
+0.0,
+-200.45
+],
+[
+-1.0,
+0.0,
+0.0,
+635.57
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7975.91,
+8057.76,
+-158.0,
+-98.9,
+872.0,
+977.38
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.6,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater servo"
+},
+{
+"key": "F45c",
+"step": "F45c",
+"name": "Dosing stepper",
+"part_indices": [
+117
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7907.06
+],
+[
+0.0,
+0.0,
+-1.0,
+286.85
+],
+[
+0.0,
+1.0,
+0.0,
+765.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7795.91,
+7838.21,
+100.89,
+144.0,
+872.0,
+946.0
+],
+"support": "nest",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 0.32,
+"two_arm": false,
+"heavy": false,
+"label": "Dosing stepper"
+},
+{
+"key": "F45d#1",
+"step": "F45d",
+"name": "Load cell",
+"part_indices": [
+126
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8403.21
+],
+[
+0.0,
+1.0,
+0.0,
+-394.0
+],
+[
+0.0,
+0.0,
+1.0,
+736.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8330.21,
+8343.21,
+-400.0,
+-388.0,
+872.0,
+916.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.054,
+"two_arm": false,
+"heavy": false,
+"label": "Load cell"
+},
+{
+"key": "F45d#3",
+"step": "F45d",
+"name": "Reservoir-docked sensor",
+"part_indices": [
+119
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8406.21
+],
+[
+0.0,
+1.0,
+0.0,
+-378.0
+],
+[
+0.0,
+0.0,
+1.0,
+717.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8310.21,
+8322.21,
+-318.0,
+-288.0,
+905.0,
+917.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.02,
+"two_arm": false,
+"heavy": false,
+"label": "Reservoir-docked sensor"
+},
+{
+"key": "F45e",
+"step": "F45e",
+"name": "NFC reader antenna",
+"part_indices": [
+112
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+0.0,
+0.0,
+1.0,
+8151.71
+],
+[
+0.0,
+1.0,
+0.0,
+-210.5
+],
+[
+-1.0,
+0.0,
+0.0,
+801.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8310.21,
+8328.21,
+-238.0,
+-219.0,
+905.0,
+907.5
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.01,
+"two_arm": false,
+"heavy": false,
+"label": "NFC reader antenna"
+},
+{
+"key": "F45f",
+"step": "F45f",
+"name": "Side reservoir port",
+"part_indices": [
+118
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+0.0,
+0.0,
+1.0,
+8161.21
+],
+[
+0.0,
+1.0,
+0.0,
+-189.0
+],
+[
+-1.0,
+0.0,
+0.0,
+798.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8310.21,
+8340.21,
+-169.0,
+-139.0,
+905.0,
+923.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.031,
+"two_arm": false,
+"heavy": false,
+"label": "Side reservoir port"
+},
+{
+"key": "F50#1",
+"step": "F50",
+"name": "Draw-latch strikes on the chamber's side faces",
+"part_indices": [
+143
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8469.21
+],
+[
+0.0,
+0.0,
+1.0,
+-129.0
+],
+[
+0.0,
+-1.0,
+0.0,
+833.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8310.21,
+8628.21,
+-89.0,
+-61.0,
+905.0,
+933.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": false,
+"label": "Draw-latch strikes on the chamber's side"
+},
+{
+"key": "F52",
+"step": "F52",
+"name": "Hinge pins",
+"part_indices": [
+140
+],
+"solids": [
+[
+140,
+0
+]
+],
+"category": "motion",
+"T": [
+[
+0.0,
+0.0,
+1.0,
+8712.71
+],
+[
+0.0,
+1.0,
+0.0,
+-265.5
+],
+[
+-1.0,
+0.0,
+0.0,
+804.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8698.21,
+8703.21,
+-400.0,
+-395.0,
+872.0,
+916.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "pinrod",
+"mass_kg": 0.007,
+"two_arm": false,
+"heavy": false,
+"label": "Hinge pins"
+},
+{
+"key": "F52b",
+"step": "F52b",
+"name": "Hinge pins",
+"part_indices": [
+140
+],
+"solids": [
+[
+140,
+1
+]
+],
+"category": "motion",
+"T": [
+[
+0.0,
+0.0,
+-1.0,
+8688.71
+],
+[
+0.0,
+1.0,
+0.0,
+-170.5
+],
+[
+1.0,
+0.0,
+0.0,
+804.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8698.21,
+8703.21,
+-305.0,
+-300.0,
+872.0,
+916.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "pinrod",
+"mass_kg": 0.007,
+"two_arm": false,
+"heavy": false,
+"label": "Hinge pins"
+},
+{
+"key": "P245",
+"step": "",
+"name": "Door drive: pneumatic rotary actuator on the hinge axis, SMC CRQ2 size 20 class",
+"part_indices": [
+245
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8155.91
+],
+[
+0.0,
+1.0,
+0.0,
+387.7
+],
+[
+0.0,
+0.0,
+1.0,
+895.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7955.91,
+7997.91,
+232.2,
+279.2,
+860.0,
+907.0
+],
+"support": "table",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.3,
+"two_arm": false,
+"heavy": false,
+"label": "Door drive: pneumatic rotary actuator on"
+},
+{
+"key": "P248#1",
+"step": "",
+"name": "Draw-latch actuators: 2 x \u00d820 compact air cylinders",
+"part_indices": [
+248
+],
+"solids": [
+[
+248,
+0
+]
+],
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8121.91
+],
+[
+0.0,
+1.0,
+0.0,
+312.2
+],
+[
+0.0,
+0.0,
+1.0,
+782.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7955.91,
+7975.91,
+126.2,
+182.2,
+860.0,
+880.0
+],
+"support": "table",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.12,
+"two_arm": false,
+"heavy": false,
+"label": "Draw-latch actuators: 2 x \u00d820 compact ai"
+},
+{
+"key": "P248#2",
+"step": "",
+"name": "Draw-latch actuators: 2 x \u00d820 compact air cylinders",
+"part_indices": [
+248
+],
+"solids": [
+[
+248,
+1
+]
+],
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7809.91
+],
+[
+0.0,
+1.0,
+0.0,
+206.2
+],
+[
+0.0,
+0.0,
+1.0,
+782.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7955.91,
+7975.91,
+20.2,
+76.2,
+860.0,
+880.0
+],
+"support": "table",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.12,
+"two_arm": false,
+"heavy": false,
+"label": "Draw-latch actuators: 2 x \u00d820 compact ai"
+},
+{
+"key": "P249",
+"step": "",
+"name": "Drawer latch wing head, left",
+"part_indices": [
+249
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8396.21
+],
+[
+0.0,
+1.0,
+0.0,
+520.5
+],
+[
+0.0,
+0.0,
+1.0,
+737.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8332.21,
+8358.21,
+389.0,
+398.0,
+863.0,
+867.0
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.005,
+"two_arm": false,
+"heavy": false,
+"label": "Drawer latch wing head, left"
+},
+{
+"key": "P250",
+"step": "",
+"name": "Drawer latch wing head, right",
+"part_indices": [
+250
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8294.21
+],
+[
+0.0,
+1.0,
+0.0,
+417.5
+],
+[
+0.0,
+0.0,
+1.0,
+737.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8332.21,
+8358.21,
+286.0,
+295.0,
+863.0,
+867.0
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.005,
+"two_arm": false,
+"heavy": false,
+"label": "Drawer latch wing head, right"
+},
+{
+"key": "P262",
+"step": "",
+"name": "Z sensor flag",
+"part_indices": [
+262
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8363.21
+],
+[
+0.0,
+1.0,
+0.0,
+126.5
+],
+[
+0.0,
+0.0,
+1.0,
+1002.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8332.21,
+8342.21,
+185.5,
+192.0,
+863.0,
+875.0
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.01,
+"two_arm": false,
+"heavy": false,
+"label": "Z sensor flag"
+},
+{
+"key": "P265",
+"step": "",
+"name": "Recoater position magnet",
+"part_indices": [
+265
+],
+"solids": null,
+"category": "motion",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8444.21
+],
+[
+0.0,
+1.0,
+0.0,
+-2.0
+],
+[
+0.0,
+0.0,
+1.0,
+807.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8332.21,
+8344.21,
+88.5,
+91.5,
+863.0,
+875.0
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.003,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater position magnet"
+},
+{
+"key": "F02b",
+"step": "F02b",
+"name": "Zero-point release valve",
+"part_indices": [
+50
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8959.21
+],
+[
+0.0,
+1.0,
+0.0,
+-460.0
+],
+[
+0.0,
+0.0,
+1.0,
+1032.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8843.21,
+8863.21,
+-400.0,
+-356.0,
+872.0,
+904.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.15,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point release valve"
+},
+{
+"key": "F06b",
+"step": "F06b",
+"name": "Zero-point release-air line",
+"part_indices": [
+52
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8885.21
+],
+[
+0.0,
+1.0,
+0.0,
+358.0
+],
+[
+0.0,
+0.0,
+1.0,
+862.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8823.21,
+8947.21,
+296.0,
+420.0,
+860.0,
+877.2
+],
+"support": "table",
+"side": "B",
+"actor": "person",
+"tool": "hand",
+"mass_kg": 0.03,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point release-air line"
+},
+{
+"key": "F07",
+"step": "F07",
+"name": "Overflow jar in from the front along its lane and up 8 mm onto its KF-40 port, held by its",
+"part_indices": [
+43,
+255
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8780.96
+],
+[
+0.0,
+0.0,
+1.0,
+-136.0
+],
+[
+0.0,
+-1.0,
+0.0,
+857.75
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8843.21,
+8908.96,
+-265.0,
+-161.0,
+872.0,
+1013.75
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.384,
+"two_arm": false,
+"heavy": false,
+"label": "Overflow jar in from the front along its"
+},
+{
+"key": "F08",
+"step": "F08",
+"name": "Overflow clamp",
+"part_indices": [
+44
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8771.01
+],
+[
+0.0,
+1.0,
+0.0,
+252.0
+],
+[
+0.0,
+0.0,
+1.0,
+951.52
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8823.21,
+8906.81,
+122.3,
+246.0,
+860.0,
+879.05
+],
+"support": "table",
+"side": "B",
+"actor": "person",
+"tool": "hand",
+"mass_kg": 0.148,
+"two_arm": false,
+"heavy": false,
+"label": "Overflow clamp"
+},
+{
+"key": "F10c",
+"step": "F10c",
+"name": "Wall liner, left, in through the door opening and onto its wall, held by its hanger tab (p",
+"part_indices": [
+67,
+252
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9157.11
+],
+[
+0.0,
+0.0,
+1.0,
+-416.0
+],
+[
+0.0,
+-1.0,
+0.0,
+957.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9017.21,
+9063.71,
+-400.0,
+-312.0,
+872.0,
+1045.5
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper+plate",
+"mass_kg": 0.073,
+"two_arm": false,
+"heavy": false,
+"label": "Wall liner, left, in through the door op"
+},
+{
+"key": "F10f",
+"step": "F10f",
+"name": "Wall liner, right, in through the door opening and onto its wall, held by its hanger tab (",
+"part_indices": [
+68,
+253
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8923.81
+],
+[
+0.0,
+0.0,
+1.0,
+-238.0
+],
+[
+0.0,
+-1.0,
+0.0,
+957.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9017.21,
+9063.71,
+-222.0,
+-134.0,
+872.0,
+1045.5
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper+plate",
+"mass_kg": 0.07,
+"two_arm": false,
+"heavy": false,
+"label": "Wall liner, right, in through the door o"
+},
+{
+"key": "F16",
+"step": "F16",
+"name": "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-ring onto the right wall's two",
+"part_indices": [
+63,
+64,
+65
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+0.0,
+0.0,
+-1.0,
+8921.21
+],
+[
+0.0,
+1.0,
+0.0,
+-62.0
+],
+[
+1.0,
+0.0,
+0.0,
+749.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8823.21,
+8879.21,
+-90.0,
+-34.0,
+905.0,
+923.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.197,
+"two_arm": false,
+"heavy": false,
+"label": "Vacuum-port adapter (KF-25 stub welded i"
+},
+{
+"key": "F57#2",
+"step": "F57",
+"name": "Fold mirror",
+"part_indices": [
+154
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9329.66
+],
+[
+0.0,
+1.0,
+0.0,
+-473.8
+],
+[
+0.0,
+0.0,
+1.0,
+635.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9153.71,
+9195.61,
+-400.0,
+-358.1,
+872.0,
+927.95
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.15,
+"two_arm": false,
+"heavy": false,
+"label": "Fold mirror"
+},
+{
+"key": "P161",
+"step": "",
+"name": "Dry scroll pump",
+"part_indices": [
+161
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11745.73
+],
+[
+0.0,
+1.0,
+0.0,
+1269.0
+],
+[
+0.0,
+0.0,
+1.0,
+304.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12302.73,
+12734.73,
+1270.0,
+1549.0,
+144.0,
+446.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 26.2,
+"two_arm": false,
+"heavy": true,
+"label": "Dry scroll pump"
+},
+{
+"key": "P162",
+"step": "",
+"name": "Pump inlet",
+"part_indices": [
+162
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5972.73
+],
+[
+0.0,
+1.0,
+0.0,
+1835.0
+],
+[
+0.0,
+0.0,
+1.0,
+19.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6734.73,
+6774.73,
+1910.0,
+1950.0,
+144.0,
+164.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": true,
+"label": "Pump inlet"
+},
+{
+"key": "P163",
+"step": "",
+"name": "Sealed cyclone + HEPA housing",
+"part_indices": [
+163
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10926.03
+],
+[
+0.0,
+1.0,
+0.0,
+1982.4
+],
+[
+0.0,
+0.0,
+1.0,
+304.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11335.53,
+11456.53,
+1790.0,
+2009.4,
+144.0,
+382.8
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 1.5,
+"two_arm": false,
+"heavy": true,
+"label": "Sealed cyclone + HEPA housing"
+},
+{
+"key": "P164",
+"step": "",
+"name": "Filter inlet",
+"part_indices": [
+164
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6364.73
+],
+[
+0.0,
+1.0,
+0.0,
+2102.4
+],
+[
+0.0,
+0.0,
+1.0,
+65.2
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6814.73,
+6854.73,
+1910.0,
+1950.0,
+144.0,
+164.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": true,
+"label": "Filter inlet"
+},
+{
+"key": "P165",
+"step": "",
+"name": "Filter outlet",
+"part_indices": [
+165
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5410.46
+],
+[
+0.0,
+1.0,
+0.0,
+1330.0
+],
+[
+0.0,
+0.0,
+1.0,
+264.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5935.46,
+5955.46,
+1270.0,
+1310.0,
+144.0,
+184.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": true,
+"label": "Filter outlet"
+},
+{
+"key": "P166",
+"step": "",
+"name": "Sealed side-channel blower",
+"part_indices": [
+166
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8702.73
+],
+[
+0.0,
+1.0,
+0.0,
+2084.0
+],
+[
+0.0,
+0.0,
+1.0,
+304.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9302.73,
+9502.73,
+1844.0,
+2024.0,
+144.0,
+374.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 9.0,
+"two_arm": false,
+"heavy": true,
+"label": "Sealed side-channel blower"
+},
+{
+"key": "P167",
+"step": "",
+"name": "Blower inlet",
+"part_indices": [
+167
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6845.03
+],
+[
+0.0,
+1.0,
+0.0,
+1440.0
+],
+[
+0.0,
+0.0,
+1.0,
+264.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7425.03,
+7445.03,
+1270.0,
+1310.0,
+144.0,
+184.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": true,
+"label": "Blower inlet"
+},
+{
+"key": "P168",
+"step": "",
+"name": "Blower outlet",
+"part_indices": [
+168
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6214.73
+],
+[
+0.0,
+1.0,
+0.0,
+2080.0
+],
+[
+0.0,
+0.0,
+1.0,
+74.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6894.73,
+6934.73,
+1910.0,
+1950.0,
+144.0,
+164.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": true,
+"label": "Blower outlet"
+},
+{
+"key": "P169",
+"step": "",
+"name": "Trace O2 analyzer + dew-point transmitter",
+"part_indices": [
+169
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6972.73
+],
+[
+0.0,
+1.0,
+0.0,
+2106.0
+],
+[
+0.0,
+0.0,
+1.0,
+304.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7802.73,
+7952.73,
+1866.0,
+2026.0,
+144.0,
+354.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 5.0,
+"two_arm": false,
+"heavy": true,
+"label": "Trace O2 analyzer + dew-point transmitte"
+},
+{
+"key": "P170",
+"step": "",
+"name": "Argon solenoid manifold",
+"part_indices": [
+170
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7572.73
+],
+[
+0.0,
+1.0,
+0.0,
+1716.0
+],
+[
+0.0,
+0.0,
+1.0,
+304.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7992.73,
+8107.73,
+1866.0,
+1996.0,
+144.0,
+226.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 2.0,
+"two_arm": false,
+"heavy": true,
+"label": "Argon solenoid manifold"
+},
+{
+"key": "P171",
+"step": "",
+"name": "Argon pressure regulator + flowmeter",
+"part_indices": [
+171
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6172.73
+],
+[
+0.0,
+1.0,
+0.0,
+1812.0
+],
+[
+0.0,
+0.0,
+1.0,
+304.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6650.73,
+6694.73,
+1910.0,
+1954.0,
+144.0,
+244.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 1.2,
+"two_arm": false,
+"heavy": true,
+"label": "Argon pressure regulator + flowmeter"
+},
+{
+"key": "P172",
+"step": "",
+"name": "Vacuum line Pirani tee",
+"part_indices": [
+172
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8855.51
+],
+[
+0.0,
+1.0,
+0.0,
+380.06
+],
+[
+0.0,
+0.0,
+1.0,
+821.94
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9153.71,
+9229.91,
+360.12,
+400.0,
+872.0,
+930.04
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.25,
+"two_arm": false,
+"heavy": false,
+"label": "Vacuum line Pirani tee"
+},
+{
+"key": "P173",
+"step": "",
+"name": "Vacuum line Pirani reducer",
+"part_indices": [
+173
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8506.91
+],
+[
+0.0,
+1.0,
+0.0,
+52.3
+],
+[
+0.0,
+0.0,
+1.0,
+751.9
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8823.21,
+8863.21,
+32.3,
+72.3,
+860.0,
+891.0
+],
+"support": "table",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.08,
+"two_arm": false,
+"heavy": false,
+"label": "Vacuum line Pirani reducer"
+},
+{
+"key": "P174",
+"step": "",
+"name": "Pirani transmitter Vacuum Research 902377 on the vacuum line",
+"part_indices": [
+174
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8698.41
+],
+[
+0.0,
+1.0,
+0.0,
+382.5
+],
+[
+0.0,
+0.0,
+1.0,
+732.9
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9017.21,
+9052.21,
+365.0,
+400.0,
+872.0,
+962.5
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.2,
+"two_arm": false,
+"heavy": false,
+"label": "Pirani transmitter Vacuum Research 90237"
+},
+{
+"key": "P175",
+"step": "",
+"name": "Vacuum line Pirani tee clamp",
+"part_indices": [
+175
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8727.51
+],
+[
+0.0,
+1.0,
+0.0,
+247.41
+],
+[
+0.0,
+0.0,
+1.0,
+834.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9017.21,
+9034.21,
+211.32,
+275.0,
+872.0,
+949.15
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": false,
+"label": "Vacuum line Pirani tee clamp"
+},
+{
+"key": "P176",
+"step": "",
+"name": "Vacuum line Pirani tee clamp",
+"part_indices": [
+176
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+8651.31
+],
+[
+0.0,
+1.0,
+0.0,
+93.73
+],
+[
+0.0,
+0.0,
+1.0,
+834.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9017.21,
+9034.21,
+57.64,
+121.32,
+872.0,
+949.15
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": false,
+"label": "Vacuum line Pirani tee clamp"
+},
+{
+"key": "P177",
+"step": "",
+"name": "Vacuum isolation valve",
+"part_indices": [
+177
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9055.79
+],
+[
+0.0,
+1.0,
+0.0,
+-232.01
+],
+[
+0.0,
+0.0,
+1.0,
+834.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9153.71,
+9353.99,
+-268.1,
+-202.7,
+872.0,
+996.19
+],
+"support": "nest",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 1.775,
+"two_arm": false,
+"heavy": false,
+"label": "Vacuum isolation valve"
+},
+{
+"key": "P178",
+"step": "",
+"name": "Gas-loop + vacuum hoses",
+"part_indices": [
+178
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9586.99
+],
+[
+0.0,
+1.0,
+0.0,
+257.0
+],
+[
+0.0,
+0.0,
+1.0,
+873.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9423.99,
+9749.99,
+94.0,
+420.0,
+860.0,
+971.8
+],
+"support": "table",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 3.0,
+"two_arm": false,
+"heavy": false,
+"label": "Gas-loop + vacuum hoses"
+},
+{
+"key": "P179",
+"step": "",
+"name": "Argon line",
+"part_indices": [
+179
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9537.19
+],
+[
+0.0,
+1.0,
+0.0,
+-306.8
+],
+[
+0.0,
+0.0,
+1.0,
+863.2
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9423.99,
+9650.39,
+-420.0,
+-193.6,
+860.0,
+887.52
+],
+"support": "table",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 0.223,
+"two_arm": false,
+"heavy": false,
+"label": "Argon line"
+},
+{
+"key": "P180",
+"step": "",
+"name": "O2 sample line",
+"part_indices": [
+180
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9913.19
+],
+[
+0.0,
+1.0,
+0.0,
+-306.8
+],
+[
+0.0,
+0.0,
+1.0,
+863.2
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9799.99,
+10026.39,
+-420.0,
+-193.6,
+860.0,
+887.52
+],
+"support": "table",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 0.101,
+"two_arm": false,
+"heavy": false,
+"label": "O2 sample line"
+},
+{
+"key": "P194",
+"step": "",
+"name": "Chilled-water supply + return to the laser",
+"part_indices": [
+194
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11728.73
+],
+[
+0.0,
+1.0,
+0.0,
+1426.0
+],
+[
+0.0,
+0.0,
+1.0,
+150.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11572.73,
+11884.73,
+1270.0,
+1582.0,
+144.0,
+195.6
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 1.5,
+"two_arm": false,
+"heavy": true,
+"label": "Chilled-water supply + return to the las"
+},
+{
+"key": "P195",
+"step": "",
+"name": "Argon supply from the dock",
+"part_indices": [
+195
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10915.93
+],
+[
+0.0,
+1.0,
+0.0,
+1903.2
+],
+[
+0.0,
+0.0,
+1.0,
+147.2
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10802.73,
+11029.13,
+1790.0,
+2016.4,
+144.0,
+171.52
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.404,
+"two_arm": false,
+"heavy": true,
+"label": "Argon supply from the dock"
+},
+{
+"key": "P196",
+"step": "",
+"name": "Pump exhaust to the dock",
+"part_indices": [
+196
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11182.33
+],
+[
+0.0,
+1.0,
+0.0,
+1903.2
+],
+[
+0.0,
+0.0,
+1.0,
+147.2
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11069.13,
+11295.53,
+1790.0,
+2016.4,
+144.0,
+171.52
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.5,
+"two_arm": false,
+"heavy": true,
+"label": "Pump exhaust to the dock"
+},
+{
+"key": "P259",
+"step": "",
+"name": "PB1 filter fan Fandis FF12D24UN",
+"part_indices": [
+259
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7055.86
+],
+[
+0.0,
+1.0,
+0.0,
+1480.0
+],
+[
+0.0,
+0.0,
+1.0,
+301.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5883.46,
+5895.46,
+1270.0,
+1420.0,
+144.0,
+490.4
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.6,
+"two_arm": false,
+"heavy": true,
+"label": "PB1 filter fan Fandis FF12D24UN"
+},
+{
+"key": "P273",
+"step": "",
+"name": "E-stop enclosure, front of the gas module's O2 box",
+"part_indices": [
+273
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5580.73
+],
+[
+0.0,
+1.0,
+0.0,
+2220.0
+],
+[
+0.0,
+0.0,
+1.0,
+204.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6450.73,
+6520.73,
+1910.0,
+1980.0,
+144.0,
+214.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.2,
+"two_arm": false,
+"heavy": true,
+"label": "E-stop enclosure, front of the gas modul"
+},
+{
+"key": "P274",
+"step": "",
+"name": "E-stops IDEC XW1E-BV402M-R, front of the gas module's O2 box",
+"part_indices": [
+274
+],
+"solids": null,
+"category": "gas",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6446.53
+],
+[
+0.0,
+1.0,
+0.0,
+2246.0
+],
+[
+0.0,
+0.0,
+1.0,
+189.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7331.53,
+7371.53,
+1910.0,
+1936.0,
+144.0,
+184.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": true,
+"label": "E-stops IDEC XW1E-BV402M-R, front of the"
+},
+{
+"key": "F36",
+"step": "F36",
+"name": "\u00d82 in. fused-silica window, 9.53 mm, AR 1064",
+"part_indices": [
+95
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10151.79
+],
+[
+0.0,
+1.0,
+0.0,
+-394.6
+],
+[
+0.0,
+0.0,
+1.0,
+758.53
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10126.39,
+10177.19,
+-420.0,
+-369.2,
+905.0,
+914.53
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.043,
+"two_arm": false,
+"heavy": false,
+"label": "\u00d82 in. fused-silica window, 9.53 mm, AR "
+},
+{
+"key": "F48b#2",
+"step": "F48b",
+"name": "Camera window",
+"part_indices": [
+129
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+0.88,
+0.07,
+-0.46,
+10163.45
+],
+[
+0.07,
+0.96,
+0.28,
+-282.0
+],
+[
+0.46,
+-0.28,
+0.84,
+679.17
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10148.39,
+10178.8,
+-297.2,
+-266.83,
+863.0,
+894.77
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "ringpad",
+"mass_kg": 0.003,
+"two_arm": false,
+"heavy": false,
+"label": "Camera window"
+},
+{
+"key": "F53",
+"step": "F53",
+"name": "f-theta lens threaded into its adapter ring over its 3 mm shim stack, under the bridge (on",
+"part_indices": [
+147,
+148,
+149
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10184.39
+],
+[
+0.0,
+1.0,
+0.0,
+362.0
+],
+[
+0.0,
+0.0,
+1.0,
+673.92
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10129.39,
+10239.39,
+307.0,
+417.0,
+860.0,
+910.2
+],
+"support": "table",
+"side": "B",
+"actor": "person",
+"tool": "hand",
+"mass_kg": 1.0,
+"two_arm": false,
+"heavy": false,
+"label": "f-theta lens threaded into its adapter r"
+},
+{
+"key": "F56b",
+"step": "F56b",
+"name": "2-axis galvo scan head",
+"part_indices": [
+150
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10183.54
+],
+[
+0.0,
+1.0,
+0.0,
+-123.08
+],
+[
+0.0,
+0.0,
+1.0,
+618.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10126.39,
+10281.39,
+-194.83,
+-64.83,
+860.0,
+982.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 3.75,
+"two_arm": false,
+"heavy": false,
+"label": "2-axis galvo scan head"
+},
+{
+"key": "F57#1",
+"step": "F57",
+"name": "Coaxial-monitoring dichroic",
+"part_indices": [
+153
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10527.34
+],
+[
+0.0,
+1.0,
+0.0,
+-353.8
+],
+[
+0.0,
+0.0,
+1.0,
+635.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10351.39,
+10393.29,
+-400.0,
+-358.1,
+872.0,
+927.95
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.15,
+"two_arm": false,
+"heavy": false,
+"label": "Coaxial-monitoring dichroic"
+},
+{
+"key": "F57#3",
+"step": "F57",
+"name": "Safety shutter + beam dump",
+"part_indices": [
+155
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10518.39
+],
+[
+0.0,
+1.0,
+0.0,
+-292.85
+],
+[
+0.0,
+0.0,
+1.0,
+623.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10331.39,
+10395.39,
+-288.1,
+-228.1,
+860.0,
+921.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 1.2,
+"two_arm": false,
+"heavy": false,
+"label": "Safety shutter + beam dump"
+},
+{
+"key": "F57#8",
+"step": "F57",
+"name": "Collimator",
+"part_indices": [
+157
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10718.34
+],
+[
+0.0,
+1.0,
+0.0,
+-252.85
+],
+[
+0.0,
+0.0,
+1.0,
+623.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10331.39,
+10537.39,
+-178.1,
+-138.1,
+860.0,
+910.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.5,
+"two_arm": false,
+"heavy": false,
+"label": "Collimator"
+},
+{
+"key": "F58",
+"step": "F58",
+"name": "Process fiber",
+"part_indices": [
+158
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10445.39
+],
+[
+0.0,
+1.0,
+0.0,
+306.0
+],
+[
+0.0,
+0.0,
+1.0,
+864.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10331.39,
+10559.39,
+192.0,
+420.0,
+860.0,
+894.4
+],
+"support": "table",
+"side": "B",
+"actor": "person",
+"tool": "hand",
+"mass_kg": 0.6,
+"two_arm": false,
+"heavy": false,
+"label": "Process fiber"
+},
+{
+"key": "P007",
+"step": "",
+"name": "Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC",
+"part_indices": [
+7
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7853.88
+],
+[
+0.0,
+1.0,
+0.0,
+1591.2
+],
+[
+0.0,
+0.0,
+1.0,
+241.6
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6902.73,
+7385.03,
+1270.0,
+1827.2,
+144.0,
+320.5
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 40.0,
+"two_arm": false,
+"heavy": true,
+"label": "Fiber laser source, 500 W single-mode, I"
+},
+{
+"key": "P184",
+"step": "",
+"name": "OD 7+ viewing window",
+"part_indices": [
+184
+],
+"solids": null,
+"category": "optics",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10651.39
+],
+[
+0.0,
+1.0,
+0.0,
+391.5
+],
+[
+0.0,
+0.0,
+1.0,
+992.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10351.39,
+10811.39,
+120.0,
+122.0,
+872.0,
+1318.11
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.493,
+"two_arm": false,
+"heavy": false,
+"label": "OD 7+ viewing window"
+},
+{
+"key": "M03",
+"step": "M03",
+"name": "Cartridge heaters M50",
+"part_indices": [
+30
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+10947.09
+],
+[
+0.0,
+1.0,
+0.0,
+-406.0
+],
+[
+0.0,
+0.0,
+-1.0,
+894.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10931.39,
+10956.44,
+-420.0,
+-392.0,
+905.0,
+927.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.015,
+"two_arm": false,
+"heavy": false,
+"label": "Cartridge heaters M50"
+},
+{
+"key": "M04",
+"step": "M04",
+"name": "Type K thermocouples M50",
+"part_indices": [
+31
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+10935.4
+],
+[
+0.0,
+1.0,
+0.0,
+-335.43
+],
+[
+0.0,
+0.0,
+-1.0,
+893.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10931.39,
+10935.91,
+-342.0,
+-313.84,
+905.0,
+926.5
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Type K thermocouples M50"
+},
+{
+"key": "C09",
+"step": "C09",
+"name": "Module-present sensor",
+"part_indices": [
+75
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11010.97
+],
+[
+0.0,
+-1.0,
+0.0,
+-276.16
+],
+[
+0.0,
+0.0,
+-1.0,
+884.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10931.39,
+10963.69,
+-263.84,
+-242.3,
+905.0,
+917.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.02,
+"two_arm": false,
+"heavy": false,
+"label": "Module-present sensor"
+},
+{
+"key": "C09d#1",
+"step": "C09d",
+"name": "Zero-point clamping modules",
+"part_indices": [
+47
+],
+"solids": [
+[
+47,
+0
+]
+],
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10875.39
+],
+[
+0.0,
+-1.0,
+0.0,
+-108.3
+],
+[
+0.0,
+0.0,
+-1.0,
+771.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10931.39,
+11019.39,
+-192.3,
+-104.3,
+860.0,
+880.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 1.0,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point clamping modules"
+},
+{
+"key": "C09d#2",
+"step": "C09d",
+"name": "Zero-point clamping modules",
+"part_indices": [
+47
+],
+"solids": [
+[
+47,
+1
+]
+],
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11215.39
+],
+[
+0.0,
+-1.0,
+0.0,
+-402.0
+],
+[
+0.0,
+0.0,
+-1.0,
+771.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11069.39,
+11157.39,
+-420.0,
+-332.0,
+860.0,
+880.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "vacuum",
+"mass_kg": 1.0,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point clamping modules"
+},
+{
+"key": "C09e",
+"step": "C09e",
+"name": "Zero-point push-in fittings",
+"part_indices": [
+51
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11175.89
+],
+[
+0.0,
+1.0,
+0.0,
+324.0
+],
+[
+0.0,
+0.0,
+1.0,
+963.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11069.39,
+11280.39,
+342.0,
+420.0,
+860.0,
+869.0
+],
+"support": "table",
+"side": "B",
+"actor": "person",
+"tool": "hand",
+"mass_kg": 0.02,
+"two_arm": false,
+"heavy": false,
+"label": "Zero-point push-in fittings"
+},
+{
+"key": "C15b",
+"step": "C15b",
+"name": "Overflow-jar sensor on its bracket, and the bracket's two M4 x 10, onto the front-right le",
+"part_indices": [
+45,
+46
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10825.64
+],
+[
+0.0,
+1.0,
+0.0,
+435.0
+],
+[
+0.0,
+0.0,
+1.0,
+985.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10953.39,
+10983.39,
+360.0,
+395.0,
+863.0,
+887.0
+],
+"support": "tray",
+"side": "B",
+"actor": "person",
+"tool": "hand",
+"mass_kg": 0.032,
+"two_arm": false,
+"heavy": false,
+"label": "Overflow-jar sensor on its bracket, and "
+},
+{
+"key": "F11",
+"step": "F11",
+"name": "Layer-light LED bar",
+"part_indices": [
+66
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10943.39
+],
+[
+0.0,
+1.0,
+0.0,
+-237.0
+],
+[
+0.0,
+0.0,
+1.0,
+748.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11069.39,
+11077.39,
+-282.0,
+-192.0,
+860.0,
+868.0
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": false,
+"label": "Layer-light LED bar"
+},
+{
+"key": "F12",
+"step": "F12",
+"name": "Through-beam fibre heads with their 2-010 O-rings, threaded into the side walls from outsi",
+"part_indices": [
+73,
+74
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11247.39
+],
+[
+0.0,
+1.0,
+0.0,
+285.5
+],
+[
+0.0,
+0.0,
+1.0,
+861.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11069.39,
+11425.39,
+279.0,
+292.0,
+860.0,
+873.0
+],
+"support": "table",
+"side": "B",
+"actor": "person",
+"tool": "hand",
+"mass_kg": 0.03,
+"two_arm": false,
+"heavy": false,
+"label": "Through-beam fibre heads with their 2-01"
+},
+{
+"key": "F41",
+"step": "F41",
+"name": "Drawer-closed sensor",
+"part_indices": [
+106
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10865.39
+],
+[
+0.0,
+0.0,
+1.0,
+-176.3
+],
+[
+0.0,
+-1.0,
+0.0,
+793.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10931.39,
+10961.39,
+-54.3,
+-42.3,
+905.0,
+917.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.02,
+"two_arm": false,
+"heavy": false,
+"label": "Drawer-closed sensor"
+},
+{
+"key": "F45b",
+"step": "F45b",
+"name": "Roller drive coupling",
+"part_indices": [
+116
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11027.39
+],
+[
+0.0,
+0.0,
+-1.0,
+443.0
+],
+[
+0.0,
+1.0,
+0.0,
+807.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10931.39,
+10943.39,
+273.0,
+285.0,
+905.0,
+938.0
+],
+"support": "riser",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 0.024,
+"two_arm": false,
+"heavy": false,
+"label": "Roller drive coupling"
+},
+{
+"key": "F48c#2",
+"step": "F48c",
+"name": "Layer camera",
+"part_indices": [
+133
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+0.88,
+0.07,
+-0.46,
+11127.48
+],
+[
+0.07,
+0.96,
+0.28,
+-89.05
+],
+[
+0.46,
+-0.28,
+0.84,
+684.03
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11089.39,
+11168.19,
+-122.0,
+-57.82,
+872.0,
+960.58
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.15,
+"two_arm": false,
+"heavy": false,
+"label": "Layer camera"
+},
+{
+"key": "F57#7",
+"step": "F57",
+"name": "Coaxial photodiode chain",
+"part_indices": [
+156
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11728.74
+],
+[
+0.0,
+1.0,
+0.0,
+-359.2
+],
+[
+0.0,
+0.0,
+1.0,
+623.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11475.39,
+11552.79,
+-420.0,
+-348.9,
+860.0,
+920.4
+],
+"support": "table",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.35,
+"two_arm": false,
+"heavy": false,
+"label": "Coaxial photodiode chain"
+},
+{
+"key": "P006",
+"step": "",
+"name": "UPS",
+"part_indices": [
+6
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10776.63
+],
+[
+0.0,
+1.0,
+0.0,
+1544.0
+],
+[
+0.0,
+0.0,
+1.0,
+330.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9825.33,
+10307.93,
+1270.0,
+1721.04,
+144.0,
+230.36
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 23.0,
+"two_arm": false,
+"heavy": true,
+"label": "UPS"
+},
+{
+"key": "P008",
+"step": "",
+"name": "Scan + laser controller PC",
+"part_indices": [
+8
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9390.03
+],
+[
+0.0,
+1.0,
+0.0,
+1544.0
+],
+[
+0.0,
+0.0,
+1.0,
+63.3
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8438.73,
+8921.33,
+1270.0,
+1804.0,
+144.0,
+230.9
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 8.0,
+"two_arm": false,
+"heavy": true,
+"label": "Scan + laser controller PC"
+},
+{
+"key": "P009",
+"step": "",
+"name": "DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5",
+"part_indices": [
+9
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10254.03
+],
+[
+0.0,
+1.0,
+0.0,
+1544.0
+],
+[
+0.0,
+0.0,
+1.0,
+-25.6
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+9302.73,
+9785.33,
+1270.0,
+1804.0,
+144.0,
+319.8
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 9.0,
+"two_arm": false,
+"heavy": true,
+"label": "DIN-rail drawer: 24 V supply, safety rel"
+},
+{
+"key": "P186",
+"step": "",
+"name": "Guard-locking door switch",
+"part_indices": [
+186
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10770.39
+],
+[
+0.0,
+1.0,
+0.0,
+482.5
+],
+[
+0.0,
+0.0,
+1.0,
+625.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10951.39,
+10970.39,
+186.0,
+203.0,
+872.0,
+962.0
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.4,
+"two_arm": false,
+"heavy": false,
+"label": "Guard-locking door switch"
+},
+{
+"key": "P188",
+"step": "",
+"name": "E-stop",
+"part_indices": [
+188
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9045.99
+],
+[
+0.0,
+1.0,
+0.0,
+2220.0
+],
+[
+0.0,
+0.0,
+1.0,
+-24.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8580.99,
+8620.99,
+1866.0,
+1888.0,
+144.0,
+184.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.1,
+"two_arm": false,
+"heavy": true,
+"label": "E-stop"
+},
+{
+"key": "P189",
+"step": "",
+"name": "Key switch",
+"part_indices": [
+189
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9118.99
+],
+[
+0.0,
+1.0,
+0.0,
+2212.0
+],
+[
+0.0,
+0.0,
+1.0,
+24.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8660.99,
+8686.99,
+1866.0,
+1880.0,
+144.0,
+170.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.1,
+"two_arm": false,
+"heavy": true,
+"label": "Key switch"
+},
+{
+"key": "P190",
+"step": "",
+"name": "Emission indicator",
+"part_indices": [
+190
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9182.99
+],
+[
+0.0,
+1.0,
+0.0,
+2208.0
+],
+[
+0.0,
+0.0,
+1.0,
+72.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8726.99,
+8748.99,
+1866.0,
+1876.0,
+144.0,
+166.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.1,
+"two_arm": false,
+"heavy": true,
+"label": "Emission indicator"
+},
+{
+"key": "P191",
+"step": "",
+"name": "Reset button",
+"part_indices": [
+191
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+9244.99
+],
+[
+0.0,
+1.0,
+0.0,
+2208.0
+],
+[
+0.0,
+0.0,
+1.0,
+117.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8788.99,
+8810.99,
+1866.0,
+1876.0,
+144.0,
+166.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.1,
+"two_arm": false,
+"heavy": true,
+"label": "Reset button"
+},
+{
+"key": "P192",
+"step": "",
+"name": "Tray dock",
+"part_indices": [
+192
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+5199.73
+],
+[
+0.0,
+1.0,
+0.0,
+1580.0
+],
+[
+0.0,
+0.0,
+1.0,
+356.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6302.73,
+6410.73,
+1910.0,
+1990.0,
+144.0,
+284.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 6.0,
+"two_arm": false,
+"heavy": true,
+"label": "Tray dock"
+},
+{
+"key": "P256",
+"step": "",
+"name": "Power box PB1: main disconnect Q0, branch breakers Q1-Q4, KM0-KM2, K1/K2, SSR and the DC supplies",
+"part_indices": [
+256
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6851.46
+],
+[
+0.0,
+1.0,
+0.0,
+1570.0
+],
+[
+0.0,
+0.0,
+1.0,
+341.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+5691.06,
+5843.46,
+1270.0,
+1574.8,
+144.0,
+550.4
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 16.0,
+"two_arm": false,
+"heavy": true,
+"label": "Power box PB1: main disconnect Q0, branc"
+},
+{
+"key": "P258",
+"step": "",
+"name": "PB1 disconnect handle Q0",
+"part_indices": [
+258
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7670.73
+],
+[
+0.0,
+1.0,
+0.0,
+2260.0
+],
+[
+0.0,
+0.0,
+1.0,
+116.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6560.73,
+6610.73,
+1910.0,
+1960.0,
+144.0,
+244.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.3,
+"two_arm": false,
+"heavy": true,
+"label": "PB1 disconnect handle Q0"
+},
+{
+"key": "P260",
+"step": "",
+"name": "PB2 process-module box: Raspberry Pi 5, PN532 NFC, NAU7802 load-cell ADC, DDR-30G-5, E3NX amplifier, M12 junction",
+"part_indices": [
+260
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11123.39
+],
+[
+0.0,
+1.0,
+0.0,
+64.0
+],
+[
+0.0,
+0.0,
+1.0,
+623.89
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11069.39,
+11257.39,
+139.0,
+229.0,
+860.0,
+920.5
+],
+"support": "table",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.9,
+"two_arm": false,
+"heavy": false,
+"label": "PB2 process-module box: Raspberry Pi 5, "
+},
+{
+"key": "P264",
+"step": "",
+"name": "Z home and lower-limit sensors",
+"part_indices": [
+264
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11567.39
+],
+[
+0.0,
+1.0,
+0.0,
+-336.9
+],
+[
+0.0,
+0.0,
+1.0,
+1069.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11495.39,
+11535.39,
+-278.9,
+-268.9,
+872.0,
+949.0
+],
+"support": "nest",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 0.04,
+"two_arm": false,
+"heavy": false,
+"label": "Z home and lower-limit sensors"
+},
+{
+"key": "P266#1",
+"step": "",
+"name": "Recoater sensor posts",
+"part_indices": [
+266
+],
+"solids": [
+[
+266,
+0
+]
+],
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11615.39
+],
+[
+0.0,
+1.0,
+0.0,
+-309.9
+],
+[
+0.0,
+0.0,
+1.0,
+1032.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11495.39,
+11515.39,
+-178.9,
+-158.9,
+872.0,
+1082.0
+],
+"support": "nest",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 0.226,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater sensor posts"
+},
+{
+"key": "P266#2",
+"step": "",
+"name": "Recoater sensor posts",
+"part_indices": [
+266
+],
+"solids": [
+[
+266,
+1
+]
+],
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10851.39
+],
+[
+0.0,
+1.0,
+0.0,
+-55.0
+],
+[
+0.0,
+0.0,
+1.0,
+1032.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10951.39,
+10971.39,
+76.0,
+96.0,
+872.0,
+1082.0
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.226,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater sensor posts"
+},
+{
+"key": "P268#1",
+"step": "",
+"name": "Recoater home and over-travel sensors",
+"part_indices": [
+268
+],
+"solids": [
+[
+268,
+0
+]
+],
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11592.39
+],
+[
+0.0,
+1.0,
+0.0,
+-200.4
+],
+[
+0.0,
+0.0,
+1.0,
+805.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11475.39,
+11489.39,
+-88.9,
+-26.9,
+860.0,
+874.0
+],
+"support": "table",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 0.03,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater home and over-travel sensors"
+},
+{
+"key": "P268#2",
+"step": "",
+"name": "Recoater home and over-travel sensors",
+"part_indices": [
+268
+],
+"solids": [
+[
+268,
+1
+]
+],
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+10966.39
+],
+[
+0.0,
+1.0,
+0.0,
+-84.5
+],
+[
+0.0,
+0.0,
+1.0,
+805.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11069.39,
+11083.39,
+27.0,
+89.0,
+860.0,
+874.0
+],
+"support": "table",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.03,
+"two_arm": false,
+"heavy": false,
+"label": "Recoater home and over-travel sensors"
+},
+{
+"key": "P270",
+"step": "",
+"name": "Guard-position switch IDEC HS6B-12B05",
+"part_indices": [
+270
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11444.39
+],
+[
+0.0,
+1.0,
+0.0,
+-103.5
+],
+[
+0.0,
+0.0,
+1.0,
+696.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11625.39,
+11644.39,
+-400.0,
+-383.0,
+872.0,
+936.0
+],
+"support": "nest",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 0.15,
+"two_arm": false,
+"heavy": false,
+"label": "Guard-position switch IDEC HS6B-12B05"
+},
+{
+"key": "P271",
+"step": "",
+"name": "E-stop enclosure, guard right side, near the front",
+"part_indices": [
+271
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11163.89
+],
+[
+0.0,
+1.0,
+0.0,
+600.0
+],
+[
+0.0,
+0.0,
+1.0,
+760.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11475.39,
+11545.39,
+350.0,
+420.0,
+860.0,
+930.0
+],
+"support": "table",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.2,
+"two_arm": false,
+"heavy": false,
+"label": "E-stop enclosure, guard right side, near"
+},
+{
+"key": "P272",
+"step": "",
+"name": "E-stops IDEC XW1E-BV402M-R, guard right side, near the front",
+"part_indices": [
+272
+],
+"solids": null,
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11243.89
+],
+[
+0.0,
+1.0,
+0.0,
+-58.0
+],
+[
+0.0,
+0.0,
+1.0,
+757.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11625.39,
+11651.39,
+-293.0,
+-253.0,
+872.0,
+912.0
+],
+"support": "nest",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 0.05,
+"two_arm": false,
+"heavy": false,
+"label": "E-stops IDEC XW1E-BV402M-R, guard right "
+},
+{
+"key": "P275#1",
+"step": "",
+"name": "Dock PE contacts",
+"part_indices": [
+275
+],
+"solids": [
+[
+275,
+0
+]
+],
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7639.99
+],
+[
+0.0,
+1.0,
+0.0,
+1520.0
+],
+[
+0.0,
+0.0,
+1.0,
+245.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8850.99,
+8857.99,
+1866.0,
+1874.0,
+144.0,
+152.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.01,
+"two_arm": false,
+"heavy": true,
+"label": "Dock PE contacts"
+},
+{
+"key": "P275#2",
+"step": "",
+"name": "Dock PE contacts",
+"part_indices": [
+275
+],
+"solids": [
+[
+275,
+1
+]
+],
+"category": "elec",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7686.99
+],
+[
+0.0,
+1.0,
+0.0,
+1480.0
+],
+[
+0.0,
+0.0,
+1.0,
+245.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8897.99,
+8904.99,
+1866.0,
+1874.0,
+144.0,
+152.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.01,
+"two_arm": false,
+"heavy": true,
+"label": "Dock PE contacts"
+},
+{
+"key": "M07",
+"step": "M07",
+"name": "Disc springs under the stack screws M50",
+"part_indices": [
+205
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+-1.0,
+0.0,
+0.0,
+11805.6
+],
+[
+0.0,
+1.0,
+0.0,
+-379.2
+],
+[
+0.0,
+0.0,
+-1.0,
+819.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11793.39,
+11826.82,
+-398.0,
+-360.4,
+863.0,
+863.51
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "nozzle",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Disc springs under the stack screws M50"
+},
+{
+"key": "M09",
+"step": "M09",
+"name": "Bore seal M50",
+"part_indices": [
+35
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11796.79
+],
+[
+0.0,
+1.0,
+0.0,
+394.6
+],
+[
+0.0,
+0.0,
+1.0,
+903.8
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11771.39,
+11822.19,
+369.2,
+420.0,
+860.0,
+865.6
+],
+"support": "table",
+"side": "B",
+"actor": "person",
+"tool": "hand",
+"mass_kg": 0.001,
+"two_arm": false,
+"heavy": false,
+"label": "Bore seal M50"
+},
+{
+"key": "M10",
+"step": "M10",
+"name": "Module M50 gland-plate O-ring",
+"part_indices": [
+22
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11823.04
+],
+[
+0.0,
+1.0,
+0.0,
+267.55
+],
+[
+0.0,
+0.0,
+1.0,
+956.3
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11793.39,
+11852.69,
+237.9,
+297.2,
+863.0,
+864.3
+],
+"support": "tray",
+"side": "B",
+"actor": "B",
+"tool": "gripper+caps",
+"mass_kg": 0.001,
+"two_arm": false,
+"heavy": false,
+"label": "Module M50 gland-plate O-ring"
+},
+{
+"key": "M12",
+"step": "M12",
+"name": "Rod O-rings M50 in the bottom flange",
+"part_indices": [
+23
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11803.39
+],
+[
+0.0,
+1.0,
+0.0,
+-256.4
+],
+[
+0.0,
+0.0,
+1.0,
+966.24
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11793.39,
+11813.39,
+-266.4,
+-246.4,
+863.0,
+871.49
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "ring_loader",
+"mass_kg": 0.001,
+"two_arm": false,
+"heavy": false,
+"label": "Rod O-rings M50 in the bottom flange"
+},
+{
+"key": "M17",
+"step": "M17",
+"name": "Spigot O-ring",
+"part_indices": [
+20
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11841.39
+],
+[
+0.0,
+1.0,
+0.0,
+-104.4
+],
+[
+0.0,
+0.0,
+1.0,
+879.1
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11793.39,
+11889.39,
+-152.4,
+-56.4,
+863.0,
+867.2
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.006,
+"two_arm": false,
+"heavy": false,
+"label": "Spigot O-ring"
+},
+{
+"key": "C00b",
+"step": "C00b",
+"name": "Floor O-ring",
+"part_indices": [
+55
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12128.89
+],
+[
+0.0,
+1.0,
+0.0,
+-297.5
+],
+[
+0.0,
+0.0,
+1.0,
+865.65
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11983.39,
+12274.39,
+-398.0,
+-197.0,
+863.0,
+865.65
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "roller",
+"mass_kg": 0.017,
+"two_arm": false,
+"heavy": false,
+"label": "Floor O-ring"
+},
+{
+"key": "C02",
+"step": "C02",
+"name": "Locating dowel",
+"part_indices": [
+202
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12349.39
+],
+[
+0.0,
+-1.0,
+0.0,
+-363.0
+],
+[
+0.0,
+0.0,
+-1.0,
+895.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12346.39,
+12352.39,
+-420.0,
+-306.0,
+905.0,
+925.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.009,
+"two_arm": false,
+"heavy": false,
+"label": "Locating dowel"
+},
+{
+"key": "C03",
+"step": "C03",
+"name": "Outlet plenum O-ring",
+"part_indices": [
+61
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12051.12
+],
+[
+0.0,
+1.0,
+0.0,
+479.5
+],
+[
+0.0,
+0.0,
+1.0,
+884.32
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11983.39,
+12127.84,
+381.0,
+398.0,
+863.0,
+864.32
+],
+"support": "tray",
+"side": "B",
+"actor": "B",
+"tool": "gripper+caps",
+"mass_kg": 0.002,
+"two_arm": false,
+"heavy": false,
+"label": "Outlet plenum O-ring"
+},
+{
+"key": "F13",
+"step": "F13",
+"name": "Inlet plenum O-ring",
+"part_indices": [
+58
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12048.87
+],
+[
+0.0,
+0.0,
+-1.0,
+285.0
+],
+[
+0.0,
+1.0,
+0.0,
+752.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11983.39,
+12114.34,
+256.5,
+287.0,
+863.0,
+864.32
+],
+"support": "tray",
+"side": "B",
+"actor": "B",
+"tool": "gripper+caps",
+"mass_kg": 0.002,
+"two_arm": false,
+"heavy": false,
+"label": "Inlet plenum O-ring"
+},
+{
+"key": "F29",
+"step": "F29",
+"name": "Lid O-ring",
+"part_indices": [
+56
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12571.39
+],
+[
+0.0,
+1.0,
+0.0,
+-296.0
+],
+[
+0.0,
+0.0,
+1.0,
+745.65
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12424.39,
+12718.39,
+-398.0,
+-194.0,
+863.0,
+865.65
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "roller",
+"mass_kg": 0.017,
+"two_arm": false,
+"heavy": false,
+"label": "Lid O-ring"
+},
+{
+"key": "F32",
+"step": "F32",
+"name": "Window-flange O-ring",
+"part_indices": [
+98
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11826.19
+],
+[
+0.0,
+1.0,
+0.0,
+111.1
+],
+[
+0.0,
+0.0,
+1.0,
+727.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11793.39,
+11858.99,
+78.3,
+143.9,
+863.0,
+864.32
+],
+"support": "tray",
+"side": "B",
+"actor": "B",
+"tool": "gripper+caps",
+"mass_kg": 0.001,
+"two_arm": false,
+"heavy": false,
+"label": "Window-flange O-ring"
+},
+{
+"key": "F35",
+"step": "F35",
+"name": "Window O-ring, lower",
+"part_indices": [
+96
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12007.84
+],
+[
+0.0,
+1.0,
+0.0,
+138.05
+],
+[
+0.0,
+0.0,
+1.0,
+717.85
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11983.39,
+12032.29,
+113.6,
+162.5,
+863.0,
+864.32
+],
+"support": "tray",
+"side": "B",
+"actor": "B",
+"tool": "gripper+caps",
+"mass_kg": 0.001,
+"two_arm": false,
+"heavy": false,
+"label": "Window O-ring, lower"
+},
+{
+"key": "F37",
+"step": "F37",
+"name": "Window clamp ring, upper",
+"part_indices": [
+97
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11986.69
+],
+[
+0.0,
+1.0,
+0.0,
+-99.7
+],
+[
+0.0,
+0.0,
+1.0,
+749.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+11961.39,
+12011.99,
+-125.0,
+-74.4,
+905.0,
+905.75
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.001,
+"two_arm": false,
+"heavy": false,
+"label": "Window clamp ring, upper"
+},
+{
+"key": "F42",
+"step": "F42",
+"name": "Metering-base O-ring on the lid",
+"part_indices": [
+110
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12523.89
+],
+[
+0.0,
+1.0,
+0.0,
+344.58
+],
+[
+0.0,
+0.0,
+1.0,
+727.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12424.39,
+12443.39,
+291.15,
+398.0,
+863.0,
+864.32
+],
+"support": "tray",
+"side": "B",
+"actor": "B",
+"tool": "gripper+caps",
+"mass_kg": 0.001,
+"two_arm": false,
+"heavy": false,
+"label": "Metering-base O-ring on the lid"
+},
+{
+"key": "F42b",
+"step": "F42b",
+"name": "Metering-base dock-face O-ring",
+"part_indices": [
+111
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12523.89
+],
+[
+0.0,
+1.0,
+0.0,
+143.73
+],
+[
+0.0,
+0.0,
+1.0,
+684.32
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12424.39,
+12443.39,
+90.3,
+197.15,
+863.0,
+864.32
+],
+"support": "tray",
+"side": "B",
+"actor": "B",
+"tool": "gripper+caps",
+"mass_kg": 0.001,
+"two_arm": false,
+"heavy": false,
+"label": "Metering-base dock-face O-ring"
+},
+{
+"key": "F45",
+"step": "F45",
+"name": "Roller feedthrough (M8 x 1 nose over its 2-012) into the metering base along its axis (arm",
+"part_indices": [
+114,
+115
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12908.39
+],
+[
+0.0,
+0.0,
+-1.0,
+556.0
+],
+[
+0.0,
+1.0,
+0.0,
+830.5
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12810.39,
+12826.39,
+384.0,
+400.0,
+872.0,
+937.5
+],
+"support": "nest",
+"side": "B",
+"actor": "B",
+"tool": "gripper",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": false,
+"label": "Roller feedthrough (M8 x 1 nose over its"
+},
+{
+"key": "F45d#2",
+"step": "F45d",
+"name": "Dovetail rails for the reservoirs",
+"part_indices": [
+113
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12899.39
+],
+[
+0.0,
+1.0,
+0.0,
+-358.0
+],
+[
+0.0,
+0.0,
+1.0,
+725.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12790.39,
+12828.39,
+-420.0,
+-296.0,
+905.0,
+911.0
+],
+"support": "riser",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.055,
+"two_arm": false,
+"heavy": false,
+"label": "Dovetail rails for the reservoirs"
+},
+{
+"key": "F47",
+"step": "F47",
+"name": "Camera adapter O-ring",
+"part_indices": [
+128
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12760.39
+],
+[
+0.0,
+1.0,
+0.0,
+314.0
+],
+[
+0.0,
+0.0,
+1.0,
+727.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12812.39,
+12858.39,
+246.0,
+292.0,
+863.0,
+864.32
+],
+"support": "tray",
+"side": "B",
+"actor": "B",
+"tool": "gripper+caps",
+"mass_kg": 0.001,
+"two_arm": false,
+"heavy": false,
+"label": "Camera adapter O-ring"
+},
+{
+"key": "F48b#1",
+"step": "F48b",
+"name": "Camera window gasket, under the window",
+"part_indices": [
+130
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+0.88,
+0.07,
+-0.46,
+12438.42
+],
+[
+0.07,
+0.96,
+0.28,
+-85.51
+],
+[
+0.46,
+-0.28,
+0.84,
+679.81
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12424.39,
+12452.74,
+-100.0,
+-71.06,
+863.0,
+892.3
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "ringpad",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Camera window gasket, under the window"
+},
+{
+"key": "F48b#3",
+"step": "F48b",
+"name": "Camera window flat ring",
+"part_indices": [
+131
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+0.88,
+0.07,
+-0.46,
+12826.42
+],
+[
+0.07,
+0.96,
+0.28,
+-209.51
+],
+[
+0.46,
+-0.28,
+0.84,
+676.06
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12812.39,
+12840.74,
+-224.0,
+-195.06,
+863.0,
+892.3
+],
+"support": "tray",
+"side": "A",
+"actor": "A",
+"tool": "ringpad",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Camera window flat ring"
+},
+{
+"key": "F49#1",
+"step": "F49",
+"name": "Pressure transducer",
+"part_indices": [
+134
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12723.89
+],
+[
+0.0,
+1.0,
+0.0,
+-138.56
+],
+[
+0.0,
+0.0,
+1.0,
+745.1
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12810.39,
+12837.39,
+-103.06,
+-74.06,
+872.0,
+954.85
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.17,
+"two_arm": false,
+"heavy": false,
+"label": "Pressure transducer"
+},
+{
+"key": "F49#2",
+"step": "F49",
+"name": "Overpressure relief valve",
+"part_indices": [
+135
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12919.39
+],
+[
+0.0,
+1.0,
+0.0,
+-461.0
+],
+[
+0.0,
+0.0,
+1.0,
+745.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12950.39,
+12968.39,
+-400.0,
+-382.0,
+872.0,
+919.0
+],
+"support": "nest",
+"side": "A",
+"actor": "A",
+"tool": "gripper",
+"mass_kg": 0.079,
+"two_arm": false,
+"heavy": false,
+"label": "Overpressure relief valve"
+},
+{
+"key": "P212#1",
+"step": "",
+"name": "Rail-hole bonded seal washers",
+"part_indices": [
+212
+],
+"solids": [
+[
+212,
+0
+]
+],
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12927.14
+],
+[
+0.0,
+1.0,
+0.0,
+39.5
+],
+[
+0.0,
+0.0,
+1.0,
+785.75
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12812.39,
+12821.89,
+150.5,
+152.0,
+863.0,
+872.5
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Rail-hole bonded seal washers"
+},
+{
+"key": "P212#2",
+"step": "",
+"name": "Rail-hole bonded seal washers",
+"part_indices": [
+212
+],
+"solids": [
+[
+212,
+1
+]
+],
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12867.14
+],
+[
+0.0,
+1.0,
+0.0,
+-56.0
+],
+[
+0.0,
+0.0,
+1.0,
+785.75
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12812.39,
+12821.89,
+55.0,
+56.5,
+863.0,
+872.5
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Rail-hole bonded seal washers"
+},
+{
+"key": "P212#3",
+"step": "",
+"name": "Rail-hole bonded seal washers",
+"part_indices": [
+212
+],
+"solids": [
+[
+212,
+2
+]
+],
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12947.14
+],
+[
+0.0,
+1.0,
+0.0,
+285.5
+],
+[
+0.0,
+0.0,
+1.0,
+785.75
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12952.39,
+12961.89,
+396.5,
+398.0,
+863.0,
+872.5
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Rail-hole bonded seal washers"
+},
+{
+"key": "P212#4",
+"step": "",
+"name": "Rail-hole bonded seal washers",
+"part_indices": [
+212
+],
+"solids": [
+[
+212,
+3
+]
+],
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12887.14
+],
+[
+0.0,
+1.0,
+0.0,
+190.0
+],
+[
+0.0,
+0.0,
+1.0,
+785.75
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12952.39,
+12961.89,
+301.0,
+302.5,
+863.0,
+872.5
+],
+"support": "tray",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "Rail-hole bonded seal washers"
+},
+{
+"key": "P002#1",
+"step": "",
+"name": "Leveling mounts, process module",
+"part_indices": [
+2
+],
+"solids": [
+[
+2,
+0
+]
+],
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+13510.89
+],
+[
+0.0,
+1.0,
+0.0,
+-152.5
+],
+[
+0.0,
+0.0,
+1.0,
+1084.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+13108.39,
+13133.39,
+-400.0,
+-375.0,
+872.0,
+924.0
+],
+"support": "nest",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": false,
+"label": "Leveling mounts, process module"
+},
+{
+"key": "P002#2",
+"step": "",
+"name": "Leveling mounts, process module",
+"part_indices": [
+2
+],
+"solids": [
+[
+2,
+1
+]
+],
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+13510.89
+],
+[
+0.0,
+1.0,
+0.0,
+202.5
+],
+[
+0.0,
+0.0,
+1.0,
+1084.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+13108.39,
+13133.39,
+375.0,
+400.0,
+872.0,
+924.0
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": false,
+"label": "Leveling mounts, process module"
+},
+{
+"key": "P002#3",
+"step": "",
+"name": "Leveling mounts, process module",
+"part_indices": [
+2
+],
+"solids": [
+[
+2,
+2
+]
+],
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12840.89
+],
+[
+0.0,
+1.0,
+0.0,
+-37.5
+],
+[
+0.0,
+0.0,
+1.0,
+1084.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+13108.39,
+13133.39,
+-285.0,
+-260.0,
+872.0,
+924.0
+],
+"support": "nest",
+"side": "A",
+"actor": "",
+"tool": "",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": false,
+"label": "Leveling mounts, process module"
+},
+{
+"key": "P002#4",
+"step": "",
+"name": "Leveling mounts, process module",
+"part_indices": [
+2
+],
+"solids": [
+[
+2,
+3
+]
+],
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12840.89
+],
+[
+0.0,
+1.0,
+0.0,
+87.5
+],
+[
+0.0,
+0.0,
+1.0,
+1084.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+13108.39,
+13133.39,
+260.0,
+285.0,
+872.0,
+924.0
+],
+"support": "nest",
+"side": "B",
+"actor": "",
+"tool": "",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": false,
+"label": "Leveling mounts, process module"
+},
+{
+"key": "P004#1",
+"step": "",
+"name": "Leveling mounts, gas module",
+"part_indices": [
+4
+],
+"solids": [
+[
+4,
+0
+]
+],
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+6994.03
+],
+[
+0.0,
+1.0,
+0.0,
+2142.5
+],
+[
+0.0,
+0.0,
+1.0,
+356.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+7411.53,
+7436.53,
+1910.0,
+1935.0,
+144.0,
+196.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": true,
+"label": "Leveling mounts, gas module"
+},
+{
+"key": "P004#2",
+"step": "",
+"name": "Leveling mounts, gas module",
+"part_indices": [
+4
+],
+"solids": [
+[
+4,
+1
+]
+],
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7968.49
+],
+[
+0.0,
+1.0,
+0.0,
+1608.5
+],
+[
+0.0,
+0.0,
+1.0,
+356.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8385.99,
+8410.99,
+1866.0,
+1891.0,
+144.0,
+196.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": true,
+"label": "Leveling mounts, gas module"
+},
+{
+"key": "P004#3",
+"step": "",
+"name": "Leveling mounts, gas module",
+"part_indices": [
+4
+],
+"solids": [
+[
+4,
+2
+]
+],
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7503.49
+],
+[
+0.0,
+1.0,
+0.0,
+2098.5
+],
+[
+0.0,
+0.0,
+1.0,
+356.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8450.99,
+8475.99,
+1866.0,
+1891.0,
+144.0,
+196.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": true,
+"label": "Leveling mounts, gas module"
+},
+{
+"key": "P004#4",
+"step": "",
+"name": "Leveling mounts, gas module",
+"part_indices": [
+4
+],
+"solids": [
+[
+4,
+3
+]
+],
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7568.49
+],
+[
+0.0,
+1.0,
+0.0,
+1608.5
+],
+[
+0.0,
+0.0,
+1.0,
+356.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+8515.99,
+8540.99,
+1866.0,
+1891.0,
+144.0,
+196.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.06,
+"two_arm": false,
+"heavy": true,
+"label": "Leveling mounts, gas module"
+},
+{
+"key": "P005",
+"step": "",
+"name": "19 in. rack frame",
+"part_indices": [
+5
+],
+"solids": null,
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+7292.73
+],
+[
+0.0,
+1.0,
+0.0,
+1570.0
+],
+[
+0.0,
+0.0,
+1.0,
+356.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+6302.73,
+6862.73,
+1270.0,
+1870.0,
+144.0,
+724.0
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 22.0,
+"two_arm": false,
+"heavy": true,
+"label": "19 in. rack frame"
+},
+{
+"key": "P181",
+"step": "",
+"name": "Guard frame",
+"part_indices": [
+181
+],
+"solids": null,
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+11222.73
+],
+[
+0.0,
+1.0,
+0.0,
+1535.0
+],
+[
+0.0,
+0.0,
+1.0,
+304.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+10802.73,
+11532.73,
+1270.0,
+1750.0,
+144.0,
+670.11
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 6.296,
+"two_arm": false,
+"heavy": true,
+"label": "Guard frame"
+},
+{
+"key": "P185",
+"step": "",
+"name": "Guard door rail",
+"part_indices": [
+185
+],
+"solids": null,
+"category": "frame",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+12642.73
+],
+[
+0.0,
+1.0,
+0.0,
+1867.5
+],
+[
+0.0,
+0.0,
+1.0,
+304.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+12302.73,
+13362.73,
+1589.0,
+1594.0,
+144.0,
+670.11
+],
+"support": "pallet",
+"side": "pallet",
+"actor": "",
+"tool": "",
+"mass_kg": 0.666,
+"two_arm": false,
+"heavy": true,
+"label": "Guard door rail"
+},
+{
+"key": "BIN-85015A47",
+"step": "",
+"name": "85015A47: 2 x Blade-cartridge ball plungers, M6 x 1 18-8 with 44",
+"part_indices": [
+215
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+13038.39
+],
+[
+0.0,
+1.0,
+0.0,
+-420.0
+],
+[
+0.0,
+0.0,
+1.0,
+860.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+13038.392774215032,
+13098.392774215032,
+-420.0,
+-360.0,
+860.0,
+890.0
+],
+"support": "bin",
+"side": "A",
+"actor": "",
+"tool": "screw presenter",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "85015A47 x2"
+},
+{
+"key": "BIN-92290A144",
+"step": "",
+"name": "92290A144: 10 x Rail-hole plug screws, M4 x 10 316, on bonded seal",
+"part_indices": [
+211,
+240,
+261
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+13038.39
+],
+[
+0.0,
+1.0,
+0.0,
+-340.0
+],
+[
+0.0,
+0.0,
+1.0,
+860.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+13038.392774215032,
+13098.392774215032,
+-340.0,
+-280.0,
+860.0,
+890.0
+],
+"support": "bin",
+"side": "A",
+"actor": "",
+"tool": "screw presenter",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "92290A144 x10"
+},
+{
+"key": "BIN-92290A148",
+"step": "",
+"name": "92290A148: 4 x Overflow-funnel screws, M4 x 12 316, counterbored",
+"part_indices": [
+226
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+13038.39
+],
+[
+0.0,
+1.0,
+0.0,
+-260.0
+],
+[
+0.0,
+0.0,
+1.0,
+860.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+13038.392774215032,
+13098.392774215032,
+-260.0,
+-200.0,
+860.0,
+890.0
+],
+"support": "bin",
+"side": "A",
+"actor": "",
+"tool": "screw presenter",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "92290A148 x4"
+},
+{
+"key": "BIN-92290A252",
+"step": "",
+"name": "92290A252: 2 x Recoater sensor posts to the base plate, M5 x 25 i",
+"part_indices": [
+269
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+13038.39
+],
+[
+0.0,
+1.0,
+0.0,
+-180.0
+],
+[
+0.0,
+0.0,
+1.0,
+860.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+13038.392774215032,
+13098.392774215032,
+-180.0,
+-120.0,
+860.0,
+900.0000001
+],
+"support": "bin",
+"side": "A",
+"actor": "",
+"tool": "screw presenter",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "92290A252 x2"
+},
+{
+"key": "BIN-93600A304",
+"step": "",
+"name": "93600A304: 8 x Blade-cartridge dowels, \u00d83 x 10 316",
+"part_indices": [
+214,
+223,
+230,
+233
+],
+"solids": null,
+"category": "seal",
+"T": [
+[
+1.0,
+0.0,
+0.0,
+13038.39
+],
+[
+0.0,
+1.0,
+0.0,
+-100.0
+],
+[
+0.0,
+0.0,
+1.0,
+860.0
+],
+[
+0.0,
+0.0,
+0.0,
+1.0
+]
+],
+"bbox": [
+13038.392774215032,
+13098.392774215032,
+-100.0,
+-40.0,
+860.0,
+890.0
+],
+"support": "bin",
+"side": "A",
+"actor": "",
+"tool": "screw presenter",
+"mass_kg": 0.0,
+"two_arm": false,
+"heavy": false,
+"label": "93600A304 x8"
+}
+]
+}

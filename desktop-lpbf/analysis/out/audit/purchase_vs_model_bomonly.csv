@@ -1,0 +1,317 @@
+kind,file,id,part_numbers,item,model_parts,costed_by,reason
+bom.csv line,bom.csv,L1,,Fiber laser source,2,L1,
+bom.csv line,bom.csv,L2,,Laser chiller,0,L2,
+bom.csv line,bom.csv,L3,,Collimator / beam expander,1,L3,
+bom.csv line,bom.csv,L4,,Safety shutter + beam dump,1,L4,
+bom.csv line,bom.csv,L5,,2-axis galvo scan head,1,L5,
+bom.csv line,bom.csv,L6,,F-theta lens,1,L6,
+bom.csv line,bom.csv,L7,,Chamber laser window,1,L7,
+bom.csv line,bom.csv,C1,,Scan + laser controller,0,C1,
+bom.csv line,bom.csv,C2,,Supervisor computer,0,C2,
+bom.csv line,bom.csv,C3,,Motion controller and stepper drive,0,C3,
+bom.csv line,bom.csv,C4,,DC supplies (UPS-backed) and 24 V branch protection,0,C4,
+bom.csv line,bom.csv,C5,,Process I/O PLC and thermocouple inputs,0,C5,
+bom.csv line,bom.csv,C6,,"4U control drawer, PB2 box and DIN hardware",2,C6,
+bom.csv line,bom.csv,M1,,Recoater axis (less servo),12,M1,
+bom.csv line,bom.csv,M2,,Servo motors,2,M2,
+bom.csv line,bom.csv,M3,,Z stage (less servo): integrated actuator under the floor,5,M3,
+bom.csv line,bom.csv,M4,,"Metering base, roller drive and overflow",8,M4,
+bom.csv line,bom.csv,M5,,Recoater blade cartridges,4,M5,
+bom.csv line,bom.csv,M6,,Layer camera + lighting,4,M6,
+bom.csv line,bom.csv,G1,,"Process chamber: through-frame, floor plate, lid, door and their small parts",23,G1,
+bom.csv line,bom.csv,G2,,Vacuum pump,2,G2,
+bom.csv line,bom.csv,G3,,Argon supply,1,G3,
+bom.csv line,bom.csv,G4,,Recirculation blower,1,G4,
+bom.csv line,bom.csv,G5,,Filter train,1,G5,
+bom.csv line,bom.csv,G6,,O2 analyzer,1,G6,
+bom.csv line,bom.csv,G7,,Valves / fittings / gauges,20,G7,
+bom.csv line,bom.csv,G8,,"Chamber, module and port seals",24,G8,
+bom.csv line,bom.csv,G9,,Dew-point / moisture sensor,0,G9,
+bom.csv line,bom.csv,S1,,Safety controller and final elements,0,S1,
+bom.csv line,bom.csv,S2,,Guard lock and guard-position switch,2,S2,
+bom.csv line,bom.csv,S3,,"E-stops (rack, guard front, gas module, spare)",5,S3,
+bom.csv line,bom.csv,S4,,Key switch + emission indicator + manual reset + HOT lamp,4,S4,
+bom.csv line,bom.csv,S5,,Laser-safe viewing window,1,S5,
+bom.csv line,bom.csv,S6,,Laser safety eyewear (service/alignment),0,S6,
+bom.csv line,bom.csv,S7,,Room O2-deficiency monitor,0,S7,
+bom.csv line,bom.csv,S8,,Class D extinguisher,0,S8,
+bom.csv line,bom.csv,S9,,"Rack, guard frame, guard panels and sliding guard door",6,S9,
+bom.csv line,bom.csv,F3,,Levelling mounts (process and gas modules),2,F3,
+bom.csv line,bom.csv,F4,,Module base plates (process and gas),2,F4,
+bom.csv line,bom.csv,F5,,"Optics bridge, posts and beam-path mounts",7,F5,
+bom.csv line,bom.csv,P1,,Glovebox,0,P1,
+bom.csv line,bom.csv,T1,,Laser power sensor (calibration head on the plate),0,T1,
+bom.csv line,bom.csv,T2,,Melt-pool photodiode and its optics,3,T2,
+bom.csv line,bom.csv,T3,,Calibration tools,0,T3,
+bom.csv line,bom.csv,H1,,"Heater stacks for the three build modules, rod-end feedthroughs and thermocouple wiring",6,H1,
+bom.csv line,bom.csv,H2,,"Heater power, switching, independent limit and the plate < 50 C channel",0,H2,
+bom.csv line,bom.csv,H3,,Module cooling fan under the floor,0,H3,
+bom.csv line,bom.csv,B1,,"Three build modules (Ø25 / Ø50 / Ø75): cylinders, spigot-flanges, pistons, plates, hollow rods",7,B1,
+bom.csv line,bom.csv,B2,,"Module seals, clamping and Z coupling",5,B2,
+bom.csv line,bom.csv,B3,,Zero-point module clamps (round 6),5,B3,
+bom.csv line,bom.csv,B4,,Zero-point release air (round 6),3,B4,
+bom.csv line,bom.csv,R1,,Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters,6,R1,
+bom.csv line,bom.csv,A1,,"Step-confirm sensors, reservoir ID and weighing",8,A1,
+bom.csv line,bom.csv,A2,,Cleaning and consumables,7,A2,
+bom.csv line,bom.csv,A3,,"Pneumatic door drive and latch actuators, valves and air prep; robot handles and tags",11,A3,
+bom.csv line,bom.csv,D1,,Tray dock (tray half) and umbilicals,6,D1,
+bom.csv line,bom.csv,D2,,"UPS (2U, in the rack)",1,D2,
+bom.csv line,bom.csv,FX,,"Screws, helical inserts, dowels, set screws, retainers and disc springs",45,FX,
+bom.csv line,bom.csv,E1,,"Power box PB1: main disconnect, branch protection, contactors",4,E1,
+bom.csv line,bom.csv,E2,,Ethernet switch,0,E2,
+bom.csv line,bom.csv,E3,,Axis home sensors and chamber-at-ambient switch,6,E3,
+bom.csv line,bom.csv,E4,,"Bulk wire, bonding straps, ESD",0,E4,
+bom.csv line,bom.csv,E5,,"Optional: milliohm meter, UPS network card, LED-bar feedthrough",0,E5,
+bom.csv line,bom.csv,X1,,Machining and fabrication of the custom parts not costed elsewhere,0,X1,
+purchase row,mcmaster-parts.csv,S9,5537T97,"T-Slotted Framing, Single 4-Slot Rail, Silver, 30 mm Square, Hollow",0,S9,stale: line S9's notes retire it
+purchase row,mcmaster-parts.csv,S9,5537T536,"T-Slotted Framing, Gusset Bracket for 30 mm High Rail, 1-3/16"" Long",0,S9,stale: line S9's notes retire it
+purchase row,mcmaster-parts.csv,S9,5278N47,"Self-Aligning T-Slotted Framing Nuts with Spring Tab, Drop-in, for 30 mm Rail, M6 Thread Size",0,S9,stale: line S9's notes retire it
+purchase row,mcmaster-parts.csv,S9,5537T847,"T-Slotted Framing, Rail-to-Rail Hinge for 30 mm High Rail, Silver",0,S9,stale: line S9's notes retire it
+purchase row,mcmaster-parts.csv,S9,5537T419,"T-Slotted Framing, Black Plastic Pull Handle for 30 mm High Rail, 5-3/16"" Long",0,S9,stale: line S9's notes retire it
+purchase row,mcmaster-parts.csv,S9,89155K135,"Oversized Multipurpose 6061 Aluminum Sheet, 1/2"" Thick, 12"" x 24""",0,S9,stale: line S9's notes retire it
+purchase row,mcmaster-parts.csv,G1,89155K135,"Oversized Multipurpose 6061 Aluminum Sheet, 1/2"" Thick, 12"" x 24""",0,G1,stale: line G1 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,G1,91292A137,"18-8 Stainless Steel Socket Head Screw, M6 x 1 mm Thread Size, 20 mm Long, Fully Threaded",0,G1,stale: line G1 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,G1,91292A126,"18-8 Stainless Steel Socket Head Screw, M5 x 0.8 mm Thread Size, 16 mm Long, Fully Threaded",0,G1,stale: line G1 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,G8,1165N11,"Viton O-ring cord, 0.070 in., 90A",0,G8,stale: line G8's notes retire it
+purchase row,mcmaster-parts.csv,M3,6638K11,"Ball Screw with Flange Ball Nut, M12 Thread Size, 300 mm Long Ball Screw",0,M3,stale: line M3 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,M3,60755K12,"Lead and Ball Screw End Support for Combined Radial and Thrust Loads, 23/64"" ID",0,,alternative (qty 0)
+purchase row,mcmaster-parts.csv,M3,60755K219,"Lead and Ball Screw End Support for Radial Loads, 23/64"" ID",0,,alternative (qty 0)
+purchase row,mcmaster-parts.csv,M3,6446K781,"High-Speed Precision Flexible Shaft Coupling for 3/8"" x 8 mm Shaft Diameter, 1-11/32"" Overall Length",0,M3,stale: line M3 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,M3,89895K623,"Smooth-Bore Seamless 304 Stainless Steel Tubing, 2-1/4"" OD, 0.065"" Wall Thickness",0,M3,stale: line M3 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,M3,1490N11,"Fluoroelastomer Rod Wiper for 1/2"" Rod Diameter, MS28776-1",0,M3,stale: line M3 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,M3,1240K129,"Tapped Linear Motion Shaft, Tapped on Both Ends, 440C Stainless Steel, 1/2"" Diameter, 12"" Long",0,M3,stale: line M3 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,M3,1465N1,"Wear Ring Stock for 0.250"" Groove Width, 0.250"" Wide x 0.063"" Thick Seal",0,M3,stale: line M3 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,M1,6446K781,"High-Speed Precision Flexible Shaft Coupling for 3/8"" x 8 mm Shaft Diameter, 1-11/32"" Overall Length",0,M1,
+purchase row,mcmaster-parts.csv,M1,9572K33,"V-Ring for 3/8"" ID x 3/4"" OD PTFE Stackable V-Ring Packing Seal",0,M1,stale: line M1's notes retire it
+purchase row,mcmaster-parts.csv,M1,9572K63,"One Male and One Female Adapter for 3/8"" ID x 3/4"" OD PTFE Stackable V-Ring Packing Seal",0,M1,stale: line M1's notes retire it
+purchase row,mcmaster-parts.csv,M5,1187N14,"High-Temperature Silicone Cord Stock, 3 mm Wide",0,M5,stock for custom parts
+purchase row,mcmaster-parts.csv,M4,8989K418,"Welded 304 Stainless Steel Tubing, 2"" OD, 0.065"" Wall Thickness",0,M4,stale: line M4's notes retire it
+purchase row,mcmaster-parts.csv,M4,4518K43,"Quick-Clamp High-Vacuum Fitting for Stainless Steel Tubing, for 2"" Tube x Butt-Weld, 1-9/16"" Long",0,M4,stale: line M4's notes retire it
+purchase row,mcmaster-parts.csv,M4,3487N257,"Force Sensor for Tension and Compression, S-Shape, 25-lb. Capacity",0,M4,stale: line M4's notes retire it
+purchase row,mcmaster-parts.csv,G2,4396K21,"Electric Vacuum Pump, 115V AC, NEMA 5-15 Plug, 3 CFM Maximum Flow Rate",0,G2,alternative in line G2
+purchase row,mcmaster-parts.csv,G2,3394N12,"High-Vacuum Inline Filter, Quick-Clamp Connection, Flange Size 25, 1.57"" Flange OD",0,G2,
+purchase row,mcmaster-parts.csv,G4,8677K32,"Edge-Flow Equipment-Cooling Blower, 24V DC, 5.31"" Square",0,,alternative (qty 0)
+purchase row,mcmaster-parts.csv,G4,9960K51,"High-Flow Low-Pressure Compressed Air Blower, Single Stage, Single Phase, 27 CFM @ 0 PSI",0,,alternative (qty 0)
+purchase row,mcmaster-parts.csv,G7,5539N26,"Differential Pressure Transmitter for Air, 4-20 mA Output Signal, 0 to 10 in. of H2O",0,G7,
+purchase row,mcmaster-parts.csv,G7,4277T52,"Compact Nylon Pressure-Relief Valve for Air, 1/4 NPT Male",0,G7,stale: line G7's notes retire it
+purchase row,mcmaster-parts.csv,G7,7833K76,"High-Pressure Precision Flow-Adjustment Valve, Metal-to-Metal Seat, Brass Body, 1/4 NPT Female x Female",0,G7,
+purchase row,mcmaster-parts.csv,G7,5182K111,"Yor-Lok Fitting for Stainless Steel Tubing, Straight Adapter for 1/4"" Tube OD x 1/4 NPT Male",0,G7,stock for custom parts
+purchase row,mcmaster-parts.csv,G7,4518K63,"Fluoroelastomer Rubber O-Ring for 1"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
+purchase row,mcmaster-parts.csv,G7,4518K73,"Wing Nut Clamp for 1-1/2"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
+purchase row,mcmaster-parts.csv,G7,4518K64,"Fluoroelastomer Rubber O-Ring for 1.5"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
+purchase row,mcmaster-parts.csv,S4,7545K7,Lens Cap for 22 mm Panel Cutout Diameter Oil-Resistant Panel Light with Screw Terminals,0,S4,stale: line S4 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,S4,1577T43,"Surface-Mount LED Stack Light, 3 Lights, 6-3/8"" High",0,S4,stale: line S4 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,C6,7812K14,"Powder-Coated Steel Watertight Enclosure, Hinged Cover with Slotted Latch, 10"" x 12"" x 6"", Gray",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,C6,7812K54,"11"" x 9"" Steel Panel for Powder-Coated Steel Watertight Enclosure",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,C6,8961K15,"Steel DIN 3 Rail, 7.5mm Deep, 1m Long",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,C6,69915K54,"Liquid-Tight Plastic Cord Grip, Straight, for 0.2""-0.35"" Cord OD, 1/2 NPT Thread, Nylon",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
+purchase row,fasteners.csv,row2,95966A705,"Socket Head Captive Panel Screw, M6 x 1 mm Thread, 20 mm Long (6 mm thread, 4.2 mm reduced shank)",0,FX,
+purchase row,fasteners.csv,row7,91732A767,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M2.5 x 0.45 mm Thread Size, 3.8 mm Installed Length",0,FX,
+purchase row,fasteners.csv,row15,91065A610,"Retainer for M6 x 1 mm Thread Size Captive Panel Screws, 18-8 Stainless Steel",0,FX,
+purchase row,fasteners.csv,row16,92029A142,"316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 6 mm Long",0,FX,
+purchase row,fasteners.csv,row18,92290A854,"316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 30 mm Long, Fully Threaded",0,FX,
+purchase row,seal-parts.csv,row4,2-110 9464K977,Rod glands S25 (2),0,G8,stock for custom parts
+purchase row,seal-parts.csv,row7,2-041 9464K836,Gland-plate face seal L75,0,G8,stock for custom parts
+purchase row,seal-parts.csv,row8,2-014,Hermetic-connector face seal on each rod end (3 modules),0,G8,stock for custom parts
+purchase row,seal-parts.csv,row16,2-022 9464K492,Camera adapter to lid; reservoir S lid,0,G8,
+purchase row,seal-parts.csv,row18,2-017 9464K457,Camera window seat,0,G8,
+purchase row,seal-parts.csv,row21,2-904 5267T786,"SAE J1926 -4 port O-rings (argon in, O2 sample, transducer, relief valve)",0,G8,
+purchase row,seal-parts.csv,row24,5174A35,"Door: robot alternative, pneumatic hold-down clamp (not drawn; same side faces)",0,G8,
+purchase row,seal-parts.csv,row25,802-U,"Door: robot alternative, pneumatic clamp (not drawn)",0,G8,
+purchase row,seal-parts.csv,row26,8EA-109-1,Door: clamp-closed sensor for the 802-U,0,G8,
+purchase row,seal-parts.csv,row27,5210N21,Drawer latch candidate (does not fit the drawn 20 mm plate: needs a 22 mm hole),0,G8,stock for custom parts
+purchase row,seal-parts.csv,row30,FD-F1-0250-LC FD-F1-KF25-0250-LC Ideal Vacuum P107199 P107199 spec sheet model F,Rotary feedthrough with a published price (alternative),0,G8,alternative (qty 0)
+purchase row,seal-parts.csv,row31,9C-K16 PN 100011,"Rod-end hermetic feedthrough meeting the spec (9 pins, KF-16): not drawn, needs a KF-16 port on the rod end",0,G8,stock for custom parts
+purchase row,seal-parts.csv,row32,A0408-2-QF Ideal Vacuum P108063 P108063,Rod-end type K thermocouple feedthrough (KF-16): not drawn,0,G8,stock for custom parts
+purchase row,seal-parts.csv,row33,HGG.1B.310.CLLPV,Rod-end connector drawn (LEMO 1B envelope): fails the spec,0,G8,alternative (qty 0)
+purchase row,seal-parts.csv,row34,5182K862,"Argon-in and O2-sample fittings, 1/4 in. tube x 7/16-20 SAE O-ring boss, 316",0,G8,stock for custom parts
+purchase row,seal-parts.csv,row36,,"Window and camera-window flat clamp rings, FKM sheet 1.0 mm",0,G8,stock for custom parts
+purchase row,vendor-parts.csv,row10,4518K73,,0,G7,
+purchase row,vendor-parts.csv,row14,4396K21,,0,G2,
+purchase row,safety-parts.csv,SP1,0-25 % O2 2 relays 4-20 mA LED Macurco OX-6,Fixed O2 monitor for the lab room (breathing height and near the argon cylinder),0,C5,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP2,Macurco OX-6 same part,Fixed O2 monitor inside the Kardex Shuttle shaft (low) and one at the tray bay,0,M3,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP3,18995T81 McMaster 18995T81 portable O2 detector nonreplaceable battery,Personal O2 monitor for filter changes and any entry,0,S7,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP5,"Critical-flow orifice, 0.5-1 mm class Lee Co. or O'Keefe Controls",Critical-flow (sonic) orifice in the argon line,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP6,34.5 mbar 4277T52 McMaster 4277T52 nylon relief 0.5 psi,Low-pressure relief on the chamber (BOM part),0,G7,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP7,Accuglass PRV-K40 KF-40 relief valve KF-40 PRV-K40 adjustable 0.5-2.0 psi set 2 ,Rated overpressure relief (spring) on a KF port,0,M4,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP8,9-11 psi IdealVac KF-40 burst disk KF-40,Last-resort burst disc on a KF-40 port,0,M4,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP9,Airgas size 80 argon with wall chain or stand ~85 ft3 = 2.4 m3,Argon cylinder restraint and smallest cylinder,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP10,1-1/2 in. exhaust line KF-25 KF-25 hose a flow or pressure switch on the duct,Pump exhaust duct to outdoors with a flow switch,0,G2,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP11,A0043-FK,Class 4 danger sign for the room door,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP12,,Invisible laser radiation label on guard and housing,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP15,SI-LS42DMG,Second guard-locking interlock (cheaper alternative / second guard),0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP16,"26 safety inputs, 4 safety outputs Banner SC26-2DE SC26-2DE",Safety controller (replace the G9SE-201),0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP17,Industrial fiber-laser shutter LB2L/M Thorlabs LB2L/M 500 W dump quote,Laser safety shutter + beam dump,0,L4,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP19,Thorlabs LG1 laser safety glasses,Service eyewear,0,S6,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP20,6435T23 McMaster 6435T23 sodium chloride 30 lb,Class D extinguisher (BOM part),0,S8,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP21,Steel covered pail dry sand,Dry sand pail with lid (cover for small powder and condensate fires),0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP22,VLF-250 VSP-722 VSP-722 aspirator Xtralis/Kidde VESDA VLF-250,Aspirating smoke detection in the Shuttle,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP23,5572N116,Combustible-metal-dust vacuum (BOM part),0,A2,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP24,Div 1 Dynabrade 61496 pneumatic immersion vac,Alternative combustible-metal vacuum (water immersion),0,A2,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP25,,"Grounding and bonding kit (static ground wire with clamps; bond the chamber, reservoirs, hoses, vacuum, pails)",0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP26,1-ohm,Ground-continuity tester,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP27,bag-out bags dry sand nitrile over butyl gloves non-sparking scoop,Filter-change bag-out kit,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP28,3M 2091 P100 filters 3M 6800 medium,Full-facepiece respirator,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP29,Nomex-class coveralls heat-resistant gloves for 200 C parts,Flame-resistant coveralls and gloves,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP31,CN708 DwyerOmega CN708 latching limit,Heater limit controller (BOM part),0,H2,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP32,2-pole,Lockable disconnect for the 240 V feed,0,,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP33,ISO 13855 distance Safety laser scanner or ESPE,Presence scanner or light curtain on the aisle side of the guard (check Kardex and MiR first),0,,"room safety, PPE or option"
+purchase row,robot-tooling.csv,RT1,2F-85,gripper,0,,robot cell
+purchase row,robot-tooling.csv,RT2,eoat.PLATE_FINGERS,plate fingers,0,,robot cell
+purchase row,robot-tooling.csv,RT3,cell.mir_deck_bodies,cap stand on the MiR250,0,,robot cell
+purchase row,robot-tooling.csv,RT4,cell.mir_deck_bodies,wand cradle on the MiR250,0,,robot cell
+purchase row,robot-tooling.csv,RT5,eoat.WAND,wand collar with grip fin,0,,robot cell
+purchase row,robot-tooling.csv,RT6,VHS110EXP,ATEX / Class II vacuum for Al powder,0,,robot cell
+purchase row,robot-tooling.csv,RT7,01768601 wand 01768900 crevice tool,vacuum wand and crevice tool,0,,robot cell
+purchase row,robot-tooling.csv,RT8,cell.BALLAST,ballast plate,0,,robot cell
+purchase row,robot-tooling.csv,RT9,UR12e,wrist force/torque sensing,0,,robot cell
+purchase row,robot-tooling.csv,RT10,9120-011M 9120-011T,tool changer (not used),0,,robot cell
+purchase row,robot-tooling.csv,RT11,am-5750,camera calibration target,0,,robot cell
+purchase row,robot-tooling.csv,RA1,automation.py,guard-door handle,0,,robot cell
+purchase row,robot-tooling.csv,RA3,CDQ2B20 SMC CDQ2B20 class,draw-latch actuators,0,A3,robot cell
+purchase row,robot-tooling.csv,RA3b,8051,door clamp (catalogue alternative to RA3),0,A3,robot cell
+purchase row,robot-tooling.csv,RA3c,D-M9B,clamp-closed sensors,0,A3,robot cell
+purchase row,robot-tooling.csv,RA4,automation.py,drawer latch wing heads,0,,robot cell
+purchase row,robot-tooling.csv,RA4b,MKB25-10LZ MKB25-10RZ,drawer clamp (powered alternative to RA4),0,,robot cell
+purchase row,robot-tooling.csv,RA5,automation.py,blade-cartridge grip fin,0,,robot cell
+purchase row,robot-tooling.csv,RA5c,94748A956,blade-cartridge pin (alternative to RA5b),0,,robot cell
+purchase row,robot-tooling.csv,RA6,automation.py,liner pull tabs,0,,robot cell
+purchase row,robot-tooling.csv,RA7,automation.py,AprilTag plates,0,,robot cell
+purchase row,robot-tooling.csv,RA8,49517 receiver 49607 shank,build-plate drawbar ball lock,0,,robot cell
+purchase row,robot-tooling.csv,RA9,CDQ2B40-10DCMZ,drawbar release cylinder,0,,robot cell
+purchase row,robot-tooling.csv,RA12,SS5Y3-45FD-05U-N7,valve manifold,0,A3,robot cell
+purchase row,robot-tooling.csv,RA13,modules_low.py MODULE_GRIP,module grip block,0,,robot cell
+purchase row,assembly-tooling.csv,E1,UR12e,UR12e collaborative arm (the UR10e renamed),0,,tool or fixture
+purchase row,assembly-tooling.csv,E2,MiR250,MiR250 with a 131 kg ballast plate and a 480 mm cabinet,0,,tool or fixture
+purchase row,assembly-tooling.csv,E3,2F-85 GRP-CPL-062,Robotiq 2F-85 with the ISO 9409 coupling,0,,tool or fixture
+purchase row,assembly-tooling.csv,E4,D405,Intel RealSense D405 on the changer's master side,0,,tool or fixture
+purchase row,assembly-tooling.csv,E5,QC-21,ATI QC-21 automatic tool changer (master + tool plates),0,,tool or fixture
+purchase row,assembly-tooling.csv,E6,QC-21 module per ATI QC-21 options,electrical signal module for the changer (screwdriver / nutrunner / vacuum gripper power and bus),0,,tool or fixture
+purchase row,assembly-tooling.csv,E7,Screwdriver,OnRobot Screwdriver,0,,tool or fixture
+purchase row,assembly-tooling.csv,E8,10CA/N PLUTO 10CA/N class,inline electric nutrunner,0,L6,tool or fixture
+purchase row,assembly-tooling.csv,E8b,,angle-head nutrunner (0.5-10 N m class),0,,tool or fixture
+purchase row,assembly-tooling.csv,E9,,retaining hex bits for socket-head screws (2 / 2.5 / 3 / 4 / 5 mm) and a Ø9 x 150 mm extension,0,,tool or fixture
+purchase row,assembly-tooling.csv,E10,VGC10,OnRobot VGC10,0,,tool or fixture
+purchase row,assembly-tooling.csv,E11,LVP,Krytox LVP vacuum grease (PFPE),0,,tool or fixture
+purchase row,assembly-tooling.csv,C1,,spigot mandrel: acetal cone + 0.45 mm sleeve over the spigot's top edge + Ø50.4 bore plug + Ø24 knob,0,,tool or fixture
+purchase row,assembly-tooling.csv,C2,,spigot pusher: acetal tube ID 97.6 / OD 104 that stops on the mandrel,0,,tool or fixture
+purchase row,assembly-tooling.csv,C3,,rod bullet: PEEK nose plugged into the hollow rod,0,,tool or fixture
+purchase row,assembly-tooling.csv,C4,,ring loader: slotted stainless tube OD 15.6 / ID 12.4 + plunger + 30 mm grip block,0,,tool or fixture
+purchase row,assembly-tooling.csv,C5,1p4.step 3p2.step roller_1p4.step,roller: compliant PTFE wheel Ø30 on a fork (3.2 mm wheel for the 3.53 mm cord; 1.4 mm cartridge for 1.78 mm co,0,,tool or fixture
+purchase row,assembly-tooling.csv,C6,analysis/assembly/tooling.py ring_caps,2F-85 pin caps (2 mm wall over the pad + Ø2 x 6 mm steel pin),0,,tool or fixture
+purchase row,assembly-tooling.csv,C7,,Fixture C (run 1 only; run 2 uses the trunnion C13): chamber upside down on four 6 mm strips outside the lid g,0,,tool or fixture
+purchase row,assembly-tooling.csv,C7b,tooling.fixture_P,Fixture P: floor-standing pedestal for the chamber's floor plate (240 x 150 column; plate underside 1000 mm ab,0,,tool or fixture
+purchase row,assembly-tooling.csv,C8,,Fixture B: two 120 x 200 columns under the process base plate (its underside 1000 mm above the floor),0,,tool or fixture
+purchase row,assembly-tooling.csv,C9,,module nests: stack pedestal Ø44; spigot-face ring Ø130; upright stand on four 10 mm posts at r 48,0,,tool or fixture
+purchase row,assembly-tooling.csv,C10,,three temporary M3 guide pins for stacking the Macor rings and shields,0,,tool or fixture
+purchase row,assembly-tooling.csv,C11,cell2.mir cell2.mir_bodies,tool stand on each MiR's cabinet (as byu-vcl PR 318's finger stand),0,,tool or fixture
+purchase row,assembly-tooling.csv,C12,,small-part vacuum nozzle: Ø5 x 60 mm stem with a 4 mm silicone cup on the VGC10's adaptor plate,0,,tool or fixture
+purchase row,assembly-tooling.csv,C13,trunnion_jaws.step,"trunnion turn-over positioner: two stands, axis 1000 mm up along x, Ø50 shafts, two 12 x 90 x 70 mm jaws on th",0,,tool or fixture
+purchase row,options-mcmaster.csv,H1,6455N24,"Insertion Heater with Standard Wire Lead Covering for 1/4"" Hole, 120V AC, 1-1/2"" Long Heating Element, 50W",0,H1,stale: line H1 no longer cites options-mcmaster.csv
+purchase row,options-mcmaster.csv,H1,3618K422,"Insertion Heater with Standard Wire Lead Covering for 1/4"" Hole, 120V AC, 1-1/2"" Long Heating Element, 100W",0,H1,stale: line H1 no longer cites options-mcmaster.csv
+purchase row,options-mcmaster.csv,H1,5586N19,"Dual-Output Thermocouple Probe for Liquids and Gases, Type K/K, 6"" Long x 1/8"" Diameter Probe",0,H1,stale: line H1 no longer cites options-mcmaster.csv
+purchase row,options-mcmaster.csv,H1,3869K35,"Thermocouple Connector, Flat-Pin Mini, Male Connection, Type K, 400 Degree F Maximum",0,H1,stale: line H1 no longer cites options-mcmaster.csv
+purchase row,options-mcmaster.csv,H1,3869K34,"Thermocouple Connector, Flat-Pin Mini, Female Connection, Type K, 400 Degree F Maximum",0,H1,stale: line H1 no longer cites options-mcmaster.csv
+purchase row,options-mcmaster.csv,B1,89495K18,"Highly Corrosion-Resistant Round Tube, 316 Stainless Steel, 0.188"" Thick Wall, 1-1/4"" OD, Seamless",0,B1,stock for custom parts
+purchase row,options-mcmaster.csv,B1,11119N55,"Highly Corrosion-Resistant 316 Stainless Steel Round Tube, 1/4"" Thick Wall, 2-1/4"" OD, Seamless",0,B1,stock for custom parts
+purchase row,options-mcmaster.csv,B1,89495K4,"Highly Corrosion-Resistant Round Tube, 316 Stainless Steel, 3/8"" Thick Wall, 3-1/2"" OD, Seamless",0,B1,stock for custom parts
+purchase row,options-mcmaster.csv,B1,9260K5,"Highly Corrosion-Resistant 316/316L Stainless Steel Disc, 4"" Diameter",0,B1,stock for custom parts
+purchase row,options-mcmaster.csv,B1,11119N35,"Highly Corrosion-Resistant 316 Stainless Steel Round Tube, 0.065"" Thick Wall, 5/8"" OD, Welded",0,B1,stock for custom parts
+purchase row,options-mcmaster.csv,B2,9464K367,"Chemical-Resistant Viton® Fluoroelastomer O-Ring, 1/8 Fractional Width, Dash Number 240",0,B2,
+purchase row,options-mcmaster.csv,B2,9464K982,"Chemical-Resistant Viton® Fluoroelastomer O-Ring, 3/32 Fractional Width, Dash Number 114",0,B2,
+purchase row,options-mcmaster.csv,B2,95966A705,"Socket Head Captive Panel Screw, M6 x 1 mm Thread, 20 mm Long",0,B2,
+purchase row,options-mcmaster.csv,B2,91065A610,Retainers for M6 x 1 mm Thread Size Captive Panel Screws,0,B2,
+purchase row,options-mcmaster.csv,B2,6435K35,"Clamping Shaft Collar for 5/8"" Diameter, 303 Stainless Steel",0,B2,
+purchase row,options-mcmaster.csv,R1,8983K56,"Multipurpose 304 Stainless Steel Sheet, 0.036"" Thick, 12"" x 24""",0,R1,stock for custom parts
+purchase row,options-mcmaster.csv,R1,8969T3,"316 Stainless Steel Corrosion-Resistant Compression Springs, 1"" Long, 0.25"" OD, 0.192"" ID",0,R1,
+purchase row,options-mcmaster.csv,A2,4123K47,"On/Off Valve with Ultra-High-Vacuum Fittings, Valve Trade Number 40, for 1-1/2"" Tube OD",0,A2,alternative in line A2
+purchase row,options-mcmaster.csv,A2,5572N116,"Vacuum System for Powered Sanders, Air-Powered, Wall-Mount, 1-1/2 Gallon Capacity",0,A2,
+purchase row,options-vendors.csv,H1,P-IH5-0069-24V,"Industrial Heater (50W 24V), Bare Leads",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,24V option Standard Heater Cartridge 40W,Standard Heater Cartridge 40W,0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,RT240,TCO FUSE 250 15A 240C AXIAL,0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,100801,2 Pairs of Thermocouple pins and two Power Pins Feedthrough - KF50,0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,TFT2KY00008,"THERMOCOUPLE FEEDTHROUGH, SINGLE ENDED, 2 PAIR TYPE K, MINI PLUG STYLE ATM CONNECTOR, MOUNTED ON A QF16 FLANGE",0,,alternative (qty 0)
+purchase row,options-vendors.csv,H1,1205020022,"CIRC CBL 5POS RCPT TO WIRE 1.64' (Brad M12 Power L-Code; receptacle, male pins, panel mount, wire leads)",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,1205000300,"CIRC CBL 5POS PLUG TO WIRE 3.28' (Brad M12 Power L-Code; plug, female sockets, free-hanging, wire leads)",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,SMPW-K-M,"Miniature Thermocouple Connectors Flat Pin with Write-on Window (Type K, ANSI, male)",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,SMPW-K-F,"Miniature Thermocouple Connectors Flat Pin with Write-on Window (Type K, ANSI, female)",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H2,CN708,"Temperature Limit Controller with Audible Buzzer and 15 Amp Relay (°C display, 24 Vac/Vdc supply)",0,H2,stale: line H2 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H2,CNI32-AL-DC,"1/32, 1/16, and 1/8 DIN Temperature and Process Limit Controller (1/32 DIN, DC supply)",0,,alternative (qty 0)
+purchase row,options-vendors.csv,H2,D1D12,SSR RELAY SPST-NO 12A 0-100V,0,H2,stale: line H2 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H2,LRS-350-24,"24Vdc 14.6A, Power Supply, 24 Volts DC, 350 Watts",0,H2,stale: line H2 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,A1,E2E-X2B1D12 E2E-X2B1D12 2M,SENSOR INDUCT 2MM PNP M12 NO,0,,alternative (qty 0)
+purchase row,options-vendors.csv,A1,E3NX-FA41 E3NX-FA41 2M,FIBER AMP 1-OUT PNP PW,0,A1,stale: line A1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,A1,3001300,Beontag Ironside Micro NFC Tag | NXP NTAG213,0,A1,stale: line A1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,A1,DTI410,RFID read/write head HF for flush mounting (IO-Link),0,,alternative (qty 0)
+purchase row,options-vendors.csv,A1,SEN-15242,SparkFun Qwiic Scale - NAU7802,0,A1,stale: line A1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,A2,25-250,"50.8mm Dia. 3mm Thick Uncoated, 1λ Fused Silica Window",0,A2,stale: line A2 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,A2,11-742,"Thin Fused Silica Laser Window, 50.80 mm dia. x 1.00 mm, BBAR (950-1150nm)",0,,alternative (qty 0)
+purchase row,options-vendors.csv,A2,MX200 MX200 Series,"MX200 Series: Compact C2D2, Universities and Labs (listed under Group E Metals, Immersion Separators)",0,A2,stale: line A2 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,A2,Mini Immersion Separator Wet Mix for 3D Printing,"Mini Immersion Separator ""Wet (Water) Mix"" Models for 3D Printing and Additive Manufacturing",0,,alternative (qty 0)
+purchase row,options-vendors.csv,A2,FSD75-AP-6H,"ProSense liquid flow switch, spring-supported piston, 3/4in female NPT process connection, 0.26 to 6.6 GPM, Ou",0,A2,stale: line A2 no longer cites options-vendors.csv
+purchase row,plate-materials.csv,B1,1610T27,"Multipurpose 6061 Aluminum, 3-1/4"" Diameter Rod",0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,9257K14,"High-Strength Grade 5 Titanium Disc, 3-1/2"" Diameter x 1/2"" Long",0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,1319T2,"High-Strength 17-4 PH Stainless Steel Disc, Heat Treatment Condition A, 3-1/2"" Diameter",0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,87205K61,"High-Strength 17-4 PH Stainless Steel Rod, 4"" Diameter",0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,86705K25,"Wear-Resistant 410 Stainless Steel Rod, 3-1/4"" Diameter",0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,9260K4,"Highly Corrosion-Resistant 316/316L Stainless Steel Disc, 3-1/2"" Diameter",0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,,"(none: McMaster sells 430 only as sheet, strip, foil and wire)",0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,,(none: McMaster has no 4032 aluminum),0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,4279K18,"Thermally Stable Invar 36 Nickel Alloy Rods (1"" dia. row)",0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,,(AlSi10Mg is not sold as plate stock),0,B1,plate-material options (study)
+purchase row,plate-materials.csv,B1,,"(spray-formed hypereutectic Al-Si, e.g. CE17)",0,B1,plate-material options (study)
+purchase row,vendor-lookups.csv,row3,FTH254-1064,"F-Theta Lens, EFL 254 mm, M85x1.0",0,L6,
+purchase row,vendor-lookups.csv,row4,FTHW75-1064,Replacement protective window for FTH100/FTH160,0,L6,
+purchase row,vendor-lookups.csv,row5,GVS012,"2D Large Beam (10 mm) Galvo System, Silver-Coated Mirrors, PSU Not Included",0,,
+purchase row,vendor-lookups.csv,row6,GBE02-C,"2X Achromatic Galilean Beam Expander, AR 1050-1650 nm",0,,
+purchase row,vendor-lookups.csv,row7,GBE03-C,"3X Achromatic Galilean Beam Expander, AR 1050-1650 nm",0,,
+purchase row,vendor-lookups.csv,row8,WG41050-C,"Ø1"" UVFS Broadband Precision Window, AR 1050-1700 nm, t = 5 mm",0,L7,
+purchase row,vendor-lookups.csv,row10,LG1,"Laser Safety Glasses, Light Green Lenses, 59% VLT, Universal Style",0,,
+purchase row,vendor-lookups.csv,row11,LB2L/M,"Liquid-Cooled Beam Block, 1-12 um, 500 W Max Avg. Power, Pulsed and CW",0,L4,
+purchase row,vendor-lookups.csv,row12,S322C,"Thermal Power Sensor Head, 0.25-11 um, 100 mW-200 W, Ø25 mm, Fan Cooled",0,T1,
+purchase row,vendor-lookups.csv,row13,PDA36A2,"Si Switchable Gain Detector, 350-1100 nm, 12 MHz BW, 13 mm2",0,T2,
+purchase row,vendor-lookups.csv,row14,SG7110,Fiber Galvo Scanner Head (10 mm),0,L5,
+purchase row,vendor-lookups.csv,row15,SG7210,Fiber Galvo Scanner Head,0,L5,
+purchase row,vendor-lookups.csv,row16,RC1001,Input Aperture 10 mm Galvo Scanner Head,0,,
+purchase row,vendor-lookups.csv,row17,DLC2-M4-2D,JCZ Marking Control Card 2.5D (EZCAD3),0,C1,
+purchase row,vendor-lookups.csv,row18,Raycus single-module CW,1.5 kW / 2 kW Raycus Single Module CW Fiber Laser for Cutting,0,,
+purchase row,vendor-lookups.csv,row19,ClearPath-SD,ClearPath-SD integrated servo (step/dir),0,C3,
+purchase row,vendor-lookups.csv,row21,6624K69,"Ball screw, M14, 500 mm, 4 mm lead, ±0.210 mm/300 mm",0,,
+purchase row,vendor-lookups.csv,row23,9901K64,Rotary vane vacuum pump,0,,
+purchase row,vendor-lookups.csv,row24,1165N11,"Viton O-ring cord, 0.070 in., 90A",0,G8,
+purchase row,vendor-lookups.csv,row25,5612T2,"HEPA filter, 12 x 12 in., fiberglass, aluminum frame",0,,
+purchase row,vendor-lookups.csv,row26,4083N11,Glove box (14 x 24 1/2 x 10 in. class),0,P1,
+purchase row,vendor-lookups.csv,row27,4083N14,Glove box with humidity meter and two 1/4 in. gas ports,0,P1,
+purchase row,vendor-lookups.csv,row28,18995T81,"Single-gas O2 detector, 0-25%, nonreplaceable battery",0,S7,
+purchase row,vendor-lookups.csv,row29,6435T23,"Class D fire extinguisher, sodium chloride, 30 lb",0,S8,
+purchase row,vendor-lookups.csv,row30,G9SE-201 Omron,"Safety relay unit, 2+1 outputs",0,S2,
+purchase row,vendor-lookups.csv,row33,SDR-480-24,"Mean Well AC/DC DIN rail supply, 24 V 480 W",0,,
+purchase row,vendor-lookups.csv,row34,OXY-FLEX-0-H,"SST Sensing zirconia oxygen sensor, 4-20 mA output",0,G6,
+purchase row,vendor-lookups.csv,row35,3263 Adafruit,MAX31856 universal thermocouple amplifier breakout,0,M6,
+purchase row,vendor-lookups.csv,row36,QS20XY-Y1,"Dual-Axis, Ø20 mm Beam Galvo System, Mirrors Coated for 1064 nm (Power Supply & Cables Sold Separately)",0,L5,
+purchase row,audit-prices.csv,G1,6061-T651,"6061 T651 Aluminum Plate, 5-1/2 in., width 9.5 in., length 15 in.",0,G1,stock for custom parts
+purchase row,audit-prices.csv,G1,89155K165,"Oversized multipurpose 6061 aluminium sheet, 1 in. thick, 12 x 24 in.",0,G1,stock for custom parts
+purchase row,audit-prices.csv,G1,89155K155,"Oversized Multipurpose 6061 Aluminum Sheet, 3/4"" Thick, 12"" x 24""",0,G1,stock for custom parts
+purchase row,audit-prices.csv,G2,Agilent IDP-3 IDP-3 IDP3A01,"Agilent IDP-3 Dry Scroll Pump, 220 VAC",0,,alternative (qty 0)
+purchase row,audit-prices.csv,G7,902377,"Active Pirani Transmitter only (no display), 1 to 2000 mTorr, plus 4-20 mA and 0-10 VDC outputs, with NW-16 fl",0,G7,
+purchase row,audit-prices.csv,G7,none found,"316 stainless relief valve with FKM seal, ~0.5 psi",0,G7,
+purchase row,audit-prices.csv,G7,none found,316 adapter 7/16-20 SAE-4 male x 1/4 NPT female,0,G7,
+purchase row,audit-prices.csv,G7,5182K862,"Yor-Lok straight adapter, 1/4 in. tube x 7/16-20 UNF male (SAE -04), 316",0,G7,stock for custom parts
+purchase row,audit-prices.csv,G8,9262N11,O-ring splicing jig,0,G8,
+purchase row,audit-prices.csv,G9,DMT143,Vaisala DMT143 Miniature Dew Point Transmitter for OEM Applications,0,G9,
+purchase row,audit-prices.csv,M4,5786N32,"Quick-Clamp High-Vacuum Fitting, Cap for 1-1/2"" OD Aluminum Tube",0,M4,stock for custom parts
+purchase row,audit-prices.csv,M6,4562,16mm 10MP Telephoto Lens for Raspberry Pi HQ Camera,0,,alternative (qty 0)
+purchase row,audit-prices.csv,S9,7648K62,"Steel Electronics Cabinet, 19-1/2"" x 21"" x 24-1/2""",0,,alternative (qty 0)
+purchase row,audit-prices.csv,S9,5537T935,"Silver Corner Bracket for 20 mm High Rail, 3/4"" Long",0,S9,
+purchase row,audit-prices.csv,S9,5278N44,"Self-Aligning T-Slotted Framing Nuts with Spring-Loaded Ball, Drop-in, for 20mm Rail, M5 Thread",0,S9,
+purchase row,audit-prices.csv,S9,7648K69,Back panel for the 7648K62 cabinet,0,,alternative (qty 0)
+purchase row,audit-prices.csv,F4,86825K49,"Easy-to-Machine MIC6 Cast Aluminum Sheet, 5/8"" Thick, 24"" x 72""",0,F4,stock for custom parts
+purchase row,audit-prices.csv,F5,89155K86,"Oversized Multipurpose 6061 Aluminum Sheet, 1"" Thick, 24"" x 24""",0,F5,stock for custom parts
+purchase row,audit-prices.csv,F5,6546K31,"Multipurpose 6061 Aluminum Rectangular Tube, 1/4"" Wall Thickness, 2-1/2"" High x 2-1/2"" Wide Outside",0,F5,stock for custom parts
+purchase row,audit-prices.csv,D2,GXT5LI-1500LVRT2UXL,Vertiv Liebert GXT5 Lithium-Ion Online UPS 1500VA/1350W 120V Rack/Tower,0,,alternative (qty 0)
+purchase row,audit-prices.csv,A3,SS5Y3-45FD-05U-N7,"SMC SY3000 DIN-rail D-sub manifold base, 5 stations",0,A3,
+purchase row,audit-prices.csv,A3,SY3140-5LOZ,"SY 4/5 PORT SOLENOID VALVE with Voltage 24 VDC (SY3140-5LOZ VALVE, SOL 24VDC)",0,A3,
+purchase row,audit-prices.csv,A3,8800N538,"SMC Modular Compressed Air Filter/Regulator, Particle Removal, Series No. 20, Nylon, 1/4 NPT Female",0,A3,
+purchase row,audit-prices.csv,A3,8847N84,Pressure gauge for the 8800N538 filter-regulator,0,A3,
+purchase row,audit-prices.csv,A3,AS2201F-01-06S,"SMC AS2201F-01-06S flow control (speed controller, R1/8 x 6 mm tube, elbow)",0,A3,stock for custom parts
+purchase row,audit-prices.csv,H3,1939K12,"Low-Voltage Equipment-Cooling Fan, 24V DC with Wire Leads, 3.15"" Square x 1.26"" Deep Overall, 18 CFM",0,H3,

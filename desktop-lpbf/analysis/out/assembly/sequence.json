@@ -1,0 +1,6406 @@
+{
+ "frame": "model (machine) coordinates of lpbf_low.py; waypoints are translations of the part from its final pose, in insertion order, ending at [0, 0, 0]",
+ "steps": [
+  {
+   "id": "M01",
+   "label": "Heater block onto the stack nest, bayonet face down",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Heater block M50 (6061-T6, bayonet socket)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M02",
+   "label": "Three M3 helical inserts in the block's underside",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "Installed right after tapping with a powered insert tool and the tang broken off, as for every insert in the chamber body (render_build chapter 2); a cobot would need a dedicated inserter and tang-break station for 3 inserts.",
+   "who": "machine shop"
+  },
+  {
+   "id": "M03",
+   "label": "Three cartridge heaters into their bores",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.05,
+   "gap_with": "Heater block M50 (6061-T6, bayonet socket)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "released 24 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -90.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M04",
+   "label": "Three type K thermocouples (control, edge, limit) into their bores",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.09,
+   "gap_with": "Heater block M50 (6061-T6, bayonet socket)",
+   "arm_clearance_mm": 2.5,
+   "arm_clearance_with": "held:M04:Type K thermocouples M50 to Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "why": "released 36 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -100.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M05",
+   "label": "Macor rings and radiation shields over three guide pins",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "nozzle",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Heater block M50 (6061-T6, bayonet socket)",
+   "arm_clearance_mm": 2.1,
+   "arm_clearance_with": "held:M05:Radiation shields M50 #1 to Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "why": "released 9 mm above its seat and let drop over its guide; released 6 mm above its seat and let drop over its guide",
+   "parts": [
+    "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
+    "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -70.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M06",
+   "label": "Piston head onto the break",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Macor standoff rings M50 #1",
+   "arm_clearance_mm": 1.7,
+   "arm_clearance_with": "right_finger_tip to Radiation shields M50 #1",
+   "why": "",
+   "parts": [
+    "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -80.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M07",
+   "label": "Disc springs into the head's slotted counterbores (small-part vacuum nozzle)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "nozzle",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -40.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M08",
+   "label": "Three M3 x 25 stack screws down through the head (torque-controlled: disc-spring preload)",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 1.5,
+   "arm_clearance_with": "screwdriver to Disc springs under the stack screws M50 #1",
+   "why": "",
+   "joint": "stack_M50",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 0.6,
+   "per_screw": [
+    {
+     "screw": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head #1",
+     "ok": true,
+     "clearance": [
+      1.5,
+      "screwdriver to Disc springs under the stack screws M50 #1"
+     ]
+    },
+    {
+     "screw": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head #2",
+     "ok": true,
+     "clearance": [
+      1.5,
+      "screwdriver to Disc springs under the stack screws M50 #2"
+     ]
+    },
+    {
+     "screw": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head #3",
+     "ok": true,
+     "clearance": [
+      1.5,
+      "screwdriver to Disc springs under the stack screws M50 #3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M09",
+   "label": "Bore seal (aramid felt + carbon-filled PTFE scraper) stretched into the head's groove",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "A felt strip and a split PTFE scraper are wrapped, not pushed; no published robot method for felt.",
+   "who": "person"
+  },
+  {
+   "id": "M10",
+   "label": "Gland-plate face O-ring (2-034) into the gland plate's groove, groove up, PFPE film",
+   "do": "seal",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper+caps",
+   "status": {
+    "sweep": "PASS",
+    "arm": "-"
+   },
+   "min_gap_mm": 1.7,
+   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+  },
+  {
+   "id": "M11",
+   "label": "Gland plate, its face O-ring held by the film, turned over onto its own nest (face down, rod bore vertical)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -80.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M12",
+   "label": "Two 2-114 rod O-rings folded through the \u00d815.93 throat into their grooves (ring loader), plate on its nest",
+   "do": "seal",
+   "arm": "A",
+   "holder": null,
+   "tool": "ring_loader",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.14,
+   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:M12:loader to Module M50 bottom flange: gland plate (316L, bolte",
+   "why": "",
+   "parts": [
+    "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -120.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring folded into the loader's slotted tube, pushed through the \u00d815.93 throat, released into the groove"
+  },
+  {
+   "id": "M13",
+   "label": "Rod (its rod end welded on by the shop: a 316L block with seven weld-in feedthroughs) lowered top end first through the gland plate's two rod O-rings, on its PEEK bullet",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.03,
+   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "arm_clearance_mm": 2.5,
+   "arm_clearance_with": "held:M13:Hollow piston rod M50 to Module M50 bottom flange: gland plate (316L, bolte",
+   "why": "",
+   "parts": [
+    "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+    "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+    "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -150.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M14",
+   "label": "Rod, with the gland plate riding on it, into the piston head's socket (stack upside down: from above)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.02,
+   "gap_with": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+    "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+    "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+    "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+    "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -150.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M15",
+   "label": "Two M4 cup-point set screws into the rod (radial)",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 0.7,
+   "arm_clearance_with": "screwdriver to Piston head M50 (6061-T6, cool side of the break; ",
+   "why": "",
+   "joint": "rod_M50",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 1.1,
+   "per_screw": [
+    {
+     "screw": "Rod set screws M50, M4 cup point 316 #1",
+     "ok": true,
+     "clearance": [
+      0.7,
+      "screwdriver to Piston head M50 (6061-T6, cool side of the break; "
+     ]
+    },
+    {
+     "screw": "Rod set screws M50, M4 cup point 316 #2",
+     "ok": true,
+     "clearance": [
+      0.7,
+      "screwdriver to Piston head M50 (6061-T6, cool side of the break; "
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M16",
+   "label": "Welded module body onto its upright nest (flange on the nest's three posts), gripped across the tube",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     120.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M17",
+   "label": "Spigot O-ring (2-238) over the mandrel into the spigot groove (before the stack: the mandrel reaches into the bore)",
+   "do": "seal",
+   "arm": "A",
+   "holder": "B",
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.05,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     40.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "2-238 stretched 9.4 % over an acetal mandrel (cone + 0.45 mm sleeve over the spigot's top edge), pushed into the groove by a sleeve that stops on the mandrel"
+  },
+  {
+   "id": "M18",
+   "label": "Module body turned upside down (wrist roll) onto its spigot nest, the tube's open end up",
+   "do": "flip",
+   "arm": "A",
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "note": "sub-assembly 'body' turned over 180 deg about y by one arm (wrist roll), from body_up to body_inv"
+  },
+  {
+   "id": "M19",
+   "label": "Heater stack, rod and gland plate lowered into the bore from the tube's open end (body upside down); the gland plate lands on the welded collar",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.2,
+   "gap_with": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Heater block M50 (6061-T6, bayonet socket)",
+    "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+    "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
+    "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
+    "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+    "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+    "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
+    "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+    "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
+    "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+    "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+    "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+    "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -260.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M20",
+   "label": "Six M4 x 20 gland-plate screws on the arc behind the rod end's block (round 6, joints.py)",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 1.0,
+   "arm_clearance_with": "screwdriver to Rod end M50: 316L feedthrough block, rod welded in",
+   "why": "",
+   "joint": "gland_M50",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 2.2,
+   "per_screw": [
+    {
+     "screw": "Gland-plate screws M50, M4 x 20 316, into the welded collar #1",
+     "ok": true,
+     "clearance": [
+      1.0,
+      "screwdriver to Rod end M50: 316L feedthrough block, rod welded in"
+     ]
+    },
+    {
+     "screw": "Gland-plate screws M50, M4 x 20 316, into the welded collar #2",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Module M50 bottom flange: gland plate (316L, bolte"
+     ]
+    },
+    {
+     "screw": "Gland-plate screws M50, M4 x 20 316, into the welded collar #3",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Module M50 bottom flange: gland plate (316L, bolte"
+     ]
+    },
+    {
+     "screw": "Gland-plate screws M50, M4 x 20 316, into the welded collar #4",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Module M50 bottom flange: gland plate (316L, bolte"
+     ]
+    },
+    {
+     "screw": "Gland-plate screws M50, M4 x 20 316, into the welded collar #5",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Module M50 bottom flange: gland plate (316L, bolte"
+     ]
+    },
+    {
+     "screw": "Gland-plate screws M50, M4 x 20 316, into the welded collar #6",
+     "ok": true,
+     "clearance": [
+      1.0,
+      "screwdriver to Rod end M50: 316L feedthrough block, rod welded in"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M21",
+   "label": "Handle lowered in front of the rod end's sleeves, then slid 15 mm back onto the gland plate (module upside down; held by its riser's two ends from above)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 2.43,
+   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "arm_clearance_mm": 7.7,
+   "arm_clearance_with": "held:M21:Module M50 handle to Rod end M50 feedthroughs, welded in (3 x Solid Sea",
+   "why": "",
+   "parts": [
+    "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -15.0,
+     -40.0
+    ],
+    [
+     0.0,
+     -15.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M22",
+   "label": "Two M4 handle screws",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 0.8,
+   "arm_clearance_with": "screwdriver to Rod end M50 feedthroughs, welded in (3 x Solid Sea",
+   "why": "",
+   "joint": "handle_M50",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 2.2,
+   "per_screw": [
+    {
+     "screw": "Handle screws M50, M4 x 10 316 #1",
+     "ok": true,
+     "clearance": [
+      0.8,
+      "screwdriver to Rod end M50 feedthroughs, welded in (3 x Solid Sea"
+     ]
+    },
+    {
+     "screw": "Handle screws M50, M4 x 10 316 #2",
+     "ok": true,
+     "clearance": [
+      0.8,
+      "screwdriver to Rod end M50 feedthroughs, welded in (3 x Solid Sea"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M23",
+   "label": "Striker disc onto the rod end",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.12,
+   "gap_with": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "released 24 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Striker disc M50 (416 stainless, on the pot magnet)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M24",
+   "label": "Three M3 x 10 flat-head striker screws",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 0.6,
+   "arm_clearance_with": "screwdriver to Striker disc M50 (416 stainless, on the pot magnet",
+   "why": "",
+   "joint": "striker_M50",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 1.1,
+   "per_screw": [
+    {
+     "screw": "Striker screws M50, M3 x 10 316 flat head #1",
+     "ok": true,
+     "clearance": [
+      0.6,
+      "screwdriver to Striker disc M50 (416 stainless, on the pot magnet"
+     ]
+    },
+    {
+     "screw": "Striker screws M50, M3 x 10 316 flat head #2",
+     "ok": true,
+     "clearance": [
+      0.6,
+      "screwdriver to Striker disc M50 (416 stainless, on the pot magnet"
+     ]
+    },
+    {
+     "screw": "Striker screws M50, M3 x 10 316 flat head #3",
+     "ok": true,
+     "clearance": [
+      0.6,
+      "screwdriver to Striker disc M50 (416 stainless, on the pot magnet"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M25",
+   "label": "Rod end's seven weld-in feedthroughs (3 x FA11631 + 3 x FA11632 type K, 1 x FA10443 4-pin power) welded into the 316L block's front face, and the rod into its top",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "TIG welds at the block's face and at the rod, on the bare rod before chapter 3, away from every O-ring; the inner joints to the feedthrough pins are made before the sleeves are welded. Ask Solid Sealing to confirm the blind-bore weld and the weld access (electrical.md 13.3). The SMPW-K and power plugs go onto the sleeves at the machine, not here.",
+   "who": "machine shop"
+  },
+  {
+   "id": "M26",
+   "label": "Module turned upright (wrist roll, 180 deg about the tool axis) onto the upright nest",
+   "do": "flip",
+   "arm": "A",
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "note": "sub-assembly 'body' turned over 180 deg about y by one arm (wrist roll), from body_inv to body_up"
+  },
+  {
+   "id": "M27",
+   "label": "Rim wiper onto the plate; plate into the bore onto the bayonet, turned 60 deg (piston at +8 mm overtravel)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 2.0,
+   "gap_with": "Heater block M50 (6061-T6, bayonet socket)",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:M27:Build plate M50 to Build module M50: spigot, flange, honed 316L cylin",
+   "why": "released 18 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+    "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "rotation": {
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "deg": 60.0,
+    "note": "turned this much about z before the path; turned back to 0 at the seat (bayonet)"
+   }
+  },
+  {
+   "id": "M28",
+   "label": "Module turned upside down again (wrist roll) onto its spigot nest, ready for the chamber (C10)",
+   "do": "flip",
+   "arm": "A",
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "note": "sub-assembly 'body' turned over 180 deg about y by one arm (wrist roll), from body_up to body_inv"
+  },
+  {
+   "id": "M29",
+   "label": "Right zero-point arm with its clamping pin (SPC mini 20 class, screwed in on the bench) onto the flange's ear at 50 deg; its screws into the ear are not drawn",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "arm_clearance_mm": 15.6,
+   "arm_clearance_with": "held:M29:Zero-point arms M50 #1 to Module M50 bottom flange: gland plate (316L, bolte",
+   "why": "",
+   "parts": [],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M30",
+   "label": "Left zero-point arm with its clamping pin onto the flange's ear at 135 deg",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "arm_clearance_mm": 14.8,
+   "arm_clearance_with": "held:M30:Zero-point arms M50 #2 to Rod end M50: 316L feedthrough block, rod welded in",
+   "why": "",
+   "parts": [],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C00",
+   "label": "Overflow funnel: its 2-042 in the block's groove, the block (KF-40 stub welded on) and its four M4 x 12 onto the floor plate's underside, on the bench before C00a",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is not modelled.",
+   "who": "person (bench)"
+  },
+  {
+   "id": "C00a",
+   "label": "Floor plate (inserts, the two frame dowels and the overflow funnel already on) onto Fixture P, gland face up, by the vacuum gripper",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+    "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
+    "Z-flange helical inserts, M5 x 7.5 18-8, in the floor (4 x McMaster 91732A261)",
+    "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+    "Outlet-plenum helical inserts, M4 x 6 18-8, in the floor (6 x McMaster 91732A656)",
+    "Overflow-funnel helical inserts, M4 x 6 18-8, in the floor (4 x McMaster 91732A656)",
+    "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+    "Overflow funnel block (316L, bolted, FKM face O-ring)",
+    "Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",
+    "Overflow port (KF-40, weld stub to 40 mm)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     150.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C00b",
+   "label": "Floor O-ring cord (3.53 mm, vulcanized splice) rolled into the floor plate's pad gland",
+   "do": "seal",
+   "arm": "A",
+   "holder": "B",
+   "tool": "roller",
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 1.1,
+   "arm_clearance_with": "roller to Chamber floor plate (6061-T6, 20 mm, bolted under ",
+   "why": "",
+   "parts": [
+    "Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)"
+   ],
+   "seal_method": "3.53 mm cord laid in by arm B at the midpoints, ends and quarter points, then rolled home by arm A's PTFE wheel (Adebola et al. 2024's binary order), splice at the back-right corner"
+  },
+  {
+   "id": "C00c",
+   "label": "Frame lowered onto the floor plate's dowels, one arm on each side wall",
+   "do": "dual",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+    "Lid screw helical inserts, M5 x 7.5 18-8, in the chamber body (20 x McMaster 91732A261)",
+    "Inlet-plenum helical inserts, M4 x 6 18-8, in the back wall (7 x McMaster 91732A656)",
+    "Vacuum-port adapter helical inserts, M5 x 7.5 18-8, in the right wall (4 x McMaster 91732A261)",
+    "Bearing-cap helical inserts, M4 x 6 18-8, in the right wall (4 x McMaster 91732A656)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     150.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C00d",
+   "label": "Eighteen M4 x 16 floor-plate screws up through the U-notches into the frame's skirt, from under the plate's edge",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PART"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 2.2,
+   "arm_clearance_with": "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under ",
+   "why": "in the: approach: no path in 500 iterations",
+   "joint": "floor",
+   "pn": null,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "torque_Nm": 1.1,
+   "per_screw": [
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #1",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #2",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #3",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #4",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #5",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #6",
+     "ok": false,
+     "clearance": null
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #7",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #8",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #9",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #10",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #11",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #12",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #13",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #14",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #15",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #16",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #17",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #18",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
+    }
+   ]
+  },
+  {
+   "id": "C01",
+   "label": "Chamber (frame + floor plate, 7.4 kg) carried upright by both arms from Fixture P into the trunnion's jaws",
+   "do": "dual",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 0.0,
+   "arm_clearance_with": "held:C01 to Trunnion jaws",
+   "why": "",
+   "parts": [
+    "(everything in the chamber sub-assembly: chamber body, inserts, outlet plenum, funnel, module, Z stage, legs and their screws)"
+   ],
+   "frames_checked": 96,
+   "frames_total": 96,
+   "waypoints_4x4": [
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -700.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      70.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -700.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      127.5
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -700.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      185.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -700.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      242.5
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -700.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      300.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -670.423
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      297.042
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -640.845
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      294.085
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -611.268
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      291.127
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -581.69
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      288.169
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -552.113
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      285.211
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -522.535
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      282.254
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -492.958
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      279.296
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -463.38
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      276.338
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -433.803
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      273.38
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -404.225
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      270.423
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -374.648
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      267.465
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -345.07
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      264.507
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -315.493
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      261.549
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -285.915
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      258.592
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -256.338
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      255.634
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -226.761
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      252.676
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -197.183
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      249.718
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -167.606
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      246.761
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -138.028
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      243.803
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -108.451
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      240.845
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -78.873
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      237.887
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -49.296
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      234.93
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -19.718
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      231.972
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      210.833
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      153.333
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      95.833
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      38.333
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   ],
+   "note": "carried the same way up between two fixtures (lift, cross, lower), by both arms: waypoints_4x4 are the part's pose relative to its final pose (model frame), ending at the identity"
+  },
+  {
+   "id": "C01b",
+   "label": "The trunnion turns the chamber upside down (180 deg about x), both arms parked",
+   "do": "rotate",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "(everything in the chamber sub-assembly)"
+   ],
+   "note": "the trunnion positioner turns the sub-assembly 180 deg about the model's x axis through machine (0, 0, 50); from upright to upside down, or back"
+  },
+  {
+   "id": "C02",
+   "label": "Locating dowel and diamond pin into the floor",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.05,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clearance_mm": 37.7,
+   "arm_clearance_with": "left_finger to Overflow port (KF-40, weld stub to 40 mm)",
+   "why": "",
+   "parts": [],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C03",
+   "label": "Outlet-plenum O-ring (2-044) into the plenum's flange groove, plenum on a nest, PFPE film",
+   "do": "seal",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper+caps",
+   "status": {
+    "sweep": "PASS",
+    "arm": "-"
+   },
+   "min_gap_mm": 1.68,
+   "gap_with": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+  },
+  {
+   "id": "C04",
+   "label": "Outlet plenum with its O-ring and KF-25 port onto the floor",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 1.68,
+   "gap_with": "Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)",
+   "arm_clearance_mm": 2.0,
+   "arm_clearance_with": "held:C04:Cross-flow outlet plenum under to Overflow funnel block (316L, bolted, FKM face O-ri",
+   "why": "",
+   "parts": [
+    "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
+    "Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)",
+    "Outlet plenum port (KF-25)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -180.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C05",
+   "label": "Six M4 x 12 outlet-plenum screws (60 mm bit extension: two sit beside the KF-25 port)",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 2.2,
+   "arm_clearance_with": "screwdriver to Cross-flow outlet plenum under the floor (316L, fl",
+   "why": "",
+   "joint": "plenum_out",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 2.2,
+   "per_screw": [
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #1",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ]
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #2",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ]
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #3",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ]
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #4",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ]
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #5",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ]
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #6",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "C09",
+   "label": "Module-present sensor",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.82,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clearance_mm": 0.5,
+   "arm_clearance_with": "held:C09:Module-present sensor to Chamber floor plate (6061-T6, 20 mm, bolted under ",
+   "why": "released 30 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Module-present sensor (inductive M12, under the floor, sees the module flange)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -120.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C09f",
+   "label": "Door hinge knuckles onto the frame's front face, one at a time (shimmed at assembly; screws not drawn)",
+   "do": "place",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clearance_mm": 14.6,
+   "arm_clearance_with": "right_finger_tip to Door hinge knuckles on the chamber #1",
+   "why": "released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -80.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C12",
+   "label": "Z mounting flange alone onto the floor (the actuator goes on after the module, its screws now)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clearance_mm": 2.9,
+   "arm_clearance_with": "held:C12:Z mounting flange to Locating dowel #1",
+   "why": "released 30 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Z mounting flange (bolted under the floor)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -150.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C13",
+   "label": "Four counterbored M5 x 12 Z-flange screws",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 2.6,
+   "arm_clearance_with": "screwdriver to Z mounting flange (bolted under the floor)",
+   "why": "",
+   "joint": "zmount",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 4.2,
+   "per_screw": [
+    {
+     "screw": "Z-flange screws, M5 x 12 316, counterbored #1",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ]
+    },
+    {
+     "screw": "Z-flange screws, M5 x 12 316, counterbored #2",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ]
+    },
+    {
+     "screw": "Z-flange screws, M5 x 12 316, counterbored #3",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ]
+    },
+    {
+     "screw": "Z-flange screws, M5 x 12 316, counterbored #4",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "C09b",
+   "label": "Four zero-point posts turned into the floor's M6 inserts by their studs",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clearance_mm": 3.5,
+   "arm_clearance_with": "held:C09b:Zero-point posts #3 to Module-present sensor (inductive M12, under the fl",
+   "why": "",
+   "parts": [
+    "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -80.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C09c",
+   "label": "Two zero-point module plates (10 mm 6061) onto the posts; their screws into the posts' ends are not drawn",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Zero-point posts #1",
+   "arm_clearance_mm": 2.1,
+   "arm_clearance_with": "held:C09c:Zero-point module plates #2 to Outlet plenum port (KF-25)",
+   "why": "",
+   "parts": [
+    "Zero-point module plates (2 x 6061, 10 mm, each on two posts)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -80.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C09d",
+   "label": "Two SCHUNK NSE-HT mini 88-20 zero-point modules (\u00d888, 1.0 kg) onto the plates, pin face up: the vacuum gripper on the pin face (\u00d888 is past the 2F-85's stroke)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Zero-point module plates #1",
+   "arm_clearance_mm": 7.2,
+   "arm_clearance_with": "held:C09d:Zero-point clamping modules #2 to Outlet plenum port (KF-25)",
+   "why": "",
+   "parts": [
+    "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -80.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C09e",
+   "label": "M5 push-in elbows into the modules' release ports, and a temporary \u00d84 release-air line from the cell's supply",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "Small threaded fittings with a tube to follow. The modules have to be open (6 bar) for the clamping pins to enter in C10.",
+   "who": "person"
+  },
+  {
+   "id": "C10",
+   "label": "Build module (upside down) into the \u00d896 floor port along its swap path, held by its handle's grip block; dowel and diamond pin through its flange lugs, clamping pins into the open zero-point modules",
+   "do": "place",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.05,
+   "gap_with": "Locating dowel #1",
+   "arm_clearance_mm": 2.2,
+   "arm_clearance_with": "held:C10:Build module M50 to Zero-point module plates #1",
+   "why": "",
+   "parts": [
+    "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+    "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
+    "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+    "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
+    "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
+    "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+    "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
+    "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+    "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+    "Heater block M50 (6061-T6, bayonet socket)",
+    "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+    "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
+    "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
+    "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+    "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+    "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
+    "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+    "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+    "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+    "Striker disc M50 (416 stainless, on the pot magnet)",
+    "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
+    "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
+    "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
+    "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+    "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
+    "Rod set screws M50, M4 cup point 316 (2 x McMaster 92029A152)",
+    "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -158.0,
+     -150.0
+    ],
+    [
+     0.0,
+     -158.0,
+     -40.0
+    ],
+    [
+     0.0,
+     0.0,
+     -40.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C11",
+   "label": "Release air off: the zero-point modules' springs lock both clamping pins (2 x 0.5 kN); no screws",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "The cell vents the temporary line. 1 kN holds 4.6x the worst separating load (hot-swap.md 3.2a). The spigot ring is already home: arm B pushed the module in at C10 (132 N running). The captive M6 are gone; the floor keeps their inserts for a hand fallback.",
+   "who": "machine"
+  },
+  {
+   "id": "C13b",
+   "label": "Z actuator, belt fold, servo, carriage, arm and magnet (pre-assembled) onto the flange",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Z mounting flange (bolted under the floor)",
+   "arm_clearance_mm": 8.9,
+   "arm_clearance_with": "held:C13b:Z actuator body to Zero-point arms M50 #1",
+   "why": "",
+   "parts": [
+    "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
+    "Z bracket + fold-back belt housing (2:1)",
+    "Z servo (ClearPath-SD, NEMA 23, folded)",
+    "Z carriage",
+    "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+    "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -150.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C14",
+   "label": "Four legs onto the floor, one at a time",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clearance_mm": 4.6,
+   "arm_clearance_with": "held:C14:Chamber legs #4 to Zero-point module plates #1",
+   "why": "",
+   "parts": [
+    "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -120.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C15",
+   "label": "One M6 x 25 down each leg's \u00d811 bore (160 mm bit extension)",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 1.0,
+   "arm_clearance_with": "nutrunner to Chamber legs #1",
+   "why": "",
+   "joint": "legs",
+   "pn": null,
+   "driver": [
+    "nutrunner"
+   ],
+   "torque_Nm": 7.4,
+   "per_screw": [
+    {
+     "screw": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #1",
+     "ok": true,
+     "clearance": [
+      1.0,
+      "nutrunner to Chamber legs #1"
+     ]
+    },
+    {
+     "screw": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #2",
+     "ok": true,
+     "clearance": [
+      1.0,
+      "nutrunner to Chamber legs #2"
+     ]
+    },
+    {
+     "screw": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #3",
+     "ok": true,
+     "clearance": [
+      1.0,
+      "nutrunner to Chamber legs #3"
+     ]
+    },
+    {
+     "screw": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #4",
+     "ok": true,
+     "clearance": [
+      1.0,
+      "nutrunner to Chamber legs #4"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "C15b",
+   "label": "Overflow-jar sensor on its bracket, and the bracket's two M4 x 10, onto the front-right leg on the bench before C14",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelled.",
+   "who": "person (bench)"
+  },
+  {
+   "id": "F01",
+   "label": "Process base plate onto Fixture B (both arms, one at each end)",
+   "do": "dual",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 0.0,
+   "arm_clearance_with": "held:F01 to Fixture B (open stand)",
+   "why": "",
+   "parts": [
+    "Base plate, process module (MIC-6, 15 mm)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     150.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F02",
+   "label": "Levelling mounts",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "They thread in when the finished process module goes onto the tray (chapter 5); until then Fixture B carries the plate on its ends.",
+   "who": "person"
+  },
+  {
+   "id": "F02b",
+   "label": "Zero-point release valve (3/2 NC, 24 V, on its sub-base) onto the base plate; its screws are not drawn",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Base plate, process module (MIC-6, 15 mm)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Zero-point release valve (3/2 NC, 24 V DC, on a single-station sub-base; envelope)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     120.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F05",
+   "label": "The trunnion turns the chamber assembly (module, Z stage, legs) back upright",
+   "do": "rotate",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "(everything in the chamber sub-assembly)"
+   ],
+   "note": "the trunnion positioner turns the sub-assembly 180 deg about the model's x axis through machine (0, 0, 50); from upright to upside down, or back"
+  },
+  {
+   "id": "F05b",
+   "label": "Chamber assembly (with the module, zero-point clamps, Z stage and legs) carried upright by both arms, each holding a leg, from the trunnion onto the base plate",
+   "do": "dual",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 117.6,
+   "arm_clearance_with": "held:F05b to Trunnion stands",
+   "why": "",
+   "parts": [
+    "(everything in the chamber sub-assembly: chamber body, inserts, outlet plenum, funnel, module, Z stage, legs and their screws)"
+   ],
+   "frames_checked": 127,
+   "frames_total": 128,
+   "waypoints_4x4": [
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -1000.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      -225.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -1000.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      -118.333
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -1000.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      -11.667
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -1000.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      95.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -961.165
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      103.738
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -922.33
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      112.476
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -883.495
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      121.214
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -844.66
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      129.951
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -805.825
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      138.689
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -766.99
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      147.427
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -728.155
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      156.165
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -689.32
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      164.903
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -650.485
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      173.641
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -611.65
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      182.379
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -572.816
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      191.117
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -533.981
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      199.854
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -495.146
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      208.592
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -456.311
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      217.33
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -417.476
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      226.068
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -378.641
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      234.806
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -339.806
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      243.544
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -300.971
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      252.282
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -262.136
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      261.019
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -223.301
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      269.757
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -184.466
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      278.495
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -145.631
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      287.233
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -106.796
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      295.971
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -67.961
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      304.709
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -29.126
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      313.447
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      293.333
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      186.667
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      80.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   ],
+   "note": "carried the same way up between two fixtures (lift, cross, lower), by both arms: waypoints_4x4 are the part's pose relative to its final pose (model frame), ending at the identity"
+  },
+  {
+   "id": "F06",
+   "label": "Eight M6 x 25 base-plate-to-leg screws, from under the plate",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PART"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 3.0,
+   "arm_clearance_with": "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)",
+   "why": "316 #1: approach: no clear way in to the hole's mouth (A/upper_arm hits Base plate, process module",
+   "joint": "legs_base",
+   "pn": null,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "torque_Nm": 7.4,
+   "per_screw": [
+    {
+     "screw": "Base-plate-to-leg screws, M6 x 25 316 #1",
+     "ok": false,
+     "clearance": null
+    },
+    {
+     "screw": "Base-plate-to-leg screws, M6 x 25 316 #2",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
+    },
+    {
+     "screw": "Base-plate-to-leg screws, M6 x 25 316 #3",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
+    },
+    {
+     "screw": "Base-plate-to-leg screws, M6 x 25 316 #4",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
+    },
+    {
+     "screw": "Base-plate-to-leg screws, M6 x 25 316 #5",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
+    },
+    {
+     "screw": "Base-plate-to-leg screws, M6 x 25 316 #6",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
+    },
+    {
+     "screw": "Base-plate-to-leg screws, M6 x 25 316 #7",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
+    },
+    {
+     "screw": "Base-plate-to-leg screws, M6 x 25 316 #8",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F06b",
+   "label": "Release-air line: \u00d84 tube from the valve through a union Y to both zero-point modules' push-in elbows (in place of the temporary line); the valve's supply comes from the rack's air prep in chapter 5",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "Tube routing (deformable), as the hoses in chapter 5. The modules stay locked while the line is swapped: their springs hold.",
+   "who": "person"
+  },
+  {
+   "id": "F07",
+   "label": "Overflow jar in from the front along its lane and up 8 mm onto its KF-40 port, held by its grip fin",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Overflow port (KF-40, weld stub to 40 mm)",
+   "arm_clearance_mm": 15.0,
+   "arm_clearance_with": "held:F07:Overflow jar to Chamber legs #3",
+   "why": "",
+   "parts": [
+    "Overflow jar (KF-40 flange on a 2.5 in. 316L cup, 47 mm, ~104 cm3, welded bottom)",
+    "Overflow jar grip fin (6061: tab on the cup, riser at x 117-125, I-section grip block at y -156 to -126, z -65 to -25, for the 2F-85)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -260.0,
+     -8.0
+    ],
+    [
+     0.0,
+     0.0,
+     -8.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F08",
+   "label": "KF-40 toggle clamp (MKS 100318805) round the jar's flange, lever to the front",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "Its hinged ring has to be held open round both flanges before one push on the lever locks it; nothing on the 2F-85 holds the ring open. An air-released KF clamp would let the robot do it (hot-swap.md).",
+   "who": "person"
+  },
+  {
+   "id": "F11",
+   "label": "LED bar (small-part vacuum nozzle on its top face)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "nozzle",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 6.0,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 6.0,
+   "arm_clearance_with": "held:F11:Layer-light LED bar to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
+   "parts": [
+    "Layer-light LED bar (on the lid's underside, along the right wall)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     300.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10a",
+   "label": "Wall liner, back lower left, in through the door opening and onto its wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 0.6,
+   "arm_clearance_with": "right_finger to Module M50 handle (6061, screwed under the gland p",
+   "why": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
+   "parts": [
+    "Lift-out wall liner, back lower left (0.5 mm 316L, behind the ball screw, spring clips)"
+   ],
+   "waypoints": [
+    [
+     26.0,
+     -560.0,
+     0.0
+    ],
+    [
+     26.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -3.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10b",
+   "label": "Wall liner, back upper left, in through the door opening and onto its wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 2.6,
+   "arm_clearance_with": "left_finger to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
+   "parts": [
+    "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)"
+   ],
+   "waypoints": [
+    [
+     50.0,
+     -560.0,
+     0.0
+    ],
+    [
+     50.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -3.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10c",
+   "label": "Wall liner, left, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper+plate",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:F10c:Lift-out wall liner, left to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
+   "parts": [
+    "Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
+    "Liner pull tab, left (316L, 2 mm hanger: a web from the left side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)"
+   ],
+   "waypoints": [
+    [
+     35.0,
+     -541.0,
+     -6.0
+    ],
+    [
+     35.0,
+     -21.0,
+     -6.0
+    ],
+    [
+     35.0,
+     -21.0,
+     0.0
+    ],
+    [
+     4.0,
+     -21.0,
+     0.0
+    ],
+    [
+     4.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10d",
+   "label": "Wall liner, back lower right, in through the door opening and onto its wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 0.8,
+   "arm_clearance_with": "right_finger to Module M50 handle (6061, screwed under the gland p",
+   "why": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
+   "parts": [
+    "Lift-out wall liner, back lower right (0.5 mm 316L, behind the ball screw, spring clips)"
+   ],
+   "waypoints": [
+    [
+     -25.0,
+     -560.0,
+     0.0
+    ],
+    [
+     -25.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -3.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10e",
+   "label": "Wall liner, back upper right, in through the door opening and onto its wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 2.6,
+   "arm_clearance_with": "left_finger to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
+   "parts": [
+    "Lift-out wall liner, back upper right (0.5 mm 316L, behind the ball screw, spring clips)"
+   ],
+   "waypoints": [
+    [
+     -25.0,
+     -560.0,
+     0.0
+    ],
+    [
+     -25.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -3.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10f",
+   "label": "Wall liner, right, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper+plate",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:F10f:Lift-out wall liner, right to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
+   "parts": [
+    "Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
+    "Liner pull tab, right (316L, 2 mm hanger: a web from the right side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)"
+   ],
+   "waypoints": [
+    [
+     -35.0,
+     -541.0,
+     -6.0
+    ],
+    [
+     -35.0,
+     -21.0,
+     -6.0
+    ],
+    [
+     -35.0,
+     -21.0,
+     0.0
+    ],
+    [
+     -4.0,
+     -21.0,
+     0.0
+    ],
+    [
+     -4.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F12",
+   "label": "Through-beam fibre heads with their 2-010 O-rings, threaded into the side walls from outside",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place.",
+   "who": "person"
+  },
+  {
+   "id": "F13",
+   "label": "Inlet-plenum O-ring (2-044) into the plenum's flange groove, PFPE film",
+   "do": "seal",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper+caps",
+   "status": {
+    "sweep": "PASS",
+    "arm": "-"
+   },
+   "min_gap_mm": 1.68,
+   "gap_with": "Cross-flow inlet plenum + nozzle (316L, bolted flange)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Inlet plenum O-ring (FKM 75A 2-044, face seal on the back wall)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -60.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+  },
+  {
+   "id": "F14",
+   "label": "Inlet plenum with its O-ring and KF-25 port onto the back wall, held there by arm A",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 1.68,
+   "gap_with": "Inlet plenum O-ring (FKM 75A 2-044, face seal on the back wall)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "arm A: no IK at the start pose at 0 mm along the insertion; held-part screws: 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner",
+   "parts": [
+    "Cross-flow inlet plenum + nozzle (316L, bolted flange)",
+    "Inlet plenum O-ring (FKM 75A 2-044, face seal on the back wall)",
+    "Inlet plenum port (KF-25)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     180.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F15",
+   "label": "Nine M4 x 16 inlet-plenum screws into the back wall",
+   "do": "screws",
+   "arm": "B",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "all screws of this joint were already driven (with the part held)",
+   "joint": "plenum_in",
+   "pn": null,
+   "driver": null,
+   "torque_Nm": 2.2,
+   "per_screw": []
+  },
+  {
+   "id": "F16",
+   "label": "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-ring onto the right wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "released 12 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
+   "parts": [
+    "Vacuum port (KF-25, stub welded into the adapter plate)",
+    "Vacuum port adapter plate (304, 8 mm, FKM face O-ring)",
+    "Vacuum port adapter O-ring (FKM 75A 2-024)"
+   ],
+   "waypoints": [
+    [
+     180.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F17",
+   "label": "Four M5 x 20 vacuum-port screws",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "all screws of this joint were already driven (with the part held)",
+   "joint": "vac_port",
+   "pn": null,
+   "driver": null,
+   "torque_Nm": 4.2,
+   "per_screw": []
+  },
+  {
+   "id": "F18",
+   "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 2.4,
+   "gap_with": "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with ",
+   "parts": [
+    "Recoater guide rail (15 mm, 260 mm)",
+    "Recoater carriage (15 mm rail)",
+    "Recoater carriage block (6061)",
+    "Recoater ball nut (flange on the +x face)",
+    "Recoater arm (6061, 40 x 14 web)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     220.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F19",
+   "label": "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "all screws of this joint were already driven (with the part held)",
+   "joint": "rail",
+   "pn": null,
+   "driver": null,
+   "torque_Nm": 2.2,
+   "per_screw": []
+  },
+  {
+   "id": "F21",
+   "label": "Ball screw in through the right wall's bore and turned through the ball nut (30 turns at 10 mm lead) into the left bore",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 1.0,
+   "gap_with": "Recoater ball nut (flange on the +x face)",
+   "arm_clearance_mm": 3.0,
+   "arm_clearance_with": "held:F21:Recoater ball screw to Process chamber body (6061-T6 through-frame from 5",
+   "why": "released 33 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Recoater ball screw (M12, 10 mm lead)"
+   ],
+   "waypoints": [
+    [
+     420.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F22",
+   "label": "Feedthrough spacer, its two 2-024 O-rings, the Ferrotec unit and the coupling on the left wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)",
+    "Recoater feedthrough O-rings (2 x FKM 75A 2-024, spacer to wall and to flange)",
+    "Recoater fixed bearing: magnetic-fluid rotary feedthrough Ferrotec SFL-006-NN on the left wall (Ferrotec SFL-006-NN; FKM face O-ring)",
+    "Recoater shaft coupling (clamp type, 6 to 8 mm, in the wall bore)"
+   ],
+   "waypoints": [
+    [
+     -160.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F23",
+   "label": "Blind bearing cap and its 2-019 O-ring on the right wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 22.1,
+   "arm_clearance_with": "right_finger_tip to Vacuum-port adapter screws, M5 x 20 316 #3",
+   "why": "released 15 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
+   "parts": [
+    "Recoater floating bearing housing (blind cap, FKM face O-ring)",
+    "Recoater bearing-cap O-ring (FKM 75A 2-019)"
+   ],
+   "waypoints": [
+    [
+     160.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F24",
+   "label": "Four M4 x 20 bearing-cap screws",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "all screws of this joint were already driven (with the part held)",
+   "joint": "bearing_cap",
+   "pn": null,
+   "driver": null,
+   "torque_Nm": 2.2,
+   "per_screw": []
+  },
+  {
+   "id": "F25",
+   "label": "Motor standoff, bracket and recoater servo",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.05,
+   "gap_with": "Recoater motor bracket",
+   "arm_clearance_mm": 0.0,
+   "arm_clearance_with": "held:F25:Recoater servo to Recoater motor bracket",
+   "why": "arm A: held:F25:Recoater motor bracket hits Trunnion stands at 0 mm along the insertion",
+   "parts": [
+    "Recoater motor standoff",
+    "Recoater motor bracket",
+    "Recoater servo (ClearPath-SD, NEMA 23)"
+   ],
+   "waypoints": [
+    [
+     -200.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F26",
+   "label": "Blade holder and blade, in through the door opening and up under the recoater arm",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "FAIL",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.05,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clearance_mm": 1.3,
+   "arm_clearance_with": "held:F26:Blade holder to Process chamber body (6061-T6 through-frame from 5",
+   "why": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 43.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 90 mm along the insertion",
+   "parts": [
+    "Blade holder (6061, 18 x 31, quick-swap)",
+    "HSS recoater blade (1.5 mm, wide nose)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -260.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F27",
+   "label": "Two M3 x 8 blade screws",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "316 #1: screwdriver: A/tool/screwdriver hits Build module M50: spigot, flange, honed 316L cylinder; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle",
+   "joint": "blade",
+   "pn": null,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "torque_Nm": 1.1,
+   "per_screw": [
+    {
+     "screw": "Blade screws, M3 x 8 316 #1",
+     "ok": false,
+     "clearance": null
+    },
+    {
+     "screw": "Blade screws, M3 x 8 316 #2",
+     "ok": false,
+     "clearance": null
+    }
+   ]
+  },
+  {
+   "id": "F28",
+   "label": "Gas knife and dose chute",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 3.0,
+   "gap_with": "Recoater carriage block (6061)",
+   "arm_clearance_mm": 3.0,
+   "arm_clearance_with": "held:F28:Dose chute to Recoater carriage block (6061)",
+   "why": "",
+   "parts": [
+    "Gas knife (cover-slide purge, 316L)",
+    "Dose chute (316L)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     200.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F29",
+   "label": "Lid O-ring cord (3.53 mm) rolled into the body's top gland: arm A rolls, arm B feeds the cord",
+   "do": "seal",
+   "arm": "A",
+   "holder": "B",
+   "tool": "roller",
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 0.9,
+   "arm_clearance_with": "roller to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
+   "parts": [
+    "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)"
+   ],
+   "seal_method": "3.53 mm cord laid in by arm B at the midpoints, ends and quarter points, then rolled home by arm A's PTFE wheel (Adebola et al. 2024's binary order), splice at the back-right corner"
+  },
+  {
+   "id": "F30",
+   "label": "Lid (inserts in) onto the cord, by the vacuum gripper",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+    "Window-flange helical inserts, M4 x 4 18-8, in the lid (6 x McMaster 91732A649)",
+    "Metering-base helical inserts, M4 x 6 18-8, in the lid (4 x McMaster 91732A656)",
+    "Drawer latch receptacles in the lid (2 x quarter-turn latch)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     340.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F31",
+   "label": "Twenty M5 x 25 lid screws, star pattern",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 2.6,
+   "arm_clearance_with": "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl",
+   "why": "",
+   "joint": "lid",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 4.2,
+   "per_screw": [
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #1",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #2",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #3",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #4",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #5",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #6",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #7",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #8",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #9",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #10",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #11",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #12",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #13",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #14",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #15",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #16",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #17",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #18",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #19",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #20",
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F32",
+   "label": "Window-flange O-ring (2-036) into the flange's lower groove, PFPE film",
+   "do": "seal",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper+caps",
+   "status": {
+    "sweep": "PASS",
+    "arm": "-"
+   },
+   "min_gap_mm": 1.68,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Window-flange O-ring (FKM 75A 2-036, face seal on the lid)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+  },
+  {
+   "id": "F33",
+   "label": "Field stop",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.1,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:F33:Field-stop aperture, M50 inser to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl",
+   "why": "released 27 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Field-stop aperture, M50 insert (\u00d841, passive beam limit; swapped with the module)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     300.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F33b",
+   "label": "Window flange with its O-ring (\u00d8100: the vacuum gripper)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Window flange (6061, two FKM O-ring grooves)",
+    "Window-flange O-ring (FKM 75A 2-036, face seal on the lid)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     360.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F34",
+   "label": "Six counterbored M4 x 16 window-flange screws (torque-controlled)",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 2.2,
+   "arm_clearance_with": "screwdriver to Window flange (6061, two FKM O-ring grooves)",
+   "why": "",
+   "joint": "window",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 2.2,
+   "per_screw": [
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #1",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ]
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #2",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ]
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #3",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ]
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #4",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ]
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #5",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ]
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #6",
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F35",
+   "label": "Window O-ring (2-031) into the flange's seat groove",
+   "do": "seal",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper+caps",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 1.15,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Window O-ring, lower (FKM 75A 2-031, under the window)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+  },
+  {
+   "id": "F36",
+   "label": "\u00d82 in. fused-silica window onto its O-ring",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.2,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "released 27 mm short and pushed home with the closed fingers",
+   "parts": [
+    "\u00d82 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     380.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F37",
+   "label": "FKM flat ring",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm_clearance_mm": 0.3,
+   "arm_clearance_with": "held:F37:Window clamp ring, upper to Window flange (6061, two FKM O-ring grooves)",
+   "why": "released 24 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     390.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F37b",
+   "label": "Window retaining ring (\u00d8100: the vacuum gripper)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.2,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     400.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F38",
+   "label": "Six M3 x 10 retaining-ring screws (torque-controlled: clamp the silica evenly)",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 1.5,
+   "arm_clearance_with": "screwdriver to Window retaining ring (spigot bottoms metal-to-met",
+   "why": "",
+   "joint": "window_ring",
+   "pn": null,
+   "driver": [
+    "screwdriver"
+   ],
+   "torque_Nm": 0.8,
+   "per_screw": [
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #1",
+     "ok": true,
+     "clearance": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ]
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #2",
+     "ok": true,
+     "clearance": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ]
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #3",
+     "ok": true,
+     "clearance": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ]
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #4",
+     "ok": true,
+     "clearance": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ]
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #5",
+     "ok": true,
+     "clearance": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ]
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #6",
+     "ok": true,
+     "clearance": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F39",
+   "label": "Cover-slide drawer (2-033 in its half-dovetail, put in on the bench) into the lid's front edge",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "released 6 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
+    "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
+    "Drawer O-ring (FKM 75A 2-033 in a half-dovetail groove, seals on the lid's front face)",
+    "Drawer latches: 2 x quarter-turn latch studs (envelope)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -200.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F40",
+   "label": "Quarter-turn drawer latches",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "Two quarter-turn studs, turned with a slotted bit on the screwdriver; the latch hardware is an envelope in the model (seals.md: no catalogue latch fits).",
+   "who": "robot (custom bit)"
+  },
+  {
+   "id": "F41",
+   "label": "Drawer-closed sensor",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 1.32,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clearance_mm": 1.0,
+   "arm_clearance_with": "held:F41:Drawer-closed sensor to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl",
+   "why": "released 18 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Drawer-closed sensor (inductive M12, on the lid's front face, sees the plate's end)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -200.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F42",
+   "label": "Metering-base O-ring (2-040) on its lid side (groove faces down when fitted: PFPE film)",
+   "do": "seal",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper+caps",
+   "status": {
+    "sweep": "PASS",
+    "arm": "-"
+   },
+   "min_gap_mm": 1.68,
+   "gap_with": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Metering-base O-ring on the lid (FKM 75A 2-040, round the dose slot)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+  },
+  {
+   "id": "F42b",
+   "label": "Metering-base dock-face O-ring (2-040), groove up",
+   "do": "seal",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper+caps",
+   "status": {
+    "sweep": "PASS",
+    "arm": "-"
+   },
+   "min_gap_mm": 1.68,
+   "gap_with": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Metering-base dock-face O-ring (FKM 75A 2-040, seals the reservoir's base plate)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+  },
+  {
+   "id": "F43",
+   "label": "Metering base alone (feedthrough, coupling and stepper not yet on) onto the lid",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clearance_mm": 23.2,
+   "arm_clearance_with": "held:F43:Metering base to Window retaining ring (spigot bottoms metal-to-met",
+   "why": "",
+   "parts": [
+    "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+    "Metering-base O-ring on the lid (FKM 75A 2-040, round the dose slot)",
+    "Metering-base dock-face O-ring (FKM 75A 2-040, seals the reservoir's base plate)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     300.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F44",
+   "label": "Four M4 x 16 metering-base screws (before the roller feedthrough covers two of them)",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 0.0,
+   "arm_clearance_with": "nutrunner to Metering base (6061, fluted roller over a 100 mm d",
+   "why": "",
+   "joint": "dose",
+   "pn": null,
+   "driver": [
+    "nutrunner"
+   ],
+   "torque_Nm": 2.2,
+   "per_screw": [
+    {
+     "screw": "Metering-base screws, M4 x 16 316 #1",
+     "ok": true,
+     "clearance": [
+      0.0,
+      "nutrunner to Metering base (6061, fluted roller over a 100 mm d"
+     ]
+    },
+    {
+     "screw": "Metering-base screws, M4 x 16 316 #2",
+     "ok": true,
+     "clearance": [
+      0.0,
+      "nutrunner to Metering base (6061, fluted roller over a 100 mm d"
+     ]
+    },
+    {
+     "screw": "Metering-base screws, M4 x 16 316 #3",
+     "ok": true,
+     "clearance": [
+      0.0,
+      "nutrunner to Metering base (6061, fluted roller over a 100 mm d"
+     ]
+    },
+    {
+     "screw": "Metering-base screws, M4 x 16 316 #4",
+     "ok": true,
+     "clearance": [
+      0.0,
+      "nutrunner to Metering base (6061, fluted roller over a 100 mm d"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F45",
+   "label": "Roller feedthrough (threaded M8 x 1 over its 2-012), coupling, stepper, dock rails, load cell, NFC, side port, docked sensor",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "FAIL",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "arm_clearance_mm": 0.2,
+   "arm_clearance_with": "held:F45:Side reservoir port to Lid screws, M5 x 25 316 socket head #18",
+   "why": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0 mm; arm A: no IK at the start pose at 0 mm along the insertion; sweep: Roller feedthrough O-ring blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0 mm; arm A: no IK at the start pose at 0 mm along the insertion; sweep: Roller drive coupling blocked by Roller shaft: magnetic-fluid rotary",
+   "parts": [
+    "Roller shaft: magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN in the metering base (M8 x 1 nose; FKM face O-ring)",
+    "Roller feedthrough O-ring (FKM 75A 2-012, under the housing's shoulder)",
+    "Roller drive coupling (5 mm to 5 mm)",
+    "Dosing stepper (NEMA 17)",
+    "Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring)",
+    "Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",
+    "NFC reader antenna (in the dock's side face, reads the tag on the reservoir plate's edge)",
+    "Side reservoir port (KF-16 flange machined in the 6061 base, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",
+    "Reservoir-docked sensor (inductive M12, at the back of the dock)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     160.0,
+     300.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F46",
+   "label": "Reservoir M slid onto the dovetail dock (about 94 N to seat on the dock O-ring)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 1.1,
+   "gap_with": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 module; same 30 x 112 mm dock plate for every size)",
+    "Reservoir M shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
+    "Reservoir M powder",
+    "Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
+    "Reservoir M lid O-ring (FKM 75A 2-030)",
+    "Reservoir M pull tab (6061, 8 mm fin, the lid's handle carried 70 mm forward, in front of the beam tube)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -160.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F47",
+   "label": "Camera adapter O-ring (2-022), PFPE film",
+   "do": "seal",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper+caps",
+   "status": {
+    "sweep": "PASS",
+    "arm": "-"
+   },
+   "min_gap_mm": 1.68,
+   "gap_with": "Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Camera adapter O-ring (FKM 75A 2-030, face seal on the lid)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+  },
+  {
+   "id": "F48",
+   "label": "Camera viewport adapter with its 2-030",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clearance_mm": 5.7,
+   "arm_clearance_with": "held:F48:Camera viewport adapter + boss to Window flange (6061, two FKM O-ring grooves)",
+   "why": "",
+   "parts": [
+    "Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals)",
+    "Camera adapter O-ring (FKM 75A 2-030, face seal on the lid)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     300.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F48b",
+   "label": "Camera window gasket (1 mm FKM flat ring), window, flat ring, retaining ring, in that order, then the camera",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "FAIL",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.04,
+   "gap_with": "Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals)",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:F48b:Camera window flat ring to Camera viewport adapter + boss (6061; \u00d830 bore on ",
+   "why": "sweep: Camera window gasket, under the window blocked by Camera viewport adapter + boss (6061; \u00d830 bore on  after 1.0 mm; arm A: A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals) (3.0 mm deep); pushed home instead, but A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight,",
+   "parts": [
+    "Camera window gasket, under the window (FKM 75A sheet, 1.0 mm, squeezed to 0.75; ID 21)",
+    "Camera window (\u00d81 in. x 3 mm fused silica; FESH0950 short-pass filter behind it in the lens)",
+    "Camera window flat ring (FKM 75A sheet, 1.0 mm, squeezed to 0.75)",
+    "Camera window retaining ring (bottoms metal-to-metal on the boss)",
+    "Layer camera (Pi HQ + C-mount lens)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     330.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F49",
+   "label": "Pressure transducer and relief valve (SAE-4 O-ring-boss ports)",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "Threaded ports need a wrench on a hex and a set torque; a 2F-85 can only spin a plain body.",
+   "who": "person"
+  },
+  {
+   "id": "F50",
+   "label": "The two draw-latch strikes on the chamber's side faces (the hinge knuckles went on in C09f)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.26,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Draw-latch strikes on the chamber's side faces (1807A61 strike plates)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -240.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F51",
+   "label": "Door (cord rolled into its half-dovetail on the bench) brought in, knuckles in line",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.01,
+   "gap_with": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
+   "arm_clearance_mm": 0.0,
+   "arm_clearance_with": "held:F51:Chamber door to Door hinge knuckles on the chamber (304 SS, shimme",
+   "why": "",
+   "parts": [
+    "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+    "Door O-ring (FKM 75A 1.78 mm cord, vulcanized splice, in a half-dovetail groove)",
+    "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
+    "Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear's front face)",
+    "Door handle"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -200.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F52",
+   "label": "Hinge pins slid in along x",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.1,
+   "gap_with": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion",
+   "parts": [
+    "Hinge pins (\u00d85, 316)"
+   ],
+   "waypoints": [
+    [
+     -160.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F03",
+   "label": "Optics posts (moved here: they blocked the side-wall parts and the right latch) onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
+   "do": "place",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Base plate, process module (MIC-6, 15 mm)",
+   "arm_clearance_mm": 2.2,
+   "arm_clearance_with": "held:F03:Optics bridge posts #3 to Draw latches on the door's latch brackets, pointin",
+   "why": "held-part screws: 316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations; held-part screws: 316 #7: approach: no clear way in to the hole's mouth (no IK (out of reach or joint limit)); 316 #8: approach: no clear way in to the hole's mouth (no",
+   "parts": [
+    "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     200.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F04",
+   "label": "Two M6 x 25 up into each post's bottom cap, from under the plate",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "all screws of this joint were already driven (with the part held)",
+   "joint": "bridge_base",
+   "pn": null,
+   "driver": null,
+   "torque_Nm": 7.4,
+   "per_screw": []
+  },
+  {
+   "id": "F53",
+   "label": "f-theta lens threaded into its adapter ring over its 3 mm shim stack, under the bridge (on the bench, bridge upside down)",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "The \u00d890 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring fitted to the bridge on the bench).",
+   "who": "person"
+  },
+  {
+   "id": "F54",
+   "label": "Optics bridge (13.3 kg, lens and ring under it) onto the four posts, one arm at each end",
+   "do": "dual",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "no collision-free pair of arm poses at the start of the carry",
+   "parts": [
+    "Optics bridge (6061, 25 mm)",
+    "f-theta lens, f = 160 mm (Thorlabs FTH160-1064)",
+    "f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 2.83 mm nominal stack: 0-6 mm: lens 2.83 mm up to 3.17 mm down)",
+    "f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     260.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F55",
+   "label": "Eight M6 x 35 bridge screws down into the posts",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": 3.0,
+   "arm_clearance_with": "nutrunner to Optics bridge (6061, 25 mm)",
+   "why": "",
+   "joint": "bridge",
+   "pn": null,
+   "driver": [
+    "nutrunner"
+   ],
+   "torque_Nm": 7.4,
+   "per_screw": [
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #1",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ]
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #2",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ]
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #3",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ]
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #4",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ]
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #5",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ]
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #6",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ]
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #7",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ]
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #8",
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F56",
+   "label": "Galvo riser plate (155 x 130: the vacuum gripper)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Optics bridge (6061, 25 mm)",
+   "arm_clearance_mm": 21.2,
+   "arm_clearance_with": "held:F56:Galvo riser plate to Reservoir M lid with robot handle (grip plane z = ",
+   "why": "",
+   "parts": [
+    "Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose over the shim range and the scanned beam)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     330.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F56b",
+   "label": "basiCube 20 scan head on the riser (3.75 kg: the vacuum gripper on its top)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose over the shim range and the scanned beam)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "arm A: no IK at the start pose at 0 mm along the insertion",
+   "parts": [
+    "2-axis galvo scan head (SCANLAB basiCube 20)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     340.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F57",
+   "label": "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.0,
+   "gap_with": "2-axis galvo scan head (SCANLAB basiCube 20)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "arm A: part 107 mm across at the grasp: wider than the 2F-85's 85 mm stroke; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion",
+   "parts": [
+    "Enclosed beam tubes (6061, \u00d818 x 2: dichroic to galvo, fold leg)",
+    "Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg: reflects 1070 nm into the galvo, passes 520-985 nm) in a 30 mm cage cube",
+    "Fold mirror (Thorlabs NB1-K14, \u00d81 in. Nd:YAG laser-line mirror, 45 deg) in a 30 mm cage cube",
+    "Safety shutter + beam dump",
+    "Coaxial photodiode chain (SM1 tube: FESH1000 short-pass, NF1064-44 notch, AC254-050-B lens; Thorlabs PDA36A2)",
+    "Collimator (IPG affixed, 2.5 mm beam: 96 \u00b5m at f = 160; housing drawn as the 5 mm unit, 128 mm + 78 mm strain relief) on V-mount"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     340.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F58",
+   "label": "Process fiber routed to the collimator",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "Armoured fiber, >= 100 mm bend radius: cable routing stays manual.",
+   "who": "person"
+  },
+  {
+   "id": "F59",
+   "label": "Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, operator panel",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "T-slot nuts and 1.5 mm panels up to 730 mm wide; its hardware is not drawn (joints.NOT_DRAWN).",
+   "who": "person"
+  },
+  {
+   "id": "T01",
+   "label": "Process module (84 kg) off Fixture B onto the VLM tray; levelling mounts threaded in",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "84 kg is 3.4 times two UR12e payloads; a hoist or lift table.",
+   "who": "person + hoist"
+  },
+  {
+   "id": "T02",
+   "label": "19 in. rack and its units (UPS 23 kg, laser 40 kg, PC 8 kg, DIN drawer 9 kg)",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "the UPS and the laser exceed a UR12e's 12.5 kg; cage nuts and screws are not drawn",
+   "who": "person + lift"
+  },
+  {
+   "id": "T03",
+   "label": "Gas module: base plate, scroll pump (26 kg), blower, filter housing, O2 box, argon manifold",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "the pump exceeds 12.5 kg; the units' screws are not drawn",
+   "who": "person + lift"
+  },
+  {
+   "id": "T04",
+   "label": "KF-25 bellows, vacuum valve, argon and O2 lines, and the zero-point valve's air supply",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "hose and tube routing (deformable, KF wing-nut clamps)",
+   "who": "person"
+  },
+  {
+   "id": "T05",
+   "label": "Tray dock and umbilicals",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "cable and hose routing",
+   "who": "person"
+  },
+  {
+   "id": "T06",
+   "label": "Leak check: rate of rise from <= 1 mbar, O2 drift at +20 mbar argon",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "the seal verification in assembly.md",
+   "who": "machine"
+  }
+ ]
+}

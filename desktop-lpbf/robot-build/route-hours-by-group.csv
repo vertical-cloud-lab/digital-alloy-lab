@@ -1,0 +1,9 @@
+group,parts,cam,setup,run,deburr,total,share_pct
+"Chamber shell: frame, floor plate, lid, door",4,12.6,10.5,9.2,4.0,36.3,12.6
+"Chamber fittings: drawer, windows, ports, feedthroughs, door hardware",12,28.2,18.7,2.9,7.5,57.2,19.9
+Build module M50 and its clamps,14,41.6,23.2,5.2,4.2,74.3,25.9
+Recoater,7,13.0,10.5,0.9,1.8,26.2,9.1
+Powder dosing and overflow,5,9.2,8.2,1.0,2.0,20.4,7.1
+Optics bridge and beam path,5,9.8,9.5,5.8,1.2,26.5,9.2
+Z stage and legs,5,8.7,8.0,1.1,1.2,18.9,6.6
+"Base plates, stands, guard and robot aids",5,9.0,10.0,7.3,1.2,27.5,9.6

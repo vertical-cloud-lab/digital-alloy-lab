@@ -1,0 +1,556 @@
+{
+ "chapter": "50-integration",
+ "threshold_mm": 1.5,
+ "opaque_min": 0.3,
+ "recordings": [
+  "/tmp/robotbuild/frames/50-integration/audit"
+ ],
+ "frames_recorded": 1070,
+ "frames_checked": 1070,
+ "subsample": "every recorded frame",
+ "recorded_every": 1,
+ "actors": 408,
+ "movers": 257,
+ "mover_names": [
+  "lift/arms",
+  "lift/body",
+  "lift/handle",
+  "m/1 Base plate, process module",
+  "m/100 Field-stop aperture, M50 insert",
+  "m/101 Cover-slide drawer",
+  "m/102 Cover slide",
+  "m/103 Drawer O-ring",
+  "m/104 Drawer latches: 2 x quarter-turn latch studs",
+  "m/105 Drawer latch receptacles in the lid",
+  "m/106 Drawer-closed sensor",
+  "m/107 Gas knife",
+  "m/108 Dose chute",
+  "m/109 Metering base",
+  "m/11 Chamber legs",
+  "m/110 Metering-base O-ring on the lid",
+  "m/111 Metering-base dock-face O-ring",
+  "m/112 NFC reader antenna",
+  "m/113 Dovetail rails for the reservoirs",
+  "m/114 Roller shaft: magnetic-fluid rotary feedthrough ",
+  "m/115 Roller feedthrough O-ring",
+  "m/116 Roller drive coupling",
+  "m/117 Dosing stepper",
+  "m/118 Side reservoir port",
+  "m/119 Reservoir-docked sensor",
+  "m/12 Z mounting flange",
+  "m/120 Reservoir M",
+  "m/121 Reservoir M shutter",
+  "m/122 Reservoir M powder",
+  "m/123 Reservoir M lid with robot handle",
+  "m/124 Reservoir M lid O-ring",
+  "m/125 Reservoir M pull tab",
+  "m/126 Load cell",
+  "m/127 Camera viewport adapter + boss",
+  "m/128 Camera adapter O-ring",
+  "m/129 Camera window",
+  "m/13 Z actuator body",
+  "m/130 Camera window gasket, under the window",
+  "m/131 Camera window flat ring",
+  "m/132 Camera window retaining ring",
+  "m/133 Layer camera",
+  "m/134 Pressure transducer",
+  "m/135 Overpressure relief valve",
+  "m/136 Chamber door",
+  "m/137 Door O-ring",
+  "m/138 Door hinge leaves + knuckles",
+  "m/139 Door hinge knuckles on the chamber",
+  "m/14 Z bracket + fold-back belt housing",
+  "m/140 Hinge pins",
+  "m/141 Draw-latch brackets on the door's ears",
+  "m/142 Draw latches on the door's latch brackets, point",
+  "m/143 Draw-latch strikes on the chamber's side faces",
+  "m/144 Door handle",
+  "m/145 Optics bridge",
+  "m/146 Optics bridge posts",
+  "m/147 f-theta lens, f = 160 mm",
+  "m/148 f-theta focus shims",
+  "m/149 f-theta adapter ring",
+  "m/15 Z servo",
+  "m/150 2-axis galvo scan head",
+  "m/151 Galvo riser plate",
+  "m/152 Enclosed beam tubes",
+  "m/153 Coaxial-monitoring dichroic",
+  "m/154 Fold mirror",
+  "m/155 Safety shutter + beam dump",
+  "m/156 Coaxial photodiode chain",
+  "m/157 Collimator",
+  "m/159 Calibration power head on the plate",
+  "m/16 Z carriage",
+  "m/160 Calibration stand for the power head",
+  "m/163 Sealed cyclone + HEPA housing",
+  "m/166 Sealed side-channel blower",
+  "m/169 Trace O2 analyzer + dew-point transmitter",
+  "m/17 Z lift arm",
+  "m/18 Pot magnet",
+  "m/181 Guard frame",
+  "m/182 Laser guard panels",
+  "m/183 Sliding guard door",
+  "m/184 OD 7+ viewing window",
+  "m/185 Guard door rail",
+  "m/186 Guard-locking door switch",
+  "m/19 Build module M50: spigot, flange, honed 316L cyl",
+  "m/197 Lid screws, M5 x 25 316 socket head",
+  "m/198 Lid screw helical inserts, M5 x 7.5 18-8, in the",
+  "m/199 Floor-plate screws, M4 x 16 316, up through U-no",
+  "m/2 Leveling mounts, process module",
+  "m/20 Spigot O-ring",
+  "m/200 Floor-plate dowels, \u00d86 x 20 316",
+  "m/201 Helical inserts for the module screws, M6 x 12 1",
+  "m/202 Locating dowel",
+  "m/203 Heater-stack screws M50, M3 x 25 316, up through",
+  "m/204 Heater-block helical inserts M50, M3 18-8",
+  "m/205 Disc springs under the stack screws M50",
+  "m/206 Gland-plate screws M50, M4 x 20 316, into the we",
+  "m/207 Handle screws M50, M4 x 10 316",
+  "m/208 Rod set screws M50, M4 cup point 316",
+  "m/209 Striker screws M50, M3 x 10 316 flat head",
+  "m/21 Module M50 bottom flange: gland plate",
+  "m/210 Recoater rail screws, M4 x 16 316, into M4 holes",
+  "m/211 Rail-hole plug screws, M4 x 10 316, on bonded se",
+  "m/212 Rail-hole bonded seal washers",
+  "m/213 Blade screws, M3 x 8 316",
+  "m/214 Blade-cartridge dowels, \u00d83 x 10 316",
+  "m/215 Blade-cartridge ball plungers, M6 x 1 18-8 with ",
+  "m/216 Window-flange screws, M4 x 16 316",
+  "m/217 Window-flange helical inserts, M4 x 4 18-8, in t",
+  "m/218 Window retaining-ring screws, M3 x 10 316",
+  "m/219 Metering-base screws, M4 x 16 316",
+  "m/22 Module M50 gland-plate O-ring",
+  "m/220 Metering-base helical inserts, M4 x 6 18-8, in t",
+  "m/221 Inlet-plenum screws, M4 x 16 316",
+  "m/222 Inlet-plenum helical inserts, M4 x 6 18-8, in th",
+  "m/223 Inlet-plenum locating dowels, \u00d83 x 10 316",
+  "m/224 Outlet-plenum screws, M4 x 12 316, counterbored",
+  "m/225 Outlet-plenum helical inserts, M4 x 6 18-8, in t",
+  "m/226 Overflow-funnel screws, M4 x 12 316, counterbore",
+  "m/227 Overflow-funnel helical inserts, M4 x 6 18-8, in",
+  "m/228 Vacuum-port adapter screws, M5 x 20 316",
+  "m/229 Vacuum-port adapter helical inserts, M5 x 7.5 18",
+  "m/23 Rod O-rings M50 in the bottom flange",
+  "m/230 Vacuum-port adapter locating dowels, \u00d83 x 10 316",
+  "m/231 Bearing-cap screws, M4 x 20 316",
+  "m/232 Bearing-cap helical inserts, M4 x 6 18-8, in the",
+  "m/233 Bearing-cap locating dowels, \u00d83 x 10 316",
+  "m/234 Reservoir M lid screws, M3 x 8 316",
+  "m/235 Z-flange screws, M5 x 12 316, counterbored",
+  "m/236 Z-flange helical inserts, M5 x 7.5 18-8, in the ",
+  "m/237 Leg-to-floor screws, M6 x 25 316, up each leg's ",
+  "m/238 Leg helical inserts, M6 x 9 18-8, in the floor",
+  "m/239 Base-plate-to-leg screws, M6 x 25 316",
+  "m/24 Module M50 handle",
+  "m/240 Jar-sensor bracket screws, M4 x 10 316, into the",
+  "m/241 Zero-point post helical inserts, M6 x 9 18-8, in",
+  "m/242 Optics-bridge screws, M6 x 35 316",
+  "m/243 Optics-post base screws, M6 x 25 316",
+  "m/244 Guard-door handle for the robot",
+  "m/245 Door drive: pneumatic rotary actuator on the hin",
+  "m/246 Door drive bracket",
+  "m/247 Door drive shaft and disc",
+  "m/248 Draw-latch actuators: 2 x \u00d820 compact air cylind",
+  "m/249 Drawer latch wing head, left",
+  "m/25 Zero-point arms M50",
+  "m/250 Drawer latch wing head, right",
+  "m/251 Blade-cartridge grip fin",
+  "m/252 Liner pull tab, left",
+  "m/253 Liner pull tab, right",
+  "m/254 AprilTag plates",
+  "m/255 Overflow jar grip fin",
+  "m/26 Zero-point clamping pins M50",
+  "m/260 PB2 process-module box: Raspberry Pi 5, PN532 NF",
+  "m/261 PB2 to the optics bridge, M4 x 10",
+  "m/262 Z sensor flag",
+  "m/263 Z sensor bracket",
+  "m/264 Z home and lower-limit sensors",
+  "m/265 Recoater position magnet",
+  "m/266 Recoater sensor posts",
+  "m/267 Recoater sensor clamps",
+  "m/268 Recoater home and over-travel sensors",
+  "m/269 Recoater sensor posts to the base plate, M5 x 25",
+  "m/27 Build plate M50",
+  "m/270 Guard-position switch IDEC HS6B-12B05",
+  "m/271 E-stop enclosure, guard right side, near the fro",
+  "m/272 E-stops IDEC XW1E-BV402M-R, guard right side, ne",
+  "m/273 E-stop enclosure, front of the gas module's O2 b",
+  "m/274 E-stops IDEC XW1E-BV402M-R, front of the gas mod",
+  "m/28 Plate rim wiper M50",
+  "m/29 Heater block M50",
+  "m/3 Base plate, gas module",
+  "m/30 Cartridge heaters M50",
+  "m/31 Type K thermocouples M50",
+  "m/32 Macor standoff rings M50",
+  "m/33 Radiation shields M50",
+  "m/34 Piston head M50",
+  "m/35 Bore seal M50",
+  "m/36 Hollow piston rod M50",
+  "m/37 Rod end M50: 316L feedthrough block, rod welded ",
+  "m/38 Rod end M50 feedthroughs, welded in",
+  "m/39 Striker disc M50",
+  "m/4 Leveling mounts, gas module",
+  "m/40 Overflow funnel block",
+  "m/41 Overflow funnel O-ring",
+  "m/42 Overflow port",
+  "m/43 Overflow jar",
+  "m/44 Overflow clamp",
+  "m/45 Overflow-jar present sensor",
+  "m/46 Overflow-jar sensor bracket",
+  "m/47 Zero-point clamping modules",
+  "m/48 Zero-point module plates",
+  "m/49 Zero-point posts",
+  "m/5 19 in. rack frame",
+  "m/50 Zero-point release valve",
+  "m/51 Zero-point push-in fittings",
+  "m/52 Zero-point release-air line",
+  "m/53 Process chamber body",
+  "m/54 Chamber floor plate",
+  "m/55 Floor O-ring",
+  "m/56 Lid O-ring",
+  "m/57 Cross-flow inlet plenum + nozzle",
+  "m/58 Inlet plenum O-ring",
+  "m/59 Inlet plenum port",
+  "m/6 UPS",
+  "m/60 Cross-flow outlet plenum under the floor",
+  "m/61 Outlet plenum O-ring",
+  "m/62 Outlet plenum port",
+  "m/63 Vacuum port",
+  "m/64 Vacuum port adapter plate",
+  "m/65 Vacuum port adapter O-ring",
+  "m/66 Layer-light LED bar",
+  "m/67 Lift-out wall liner, left",
+  "m/68 Lift-out wall liner, right",
+  "m/69 Lift-out wall liner, back upper left",
+  "m/7 Fiber laser source, 500 W single-mode, IPG YLR-5",
+  "m/70 Lift-out wall liner, back upper right",
+  "m/71 Lift-out wall liner, back lower left",
+  "m/72 Lift-out wall liner, back lower right",
+  "m/73 Plate-height through-beam",
+  "m/74 Fibre-head O-rings",
+  "m/75 Module-present sensor",
+  "m/76 Recoater guide rail",
+  "m/77 Recoater carriage",
+  "m/78 Recoater carriage block",
+  "m/79 Recoater ball screw",
+  "m/8 Scan + laser controller PC",
+  "m/80 Recoater ball nut",
+  "m/81 Recoater arm",
+  "m/82 Blade holder",
+  "m/83 HSS recoater blade",
+  "m/84 Recoater feedthrough spacer ring",
+  "m/85 Recoater fixed bearing: magnetic-fluid rotary fe",
+  "m/86 Recoater feedthrough O-rings",
+  "m/87 Recoater shaft coupling",
+  "m/88 Recoater floating bearing housing",
+  "m/89 Recoater bearing-cap O-ring",
+  "m/9 DIN-rail drawer: 24 V supply, safety relay, Clea",
+  "m/90 Recoater motor standoff",
+  "m/91 Recoater servo",
+  "m/92 Recoater motor bracket",
+  "m/93 Chamber lid",
+  "m/94 Window flange",
+  "m/95 \u00d82 in. fused-silica window, 9.53 mm, AR 1064",
+  "m/96 Window O-ring, lower",
+  "m/97 Window clamp ring, upper",
+  "m/98 Window-flange O-ring",
+  "m/99 Window retaining ring",
+  "op/brow",
+  "op/coat",
+  "op/coat skirt",
+  "op/glasses frame",
+  "op/glasses lens",
+  "op/glove",
+  "op/hair",
+  "op/iris",
+  "op/sclera",
+  "op/shirt",
+  "op/shoes",
+  "op/skin",
+  "op/trousers"
+ ],
+ "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
+ "narrow_checks": 3269,
+ "pairs_tested": 3269,
+ "violations": 0,
+ "worst_mm": 0.0,
+ "worst": null,
+ "pairs": [],
+ "cad_overlaps": [],
+ "cad_overlap_note": "two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's own overlap (a groove or hole the model does not cut), listed apart and not counted",
+ "rigid_pairs": [
+  {
+   "a": "m/266 Recoater sensor posts",
+   "b": "m/52 Zero-point release-air line",
+   "worst_mm": 17.7,
+   "frames": 1070
+  },
+  {
+   "a": "m/178 Gas-loop + vacuum hoses",
+   "b": "m/181 Guard frame",
+   "worst_mm": 17.7,
+   "frames": 293
+  },
+  {
+   "a": "m/179 Argon line",
+   "b": "m/53 Process chamber body",
+   "worst_mm": 15.2,
+   "frames": 293
+  },
+  {
+   "a": "m/53 Process chamber body",
+   "b": "m/74 Fibre-head O-rings",
+   "worst_mm": 14.4,
+   "frames": 1070
+  },
+  {
+   "a": "m/21 Module M50 bottom flange: gland plate",
+   "b": "m/23 Rod O-rings M50 in the bottom flange",
+   "worst_mm": 11.2,
+   "frames": 1070
+  },
+  {
+   "a": "m/84 Recoater feedthrough spacer ring",
+   "b": "m/86 Recoater feedthrough O-rings",
+   "worst_mm": 7.9,
+   "frames": 1070
+  },
+  {
+   "a": "m/224 Outlet-plenum screws, M4 x 12 316, counterbored",
+   "b": "m/60 Cross-flow outlet plenum under the floor",
+   "worst_mm": 7.5,
+   "frames": 1070
+  },
+  {
+   "a": "m/146 Optics bridge posts",
+   "b": "m/178 Gas-loop + vacuum hoses",
+   "worst_mm": 6.4,
+   "frames": 293
+  },
+  {
+   "a": "m/20 Spigot O-ring",
+   "b": "m/54 Chamber floor plate",
+   "worst_mm": 5.6,
+   "frames": 1070
+  },
+  {
+   "a": "m/207 Handle screws M50, M4 x 10 316",
+   "b": "m/21 Module M50 bottom flange: gland plate",
+   "worst_mm": 4.7,
+   "frames": 1070
+  },
+  {
+   "a": "m/127 Camera viewport adapter + boss",
+   "b": "m/130 Camera window gasket, under the window",
+   "worst_mm": 4.7,
+   "frames": 1070
+  },
+  {
+   "a": "m/27 Build plate M50",
+   "b": "m/29 Heater block M50",
+   "worst_mm": 4.1,
+   "frames": 1070
+  },
+  {
+   "a": "m/73 Plate-height through-beam",
+   "b": "m/74 Fibre-head O-rings",
+   "worst_mm": 3.9,
+   "frames": 1070
+  },
+  {
+   "a": "m/183 Sliding guard door",
+   "b": "m/184 OD 7+ viewing window",
+   "worst_mm": 3.0,
+   "frames": 1070
+  },
+  {
+   "a": "m/197 Lid screws, M5 x 25 316 socket head",
+   "b": "m/198 Lid screw helical inserts, M5 x 7.5 18-8, in the",
+   "worst_mm": 2.8,
+   "frames": 1070
+  },
+  {
+   "a": "m/178 Gas-loop + vacuum hoses",
+   "b": "m/62 Outlet plenum port",
+   "worst_mm": 2.1,
+   "frames": 293
+  },
+  {
+   "a": "m/25 Zero-point arms M50",
+   "b": "m/26 Zero-point clamping pins M50",
+   "worst_mm": 1.7,
+   "frames": 1070
+  },
+  {
+   "a": "m/19 Build module M50: spigot, flange, honed 316L cyl",
+   "b": "m/28 Plate rim wiper M50",
+   "worst_mm": 1.6,
+   "frames": 1070
+  },
+  {
+   "a": "m/265 Recoater position magnet",
+   "b": "m/78 Recoater carriage block",
+   "worst_mm": 1.6,
+   "frames": 1070
+  }
+ ],
+ "allowed": [
+  {
+   "rule": "not a solid",
+   "depth_allowed_mm": null,
+   "reason": "water in a wash or rinse tank, coolant, a welding arc's glow: drawn volumes that things may enter",
+   "pairs_in_contact": 1,
+   "pair_frames": 200,
+   "examples": [
+    [
+     "m/194 Chilled-water supply + return to the laser",
+     "m/5 19 in. rack frame"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "person's own layers",
+   "depth_allowed_mm": null,
+   "reason": "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)",
+   "pairs_in_contact": 24,
+   "pair_frames": 13160,
+   "examples": [
+    [
+     "op/brow",
+     "op/coat"
+    ],
+    [
+     "op/brow",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/coat skirt"
+    ],
+    [
+     "op/coat",
+     "op/glasses frame"
+    ],
+    [
+     "op/coat",
+     "op/glasses lens"
+    ],
+    [
+     "op/coat",
+     "op/glove"
+    ],
+    [
+     "op/coat",
+     "op/hair"
+    ],
+    [
+     "op/coat",
+     "op/iris"
+    ],
+    [
+     "op/coat",
+     "op/sclera"
+    ],
+    [
+     "op/coat",
+     "op/shirt"
+    ],
+    [
+     "op/coat",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/trousers"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "lift table's own parts",
+   "depth_allowed_mm": null,
+   "reason": "the scissor arms are pinned to the lift table's base and platform, and the handle is bolted to the base",
+   "pairs_in_contact": 2,
+   "pair_frames": 488,
+   "examples": [
+    [
+     "lift/arms",
+     "lift/body"
+    ],
+    [
+     "lift/body",
+     "lift/handle"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "hands on the load",
+   "depth_allowed_mm": 25.0,
+   "reason": "the person's gloved fingertips on the module, rack, unit or gas part being pushed, or the hands on the lift table's handle bar (people.py's fingers curl a little into what they touch), up to 25 mm",
+   "pairs_in_contact": 11,
+   "pair_frames": 221,
+   "examples": [
+    [
+     "lift/handle",
+     "op/glove"
+    ],
+    [
+     "m/0 VLM tray 2450 x 864 mm",
+     "op/glove"
+    ],
+    [
+     "m/166 Sealed side-channel blower",
+     "op/glove"
+    ],
+    [
+     "m/181 Guard frame",
+     "op/glove"
+    ],
+    [
+     "m/271 E-stop enclosure, guard right side, near the fro",
+     "op/glove"
+    ],
+    [
+     "m/272 E-stops IDEC XW1E-BV402M-R, guard right side, ne",
+     "op/glove"
+    ],
+    [
+     "m/3 Base plate, gas module",
+     "op/glove"
+    ],
+    [
+     "m/5 19 in. rack frame",
+     "op/glove"
+    ],
+    [
+     "m/6 UPS",
+     "op/glove"
+    ],
+    [
+     "m/8 Scan + laser controller PC",
+     "op/glove"
+    ],
+    [
+     "m/9 DIN-rail drawer: 24 V supply, safety relay, Clea",
+     "op/glove"
+    ]
+   ],
+   "worst_mm": 25.0
+  },
+  {
+   "rule": "load on the lift table",
+   "depth_allowed_mm": 3.0,
+   "reason": "a load standing on the lift table's platform (its feet 3 mm above the tray's floor), up to 3 mm",
+   "pairs_in_contact": 0,
+   "pair_frames": 0,
+   "examples": [],
+   "worst_mm": 0.0
+  }
+ ],
+ "seconds": 141.8,
+ "peak_rss_mb": 683,
+ "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
+}

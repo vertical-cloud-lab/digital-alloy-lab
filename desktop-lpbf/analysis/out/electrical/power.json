@@ -1,0 +1,329 @@
+{
+ "legs": {
+  "purge (pump on at its 6 A rating, heaters preheating)": {
+   "L1": 9.471465969530986,
+   "L2": 9.790854040064827,
+   "N": 0.3193880705338422,
+   "total_W": 1533.5625127681308,
+   "ok": true
+  },
+  "building, typical": {
+   "L1": 8.339678639214243,
+   "L2": 7.151083267997642,
+   "N": 1.1885953712166013,
+   "total_W": 1518.8524004085803,
+   "ok": true
+  },
+  "building, worst (500 W CW, blower at its AC upper bound, UPS recharging)": {
+   "L1": 17.687246963562753,
+   "L2": 13.994473949567091,
+   "N": 3.6927730139956627,
+   "total_W": 3185.8988764044943,
+   "ok": true
+  },
+  "everything at rated at once (pump interlocked off while lasing, so not a real state)": {
+   "L1": 23.687246963562753,
+   "L2": 19.99447394956709,
+   "N": 3.6927730139956627,
+   "total_W": 3934.6988764044945,
+   "ok": true
+  }
+ },
+ "inrush": {
+  "laser": {
+   "breaker": "Q1 D15",
+   "peak_A": 40.0,
+   "duration_s": 0.01,
+   "magnetic_trip_min_A": 150,
+   "margin": 3.75,
+   "with_C_curve_margin": 1.875,
+   "with_B_curve_margin": 1.125
+  },
+  "UPS input": {
+   "breaker": "Q2 D15",
+   "peak_A": 50.0,
+   "duration_s": 0.01,
+   "magnetic_trip_min_A": 150,
+   "margin": 3.0,
+   "with_C_curve_margin": 1.5,
+   "with_B_curve_margin": 0.9
+  },
+  "heater supply": {
+   "breaker": "Q2 D15",
+   "peak_A": 30.0,
+   "duration_s": 0.005,
+   "magnetic_trip_min_A": 150,
+   "margin": 5.0,
+   "with_C_curve_margin": 2.5,
+   "with_B_curve_margin": 1.5
+  },
+  "pump": {
+   "breaker": "Q3 D10",
+   "peak_A": 40.0,
+   "duration_s": 0.01,
+   "magnetic_trip_min_A": 100,
+   "margin": 2.5,
+   "with_C_curve_margin": 1.25,
+   "with_B_curve_margin": 0.75
+  },
+  "blower": {
+   "breaker": "Q4 C6",
+   "peak_A": 12.0,
+   "duration_s": 0.2,
+   "magnetic_trip_min_A": 30,
+   "margin": 2.5,
+   "with_C_curve_margin": 2.5,
+   "with_B_curve_margin": 1.5
+  },
+  "closing the main disconnect (laser + UPS + heater supply at once)": {
+   "peak_A": 120.0,
+   "upstream": "dock 30 A breaker, magnetic trip >= 150 A (C) / 300 A (D)",
+   "margin_vs_C": 1.25
+  }
+ },
+ "ups": {
+  "battery_Wh_nominal": 432.0,
+  "backed_rated_W": 770,
+  "backed_typical_W": 241,
+  "held_W": 63,
+  "runtime_at_rated_min": 17.001756773904305,
+  "runtime_at_typical_min": 64.66042188342328,
+  "runtime_hold_only_min": 302.4938162408969,
+  "power_cut_total_min": 295.80064684550615,
+  "cooldown_to_50C_min": {
+   "S25": 15,
+   "M50": 28,
+   "L75": 41
+  },
+  "ups_rated_W": 1500.0,
+  "source": "battery 4 x 12 V 9 Ah assumed for the 5PX 1500 G2 class (not read from Eaton's datasheet: its page timed out); Peukert k 1.15 for VRLA; inverter 88 % (byu-vcl PR 318's Vertiv figure). ENERGY STAR's listing of the 5PX1500RTG2 (read 2026-11-23 22:48Z) gives 7 min at 100 % (1,500 W) and 14 min at 50 % load: about 175 Wh delivered at both, which the Peukert model is checked against below",
+  "energy_star_check": {
+   "1500 W": {
+    "energy_star_min": 7.0,
+    "model_min": 7.896837203159924
+   },
+   "750 W": {
+    "energy_star_min": 14.0,
+    "model_min": 17.524178973031745
+   }
+  },
+  "hold_lower_bound_min": 166.66666666666666
+ },
+ "drawer": {
+  "heat_typ_W": 72,
+  "heat_worst_W": 147,
+  "free_area_m2": 0.2558692,
+  "rise_natural_typ_K": 51.16250447849562,
+  "rise_natural_worst_K": 104.45677997692856,
+  "fan_cfm_for_10K_worst": 25.827144278606966,
+  "fan_cfm_for_5K_worst": 51.65428855721393,
+  "inside_with_fan_10K": {
+   "room 22 C": 32.0,
+   "Shuttle, typical build, Shuttle 1 idle (heat.md)": 40.0,
+   "Shuttle, worst (PR 318 busy case + this tray at 500 W)": 53.0
+  },
+  "inside_natural_worst": {
+   "room 22 C": 126.45677997692856,
+   "Shuttle, typical build, Shuttle 1 idle (heat.md)": 134.45677997692854,
+   "Shuttle, worst (PR 318 busy case + this tray at 500 W)": 147.45677997692854
+  },
+  "limits": {
+   "Banner SC26 (operating)": 55.0,
+   "Productivity1000 PLC": 60.0,
+   "Mean Well SDR (full load without derating)": 50.0,
+   "Raspberry Pi 5 (throttles near)": 80.0
+  },
+  "items": {
+   "24 V control supply losses (SDR-240-24 class at ~40 %)": [
+    8,
+    14
+   ],
+   "48 V servo supply losses": [
+    4,
+    20
+   ],
+   "heater supply losses (LRS-350-24 at 97 / 250 W)": [
+    12,
+    31
+   ],
+   "heater SSR (D1D20: ~1.3 V at 10.4 A worst, estimate)": [
+    5,
+    14
+   ],
+   "contactors K1, K3A, K3B, K4, K5 coils": [
+    6,
+    9
+   ],
+   "PLC + modules": [
+    8,
+    12
+   ],
+   "safety controller": [
+    4,
+    5
+   ],
+   "ClearCore": [
+    4,
+    6
+   ],
+   "stepper drive": [
+    4,
+    10
+   ],
+   "Pi 5 + DC-DC": [
+    8,
+    12
+   ],
+   "Ethernet switch": [
+    3,
+    4
+   ],
+   "CN708 + 2nd temperature relay": [
+    3,
+    4
+   ],
+   "terminal blocks, fuses, wiring (I^2 R)": [
+    3,
+    6
+   ]
+  }
+ },
+ "vdrop": {
+  "dock -> PB1 (gas module) feeder": {
+   "length_m": 0.8,
+   "current_A": 24.0,
+   "volts": 208.0,
+   "mm2": 5.26,
+   "drop_V": 0.15067984790874525,
+   "drop_pct": 0.07244223457151214,
+   "heater_power_loss_pct": null,
+   "note": "10 AWG; at the full 24 A continuous"
+  },
+  "PB1 -> rack, laser 208 V": {
+   "length_m": 2.4,
+   "current_A": 9.1,
+   "volts": 208.0,
+   "mm2": 2.08,
+   "drop_V": 0.43343999999999994,
+   "drop_pct": 0.20838461538461536,
+   "heater_power_loss_pct": null,
+   "note": "14 AWG along the back duct"
+  },
+  "PB1 -> rack, UPS 120 V": {
+   "length_m": 2.4,
+   "current_A": 7.4,
+   "volts": 120.0,
+   "mm2": 2.08,
+   "drop_V": 0.3524676923076923,
+   "drop_pct": 0.2937230769230769,
+   "heater_power_loss_pct": null,
+   "note": "14 AWG"
+  },
+  "PB1 -> pump 208 V (nXDS6i)": {
+   "length_m": 2.3,
+   "current_A": 6.0,
+   "volts": 208.0,
+   "mm2": 2.08,
+   "drop_V": 0.273876923076923,
+   "drop_pct": 0.13167159763313607,
+   "heater_power_loss_pct": null,
+   "note": "14 AWG along the back duct, KM1 in PB1"
+  },
+  "heater 24 V: drawer -> rod end (L75, 10.4 A)": {
+   "length_m": 1.7,
+   "current_A": 10.4,
+   "volts": 24.0,
+   "mm2": 1.31,
+   "drop_V": 0.5571224427480916,
+   "drop_pct": 2.3213435114503818,
+   "heater_power_loss_pct": 4.588800665919235,
+   "note": "16 AWG pair incl. a 0.3 m service loop for the 50 mm stroke"
+  },
+  "heater 24 V with 18 AWG": {
+   "length_m": 1.7,
+   "current_A": 10.4,
+   "volts": 24.0,
+   "mm2": 0.823,
+   "drop_V": 0.886792709599028,
+   "drop_pct": 3.6949696233292832,
+   "heater_power_loss_pct": 7.253411241485297,
+   "note": "18 AWG for comparison"
+  },
+  "48 V servo bus: drawer -> Z servo (peak 5 A)": {
+   "length_m": 1.6,
+   "current_A": 5.0,
+   "volts": 48.0,
+   "mm2": 0.823,
+   "drop_V": 0.40126366950182263,
+   "drop_pct": 0.8359659781287972,
+   "heater_power_loss_pct": null,
+   "note": "18 AWG (Teknic DC power cable class)"
+  },
+  "24 V: drawer -> guard lock (0.5 A hold, 1 A pull-in)": {
+   "length_m": 1.6,
+   "current_A": 1.0,
+   "volts": 24.0,
+   "mm2": 0.326,
+   "drop_V": 0.20260122699386504,
+   "drop_pct": 0.8441717791411043,
+   "heater_power_loss_pct": null,
+   "note": "22 AWG"
+  },
+  "24 V: drawer -> gas module valves + O2 (2 A)": {
+   "length_m": 2.3,
+   "current_A": 2.0,
+   "volts": 24.0,
+   "mm2": 0.519,
+   "drop_V": 0.3658728323699421,
+   "drop_pct": 1.5244701348747587,
+   "heater_power_loss_pct": null,
+   "note": "20 AWG"
+  },
+  "24 V galvo: PB1 HDR-100-24 -> basiCube 20 (2.6 A)": {
+   "length_m": 1.6,
+   "current_A": 2.6,
+   "volts": 24.0,
+   "mm2": 0.823,
+   "drop_V": 0.20865710814094776,
+   "drop_pct": 0.869404617253949,
+   "heater_power_loss_pct": null,
+   "note": "18 AWG (electrical.md 7)"
+  }
+ },
+ "pins": {
+  "1 pin(s) per pole at 10.4 A": {
+   "ohm_per_pin": 0.013155829590448863,
+   "A_per_pin": 10.4,
+   "W_per_pin": 1.422934528502949,
+   "W_total_both_poles": 2.845869057005898,
+   "mV_per_pole": 136.82062774066816
+  },
+  "2 pin(s) per pole at 10.4 A": {
+   "ohm_per_pin": 0.013155829590448863,
+   "A_per_pin": 5.2,
+   "W_per_pin": 0.3557336321257373,
+   "W_total_both_poles": 1.422934528502949,
+   "mV_per_pole": 68.41031387033408
+  },
+  "3 pin(s) per pole at 10.4 A": {
+   "ohm_per_pin": 0.013155829590448863,
+   "A_per_pin": 3.466666666666667,
+   "W_per_pin": 0.15810383650032767,
+   "W_total_both_poles": 0.948623019001966,
+   "mV_per_pole": 45.60687591355606
+  },
+  "source": "Accu-Glass Sub-C pins are Au-plated Ni-Fe, 0.040 in. (1.02 mm); Ni-Fe (alloy 52 class) resistivity ~0.43 uOhm m (estimate from the alloy); 25 mm conducting length assumed"
+ },
+ "pe_current": {
+  "items": {
+   "laser (EMI filter, estimate)": 3.5,
+   "UPS (estimate)": 1.0,
+   "heater supply LRS-350 (datasheet class < 0.75 mA at 240 V)": 0.75,
+   "24 V / 48 V / 24 V galvo DIN supplies behind the UPS (3 x 0.5, estimate)": 1.5,
+   "pump inverter drive (estimate; Edwards asks for a >= 30 mA RCD to ride through start-up)": 2.0,
+   "PC (estimate)": 0.5
+  },
+  "total_mA": 9.25,
+  "note": "IEC 60204-1 8.2.8: above 10 mA in the protective conductor, use >= 10 mm2 Cu or a second PE conductor; above 3.5 mA, a plug-connected machine needs a warning and reinforced PE. A 5 mA GFCI upstream would trip."
+ }
+}

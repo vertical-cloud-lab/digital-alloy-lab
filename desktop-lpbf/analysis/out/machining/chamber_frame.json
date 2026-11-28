@@ -1,0 +1,224 @@
+{
+ "old": {
+  "design": "one 6061-T6 block, 13 x 9.5 x 6 in., 280 x 190 x 120 mm pocket, R5 vertical corners, R5 floor coves, 16 mm walls, 20 mm floor",
+  "stock_L": 12.14,
+  "part_L": 2.73,
+  "chips_L": 9.42,
+  "chips_pct": 78,
+  "residual_cm3": {
+   "standard_tools": 29.1,
+   "plus_6in_long_tools": 3.4,
+   "with_5in_tools_found_for_sale": 15.3,
+   "plus_32mm_extension_holder": 0.9
+  },
+  "source": "machining.md (cam_sim.json and chamber_reach.json before the redesign, 2026-11-20)",
+  "features": [
+   {
+    "feature": "pocket walls, 120 mm deep",
+    "reach_mm": 123,
+    "tool": {
+     "tool": "3/4 in. x 6 in. OAL",
+     "d_mm": 19.05,
+     "stick_out_mm": 112,
+     "L_over_D": 5.9,
+     "deflection_um_per_100N": 29.5,
+     "deflection_um_per_100N_at_0p7D": 50.3,
+     "N_for_25um": 85,
+     "why": "walls to the floor"
+    }
+   },
+   {
+    "feature": "R5 vertical corners, 120 mm tall",
+    "reach_mm": 125,
+    "tool": {
+     "tool": "3/8 in. at 125 mm (extension or 6 in. long)",
+     "d_mm": 9.525,
+     "stick_out_mm": 125,
+     "L_over_D": 13.1,
+     "deflection_um_per_100N": 655.6,
+     "deflection_um_per_100N_at_0p7D": 1118.5,
+     "N_for_25um": 4,
+     "why": "R5 needs a tool under \u00d810"
+    }
+   },
+   {
+    "feature": "R5 floor coves",
+    "reach_mm": 125,
+    "tool": {
+     "tool": "3/8 in. ball, 125 mm",
+     "d_mm": 9.525,
+     "stick_out_mm": 125,
+     "L_over_D": 13.1,
+     "deflection_um_per_100N": 655.6,
+     "deflection_um_per_100N_at_0p7D": 1118.5,
+     "N_for_25um": 4,
+     "why": "a cove needs a ball or corner-radius tool at full depth"
+    }
+   },
+   {
+    "feature": "pocket floor (20 mm floor, flat over the blade path)",
+    "reach_mm": 123,
+    "tool": {
+     "tool": "1 in. x 6 in. OAL",
+     "d_mm": 25.4,
+     "stick_out_mm": 108,
+     "L_over_D": 4.3,
+     "deflection_um_per_100N": 8.4,
+     "deflection_um_per_100N_at_0p7D": 14.3,
+     "N_for_25um": 299,
+     "why": "floor and lower walls"
+    }
+   },
+   {
+    "feature": "recoater-rail insert holes in the back wall's inside face",
+    "reach_mm": 216,
+    "tool": {
+     "tool": "\u00d84.2 drill + M4 STI tap through the door opening",
+     "d_mm": 4.22,
+     "stick_out_mm": 216,
+     "L_over_D": 51.2,
+     "deflection_um_per_100N": 87802.9,
+     "deflection_um_per_100N_at_0p7D": 149788.0,
+     "N_for_25um": 0,
+     "why": "16 mm front wall + 190 mm interior"
+    }
+   }
+  ]
+ },
+ "new": {
+  "design": "through-frame from 5-1/2 in. plate (walls 16 mm, 123.9 mm tall, R10 corners, 8 x 3.9 rebate) + 20 mm floor plate",
+  "frame": {
+   "milled_stock_L": 4.08,
+   "part_L": 1.58,
+   "chips_L": 2.5,
+   "core_slug_L": 7.04,
+   "residual_cm3": {
+    "standard_tools": 1.05,
+    "plus_long_tools": 0.56
+   },
+   "residual_note": "what is left is voxel slivers at the R10 corners (the 3/4 in. tool's R9.5 fits) and \u00d83-4 holes the voxels can't resolve; all are cut"
+  },
+  "floor": {
+   "milled_stock_L": 2.04,
+   "part_L": 1.11,
+   "chips_L": 0.92,
+   "residual_cm3": 0.09
+  },
+  "features": [
+   {
+    "feature": "opening walls, finished from the top and from the bottom, 62 mm each",
+    "reach_mm": 62,
+    "tool": {
+     "tool": "3/4 in. x 4 in. OAL (standard)",
+     "d_mm": 19.05,
+     "stick_out_mm": 63,
+     "L_over_D": 3.3,
+     "deflection_um_per_100N": 5.2,
+     "deflection_um_per_100N_at_0p7D": 8.9,
+     "N_for_25um": 477,
+     "why": "R10 corners"
+    }
+   },
+   {
+    "feature": "outer profile, from both sides",
+    "reach_mm": 62,
+    "tool": {
+     "tool": "3/4 in. x 4 in. OAL (standard)",
+     "d_mm": 19.05,
+     "stick_out_mm": 63,
+     "L_over_D": 3.3,
+     "deflection_um_per_100N": 5.2,
+     "deflection_um_per_100N_at_0p7D": 8.9,
+     "N_for_25um": 477,
+     "why": ""
+    }
+   },
+   {
+    "feature": "rebate 8 x 3.9 (bottom)",
+    "reach_mm": 4,
+    "tool": {
+     "tool": "3/4 in. x 4 in. OAL",
+     "d_mm": 19.05,
+     "stick_out_mm": 63,
+     "L_over_D": 3.3,
+     "deflection_um_per_100N": 5.2,
+     "deflection_um_per_100N_at_0p7D": 8.9,
+     "N_for_25um": 477,
+     "why": "same tool"
+    }
+   },
+   {
+    "feature": "door opening through the 16 mm front wall, R6.5",
+    "reach_mm": 16,
+    "tool": {
+     "tool": "1/2 in. x 3 in. OAL",
+     "d_mm": 12.7,
+     "stick_out_mm": 38,
+     "L_over_D": 3.0,
+     "deflection_um_per_100N": 5.8,
+     "deflection_um_per_100N_at_0p7D": 9.9,
+     "N_for_25um": 429,
+     "why": ""
+    }
+   },
+   {
+    "feature": "inlet slot 120 x 8 through 16 mm, round ends",
+    "reach_mm": 16,
+    "tool": {
+     "tool": "1/4 in. 3-flute",
+     "d_mm": 6.35,
+     "stick_out_mm": 25,
+     "L_over_D": 3.9,
+     "deflection_um_per_100N": 26.6,
+     "deflection_um_per_100N_at_0p7D": 45.3,
+     "N_for_25um": 94,
+     "why": ""
+    }
+   },
+   {
+    "feature": "lid and floor O-ring glands 4.6 x 2.65",
+    "reach_mm": 2.65,
+    "tool": {
+     "tool": "4 mm 2-flute",
+     "d_mm": 4.0,
+     "stick_out_mm": 16,
+     "L_over_D": 4.0,
+     "deflection_um_per_100N": 44.2,
+     "deflection_um_per_100N_at_0p7D": 75.4,
+     "N_for_25um": 57,
+     "why": ""
+    }
+   },
+   {
+    "feature": "rail holes: M4 tapped through the back wall from outside",
+    "reach_mm": 16,
+    "tool": {
+     "tool": "\u00d83.3 drill / M4 tap",
+     "d_mm": 3.3,
+     "stick_out_mm": 30,
+     "L_over_D": 9.1,
+     "deflection_um_per_100N": 629.1,
+     "deflection_um_per_100N_at_0p7D": 1073.2,
+     "N_for_25um": 4,
+     "why": "no inside-face holes left"
+    }
+   },
+   {
+    "feature": "floor plate: pad step, port \u00d896, slots, notches (20 mm plate)",
+    "reach_mm": 20,
+    "tool": {
+     "tool": "3/4 in. x 4 in. OAL",
+     "d_mm": 19.05,
+     "stick_out_mm": 63,
+     "L_over_D": 3.3,
+     "deflection_um_per_100N": 5.2,
+     "deflection_um_per_100N_at_0p7D": 8.9,
+     "N_for_25um": 477,
+     "why": ""
+    }
+   }
+  ]
+ },
+ "chips_saved_L": 6.0,
+ "method": "Deflection: an end mill as a cantilever, delta = F L^3 / (3 E I), with I = pi D_e^4 / 64 and D_e = 0.8 D (Mitsubishi Materials models an end mill as a solid rod of 0.7-0.8 D; 0.7 D bends 1.7x more), E = 600 GPa (WC-Co), per 100 N of radial load, which is about what a full-height finishing pass in 6061 puts on a 3/4 in. tool (0.25 mm radial, 0.05 mm/tooth, ~60 mm of flute engaged, K_c ~ 700 N/mm2: ~240 N tangential, ~0.4 of that radial). The holder and spindle add to it; this is the tool alone. Volumes come from cam_sim.json (voxel stock-removal runs) where it has them."
+}

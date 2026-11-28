@@ -1,0 +1,19 @@
+part,replacement,hours_now,hours_after,hours_saved,catalogue_usd_est,design_cost,call
+"Macor standoff rings M50 (3 standoffs x 3 rings, Ø8, cut from 8489K75 rod; therm",stock ceramic (alumina or Macor) washers,4.5,0.5,4.0,72.0,stand-off height set by stock thickness,swap
+"Striker disc M50 (416 stainless, on the pot magnet)",stock 430 / 416 stainless disc or washer,4.6,0.5,4.1,75.0,none,swap
+Recoater motor standoff,stock NEMA 23 standoff bracket,4.7,0.0,4.7,0.0,none,swap
+Recoater motor bracket,stock NEMA 23 bracket,3.7,1.0,2.7,95.0,motor position follows the stock bracket's hole pattern,swap
+"Window flange (6061, two FKM O-ring grooves)",stock fused-silica viewport on a standard flange (Ø ~100 mm class); AR coat for 1070 nm to order,5.8,1.0,4.8,515.0,the lid's window seat becomes a standard port; the cover-slide drawer must still cover it: medium redesign,swap
+Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry),comes with the viewport,4.7,0.0,4.7,0.0,none beyond the viewport,swap
+"Field-stop aperture, M50 insert (Ø41, passive beam limit; swapped with the modul",Thorlabs SM2 iris or fixed aperture in a lens tube,4.5,1.0,3.5,105.0,aperture swapped per module becomes a tube insert,swap
+Camera window retaining ring (bottoms metal-to-metal on the boss),Thorlabs SM1 retaining ring,4.5,0.0,4.5,0.0,the boss needs an SM1 thread,swap
+Door handle,catalogue pull handle,3.5,1.0,2.5,74.0,check the robot's grip on a catalogue pull,swap
+"f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridg",Thorlabs SM-thread adapter if the lens's M85x1 has one; else keep custom,4.7,1.0,3.7,125.0,none if an adapter exists (not checked),swap
+"Enclosed beam tubes (6061, Ø18 x 2: dichroic to galvo, fold leg)",Thorlabs SM1 lens tubes and couplers,3.7,1.0,2.7,100.0,none,swap
+"Guard-door handle for the robot (Ø12 x 130 bar on two Ø10 standoffs, 6061)",catalogue pull handle on standoffs,3.6,1.0,2.6,74.0,check the robot's grip,swap
+"Chamber legs, PB1 stand rails, zero-point posts","cut-to-length precision ground bar or 80/20 extrusion, drilled",11.7,4.5,7.2,,legs and posts become saw-cut and drilled bar; slots or holes move to suit extrusion,swap
+Optics bridge posts (welded 60 x 60 tube),80/20 1515-class extrusion posts with end plates,6.2,2.0,4.2,,stiffness of the bridge support to be re-checked (the beam path is aligned to it),consider
+"Draw-latch brackets, door drive bracket, shaft and disc",toggle latches with their own keepers; a catalogue D-bore hub,10.8,3.0,7.8,,latch force and the door seal's squeeze must be re-checked,consider
+AprilTag plates,"printed tags on stock aluminium sheet, bonded",4.0,0.3,3.7,,none,swap
+Base plates (MIC-6),MIC-6 cut to size by the supplier + a waterjet profile; drill here,16.3,8.2,8.1,,none (outsourcing.md's hybrid),swap
+"Chamber shell, cover-slide drawer, module body and gland plate, metering base, camera boss, heater block, build plate",none that keeps the design,80.7,80.7,0.0,,"a catalogue cube or box chamber changes the footprint, gas volume and every port (option 5); KF / ISO stubs would have to be welded to a box (option 4); the module's honed bore and spigot, the bayonet heater and plate, the drawer's dovetail seal and the doser have no catalogue equivalents",keep custom

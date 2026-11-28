@@ -1,0 +1,579 @@
+{
+ "chapter": "40-assembly-module",
+ "threshold_mm": 1.5,
+ "opaque_min": 0.3,
+ "recordings": [
+  "/tmp/robotbuild/frames/40-assembly-module/audit.part0",
+  "/tmp/robotbuild/frames/40-assembly-module/audit.part1"
+ ],
+ "frames_recorded": 2983,
+ "frames_checked": 2983,
+ "narrow_checks": 41694,
+ "pairs_tested": 41694,
+ "seconds": 100.1,
+ "peak_rss_mb": 440,
+ "merged_from": [
+  "/tmp/r10/w3/audit/40-assembly-module/p0/scene_audit_40-assembly-module.json",
+  "/tmp/r10/w3/audit/40-assembly-module/p1/scene_audit_40-assembly-module.json"
+ ],
+ "subsample": "every recorded frame",
+ "recorded_every": 1,
+ "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
+ "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB",
+ "cad_overlap_note": "two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's own overlap (a groove or hole the model does not cut), listed apart and not counted",
+ "violations": 9,
+ "worst_mm": 22.6,
+ "worst": {
+  "a": "mirA/A screw presenter",
+  "b": "o259",
+  "b_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
+  "worst_mm": 22.6,
+  "worst_frame": 981,
+  "frames": 2,
+  "frame_ranges": [
+   [
+    981,
+    982
+   ]
+  ],
+  "limit_mm": 1.5,
+  "rule": null
+ },
+ "pairs": [
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o259",
+   "b_is": "shcs: Heater-stack screws M50, M3 x 25 316, up through slotted counterbores ",
+   "worst_mm": 22.6,
+   "worst_frame": 981,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     981,
+     982
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o271",
+   "b_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #4",
+   "worst_mm": 18.5,
+   "worst_frame": 2233,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     2233,
+     2234
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o268",
+   "b_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #1",
+   "worst_mm": 18.5,
+   "worst_frame": 2285,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     2285,
+     2286
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o276",
+   "b_is": "set: Rod set screws M50, M4 cup point 316 #1",
+   "worst_mm": 10.5,
+   "worst_frame": 1728,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     1728,
+     1728
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o274",
+   "b_is": "shcs: Handle screws M50, M4 x 10 316 #1",
+   "worst_mm": 7.9,
+   "worst_frame": 2427,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2427,
+     2427
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o278",
+   "b_is": "fhcs: Striker screws M50, M3 x 10 316 flat head #1",
+   "worst_mm": 4.7,
+   "worst_frame": 2550,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2550,
+     2550
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o269",
+   "b_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #2",
+   "worst_mm": 2.0,
+   "worst_frame": 2328,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2328,
+     2328
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o272",
+   "b_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #5",
+   "worst_mm": 2.0,
+   "worst_frame": 2345,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2345,
+     2345
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o273",
+   "b_is": "shcs: Gland-plate screws M50, M4 x 20 316, into the welded collar #6",
+   "worst_mm": 2.0,
+   "worst_frame": 2362,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2362,
+     2362
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  }
+ ],
+ "cad_overlaps": [
+  {
+   "a": "o19",
+   "b": "o35",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
+   "worst_mm": 48.4,
+   "worst_frame": 2674,
+   "pair_frames": 26
+  },
+  {
+   "a": "o19",
+   "b": "o20",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
+   "worst_mm": 17.7,
+   "worst_frame": 2080,
+   "pair_frames": 1290
+  },
+  {
+   "a": "o21",
+   "b": "o23",
+   "a_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
+   "b_is": "part: Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod g",
+   "worst_mm": 15.2,
+   "worst_frame": 2833,
+   "pair_frames": 143
+  },
+  {
+   "a": "o29",
+   "b": "o31",
+   "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
+   "b_is": "part: Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 3",
+   "worst_mm": 12.0,
+   "worst_frame": 2680,
+   "pair_frames": 14
+  },
+  {
+   "a": "o489",
+   "b": "o491",
+   "a_is": "part: Zero-point arms M50 #1",
+   "b_is": "part: Zero-point clamping pins M50 #1",
+   "worst_mm": 8.2,
+   "worst_frame": 2905,
+   "pair_frames": 2090
+  },
+  {
+   "a": "o490",
+   "b": "o492",
+   "a_is": "part: Zero-point arms M50 #2",
+   "b_is": "part: Zero-point clamping pins M50 #2",
+   "worst_mm": 8.2,
+   "worst_frame": 2945,
+   "pair_frames": 2088
+  },
+  {
+   "a": "o267",
+   "b": "o34",
+   "a_is": "disc: Disc springs under the stack screws M50 #3",
+   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
+   "worst_mm": 8.2,
+   "worst_frame": 2691,
+   "pair_frames": 6
+  },
+  {
+   "a": "o265",
+   "b": "o34",
+   "a_is": "disc: Disc springs under the stack screws M50 #1",
+   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
+   "worst_mm": 8.2,
+   "worst_frame": 2691,
+   "pair_frames": 14
+  },
+  {
+   "a": "o27",
+   "b": "o29",
+   "a_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "b_is": "part: Heater block M50 (6061-T6, bayonet socket)",
+   "worst_mm": 4.1,
+   "worst_frame": 2770,
+   "pair_frames": 368
+  },
+  {
+   "a": "o19",
+   "b": "o28",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
+   "worst_mm": 2.9,
+   "worst_frame": 2832,
+   "pair_frames": 84
+  }
+ ],
+ "rigid_pairs": [
+  {
+   "a": "mirA/A MiR250",
+   "b": "mirA/light strip",
+   "worst_mm": ">100",
+   "frames": 1822
+  },
+  {
+   "a": "mirB/B MiR250",
+   "b": "mirB/light strip",
+   "worst_mm": ">100",
+   "frames": 1161
+  },
+  {
+   "a": "mirA/A MiR250",
+   "b": "mirA/top",
+   "worst_mm": 4.1,
+   "frames": 1822
+  },
+  {
+   "a": "mirB/B MiR250",
+   "b": "mirB/top",
+   "worst_mm": 4.1,
+   "frames": 1161
+  },
+  {
+   "a": "mirA/A cabinet",
+   "b": "mirA/top",
+   "worst_mm": 2.1,
+   "frames": 1822
+  },
+  {
+   "a": "mirB/B cabinet",
+   "b": "mirB/top",
+   "worst_mm": 2.1,
+   "frames": 1161
+  }
+ ],
+ "allowed": [
+  {
+   "rule": "person's own layers",
+   "depth_allowed_mm": null,
+   "reason": "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)",
+   "pairs_in_contact": 22,
+   "pair_frames": 15008,
+   "examples": [
+    [
+     "op/brow",
+     "op/coat"
+    ],
+    [
+     "op/brow",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/coat skirt"
+    ],
+    [
+     "op/coat",
+     "op/glasses frame"
+    ],
+    [
+     "op/coat",
+     "op/glasses lens"
+    ],
+    [
+     "op/coat",
+     "op/glove"
+    ],
+    [
+     "op/coat",
+     "op/iris"
+    ],
+    [
+     "op/coat",
+     "op/sclera"
+    ],
+    [
+     "op/coat",
+     "op/shirt"
+    ],
+    [
+     "op/coat",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/trousers"
+    ],
+    [
+     "op/coat skirt",
+     "op/glove"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "adjacent UR links",
+   "depth_allowed_mm": null,
+   "reason": "neighbouring UR12e links meet at their joint (the pieces of one link, and the planner's ADJACENT pairs in cell.py)",
+   "pairs_in_contact": 144,
+   "pair_frames": 223252,
+   "examples": [
+    [
+     "A/base/0",
+     "A/base/1"
+    ],
+    [
+     "A/base/0",
+     "A/shoulder/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/2"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/3"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/0"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/2"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/3"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/0"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/2"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "flange stack",
+   "depth_allowed_mm": null,
+   "reason": "the tool changer, the 2F-85 and its fingers, caps and the wrist camera are bolted to the flange and to each other",
+   "pairs_in_contact": 242,
+   "pair_frames": 257658,
+   "examples": [
+    [
+     "A/changer",
+     "A/gr/adapter/0"
+    ],
+    [
+     "A/changer",
+     "A/gr/adapter/1"
+    ],
+    [
+     "A/changer",
+     "A/gr/base/0"
+    ],
+    [
+     "A/changer",
+     "A/gr/base/1"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/0"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/1"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/2"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/3"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/4"
+    ],
+    [
+     "A/changer",
+     "A/gr/right_knuckle/0"
+    ],
+    [
+     "A/changer",
+     "A/wrist3/0"
+    ],
+    [
+     "A/gr/adapter/0",
+     "A/gr/adapter/1"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "screw in its hole",
+   "depth_allowed_mm": 40.0,
+   "reason": "a socket-head, flat-head or set screw, insert, dowel or plunger drawn in its hole: its thread or shank is drawn inside the part it fastens (the CAD's holes are not threaded), up to 40 mm",
+   "pairs_in_contact": 9,
+   "pair_frames": 5429,
+   "examples": [
+    [
+     "o276",
+     "o34"
+    ],
+    [
+     "o277",
+     "o34"
+    ]
+   ],
+   "worst_mm": 6.0
+  },
+  {
+   "rule": "hands on the part they set",
+   "depth_allowed_mm": 25.0,
+   "reason": "round 9: the person's hands on a part they set in its seat or a screw they drive after a step the arms failed (people.py's fingers curl a little into what they hold), up to 25 mm",
+   "pairs_in_contact": 0,
+   "pair_frames": 0,
+   "examples": [],
+   "worst_mm": 0.0
+  },
+  {
+   "rule": "driver on its screw",
+   "depth_allowed_mm": 30.0,
+   "reason": "the nutrunner's or screwdriver's bit or socket on the screw it turns, up to 30 mm (the socket's depth)",
+   "pairs_in_contact": 11,
+   "pair_frames": 347,
+   "examples": [
+    [
+     "A/tool/screwdriver/0/2.5",
+     "o276"
+    ],
+    [
+     "A/tool/screwdriver/0/2.5",
+     "o277"
+    ],
+    [
+     "A/tool/screwdriver/0/3.1",
+     "o259"
+    ],
+    [
+     "A/tool/screwdriver/0/3.1",
+     "o260"
+    ],
+    [
+     "A/tool/screwdriver/0/3.1",
+     "o261"
+    ]
+   ],
+   "worst_mm": 3.0
+  },
+  {
+   "rule": "screw in its insert",
+   "depth_allowed_mm": 40.0,
+   "reason": "a screw threaded into its threaded insert (round 9: chapter 41's 19 insert x screw pairs, up to 10.5 mm in round 8; the inserts are drawn as solid sleeves), up to 40 mm",
+   "pairs_in_contact": 3,
+   "pair_frames": 3960,
+   "examples": [
+    [
+     "o259",
+     "o262"
+    ],
+    [
+     "o260",
+     "o263"
+    ],
+    [
+     "o261",
+     "o264"
+    ]
+   ],
+   "worst_mm": 6.0
+  }
+ ],
+ "stills": [
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_40-assembly-module_1.png",
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_40-assembly-module_2.png",
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_40-assembly-module_3.png",
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_40-assembly-module_4.png"
+ ]
+}

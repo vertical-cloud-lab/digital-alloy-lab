@@ -1,0 +1,2566 @@
+{
+ "run_utc": "2026-11-20T23:11Z",
+ "payload": {
+  "net_per_arm_kg": 11.2,
+  "gripper_kg": 5.0,
+  "parts": [
+   {
+    "part": "Base plate, process module (MIC-6, 15 mm)",
+    "mat": "mic6",
+    "stock": "0.75 in. plate, 486 x 736 mm",
+    "n": 1,
+    "stock_kg": 18.13,
+    "part_kg": 12.04,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 274.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "fail",
+    "one_arm": "fail",
+    "two_arms": "pass",
+    "verdict": "two arms, rigid grasp"
+   },
+   {
+    "part": "Base plate, gas module (MIC-6, 15 mm)",
+    "mat": "mic6",
+    "stock": "0.75 in. plate, 556 x 596 mm",
+    "n": 1,
+    "stock_kg": 16.79,
+    "part_kg": 12.94,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 218.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "fail",
+    "one_arm": "fail",
+    "two_arms": "pass",
+    "verdict": "two arms, rigid grasp"
+   },
+   {
+    "part": "Chamber legs (6061, 30 x 30)",
+    "mat": "al6061",
+    "stock": "1.25 in. plate, 36 x 146 mm",
+    "n": 4,
+    "stock_kg": 0.45,
+    "part_kg": 0.3,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 72.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Z mounting flange (bolted under the floor)",
+    "mat": "al6061",
+    "stock": "0.5 in. plate, 54 x 146 mm",
+    "n": 1,
+    "stock_kg": 0.27,
+    "part_kg": 0.18,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 47.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Z bracket + fold-back belt housing (2:1)",
+    "mat": "al6061",
+    "stock": "1.5 in. plate, 78 x 129 mm",
+    "n": 1,
+    "stock_kg": 1.04,
+    "part_kg": 0.75,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 51.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+    "mat": "al6061",
+    "stock": "0.625 in. plate, 66 x 84 mm",
+    "n": 1,
+    "stock_kg": 0.24,
+    "part_kg": 0.14,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 44.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+    "mat": "ss316l",
+    "stock": "weldment: \u00d84 in. bar (spigot) + 3/4 in. plate (flange) + 2-1/2 in. tube (cylinder) + collar ring",
+    "n": 1,
+    "stock_kg": 2.26,
+    "part_kg": 1.74,
+    "setups": 4,
+    "machine": "CNC lathe + VMC",
+    "time_min": 115.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+    "mat": "ss316l",
+    "stock": "\u00d83.375 in. bar x 20 mm",
+    "n": 1,
+    "stock_kg": 0.92,
+    "part_kg": 0.53,
+    "setups": 3,
+    "machine": "CNC lathe + VMC",
+    "time_min": 89.0,
+    "bar_od_mm": 85.7,
+    "od_grip_2F85": "fail: OD over the 85 mm stroke (OnRobot 3FG15 grips 4-152 mm)",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Module M50 handle (6061, screwed under the gland plate; for a hand or a gripper)",
+    "mat": "al6061",
+    "stock": "0.375 in. plate, 50 x 54 mm",
+    "n": 1,
+    "stock_kg": 0.07,
+    "part_kg": 0.01,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 42.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+    "mat": "al6061",
+    "stock": "\u00d82.125 in. bar x 20 mm",
+    "n": 1,
+    "stock_kg": 0.12,
+    "part_kg": 0.05,
+    "setups": 5,
+    "machine": "CNC lathe + VMC",
+    "time_min": 102.0,
+    "bar_od_mm": 54.0,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Heater block M50 (6061-T6, bayonet socket)",
+    "mat": "al6061",
+    "stock": "\u00d82.125 in. bar x 20 mm",
+    "n": 1,
+    "stock_kg": 0.12,
+    "part_kg": 0.07,
+    "setups": 3,
+    "machine": "CNC lathe + VMC",
+    "time_min": 72.0,
+    "bar_od_mm": 54.0,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
+    "mat": "macor",
+    "stock": "\u00d80.5 in. bar x 9 mm",
+    "n": 9,
+    "stock_kg": 0.0,
+    "part_kg": 0.0,
+    "setups": 2,
+    "machine": "CNC lathe + VMC",
+    "time_min": 41.0,
+    "bar_od_mm": 12.7,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+    "mat": "al6061",
+    "stock": "\u00d82.125 in. bar x 24 mm",
+    "n": 1,
+    "stock_kg": 0.15,
+    "part_kg": 0.07,
+    "setups": 6,
+    "machine": "CNC lathe + VMC",
+    "time_min": 127.0,
+    "bar_od_mm": 54.0,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+    "mat": "ss316l",
+    "stock": "tube, cut to length",
+    "n": 1,
+    "stock_kg": 0.06,
+    "part_kg": 0.04,
+    "setups": 2,
+    "machine": "CNC lathe + VMC",
+    "time_min": 44.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
+    "mat": "ss316l",
+    "stock": "\u00d81.25 in. bar x 26 mm",
+    "n": 1,
+    "stock_kg": 0.16,
+    "part_kg": 0.04,
+    "setups": 3,
+    "machine": "CNC lathe + VMC",
+    "time_min": 69.0,
+    "bar_od_mm": 31.8,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Striker disc M50 (416 stainless, on the pot magnet)",
+    "mat": "steel",
+    "stock": "\u00d81.125 in. bar x 11 mm",
+    "n": 1,
+    "stock_kg": 0.06,
+    "part_kg": 0.02,
+    "setups": 2,
+    "machine": "CNC lathe + VMC",
+    "time_min": 44.0,
+    "bar_od_mm": 28.6,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Overflow funnel block (316L, bolted, FKM face O-ring)",
+    "mat": "ss316l",
+    "stock": "1 in. plate, 50 x 124 mm",
+    "n": 1,
+    "stock_kg": 1.26,
+    "part_kg": 0.59,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 82.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Chamber frame (version B): 13 x 9.5 x 5.5 in. plate as delivered",
+    "mat": "al6061",
+    "stock": "13 x 9.5 x 5.5 in. plate",
+    "n": 1,
+    "stock_kg": 30.05,
+    "part_kg": 4.27,
+    "setups": null,
+    "machine": "3-axis VMC",
+    "time_min": null,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "fail",
+    "one_arm": "fail",
+    "two_arms": "fail",
+    "verdict": "person + hoist"
+   },
+   {
+    "part": "Chamber frame (version B): its 274 x 184 mm core, cut out as one slug",
+    "mat": "al6061",
+    "stock": "",
+    "n": 1,
+    "stock_kg": 19.0,
+    "part_kg": null,
+    "setups": null,
+    "machine": "",
+    "time_min": null,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "fail",
+    "one_arm": "fail",
+    "two_arms": "pass",
+    "verdict": "two arms, rigid grasp"
+   },
+   {
+    "part": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+    "mat": "al6061",
+    "stock": "13 x 9.5 x 5.5 in. blank (5-1/2 in. plate); the 274 x 184 core out as one slug first",
+    "n": 1,
+    "stock_kg": 11.05,
+    "part_kg": 4.27,
+    "setups": 5,
+    "machine": "3-axis VMC",
+    "time_min": 499.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "fail",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, heavier gripper"
+   },
+   {
+    "part": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+    "mat": "al6061",
+    "stock": "1 in. plate, 228 x 318 mm",
+    "n": 1,
+    "stock_kg": 4.97,
+    "part_kg": 3.01,
+    "setups": 3,
+    "machine": "3-axis VMC",
+    "time_min": 186.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Recoater carriage block (6061)",
+    "mat": "al6061",
+    "stock": "1.75 in. plate, 50 x 80 mm",
+    "n": 1,
+    "stock_kg": 0.48,
+    "part_kg": 0.18,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 49.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Recoater arm (6061, 40 x 14 web)",
+    "mat": "al6061",
+    "stock": "0.5 in. plate, 20 x 46 mm",
+    "n": 1,
+    "stock_kg": 0.03,
+    "part_kg": 0.01,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 41.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Blade holder (6061, 18 x 31, quick-swap)",
+    "mat": "al6061",
+    "stock": "1 in. plate, 37 x 120 mm",
+    "n": 1,
+    "stock_kg": 0.3,
+    "part_kg": 0.17,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 46.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)",
+    "mat": "al6061",
+    "stock": "0.5 in. plate, 58 x 58 mm",
+    "n": 1,
+    "stock_kg": 0.12,
+    "part_kg": 0.04,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 43.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Recoater floating bearing housing (blind cap, FKM face O-ring)",
+    "mat": "al6061",
+    "stock": "\u00d81.75 in. bar x 46 mm",
+    "n": 1,
+    "stock_kg": 0.19,
+    "part_kg": 0.04,
+    "setups": 2,
+    "machine": "CNC lathe + VMC",
+    "time_min": 46.0,
+    "bar_od_mm": 44.4,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Recoater motor standoff",
+    "mat": "al6061",
+    "stock": "\u00d82.5 in. bar x 66 mm",
+    "n": 1,
+    "stock_kg": 0.56,
+    "part_kg": 0.05,
+    "setups": 2,
+    "machine": "CNC lathe + VMC",
+    "time_min": 54.0,
+    "bar_od_mm": 63.5,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Recoater motor bracket",
+    "mat": "al6061",
+    "stock": "2.5 in. plate, 96 x 176 mm",
+    "n": 1,
+    "stock_kg": 2.9,
+    "part_kg": 2.48,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 57.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+    "mat": "al6061",
+    "stock": "0.75 in. plate, 228 x 318 mm",
+    "n": 1,
+    "stock_kg": 3.73,
+    "part_kg": 2.65,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 122.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Window flange (6061, two FKM O-ring grooves)",
+    "mat": "al6061",
+    "stock": "\u00d84.25 in. bar x 28 mm",
+    "n": 1,
+    "stock_kg": 0.69,
+    "part_kg": 0.35,
+    "setups": 2,
+    "machine": "CNC lathe + VMC",
+    "time_min": 60.0,
+    "bar_od_mm": 107.9,
+    "od_grip_2F85": "fail: OD over the 85 mm stroke (OnRobot 3FG15 grips 4-152 mm)",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)",
+    "mat": "al6061",
+    "stock": "\u00d84.25 in. bar x 12 mm",
+    "n": 1,
+    "stock_kg": 0.3,
+    "part_kg": 0.09,
+    "setups": 2,
+    "machine": "CNC lathe + VMC",
+    "time_min": 49.0,
+    "bar_od_mm": 107.9,
+    "od_grip_2F85": "fail: OD over the 85 mm stroke (OnRobot 3FG15 grips 4-152 mm)",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Field-stop aperture (\u00d836, passive beam limit)",
+    "mat": "al6061",
+    "stock": "\u00d82.375 in. bar x 11 mm",
+    "n": 1,
+    "stock_kg": 0.08,
+    "part_kg": 0.02,
+    "setups": 2,
+    "machine": "CNC lathe + VMC",
+    "time_min": 42.0,
+    "bar_od_mm": 60.3,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
+    "mat": "al6061",
+    "stock": "1 in. plate, 134 x 170 mm",
+    "n": 1,
+    "stock_kg": 1.57,
+    "part_kg": 0.18,
+    "setups": 4,
+    "machine": "3-axis VMC",
+    "time_min": 117.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+    "mat": "al6061",
+    "stock": "1.5 in. plate, 50 x 150 mm",
+    "n": 1,
+    "stock_kg": 0.77,
+    "part_kg": 0.47,
+    "setups": 3,
+    "machine": "3-axis VMC",
+    "time_min": 73.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
+    "mat": "al6061",
+    "stock": "0.625 in. plate, 34 x 80 mm",
+    "n": 1,
+    "stock_kg": 0.12,
+    "part_kg": 0.03,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 43.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings)",
+    "mat": "al6061",
+    "stock": "1.75 in. plate, 58 x 64 mm",
+    "n": 1,
+    "stock_kg": 0.45,
+    "part_kg": 0.08,
+    "setups": 5,
+    "machine": "3-axis VMC",
+    "time_min": 111.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Camera window retaining ring (bottoms metal-to-metal on the boss)",
+    "mat": "al6061",
+    "stock": "\u00d81.5 in. bar x 26 mm",
+    "n": 1,
+    "stock_kg": 0.08,
+    "part_kg": 0.0,
+    "setups": 2,
+    "machine": "CNC lathe + VMC",
+    "time_min": 42.0,
+    "bar_od_mm": 38.1,
+    "od_grip_2F85": "pass",
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+    "mat": "al6061",
+    "stock": "0.75 in. plate, 126 x 318 mm",
+    "n": 1,
+    "stock_kg": 2.06,
+    "part_kg": 1.29,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 68.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Door handle",
+    "mat": "al6061",
+    "stock": "0.625 in. plate, 18 x 78 mm",
+    "n": 3,
+    "stock_kg": 0.06,
+    "part_kg": 0.01,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 45.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Optics bridge (6061, 25 mm)",
+    "mat": "al6061",
+    "stock": "1.25 in. plate, 376 x 611 mm",
+    "n": 1,
+    "stock_kg": 19.69,
+    "part_kg": 13.32,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 250.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "fail",
+    "one_arm": "fail",
+    "two_arms": "pass",
+    "verdict": "two arms, rigid grasp"
+   },
+   {
+    "part": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+    "mat": "al6061",
+    "stock": "tube, cut to length",
+    "n": 4,
+    "stock_kg": 1.59,
+    "part_kg": 1.22,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 135.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)",
+    "mat": "al6061",
+    "stock": "0.75 in. plate, 116 x 116 mm",
+    "n": 1,
+    "stock_kg": 0.69,
+    "part_kg": 0.17,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 55.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Galvo riser plate (6061, 10 mm)",
+    "mat": "al6061",
+    "stock": "0.5 in. plate, 136 x 161 mm",
+    "n": 1,
+    "stock_kg": 0.75,
+    "part_kg": 0.54,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 51.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Enclosed beam tube",
+    "mat": "al6061",
+    "stock": "1 in. plate, 26 x 89 mm",
+    "n": 1,
+    "stock_kg": 0.16,
+    "part_kg": 0.03,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 45.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)",
+    "mat": "al6061",
+    "stock": "0.625 in. plate, 18 x 136 mm",
+    "n": 3,
+    "stock_kg": 0.11,
+    "part_kg": 0.02,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 48.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Door damper bracket (6061, 4 mm, flanged onto the chamber's left side face)",
+    "mat": "al6061",
+    "stock": "1.25 in. plate, 42 x 50 mm",
+    "n": 1,
+    "stock_kg": 0.18,
+    "part_kg": 0.02,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 44.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Door damper shaft and drive disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
+    "mat": "al6061",
+    "stock": "0.75 in. plate, 22 x 40 mm",
+    "n": 1,
+    "stock_kg": 0.05,
+    "part_kg": 0.0,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 41.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Door lift lug for the robot (6061, 20 x 18 x 4 mm on the door's top edge, left end)",
+    "mat": "al6061",
+    "stock": "0.25 in. plate, 24 x 26 mm",
+    "n": 1,
+    "stock_kg": 0.01,
+    "part_kg": 0.0,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 40.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+    "mat": "al6061",
+    "stock": "0.25 in. plate, 16 x 22 mm",
+    "n": 1,
+    "stock_kg": 0.01,
+    "part_kg": 0.0,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 40.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-registration)",
+    "mat": "al6061",
+    "stock": "0.25 in. plate, 62 x 62 mm",
+    "n": 2,
+    "stock_kg": 0.07,
+    "part_kg": 0.02,
+    "setups": 2,
+    "machine": "3-axis VMC",
+    "time_min": 44.0,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "pass",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "part": "Chamber body (version A): 13 x 9.5 x 6 in. block as delivered",
+    "mat": "al6061",
+    "stock": "",
+    "n": 1,
+    "stock_kg": 32.79,
+    "part_kg": null,
+    "setups": null,
+    "machine": "3-axis VMC",
+    "time_min": null,
+    "version_a": true,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "fail",
+    "one_arm": "fail",
+    "two_arms": "fail",
+    "verdict": "person + hoist"
+   },
+   {
+    "part": "Chamber body (version A) after the pocket is roughed",
+    "mat": "al6061",
+    "stock": "",
+    "n": 1,
+    "stock_kg": 15.55,
+    "part_kg": null,
+    "setups": null,
+    "machine": "3-axis VMC",
+    "time_min": null,
+    "version_a": true,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "fail",
+    "one_arm": "fail",
+    "two_arms": "pass",
+    "verdict": "two arms, rigid grasp"
+   },
+   {
+    "part": "Chamber body (version A), finished (first machining review)",
+    "mat": "al6061",
+    "stock": "",
+    "n": 1,
+    "stock_kg": 7.36,
+    "part_kg": null,
+    "setups": null,
+    "machine": "3-axis VMC",
+    "time_min": null,
+    "version_a": true,
+    "bar_od_mm": null,
+    "od_grip_2F85": null,
+    "gripper_2F85": "fail",
+    "one_arm": "pass",
+    "two_arms": "pass",
+    "verdict": "one arm, heavier gripper"
+   }
+  ],
+  "boxes": [
+   {
+    "box": "chamber block 13 x 9.5 x 6 in. 6061 (strapped to a pallet board)",
+    "size_mm": [
+     360,
+     270,
+     180
+    ],
+    "kg": 34.0,
+    "verdict": "person + pallet jack or hoist"
+   },
+   {
+    "box": "plate bundle: 2 MIC-6 3/4 in., 1-1/4 in. 6061, 3/4 in. 6061",
+    "size_mm": [
+     720,
+     400,
+     110
+    ],
+    "kg": 58.0,
+    "verdict": "person + pallet jack or hoist"
+   },
+   {
+    "box": "IPG YLR-500 laser (4U, 40 kg) in its crate",
+    "size_mm": [
+     760,
+     680,
+     380
+    ],
+    "kg": 52.0,
+    "verdict": "person + pallet jack or hoist"
+   },
+   {
+    "box": "vacuum pump 4396K21",
+    "size_mm": [
+     520,
+     330,
+     420
+    ],
+    "kg": 21.0,
+    "verdict": "two arms"
+   },
+   {
+    "box": "T-slot rail 14 x 4 ft (McMaster 5537T97)",
+    "size_mm": [
+     1300,
+     160,
+     160
+    ],
+    "kg": 15.0,
+    "verdict": "two arms"
+   },
+   {
+    "box": "bar stock: 4 in. 316, 3-3/8 in. 316, 2-1/8 in. 6061 ...",
+    "size_mm": [
+     400,
+     300,
+     160
+    ],
+    "kg": 16.0,
+    "verdict": "two arms"
+   },
+   {
+    "box": "galvo + f-theta (SCANLAB basiCube 20)",
+    "size_mm": [
+     420,
+     320,
+     300
+    ],
+    "kg": 6.0,
+    "verdict": "one arm, heavier gripper or slide"
+   },
+   {
+    "box": "servos, drives, 24 V supply (Teknic, Mean Well)",
+    "size_mm": [
+     400,
+     300,
+     200
+    ],
+    "kg": 5.0,
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "box": "seals, fasteners, inserts (McMaster)",
+    "size_mm": [
+     300,
+     250,
+     150
+    ],
+    "kg": 4.0,
+    "verdict": "one arm, 2F-85"
+   },
+   {
+    "box": "fittings, valves, gauges, KF parts (McMaster)",
+    "size_mm": [
+     350,
+     300,
+     200
+    ],
+    "kg": 6.0,
+    "verdict": "one arm, heavier gripper or slide"
+   },
+   {
+    "box": "Thorlabs window, eyewear, sensors",
+    "size_mm": [
+     300,
+     250,
+     150
+    ],
+    "kg": 2.0,
+    "verdict": "one arm, 2F-85"
+   }
+  ],
+  "dfm_json_mtime_utc": "2026-11-20T23:30Z"
+ },
+ "P1_vf4_single_arm": {
+  "name": "P1 VF-4: chamber frame blank (version B) from the deck into the vise and out",
+  "ok": true,
+  "fail": null,
+  "time_s": 11.3,
+  "segments": [
+   {
+    "kind": "joint",
+    "note": "home -> above the part on the deck",
+    "ok": true,
+    "t_s": 0.4,
+    "info": {
+     "planned": false
+    }
+   },
+   {
+    "kind": "linear",
+    "note": "down 120 mm onto the end wall",
+    "ok": true,
+    "t_s": 0.8,
+    "info": {
+     "n": 25
+    }
+   },
+   {
+    "kind": "grip",
+    "note": "close on the 28 mm wall",
+    "ok": true,
+    "t_s": 0.8,
+    "info": {}
+   },
+   {
+    "kind": "linear",
+    "note": "lift 150 mm off the deck",
+    "ok": true,
+    "t_s": 1.0,
+    "info": {
+     "n": 31
+    }
+   },
+   {
+    "kind": "joint",
+    "note": "carry through the door to 120 mm above the vise",
+    "ok": true,
+    "t_s": 3.0,
+    "info": {
+     "planned": true,
+     "iterations": 284,
+     "nodes": 157,
+     "waypoints": 4,
+     "plan_s": 10.6
+    }
+   },
+   {
+    "kind": "linear",
+    "note": "lower 120 mm into the open vise",
+    "ok": true,
+    "t_s": 0.8,
+    "info": {
+     "n": 25
+    }
+   },
+   {
+    "kind": "vise",
+    "note": "pneumatic vise closes (machine M-code); gripper opens",
+    "ok": true,
+    "t_s": 1.5,
+    "info": {}
+   },
+   {
+    "kind": "linear",
+    "note": "retreat 120 mm up",
+    "ok": true,
+    "t_s": 0.8,
+    "info": {
+     "n": 25
+    }
+   },
+   {
+    "kind": "joint",
+    "note": "out of the machine to home",
+    "ok": true,
+    "t_s": 2.2,
+    "info": {
+     "planned": true,
+     "iterations": 58,
+     "nodes": 49,
+     "waypoints": 3
+    }
+   }
+  ],
+  "tightest": {
+   "clear_mm": 10.0,
+   "robot_body": "frame blank B",
+   "world_body": "vf4/vise fixed jaw",
+   "segment": 5,
+   "q": [
+    4.288420607720489,
+    -1.44233422623405,
+    1.6858579346374682,
+    -1.814320035198314,
+    -1.5707963267948966,
+    -0.42396837266420045
+   ]
+  },
+  "tightest_transit": {
+   "clear_mm": 27.9,
+   "robot_body": "A/upper_arm",
+   "world_body": "vf4/front panel below the door",
+   "segment": 8,
+   "q": [
+    3.1815633988695278,
+    -2.2731271320685544,
+    2.125814609284727,
+    -1.7119938390003213,
+    -1.6240104514902558,
+    -1.8415374839259266
+   ]
+  },
+  "part_kg": 11.04,
+  "fine_audit_0p2deg": []
+ },
+ "torque_frac_at_vise_by_payload_kg": {
+  "2.0": 0.403,
+  "5.0": 0.534,
+  "7.5": 0.643,
+  "10.0": 0.752,
+  "11.2": 0.804,
+  "12.5": 0.861,
+  "15.0": 0.97,
+  "20.0": 1.188,
+  "25.0": 1.406,
+  "33.0": 1.755
+ },
+ "P2_lathe": {
+  "name": "P2 lathe: 2-1/8 in. 6061 slug from the deck into the chuck",
+  "ok": true,
+  "fail": null,
+  "time_s": 23.5,
+  "segments": [
+   {
+    "kind": "joint",
+    "note": "home -> 100 mm above the slug (deck)",
+    "ok": true,
+    "t_s": 3.7,
+    "info": {
+     "planned": true,
+     "iterations": 590,
+     "nodes": 279,
+     "waypoints": 3
+    }
+   },
+   {
+    "kind": "linear",
+    "note": "down 100 mm round the slug's top (deck)",
+    "ok": true,
+    "t_s": 0.7,
+    "info": {
+     "n": 21
+    }
+   },
+   {
+    "kind": "grip",
+    "note": "close on \u00d854",
+    "ok": true,
+    "t_s": 0.8,
+    "info": {}
+   },
+   {
+    "kind": "linear",
+    "note": "lift 130 mm off the deck",
+    "ok": true,
+    "t_s": 0.9,
+    "info": {
+     "n": 27
+    }
+   },
+   {
+    "kind": "joint",
+    "note": "carry the slug to the front of the door, level with the spindle axis",
+    "ok": true,
+    "t_s": 4.5,
+    "info": {
+     "planned": true,
+     "iterations": 39,
+     "nodes": 42,
+     "waypoints": 4,
+     "plan_s": 32.5
+    }
+   },
+   {
+    "kind": "linear",
+    "note": "straight in 450 mm through the door onto the spindle axis",
+    "ok": true,
+    "t_s": 1.8,
+    "info": {
+     "n": 91
+    }
+   },
+   {
+    "kind": "linear",
+    "note": "push 70 mm along the spindle axis into the open jaws",
+    "ok": true,
+    "t_s": 0.5,
+    "info": {
+     "n": 15
+    }
+   },
+   {
+    "kind": "chuck",
+    "note": "chuck closes (foot pedal / M-code); gripper opens",
+    "ok": true,
+    "t_s": 1.5,
+    "info": {}
+   },
+   {
+    "kind": "linear",
+    "note": "up 100 mm off the slug",
+    "ok": true,
+    "t_s": 0.7,
+    "info": {
+     "n": 21
+    }
+   },
+   {
+    "kind": "linear",
+    "note": "straight back 450 mm out of the door",
+    "ok": true,
+    "t_s": 1.8,
+    "info": {
+     "n": 93
+    }
+   },
+   {
+    "kind": "joint",
+    "note": "out of the lathe to home",
+    "ok": true,
+    "t_s": 6.6,
+    "info": {
+     "planned": true,
+     "iterations": 1335,
+     "nodes": 452,
+     "waypoints": 6
+    }
+   }
+  ],
+  "tightest": {
+   "clear_mm": 3.0,
+   "robot_body": "A/forearm",
+   "world_body": "lathe/front panel above the door",
+   "segment": 0,
+   "q": [
+    1.3106637798548058,
+    -2.0092419489052484,
+    2.0398293441504363,
+    0.6440453270186768,
+    -3.634779777803376,
+    -1.731312216869723
+   ]
+  },
+  "tightest_transit": {
+   "clear_mm": 3.0,
+   "robot_body": "A/forearm",
+   "world_body": "lathe/front panel above the door",
+   "segment": 0,
+   "q": [
+    1.3106637798548058,
+    -2.0092419489052484,
+    2.0398293441504363,
+    0.6440453270186768,
+    -3.634779777803376,
+    -1.731312216869723
+   ]
+  },
+  "part_kg": 0.62,
+  "fine_audit_0p2deg": []
+ },
+ "P1_vf4_single_arm_door_1251": {
+  "name": "P1 VF-4: chamber frame blank (version B) from the deck into the vise and out",
+  "ok": true,
+  "fail": null,
+  "time_s": 11.6,
+  "segments": [
+   {
+    "kind": "joint",
+    "note": "home -> above the part on the deck",
+    "ok": true,
+    "t_s": 0.4,
+    "info": {
+     "planned": false
+    }
+   },
+   {
+    "kind": "linear",
+    "note": "down 120 mm onto the end wall",
+    "ok": true,
+    "t_s": 0.8,
+    "info": {
+     "n": 25
+    }
+   },
+   {
+    "kind": "grip",
+    "note": "close on the 28 mm wall",
+    "ok": true,
+    "t_s": 0.8,
+    "info": {}
+   },
+   {
+    "kind": "linear",
+    "note": "lift 150 mm off the deck",
+    "ok": true,
+    "t_s": 1.0,
+    "info": {
+     "n": 31
+    }
+   },
+   {
+    "kind": "joint",
+    "note": "carry through the door to 120 mm above the vise",
+    "ok": true,
+    "t_s": 3.2,
+    "info": {
+     "planned": true,
+     "iterations": 414,
+     "nodes": 175,
+     "waypoints": 4,
+     "plan_s": 7.8
+    }
+   },
+   {
+    "kind": "linear",
+    "note": "lower 120 mm into the open vise",
+    "ok": true,
+    "t_s": 0.8,
+    "info": {
+     "n": 25
+    }
+   },
+   {
+    "kind": "vise",
+    "note": "pneumatic vise closes (machine M-code); gripper opens",
+    "ok": true,
+    "t_s": 1.5,
+    "info": {}
+   },
+   {
+    "kind": "linear",
+    "note": "retreat 120 mm up",
+    "ok": true,
+    "t_s": 0.8,
+    "info": {
+     "n": 25
+    }
+   },
+   {
+    "kind": "joint",
+    "note": "out of the machine to home",
+    "ok": true,
+    "t_s": 2.2,
+    "info": {
+     "planned": true,
+     "iterations": 165,
+     "nodes": 108,
+     "waypoints": 3
+    }
+   }
+  ],
+  "tightest_transit": {
+   "clear_mm": 6.3,
+   "robot_body": "frame blank B",
+   "world_body": "vf4/front panel right of the door",
+   "segment": 4,
+   "q": [
+    2.8898471895180458,
+    -2.1578857900052957,
+    1.7467782116850046,
+    -1.2266511785837555,
+    -2.1485290760997184,
+    -0.6238042984748091
+   ]
+  },
+  "fine_audit_0p2deg": []
+ },
+ "P3_two_arms": {
+  "kg": 15.55,
+  "per_arm_kg": 7.77,
+  "steps": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60
+  ],
+  "ok": true,
+  "n_steps": 61,
+  "door_w": 1588.0,
+  "pull_mm": 450.0,
+  "tau_frac_max": [
+   0.681,
+   0.681
+  ],
+  "tightest": {
+   "clear_mm": 22.3,
+   "k": 4,
+   "bodies": [
+    "B/forearm",
+    "A/forearm"
+   ],
+   "qa": [
+    4.354634770325561,
+    -1.4649422630555833,
+    1.6702526537571536,
+    -1.7761067174964662,
+    -1.5707963267948966,
+    -0.3577542100591293
+   ],
+   "qb": [
+    1.9535583678018786,
+    -1.681277885381863,
+    -1.6650781635810448,
+    -1.366032931421782,
+    1.5707963267948966,
+    -2.7588306125828113
+   ]
+  }
+ },
+ "P3_two_arms_door_1251": {
+  "kg": 15.55,
+  "per_arm_kg": 7.77,
+  "steps": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57
+  ],
+  "ok": true,
+  "n_steps": 58,
+  "door_w": 1251.0,
+  "pull_mm": 420.0,
+  "tau_frac_max": [
+   0.681,
+   0.681
+  ],
+  "tightest": {
+   "clear_mm": 6.3,
+   "k": 56,
+   "bodies": [
+    "B/upper_arm",
+    "vf4/front panel right of the door"
+   ],
+   "qa": [
+    3.9365392537985238,
+    -2.20707009350817,
+    2.0135025561863413,
+    -1.377228789473068,
+    -1.5707963267948966,
+    -0.7758497265861661
+   ],
+   "qb": [
+    2.3902956986109736,
+    -0.946422511694871,
+    -2.009258871226328,
+    -1.7567075974634907,
+    1.5707963267948966,
+    -2.322093281773716
+   ]
+  }
+ },
+ "P6_two_arms_plate": {
+  "kg": 19.69,
+  "per_arm_kg": 9.85,
+  "door_w": 1588.0,
+  "pull_mm": 400.0,
+  "ok": true,
+  "n_steps": 56,
+  "tau_frac_max": [
+   0.771,
+   0.771
+  ],
+  "tightest": {
+   "clear_mm": 70.0,
+   "k": 3,
+   "bodies": [
+    "bridge plate",
+    "vf4/table"
+   ],
+   "qa": [
+    4.507291176890953,
+    -1.2965020146079853,
+    1.7057499446672566,
+    -1.9800442568541676,
+    -1.5707963267948966,
+    -0.2050978034937369
+   ],
+   "qb": [
+    1.775894130288634,
+    -1.8450906389818076,
+    -1.7057499446672564,
+    -1.1615483967356255,
+    1.5707963267948966,
+    -2.936494850096056
+   ]
+  },
+  "stability_A": {
+   "mass_kg": 309.7,
+   "cog_mm": [
+    28,
+    70,
+    398
+   ],
+   "tcp_mm": [
+    184,
+    959,
+    1042
+   ],
+   "payload_kg": 9.85,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 472.0,
+    "tcp_beyond_edge_mm": 734.0,
+    "extra_kg_to_tip": 65.6
+   }
+  },
+  "stability_B": {
+   "mass_kg": 309.7,
+   "cog_mm": [
+    -28,
+    70,
+    398
+   ],
+   "tcp_mm": [
+    -184,
+    959,
+    1042
+   ],
+   "payload_kg": 9.85,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 472.0,
+    "tcp_beyond_edge_mm": 734.0,
+    "extra_kg_to_tip": 65.6
+   }
+  }
+ },
+ "P6_two_arms_plate_door_1251": {
+  "kg": 19.69,
+  "per_arm_kg": 9.85,
+  "door_w": 1251.0,
+  "pull_mm": 400.0,
+  "ok": true,
+  "n_steps": 56,
+  "tau_frac_max": [
+   0.771,
+   0.771
+  ],
+  "tightest": {
+   "clear_mm": 70.0,
+   "k": 3,
+   "bodies": [
+    "bridge plate",
+    "vf4/table"
+   ],
+   "qa": [
+    4.507291176890953,
+    -1.2965020146079853,
+    1.7057499446672566,
+    -1.9800442568541676,
+    -1.5707963267948966,
+    -0.2050978034937369
+   ],
+   "qb": [
+    1.775894130288634,
+    -1.8450906389818076,
+    -1.7057499446672564,
+    -1.1615483967356255,
+    1.5707963267948966,
+    -2.936494850096056
+   ]
+  },
+  "stability_A": {
+   "mass_kg": 309.7,
+   "cog_mm": [
+    28,
+    70,
+    398
+   ],
+   "tcp_mm": [
+    184,
+    959,
+    1042
+   ],
+   "payload_kg": 9.85,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 472.0,
+    "tcp_beyond_edge_mm": 734.0,
+    "extra_kg_to_tip": 65.6
+   }
+  },
+  "stability_B": {
+   "mass_kg": 309.7,
+   "cog_mm": [
+    -28,
+    70,
+    398
+   ],
+   "tcp_mm": [
+    -184,
+    959,
+    1042
+   ],
+   "payload_kg": 9.85,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 472.0,
+    "tcp_beyond_edge_mm": 734.0,
+    "extra_kg_to_tip": 65.6
+   }
+  }
+ },
+ "P4_box_seam": {
+  "box": "galvo + f-theta (SCANLAB basiCube 20)",
+  "seam_mm": 390.0,
+  "ok": true,
+  "info": {
+   "n": 79
+  },
+  "t_s": 5.9,
+  "tau_frac_max": 0.321,
+  "push_along_seam_N_half_torque": 110.0
+ },
+ "P5_reach": [
+  {
+   "station": "Horizontal bandsaw",
+   "what": "bar on the saw bed, at the blade line",
+   "point_local": [
+    0,
+    400,
+    790
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 641.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.206,
+   "clear_mm": 43.3,
+   "nearest": "Horizontal bandsaw/saw head (raised)"
+  },
+  {
+   "station": "Horizontal bandsaw",
+   "what": "bar on the saw bed, at the blade line",
+   "point_local": [
+    -600,
+    450,
+    790
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 889.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.31,
+   "clear_mm": 10.9,
+   "nearest": "Horizontal bandsaw/infeed roller table"
+  },
+  {
+   "station": "Deburr and wash",
+   "what": "basket handle in the ultrasonic tank",
+   "point_local": [
+    -510,
+    335,
+    1095
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 646.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.348,
+   "clear_mm": 95.0,
+   "nearest": "Deburr and wash/ultrasonic lid (open, upright)"
+  },
+  {
+   "station": "Deburr and wash",
+   "what": "part held against the deburr brush (tool level, into the station)",
+   "point_local": [
+    30,
+    215,
+    1050
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 600.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.258,
+   "clear_mm": 23.0,
+   "nearest": "Deburr and wash/brush wheel"
+  },
+  {
+   "station": "Measuring",
+   "what": "part on the granite plate",
+   "point_local": [
+    0,
+    300,
+    962
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 564.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.3,
+   "clear_mm": 40.9,
+   "nearest": "Measuring/granite surface plate 36 x 24 x 6 in."
+  },
+  {
+   "station": "Measuring",
+   "what": "part on the granite plate",
+   "point_local": [
+    -150,
+    450,
+    962
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 724.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.303,
+   "clear_mm": 40.9,
+   "nearest": "Measuring/granite surface plate 36 x 24 x 6 in."
+  },
+  {
+   "station": "Measuring",
+   "what": "height gauge scriber (as a person would work it)",
+   "point_local": [
+    170,
+    345,
+    1060
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 662.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.253,
+   "clear_mm": 21.0,
+   "nearest": "Measuring/granite surface plate 36 x 24 x 6 in."
+  },
+  {
+   "station": "Kitting rack",
+   "what": "handle tab of the tote on each rack shelf",
+   "point_local": [
+    300,
+    20,
+    700
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 529.0,
+   "branches": 8,
+   "ok": false,
+   "why": "[('A/upper_arm', 'mir0/MiR250 cabinet (UR control box)', None), ('A/upper_arm', 'mir0/arm mounting plate', None), ('A/forearm', 'mir0/MiR250 cabinet (UR control box)', None)]"
+  },
+  {
+   "station": "Kitting rack",
+   "what": "handle tab of the tote on each rack shelf",
+   "point_local": [
+    300,
+    20,
+    1150
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 627.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.228,
+   "clear_mm": 20.9,
+   "nearest": "Kitting rack/tote 1050 1"
+  },
+  {
+   "station": "Kitting rack",
+   "what": "handle tab of the tote on each rack shelf",
+   "point_local": [
+    300,
+    20,
+    1600
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 954.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.517,
+   "clear_mm": 20.9,
+   "nearest": "Kitting rack/tote 1500 1"
+  },
+  {
+   "station": "Kitting rack",
+   "what": "handle tab, MiR parked 450 mm off the rack",
+   "point_local": [
+    300,
+    20,
+    700
+   ],
+   "dock_gap_mm": 450.0,
+   "reach_mm": 781.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.378,
+   "clear_mm": 20.9,
+   "nearest": "Kitting rack/tote 600 1"
+  },
+  {
+   "station": "Kitting rack",
+   "what": "handle tab, MiR parked 450 mm off the rack",
+   "point_local": [
+    300,
+    20,
+    1150
+   ],
+   "dock_gap_mm": 450.0,
+   "reach_mm": 850.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.298,
+   "clear_mm": 20.9,
+   "nearest": "Kitting rack/tote 1050 1"
+  },
+  {
+   "station": "Kitting rack",
+   "what": "handle tab, MiR parked 450 mm off the rack",
+   "point_local": [
+    300,
+    20,
+    1600
+   ],
+   "dock_gap_mm": 450.0,
+   "reach_mm": 1113.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.513,
+   "clear_mm": 20.9,
+   "nearest": "Kitting rack/tote 1500 1"
+  },
+  {
+   "station": "Assembly bench",
+   "what": "assembly point on the bench, 500 mm in",
+   "point_local": [
+    -300,
+    500,
+    960
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 757.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.306,
+   "clear_mm": 40.9,
+   "nearest": "Assembly bench/bench top"
+  },
+  {
+   "station": "Assembly bench",
+   "what": "assembly point on the bench, 500 mm in",
+   "point_local": [
+    300,
+    300,
+    960
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 816.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.312,
+   "clear_mm": 18.4,
+   "nearest": "Assembly bench/bench top"
+  },
+  {
+   "station": "Stock racks",
+   "what": "bar on the cantilever arms (bottom, middle, top)",
+   "point_local": [
+    0,
+    200,
+    560
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 611.0,
+   "branches": 8,
+   "ok": false,
+   "why": "[('A/forearm', 'Stock racks/cantilever arms 950', None), ('A/gr/base', 'Stock racks/bar stock (4 in. 316, 2-1/8 in. 6061, ...)', 3.0), ('A/gr/right_knuckle', 'Stock racks/bar stock (4 in. 316, 2-1/8 i"
+  },
+  {
+   "station": "Stock racks",
+   "what": "bar on the cantilever arms (bottom, middle, top)",
+   "point_local": [
+    0,
+    200,
+    1060
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 619.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.336,
+   "clear_mm": 41.0,
+   "nearest": "Stock racks/cantilever arms 950"
+  },
+  {
+   "station": "Stock racks",
+   "what": "bar on the cantilever arms (bottom, middle, top)",
+   "point_local": [
+    0,
+    200,
+    1560
+   ],
+   "dock_gap_mm": 80.0,
+   "reach_mm": 945.0,
+   "branches": 8,
+   "ok": true,
+   "tau_frac": 0.473,
+   "clear_mm": 41.0,
+   "nearest": "Stock racks/cantilever arms 1450"
+  }
+ ],
+ "routes": {
+  "drive": {
+   "v": 1.0,
+   "a": 0.3,
+   "turn_s": 4.0
+  },
+  "aisle": {
+   "y0": 4000.0,
+   "y1": 7000.0,
+   "lanes": [
+    5000.0,
+    6000.0
+   ]
+  },
+  "legs": [
+   {
+    "frm": "Receiving (table)",
+    "to": "Stock racks (centre)",
+    "m": 4.5,
+    "s": 20.3,
+    "poly": [
+     [
+      2400,
+      4370
+     ],
+     [
+      2400,
+      5000
+     ],
+     [
+      5600,
+      5000
+     ],
+     [
+      5600,
+      4370
+     ]
+    ]
+   },
+   {
+    "frm": "Stock racks (centre)",
+    "to": "Horizontal bandsaw (centre)",
+    "m": 4.3,
+    "s": 20.1,
+    "poly": [
+     [
+      5600,
+      4370
+     ],
+     [
+      5600,
+      5000
+     ],
+     [
+      8600,
+      5000
+     ],
+     [
+      8600,
+      4370
+     ]
+    ]
+   },
+   {
+    "frm": "Horizontal bandsaw (centre)",
+    "to": "Haas VF-4 (centre)",
+    "m": 8.3,
+    "s": 24.9,
+    "poly": [
+     [
+      8600,
+      4370
+     ],
+     [
+      8600,
+      5000
+     ],
+     [
+      2600,
+      5000
+     ],
+     [
+      2600,
+      6630
+     ]
+    ]
+   },
+   {
+    "frm": "Haas VF-4 (centre)",
+    "to": "CNC lathe (Haas ST-20 class) (centre)",
+    "m": 7.6,
+    "s": 25.0,
+    "poly": [
+     [
+      2600,
+      6630
+     ],
+     [
+      2600,
+      5000
+     ],
+     [
+      6900,
+      5000
+     ],
+     [
+      6900,
+      6630
+     ]
+    ]
+   },
+   {
+    "frm": "CNC lathe (Haas ST-20 class) (centre)",
+    "to": "Haas VF-4 (centre)",
+    "m": 7.6,
+    "s": 25.0,
+    "poly": [
+     [
+      6900,
+      6630
+     ],
+     [
+      6900,
+      5000
+     ],
+     [
+      2600,
+      5000
+     ],
+     [
+      2600,
+      6630
+     ]
+    ]
+   },
+   {
+    "frm": "Haas VF-4 (centre)",
+    "to": "Deburr and wash (centre)",
+    "m": 10.4,
+    "s": 27.8,
+    "poly": [
+     [
+      2600,
+      6630
+     ],
+     [
+      2600,
+      5000
+     ],
+     [
+      9700,
+      5000
+     ],
+     [
+      9700,
+      6630
+     ]
+    ]
+   },
+   {
+    "frm": "Deburr and wash (centre)",
+    "to": "Measuring (centre)",
+    "m": 5.5,
+    "s": 22.7,
+    "poly": [
+     [
+      9700,
+      6630
+     ],
+     [
+      9700,
+      5000
+     ],
+     [
+      11900,
+      5000
+     ],
+     [
+      11900,
+      6630
+     ]
+    ]
+   },
+   {
+    "frm": "Measuring (centre)",
+    "to": "Kitting rack (centre)",
+    "m": 2.8,
+    "s": 18.1,
+    "poly": [
+     [
+      11900,
+      6630
+     ],
+     [
+      11900,
+      5000
+     ],
+     [
+      11400,
+      5000
+     ],
+     [
+      11400,
+      4370
+     ]
+    ]
+   },
+   {
+    "frm": "Kitting rack (centre)",
+    "to": "Assembly bench (left)",
+    "m": 4.6,
+    "s": 21.1,
+    "poly": [
+     [
+      11400,
+      4370
+     ],
+     [
+      11400,
+      5000
+     ],
+     [
+      13700,
+      5000
+     ],
+     [
+      13700,
+      6630
+     ]
+    ]
+   }
+  ],
+  "total_m": 55.6,
+  "total_s": 205.0,
+  "docking_s": 30.0,
+  "n_docks": 9,
+  "note": "lanes at y = 5000 and 6000 mm in a 3 m aisle; MiR250: two robots pass in 3000 mm (default fields)"
+ },
+ "stability": {
+  "P1 frame blank in the vise (11.0 kg), ballast=True": {
+   "mass_kg": 310.9,
+   "cog_mm": [
+    -18,
+    66,
+    408
+   ],
+   "tcp_mm": [
+    -39,
+    888,
+    1154
+   ],
+   "payload_kg": 11.04,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 484.3,
+    "tcp_beyond_edge_mm": 663.0,
+    "extra_kg_to_tip": 74.5
+   }
+  },
+  "P1 frame blank in the vise (11.0 kg), ballast=False": {
+   "mass_kg": 179.6,
+   "cog_mm": [
+    -32,
+    115,
+    473
+   ],
+   "tcp_mm": [
+    -39,
+    888,
+    1154
+   ],
+   "payload_kg": 11.04,
+   "accel_ms2": 0.0,
+   "ballast": false,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 194.6,
+    "tcp_beyond_edge_mm": 663.0,
+    "extra_kg_to_tip": 29.9
+   }
+  },
+  "one arm, 11.2 kg at 900 mm out toward the machine, ballast=True": {
+   "mass_kg": 311.1,
+   "cog_mm": [
+    -27,
+    81,
+    394
+   ],
+   "tcp_mm": [
+    -190,
+    1030,
+    950
+   ],
+   "payload_kg": 11.2,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 440.0,
+    "tcp_beyond_edge_mm": 805.0,
+    "extra_kg_to_tip": 55.7
+   }
+  },
+  "one arm, 11.2 kg at 900 mm out toward the machine, ballast=False": {
+   "mass_kg": 179.8,
+   "cog_mm": [
+    -46,
+    140,
+    448
+   ],
+   "tcp_mm": [
+    -190,
+    1030,
+    950
+   ],
+   "payload_kg": 11.2,
+   "accel_ms2": 0.0,
+   "ballast": false,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 150.3,
+    "tcp_beyond_edge_mm": 805.0,
+    "extra_kg_to_tip": 19.0
+   }
+  },
+  "one arm, 11.2 kg at 1100 mm out toward the machine, ballast=True": {
+   "mass_kg": 311.1,
+   "cog_mm": [
+    -26,
+    97,
+    391
+   ],
+   "tcp_mm": [
+    -190,
+    1230,
+    950
+   ],
+   "payload_kg": 11.2,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 390.1,
+    "tcp_beyond_edge_mm": 1005.0,
+    "extra_kg_to_tip": 39.6
+   }
+  },
+  "one arm, 11.2 kg at 1100 mm out toward the machine, ballast=False": {
+   "mass_kg": 179.8,
+   "cog_mm": [
+    -46,
+    168,
+    443
+   ],
+   "tcp_mm": [
+    -190,
+    1230,
+    950
+   ],
+   "payload_kg": 11.2,
+   "accel_ms2": 0.0,
+   "ballast": false,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 100.4,
+    "tcp_beyond_edge_mm": 1005.0,
+    "extra_kg_to_tip": 10.2
+   }
+  },
+  "driving at 0.3 m/s^2 with the blank on the deck": {
+   "mass_kg": 310.9,
+   "cog_mm": [
+    -13,
+    19,
+    394
+   ],
+   "tcp_mm": [
+    172,
+    0,
+    1134
+   ],
+   "payload_kg": 0.0,
+   "accel_ms2": 0.3,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 591.4,
+    "tcp_beyond_edge_mm": -225.0,
+    "extra_kg_to_tip": null
+   }
+  },
+  "driving at 1.0 m/s^2 with the blank on the deck": {
+   "mass_kg": 310.9,
+   "cog_mm": [
+    -13,
+    19,
+    394
+   ],
+   "tcp_mm": [
+    172,
+    0,
+    1134
+   ],
+   "payload_kg": 0.0,
+   "accel_ms2": 1.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 505.6,
+    "tcp_beyond_edge_mm": -225.0,
+    "extra_kg_to_tip": null
+   }
+  },
+  "P3 arm A, half the block (7.77 kg), in the vise": {
+   "mass_kg": 307.6,
+   "cog_mm": [
+    31,
+    57,
+    401
+   ],
+   "tcp_mm": [
+    287,
+    888,
+    1162
+   ],
+   "payload_kg": 7.77,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 506.5,
+    "tcp_beyond_edge_mm": 663.0,
+    "extra_kg_to_tip": 77.9
+   }
+  },
+  "P3 arm B, half the block (7.77 kg), in the vise": {
+   "mass_kg": 307.6,
+   "cog_mm": [
+    -32,
+    57,
+    401
+   ],
+   "tcp_mm": [
+    -307,
+    888,
+    1162
+   ],
+   "payload_kg": 7.77,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 506.3,
+    "tcp_beyond_edge_mm": 663.0,
+    "extra_kg_to_tip": 77.8
+   }
+  },
+  "P3 arm A at the end of the draw": {
+   "mass_kg": 307.6,
+   "cog_mm": [
+    21,
+    26,
+    405
+   ],
+   "tcp_mm": [
+    287,
+    438,
+    1312
+   ],
+   "payload_kg": 7.77,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 601.9,
+    "tcp_beyond_edge_mm": 213.0,
+    "extra_kg_to_tip": 288.1
+   }
+  },
+  "P3 arm B at the end of the draw": {
+   "mass_kg": 307.6,
+   "cog_mm": [
+    -22,
+    26,
+    405
+   ],
+   "tcp_mm": [
+    -307,
+    438,
+    1312
+   ],
+   "payload_kg": 7.77,
+   "accel_ms2": 0.0,
+   "ballast": true,
+   "worst": {
+    "edge": "+y",
+    "restoring_Nm": 600.3,
+    "tcp_beyond_edge_mm": 213.0,
+    "extra_kg_to_tip": 287.3
+   }
+  }
+ },
+ "run_s": 123.1,
+ "payload_refreshed_utc": "2026-11-20T23:58Z"
+}

@@ -1,0 +1,563 @@
+[
+ {
+  "replaces": "Recoater servo (ClearPath-SD, NEMA 23)",
+  "found": true,
+  "line": "rmot = place(VP.clearpath_sd_231x(20.57), (-cx - 60, ry_, rz_), (0, 1, 0), (1, 0, 0))",
+  "note": "59.1 sq (not 57.15) and 84.8 long (not 100) + a 22.75 mm connector block on top: the motor bracket top must drop ~1 mm (rz_ - 28.6 -> rz_ - 29.6)",
+  "new_bbox": [
+   -300.8,
+   -195.4,
+   42.5,
+   101.5,
+   10.4,
+   92.3
+  ],
+  "old_bbox": [
+   -316.0,
+   -194.4,
+   43.4,
+   100.6,
+   11.4,
+   68.6
+  ],
+  "hits": [
+   {
+    "part": "Recoater motor bracket",
+    "mm3": 4032.5,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Z servo (ClearPath-SD, NEMA 23, folded)",
+  "found": true,
+  "line": "modules_low.add_zstage: h.place(VP.clearpath_sd_231x(18.0), (64.0, 80.0, az1), (1, 0, 0), (0, 0, 1))",
+  "note": "connector block on +y (toward the back); 84.8 long instead of 100",
+  "new_bbox": [
+   34.5,
+   93.5,
+   50.5,
+   132.3,
+   -172.8,
+   -70.0
+  ],
+  "old_bbox": [
+   35.4,
+   92.6,
+   51.4,
+   108.6,
+   -188.0,
+   -68.4
+  ],
+  "hits": [
+   {
+    "part": "Base plate, process module (MIC-6, 15 mm)",
+    "mm3": 12623.7,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Dosing stepper (NEMA 17)",
+  "found": true,
+  "line": "place(VP.mcm_6627T91(), (xd, 74, rzc), (1, 0, 0), (0, -1, 0))",
+  "note": "48 mm body (not 40) and the 5 mm x 24 shaft now drawn; the shaft runs into the roller seal housing (designed)",
+  "new_bbox": [
+   -111.2,
+   -68.8,
+   48.0,
+   122.0,
+   142.8,
+   186.0
+  ],
+  "old_bbox": [
+   -111.2,
+   -68.8,
+   72.0,
+   114.0,
+   142.8,
+   185.2
+  ],
+  "hits": [
+   {
+    "part": "Metering base (6061, fluted roller over a 100 mm dose line)",
+    "mm3": 260.6,
+    "envelope_mm3": 0.0
+   },
+   {
+    "part": "Roller shaft seal housing",
+    "mm3": 195.3,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Recoater carriage (15 mm rail)",
+  "found": true,
+  "line": "place(VP.mcm_6709K12(), (xc, iy, P['rc_rail_z']), (1, 0, 0), (0, -1, 0))",
+  "note": "same 28 x 34 section; 62.1 long with the grease nipple (was 57)",
+  "new_bbox": [
+   -134.3,
+   -72.2,
+   67.0,
+   90.3,
+   65.0,
+   99.0
+  ],
+  "old_bbox": [
+   -134.5,
+   -77.5,
+   67.0,
+   92.0,
+   65.0,
+   99.0
+  ],
+  "hits": [
+   {
+    "part": "Recoater guide rail (15 mm, 270 mm)",
+    "mm3": 63.5,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Recoater guide rail (15 mm, 270 mm)",
+  "found": true,
+  "line": "rr = place(VP.mcm_6709K33(270.0), (-135, iy, P['rc_rail_z']), (1, 0, 0), (0, -1, 0))",
+  "note": "same envelope; raceway grooves drawn (assumed)",
+  "new_bbox": [
+   -135.0,
+   135.0,
+   80.0,
+   95.0,
+   74.5,
+   89.5
+  ],
+  "old_bbox": [
+   -135.0,
+   135.0,
+   80.0,
+   95.0,
+   74.5,
+   89.5
+  ],
+  "hits": []
+ },
+ {
+  "replaces": "Recoater ball nut (flange on the +x face)",
+  "found": true,
+  "line": "place(VP.mcm_4566N401(), (xc + 10.5, ry_, rz_), (-1, 0, 0), (0, 0, 1))",
+  "note": "flange has flats 30 mm across (faces +/-y)",
+  "new_bbox": [
+   -117.0,
+   -74.0,
+   57.0,
+   87.0,
+   20.0,
+   60.0
+  ],
+  "old_bbox": [
+   -117.0,
+   -74.0,
+   52.0,
+   92.0,
+   20.0,
+   60.0
+  ],
+  "hits": []
+ },
+ {
+  "replaces": "f-theta lens, f = 160 mm (FTH160-1064 envelope)",
+  "found": true,
+  "line": "lens = VP.thorlabs_fth160_1064().translate(V(0, 0, P['z_lens0']))",
+  "note": "fits inside the old envelope; its M85x1 thread (z 191.7-204.5) ends 3.2 mm below the bridge (z 207.7): needs a 16 mm M85x1 adapter ring under the bridge",
+  "new_bbox": [
+   -45.0,
+   45.0,
+   -45.0,
+   45.0,
+   182.5,
+   232.7
+  ],
+  "old_bbox": [
+   -45.0,
+   45.0,
+   -45.0,
+   45.0,
+   181.0,
+   232.7
+  ],
+  "hits": []
+ },
+ {
+  "replaces": "2-axis galvo scan head (basiCube class)",
+  "found": true,
+  "line": "galvo = VP.scanlab_basicube20().translate(V(0, 0, zb1_))",
+  "note": "155 x 130 x 122 (was 115 x 115 x 110); beam input at z = z_bridge1 + 30 (was + 45) and y = -25.25 (was 0): beam tube, shutter and collimator move",
+  "new_bbox": [
+   -57.1,
+   97.8,
+   -71.8,
+   58.2,
+   232.7,
+   354.7
+  ],
+  "old_bbox": [
+   -72.5,
+   57.5,
+   -57.5,
+   57.5,
+   232.7,
+   342.7
+  ],
+  "hits": []
+ },
+ {
+  "replaces": "Collimator (QBH, f = 30 mm, D ~ 3.2 mm) on V-mount",
+  "found": true,
+  "line": "coll = VP.ipg_collimator_d5().translate(V(-210, -25.25, P['beam_z'])) with P['beam_z'] = P['z_bridge1'] + 30 (keep the V-mount block)",
+  "note": "206 mm with its strain relief (envelope 130): the relief ends at x = -416, 46 mm outside the guard's left panel (x = -370)",
+  "new_bbox": [
+   -416.0,
+   -210.0,
+   -40.2,
+   -10.2,
+   247.7,
+   277.7
+  ],
+  "old_bbox": [
+   -340.0,
+   -210.0,
+   -20.0,
+   20.0,
+   232.7,
+   293.7
+  ],
+  "hits": [
+   {
+    "part": "Laser guard panels (1.5 mm aluminium)",
+    "mm3": 252.5,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Vacuum isolation valve (KF-25 angle, pneumatic)",
+  "found": true,
+  "line": "vv = comp([place(VP.kf_wing_clamp(25), (cx + 18, 0, 70), (0, 1, 0), (1, 0, 0)), VP.mcm_4123K45('+x').translate(V(cx + 18, 0, 70))])",
+  "note": "the BOM's valve is a straight 124 mm ball valve with a 138 mm lever, not an angle valve: its outlet flange lands at x = 298, outside the guard (x = 290)",
+  "new_bbox": [
+   165.5,
+   374.3,
+   -32.5,
+   44.6,
+   40.1,
+   161.7
+  ],
+  "old_bbox": [
+   168.0,
+   222.0,
+   -27.0,
+   40.0,
+   43.0,
+   118.0
+  ],
+  "hits": [
+   {
+    "part": "Vacuum port (KF-25)",
+    "mm3": 573.9,
+    "envelope_mm3": 0.0
+   },
+   {
+    "part": "Laser guard panels (1.5 mm aluminium)",
+    "mm3": 381.8,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Pressure transducer",
+  "found": true,
+  "line": "VP.mcm_3861N11().translate(V(100, 50, lz1)); lid hole at (100, 50) -> \u00d813.7 (1/4 NPT), not \u00d88",
+  "note": "1/4 NPT male thread goes into the lid (tap the lid or use a 4518K49 KF-25 x 1/4 NPT adapter)",
+  "new_bbox": [
+   86.5,
+   113.5,
+   38.1,
+   61.9,
+   119.5,
+   205.8
+  ],
+  "old_bbox": [
+   89.0,
+   111.0,
+   39.0,
+   61.0,
+   136.0,
+   200.0
+  ],
+  "hits": [
+   {
+    "part": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+    "mm3": 1554.3,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Inlet plenum port (KF-25)",
+  "found": true,
+  "line": "place(VP.kf_weld_stub(25, 26), (0, 163.0, 11), (1, 0, 0), (0, 1, 0))",
+  "note": "McMaster 5786N23 profile + 1 in. x 0.065 in. tube",
+  "new_bbox": [
+   -19.9,
+   19.9,
+   137.0,
+   163.0,
+   -8.9,
+   30.9
+  ],
+  "old_bbox": [
+   -20.0,
+   20.0,
+   137.0,
+   163.0,
+   -9.0,
+   31.0
+  ],
+  "hits": []
+ },
+ {
+  "replaces": "Outlet plenum port (KF-25)",
+  "found": true,
+  "line": "place(VP.kf_weld_stub(25, 26), (86, -90.0, -91.0), (1, 0, 0), (0, 0, 1))",
+  "note": "McMaster 5786N23 profile + 1 in. x 0.065 in. tube",
+  "new_bbox": [
+   66.1,
+   105.9,
+   -109.9,
+   -70.1,
+   -117.0,
+   -91.0
+  ],
+  "old_bbox": [
+   66.0,
+   106.0,
+   -110.0,
+   -70.0,
+   -117.0,
+   -91.0
+  ],
+  "hits": []
+ },
+ {
+  "replaces": "Vacuum port (KF-25)",
+  "found": true,
+  "line": "place(VP.kf_weld_stub(25, 22), (174.0, 0, 70), (0, 1, 0), (1, 0, 0))",
+  "note": "McMaster 5786N23 profile + 1 in. x 0.065 in. tube",
+  "new_bbox": [
+   152.0,
+   174.0,
+   -19.9,
+   19.9,
+   50.1,
+   89.9
+  ],
+  "old_bbox": [
+   152.0,
+   174.0,
+   -20.0,
+   20.0,
+   50.0,
+   90.0
+  ],
+  "hits": []
+ },
+ {
+  "replaces": "Overflow port (KF-40)",
+  "found": true,
+  "line": "place(VP.kf_weld_stub(40, 16), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, -1))",
+  "note": "5786N25 takes 1.5 in. tube (38.1 OD), not 41.3",
+  "new_bbox": [
+   72.6,
+   127.4,
+   -27.4,
+   27.4,
+   -58.0,
+   -39.0
+  ],
+  "old_bbox": [
+   72.5,
+   127.5,
+   -27.5,
+   27.5,
+   -58.0,
+   -42.0
+  ],
+  "hits": [
+   {
+    "part": "Overflow funnel block (316L)",
+    "mm3": 18.2,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Overflow clamp (KF-40)",
+  "found": true,
+  "line": "place(VP.kf_wing_clamp(40), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1))",
+  "note": "wing nut reaches 53.5 mm from the axis (+x)",
+  "new_bbox": [
+   60.0,
+   153.5,
+   -35.5,
+   36.1,
+   -66.5,
+   -49.5
+  ],
+  "old_bbox": [
+   65.5,
+   147.5,
+   -34.5,
+   34.5,
+   -64.0,
+   -52.0
+  ],
+  "hits": [
+   {
+    "part": "Overflow port (KF-40)",
+    "mm3": 930.1,
+    "envelope_mm3": 0.0
+   },
+   {
+    "part": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
+    "mm3": 930.1,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Sealed cyclone + HEPA housing (316L, valves off for passivation)",
+  "found": true,
+  "line": "filt = VP.mcm_5169K72().translate(V(470, -40, g0 + 20)) (keep the 20 mm stand; inlet is now the side boss, outlet the bottom)",
+  "note": "\u00d895 x 92 instead of \u00d8116 x 254; ports are 1/2 NPSC, so the two KF-25 filter ports move to NPT adapters",
+  "new_bbox": [
+   422.4,
+   527.4,
+   -100.6,
+   20.6,
+   -140.0,
+   -47.9
+  ],
+  "old_bbox": [
+   412.0,
+   528.0,
+   -98.0,
+   18.0,
+   -160.0,
+   94.0
+  ],
+  "hits": [
+   {
+    "part": "Filter outlet (KF-25)",
+    "mm3": 54.9,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Dry scroll pump (\u2264 0.3 mbar, 6 m3/h class)",
+  "found": true,
+  "line": "pump = VP.mcm_4396K21().translate(V(770, 165, g0))",
+  "note": "368 x 143 x 305: 15 mm taller than the envelope with its inlet; intake is a flare tee on the pump block, so the KF-25 inlet moves",
+  "new_bbox": [
+   585.9,
+   954.1,
+   93.5,
+   236.4,
+   -160.0,
+   144.8
+  ],
+  "old_bbox": [
+   560.0,
+   1005.0,
+   40.0,
+   290.0,
+   -160.0,
+   130.0
+  ],
+  "hits": [
+   {
+    "part": "Pump inlet (KF-25)",
+    "mm3": 860.8,
+    "envelope_mm3": 0.0
+   }
+  ]
+ },
+ {
+  "replaces": "Fiber laser source, 500 W single-mode (3U)",
+  "found": true,
+  "line": "laser unit: nu 3 -> 4 and the rack 470 -> 515 mm tall (or the DIN drawer 3U -> 2U); shape VP.ipg_ylr500_u3().translate(V(-710, ry0 + 30, zr))",
+  "note": "4U (176.5), not 3U: overlaps the scan PC above it by 43 mm in a 10U rack; handles 51 mm proud of the rack front",
+  "new_bbox": [
+   -951.1,
+   -468.8,
+   -321.2,
+   236.0,
+   -97.1,
+   79.4
+  ],
+  "old_bbox": [
+   -951.3,
+   -468.7,
+   -274.0,
+   260.0,
+   -97.1,
+   34.3
+  ],
+  "hits": [
+   {
+    "part": "Scan + laser controller PC (2U)",
+    "mm3": 9813741.5,
+    "envelope_mm3": 0.0
+   },
+   {
+    "part": "Process fiber (armoured, \u2265 100 mm bend radius)",
+    "mm3": 5759.6,
+    "envelope_mm3": 4190.2
+   }
+  ]
+ },
+ {
+  "replaces": "UPS (Eaton 5PX 1500 class, 2U)",
+  "found": true,
+  "line": "VP.eaton_5px1500rtg2().translate(V(-710, ry0 + 30, zr))",
+  "note": "smaller than the 2U envelope (447 deep, not 530)",
+  "new_bbox": [
+   -951.3,
+   -468.7,
+   -273.0,
+   177.0,
+   -186.0,
+   -99.6
+  ],
+  "old_bbox": [
+   -951.3,
+   -468.7,
+   -274.0,
+   260.0,
+   -186.0,
+   -99.1
+  ],
+  "hits": []
+ },
+ {
+  "replaces": "RECHECK 2026-11-20 14:51Z (after the full run)",
+  "found": true,
+  "line": "",
+  "note": "Z servo with connector='-y' (now the default in swaps()): no overlap with any part, and clear of every module part along the 41-step module swap path. Recoater carriage with the grease nipple moved above the rail (z 19.7): no overlap (the full run's 63.5 mm3 into the rail was the nipple at z 15.5).",
+  "new_bbox": null,
+  "old_bbox": null,
+  "hits": []
+ }
+]

@@ -1,0 +1,852 @@
+{
+ "exhaustive": {
+  "cases": 16777216,
+  "violations": {
+   "P1": 0,
+   "P2": 0,
+   "P3": 0,
+   "P4": 0,
+   "P5": 0,
+   "P6": 0,
+   "P7": 0,
+   "P8": 0
+  },
+  "reachable_counts": {
+   "laser_ilk": 1024,
+   "shutter_open": 512,
+   "servo_en": 262144,
+   "unlock": 1048512,
+   "heater_en": 65536,
+   "argon_en": 2097152,
+   "entry_ok": 516096,
+   "move_ok": 1048320
+  }
+ },
+ "properties": {
+  "P1": "laser interlock closed (emission possible) only if all three E-stops are released, the guard is closed and locked, the key is on, room O2 is OK, the plate limit is healthy, the robot is at safe home, the tray is docked, the process permissive holds, the machine was reset (armed) and no fault is latched",
+  "P2": "shutter open only while the laser interlock is closed",
+  "P3": "guard unlock only with the laser interlock open, the shutter commanded shut and confirmed closed on both channels, the plate below 50 C and the chamber at ambient pressure",
+  "P4": "heater contactor K1 only with the E-stops released, the limit healthy, room O2 OK and no fault",
+  "P5": "robot entry only with the laser interlock open, the shutter closed, the plate below 50 C, the chamber at ambient and the servo bus off",
+  "P6": "argon supply valve only with room O2 OK and exhaust flow proven",
+  "P7": "VLM tray movement only with the laser interlock open, the shutter closed and the robot at safe home",
+  "P8": "servo bus K3 only with the E-stops released and the guard closed and locked"
+ },
+ "single_faults": [
+  {
+   "fault": "estop_rack:A_stuck_ok",
+   "armed_before": true,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_rack: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_rack:B_stuck_ok",
+   "armed_before": true,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_rack: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_rack:A_stuck_trip",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_rack: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_rack:AB_short",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_rack: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_guard:A_stuck_ok",
+   "armed_before": true,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_guard: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_guard:B_stuck_ok",
+   "armed_before": true,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_guard: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_guard:A_stuck_trip",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_guard: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_guard:AB_short",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_guard: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_gas:A_stuck_ok",
+   "armed_before": true,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_gas: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_gas:B_stuck_ok",
+   "armed_before": true,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_gas: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_gas:A_stuck_trip",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_gas: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "estop_gas:AB_short",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "estop_gas: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "guard_closed:A_stuck_ok",
+   "armed_before": true,
+   "demand": "guard opened",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "guard_closed: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "guard_closed:B_stuck_ok",
+   "armed_before": true,
+   "demand": "guard opened",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "guard_closed: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "guard_closed:A_stuck_trip",
+   "armed_before": false,
+   "demand": "guard opened",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "guard_closed: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "guard_closed:AB_short",
+   "armed_before": false,
+   "demand": "guard opened",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "guard_closed: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "guard_locked:A_stuck_ok",
+   "armed_before": true,
+   "demand": "lock lost",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "guard_locked: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "guard_locked:B_stuck_ok",
+   "armed_before": true,
+   "demand": "lock lost",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "guard_locked: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "guard_locked:A_stuck_trip",
+   "armed_before": false,
+   "demand": "lock lost",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "guard_locked: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "guard_locked:AB_short",
+   "armed_before": false,
+   "demand": "lock lost",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "guard_locked: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "room_o2:A_stuck_ok",
+   "armed_before": true,
+   "demand": "O2 alarm",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "room_o2: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "room_o2:B_stuck_ok",
+   "armed_before": true,
+   "demand": "O2 alarm",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "room_o2: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "room_o2:A_stuck_trip",
+   "armed_before": false,
+   "demand": "O2 alarm",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "room_o2: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "room_o2:AB_short",
+   "armed_before": false,
+   "demand": "O2 alarm",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "room_o2: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "plate_cool:A_stuck_ok",
+   "armed_before": false,
+   "demand": "unlock asked with the plate hot",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "plate_cool: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "plate_cool:B_stuck_ok",
+   "armed_before": false,
+   "demand": "unlock asked with the plate hot",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "plate_cool: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "plate_cool:A_stuck_trip",
+   "armed_before": true,
+   "demand": "unlock asked with the plate hot",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": false,
+   "fault_latched": false,
+   "why": [],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "plate_cool:AB_short",
+   "armed_before": false,
+   "demand": "unlock asked with the plate hot",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "plate_cool: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "robot_home:A_stuck_ok",
+   "armed_before": true,
+   "demand": "robot leaves home",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "robot_home: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "robot_home:B_stuck_ok",
+   "armed_before": true,
+   "demand": "robot leaves home",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "robot_home: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "robot_home:A_stuck_trip",
+   "armed_before": false,
+   "demand": "robot leaves home",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "robot_home: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "robot_home:AB_short",
+   "armed_before": false,
+   "demand": "robot leaves home",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "robot_home: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "vlm_docked:A_stuck_ok",
+   "armed_before": true,
+   "demand": "tray undocks",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "vlm_docked: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "vlm_docked:B_stuck_ok",
+   "armed_before": true,
+   "demand": "tray undocks",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "vlm_docked: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "vlm_docked:A_stuck_trip",
+   "armed_before": false,
+   "demand": "tray undocks",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "vlm_docked: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "vlm_docked:AB_short",
+   "armed_before": false,
+   "demand": "tray undocks",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "vlm_docked: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "shutter_closed:A_stuck_ok",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "shutter_closed: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "shutter_closed:B_stuck_ok",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "shutter_closed: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "shutter_closed:A_stuck_trip",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "shutter_closed: channels disagree"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "shutter_closed:AB_short",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "shutter_closed: test pulses see a short between channels"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "K4:welded",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "K4: EDM sees it closed while commanded open"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "K5:welded",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "K5: EDM sees it closed while commanded open"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "K1:welded",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "K1: EDM sees it closed while commanded open"
+   ],
+   "ok": true,
+   "note": "K1 stays closed; the PLC turns the SSR off on the E-stop status, K2 (CN708) still opens on over-temperature; not safety-rated while it lasts"
+  },
+  {
+   "fault": "K3A:welded",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "K3A: EDM sees it closed while commanded open"
+   ],
+   "ok": true,
+   "note": "the other bus contactor opens (two in series: ClearPath-SD has no safe torque off)"
+  },
+  {
+   "fault": "K3B:welded",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "K3B: EDM sees it closed while commanded open"
+   ],
+   "ok": true,
+   "note": "the other bus contactor opens (two in series: ClearPath-SD has no safe torque off)"
+  },
+  {
+   "fault": "shutter:stuck_open",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": false,
+   "why": [],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "laser:ignores_loop",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "laser status shows emission possible with its interlock loop open"
+   ],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "reset:stuck_pressed",
+   "armed_before": false,
+   "demand": "E-stop pressed",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": false,
+   "why": [],
+   "ok": true,
+   "note": ""
+  },
+  {
+   "fault": "limit_ok:stuck_ok",
+   "armed_before": true,
+   "demand": "limit trips",
+   "beam_after_demand": false,
+   "laser_loop_after_demand": false,
+   "hazard_removed": true,
+   "rearm_refused": true,
+   "fault_latched": true,
+   "why": [
+    "CN708 relay still closed while the PLC reads over-temperature"
+   ],
+   "ok": true,
+   "note": "the PLC's own over-temperature (control and edge TCs) drops its permissive and K1; its cross-check of the CN708 relay latches the fault"
+  }
+ ],
+ "sequences": [
+  {
+   "step": "power-up, nothing pressed",
+   "output": false,
+   "note": "laser interlock stays open until a reset (CFR 1040.10(f)(10))"
+  },
+  {
+   "step": "reset held down",
+   "output": false,
+   "note": "nothing on the leading edge"
+  },
+  {
+   "step": "reset released",
+   "output": true,
+   "note": "arms on the trailing edge"
+  },
+  {
+   "step": "guard opened while lasing (lock forced)",
+   "output": false,
+   "note": "drops at once"
+  },
+  {
+   "step": "guard closed again",
+   "output": false,
+   "note": "stays off: needs a new reset"
+  },
+  {
+   "step": "reset",
+   "output": true,
+   "note": "re-armed"
+  },
+  {
+   "step": "unlock requested while lasing",
+   "output": false,
+   "note": "refused (P3)"
+  },
+  {
+   "step": "laser and shutter released, plate still hot",
+   "output": false,
+   "note": "refused: plate above 50 C"
+  },
+  {
+   "step": "plate below 50 C, chamber vented",
+   "output": true,
+   "note": "unlock given; robot entry given"
+  },
+  {
+   "step": "after a power cut",
+   "output": false,
+   "note": "needs a manual reset"
+  }
+ ],
+ "inputs": {
+  "dual": {
+   "estop_rack": "E-stop on the rack's operator panel",
+   "estop_guard": "E-stop on the guard front",
+   "estop_gas": "E-stop on the gas module / dock side",
+   "guard_closed": "guard door closed (coded non-contact sensor, separate from the lock)",
+   "guard_locked": "guard lock engaged (lock-monitoring contacts)",
+   "room_o2": "room and Shuttle O2 monitors above 19.5 % (two monitors' relays, one per channel)",
+   "plate_cool": "plate below 50 C (2nd temperature channel's relay + PLC reading of the edge TC)",
+   "robot_home": "UR12e at its safe home (UR safety output 'Safe Home', two channels)",
+   "vlm_docked": "tray docked and the VLM at rest (dock signal pins, two channels)",
+   "shutter_closed": "shutter closed (two position switches on the shutter blade)"
+  },
+  "single": {
+   "key_on": "laser key switch on",
+   "limit_ok": "CN708 latching limit healthy (its relay; it also drops K2 on its own)",
+   "chamber_ambient": "chamber within +/-5 mbar of ambient (pressure switch)",
+   "process_ok": "PLC process permissive (chamber O2 < set point, pressure in window, module present, fibre and head in place)",
+   "exhaust_ok": "exhaust flow proven (flow switch in the vent header)"
+  },
+  "requests": [
+   "laser_req",
+   "shutter_req",
+   "unlock_req",
+   "heater_req",
+   "argon_req",
+   "entry_req",
+   "move_req"
+  ],
+  "state": [
+   "armed",
+   "fault"
+  ]
+ }
+}

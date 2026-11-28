@@ -1,0 +1,135 @@
+{
+ "drawer": {
+  "op": "drawer",
+  "frames": 105,
+  "ik_all": true,
+  "unreachable_steps": [],
+  "min_clear_mm": -57.9,
+  "min_clear_step": "approach the pull tab",
+  "min_clear_pair": [
+   "UR10e forearm_link",
+   "vlm_lintel",
+   -57.9
+  ],
+  "exact_mm": null,
+  "seat_min_mm": null,
+  "collisions": [
+   {
+    "step": "approach the pull tab",
+    "robot": "UR10e forearm_link",
+    "machine": "vlm_lintel"
+   },
+   {
+    "step": "close on the tab's posts",
+    "robot": "UR10e forearm_link",
+    "machine": "vlm_lintel"
+   },
+   {
+    "step": "pull 120 mm",
+    "robot": "UR10e forearm_link",
+    "machine": "vlm_lintel"
+   },
+   {
+    "step": "push home (seat the O-ring)",
+    "robot": "UR10e forearm_link",
+    "machine": "vlm_lintel"
+   }
+  ],
+  "reach_margin_min_mm": 795.6,
+  "limit_margin_min_deg": 16.2,
+  "reconfigurations": [],
+  "torque": {
+   "peak_Nm": [
+    3.5,
+    50.4,
+    148.7,
+    36.1,
+    0.7,
+    0.0
+   ],
+   "peak_ratio": 0.991,
+   "worst_joint": "elbow",
+   "duration_s": 6.1,
+   "forces": {
+    "pull 120 mm": {
+     "needed_N": 20.0,
+     "arm_can_N": 358.0
+    },
+    "push home (seat the O-ring)": {
+     "needed_N": 350.0,
+     "arm_can_N": 353.0
+    }
+   }
+  },
+  "fingers": "stock",
+  "runtime_s": 2.1,
+  "steps": [
+   {
+    "step": "approach the pull tab",
+    "frames": 41,
+    "ik_ok": true,
+    "min_clear_mm": -57.9,
+    "pair": [
+     "UR10e forearm_link",
+     "vlm_lintel"
+    ],
+    "seat": false,
+    "reach_margin_mm": 795.6,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the tab's posts",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -57.9,
+    "pair": [
+     "UR10e forearm_link",
+     "vlm_lintel"
+    ],
+    "seat": false,
+    "reach_margin_mm": 795.6,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "pull 120 mm",
+    "frames": 31,
+    "ik_ok": true,
+    "min_clear_mm": -57.9,
+    "pair": [
+     "UR10e forearm_link",
+     "vlm_lintel"
+    ],
+    "seat": false,
+    "reach_margin_mm": 795.6,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "push home (seat the O-ring)",
+    "frames": 31,
+    "ik_ok": true,
+    "min_clear_mm": -57.9,
+    "pair": [
+     "UR10e forearm_link",
+     "vlm_lintel"
+    ],
+    "seat": false,
+    "reach_margin_mm": 795.6,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "_meta": {
+  "base_mm": [
+   0.0,
+   -782.0,
+   -212.0
+  ],
+  "menagerie_sha": "370c43965323c0944b433b202aac5058b5f907a9",
+  "cad": "/tmp/robot-work/cad",
+  "module_mass_kg": 2.48
+ }
+}

@@ -1,0 +1,58 @@
+part,group,machine,material,setups_4th,cam_h,setup_h,cutting_h,deburr_inspect_h,total_h,total_h_3axis,one_off_h,per_batch_h,per_machine_h,seal_part,us_outside_usd,jlccnc_usd,stock_usd
+"Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor ",Chamber shell,3-axis VMC,al6061,3,5.7,4.5,5.05,1.0,16.2,19.2,5.7,4.5,6.05,True,7000.0,,2011.0
+"Base plate, process module (MIC-6, 15 mm)","Base, guard, aids",3-axis VMC,mic6,2,2.1,2.5,3.97,0.25,8.8,8.8,2.1,2.5,4.22,False,745.0,,622.0
+"Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module po",Chamber shell,3-axis VMC,al6061,2,2.8,2.5,2.38,1.0,8.7,8.7,2.8,2.5,3.38,True,1076.0,98.25,168.0
+"Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",Build module,CNC lathe + VMC,al6061,3,5.2,3.0,0.12,0.25,8.6,10.1,5.2,3.0,0.37,False,271.0,40.98,5.0
+"Optics bridge (6061, 25 mm)",Optics,3-axis VMC,al6061,2,1.9,2.5,3.53,0.25,8.2,8.2,1.9,2.5,3.78,False,1735.0,208.93,666.0
+"Base plate, gas module (MIC-6, 15 mm)","Base, guard, aids",3-axis VMC,mic6,2,1.8,2.5,2.97,0.25,7.5,7.5,1.8,2.5,3.22,False,666.0,194.03,576.0
+"Build module M50: spigot, flange, honed 316L cylinder (Ø50.8 bore, 3 mm wall) and bottom c",Build module,CNC lathe + VMC,ss316l,1,4.1,1.5,0.58,1.0,7.2,8.7,4.1,1.5,1.58,True,1200.0,414.55,156.0
+"Camera viewport adapter + boss (6061; Ø30 bore on the line of sight, Ø20 aperture, Ø1 in. ",Chamber fittings,3-axis VMC,al6061,2,3.6,2.2,0.28,1.0,7.1,8.7,3.6,2.2,1.28,True,379.0,53.27,15.0
+"Build plate M50 (Ø50.5 x 10, 6061-T6; bayonet spigot, gripper groove)",Build module,CNC lathe + VMC,al6061,2,4.5,2.2,0.03,0.25,7.0,8.6,4.5,2.2,0.28,False,228.0,22.28,4.0
+"Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",Chamber shell,3-axis VMC,al6061,1,2.4,2.0,1.38,1.0,6.8,7.3,2.4,2.0,2.38,True,638.0,82.34,126.0
+"Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",Build module,CNC lathe + VMC,ss316l,1,3.5,1.5,0.97,0.25,6.2,6.9,3.5,1.5,1.22,False,407.9,176.54,15.0
+"Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",Optics,3-axis VMC,al6061,2,1.8,2.5,1.6,0.25,6.2,6.2,1.8,2.5,1.85,False,1861.0,521.08,331.0
+"Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",Chamber fittings,3-axis VMC,al6061,1,3.0,1.5,0.62,1.0,6.1,7.6,3.0,1.5,1.62,True,444.0,56.58,53.0
+"Window flange (6061, two FKM O-ring grooves)",Chamber fittings,CNC lathe + VMC,al6061,1,3.0,1.5,0.33,1.0,5.8,5.8,3.0,1.5,1.33,True,395.0,38.32,23.0
+"Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",Powder dosing,3-axis VMC,al6061,2,2.4,2.2,0.22,1.0,5.8,5.8,2.4,2.2,1.22,True,435.0,39.44,26.0
+"Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 ro",Build module,CNC lathe + VMC,ss316l,1,3.5,1.5,0.48,0.25,5.7,6.4,3.5,1.5,0.73,True,794.0,100.92,42.0
+"Heater block M50 (6061-T6, bayonet socket)",Build module,CNC lathe + VMC,al6061,1,3.5,1.5,0.2,0.25,5.5,6.2,3.5,1.5,0.45,False,207.0,21.37,4.0
+"Recoater floating bearing housing (blind cap, FKM face O-ring)",Chamber fittings,CNC lathe + VMC,al6061,1,2.8,1.5,0.12,1.0,5.4,5.4,2.8,1.5,1.12,True,156.0,20.59,7.0
+"Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm pla",Build module,3-axis VMC,al6061,1,1.7,1.5,1.72,0.25,5.2,5.2,1.7,1.5,1.97,False,319.4,120.81,15.0
+"Overflow funnel block (316L, bolted, FKM face O-ring)",Chamber fittings,3-axis VMC,ss316l,1,1.8,1.5,0.83,1.0,5.1,5.1,1.8,1.5,1.83,True,123.0,150.3,57.0
+"Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot gri",Build module,3-axis VMC,al6061,1,2.3,1.5,0.77,0.25,4.8,5.5,2.3,1.5,1.02,False,188.0,66.24,2.0
+Recoater motor standoff,Recoater,CNC lathe + VMC,al6061,1,2.7,1.5,0.23,0.25,4.7,4.7,2.7,1.5,0.48,False,385.0,25.65,19.0
+Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry),Chamber fittings,CNC lathe + VMC,al6061,1,2.8,1.5,0.15,0.25,4.7,4.7,2.8,1.5,0.4,False,292.0,27.21,10.0
+"f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)",Optics,3-axis VMC,al6061,1,2.7,1.5,0.2,0.25,4.7,4.7,2.7,1.5,0.45,False,275.15,29.04,15.0
+"Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)","Z stage, legs",3-axis VMC,al6061,1,1.8,2.0,0.58,0.25,4.6,5.1,1.8,2.0,0.83,False,266.3,111.83,15.0
+"Striker disc M50 (416 stainless, on the pot magnet)",Build module,CNC lathe + VMC,steel,1,2.8,1.5,0.07,0.25,4.6,4.6,2.8,1.5,0.32,False,609.0,50.2,2.0
+"Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",Chamber shell,3-axis VMC,al6061,1,1.7,1.5,0.42,1.0,4.6,4.6,1.7,1.5,1.42,True,454.0,37.83,70.0
+"Macor standoff rings M50 (3 standoffs x 3 rings, Ø8, cut from 8489K75 rod; thermal break)",Build module,CNC lathe + VMC,macor,1,2.7,1.5,0.02,0.25,4.5,4.5,2.7,1.5,0.27,False,1585.0,116.1,148.0
+"Field-stop aperture, M50 insert (Ø41, passive beam limit; swapped with the module)",Build module,CNC lathe + VMC,al6061,1,2.7,1.5,0.03,0.25,4.5,4.5,2.7,1.5,0.28,False,257.45,16.59,15.0
+Camera window retaining ring (bottoms metal-to-metal on the boss),Chamber fittings,CNC lathe + VMC,al6061,1,2.7,1.5,0.03,0.25,4.5,4.5,2.7,1.5,0.28,False,257.0,15.59,3.0
+"Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)",Chamber fittings,3-axis VMC,al6061,1,1.7,1.5,0.05,1.0,4.2,4.2,1.7,1.5,1.05,True,14.0,17.28,4.0
+"Overflow jar grip fin (6061: tab on the cup, riser at x 117-125, I-section grip block at y",Powder dosing,3-axis VMC,al6061,1,1.7,1.5,0.62,0.25,4.1,4.1,1.7,1.5,0.87,False,222.05,53.1,15.0
+"AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-regi","Base, guard, aids",3-axis VMC,al6061,1,1.7,2.0,0.07,0.25,4.0,4.5,1.7,2.0,0.32,False,7.0,26.62,4.0
+"Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear'",Chamber fittings,3-axis VMC,al6061,1,1.7,1.5,0.32,0.25,3.8,3.8,1.7,1.5,0.57,False,195.5,51.76,15.0
+"Blade holder (6061, 18 x 31, quick-swap)",Recoater,3-axis VMC,al6061,1,1.8,1.5,0.12,0.25,3.7,3.7,1.8,1.5,0.37,False,103.0,16.64,10.0
+Recoater motor bracket,Recoater,3-axis VMC,al6061,1,1.7,1.5,0.28,0.25,3.7,3.7,1.7,1.5,0.53,False,207.0,74.57,98.0
+"Galvo riser plate (6061, 5 mm, Ø56 bore: clears the f-theta's Ø53 nose over the shim range",Optics,3-axis VMC,al6061,1,1.7,1.5,0.22,0.25,3.7,3.7,1.7,1.5,0.47,False,186.65,21.35,15.0
+"Enclosed beam tubes (6061, Ø18 x 2: dichroic to galvo, fold leg)",Optics,3-axis VMC,al6061,1,1.7,1.5,0.22,0.25,3.7,3.7,1.7,1.5,0.47,False,186.65,88.68,15.0
+Z mounting flange (bolted under the floor),"Z stage, legs",3-axis VMC,al6061,1,1.8,1.5,0.1,0.25,3.6,3.6,1.8,1.5,0.35,False,116.0,14.95,9.0
+Z bracket + fold-back belt housing (2:1),"Z stage, legs",3-axis VMC,al6061,1,1.7,1.5,0.18,0.25,3.6,3.6,1.7,1.5,0.43,False,146.0,35.86,35.0
+Recoater carriage block (6061),Recoater,3-axis VMC,al6061,1,1.7,1.5,0.15,0.25,3.6,3.6,1.7,1.5,0.4,False,376.0,33.77,16.0
+"Guard-door handle for the robot (Ø12 x 130 bar on two Ø10 standoffs, 6061)","Base, guard, aids",3-axis VMC,al6061,1,1.7,1.5,0.13,0.25,3.6,3.6,1.7,1.5,0.38,False,343.0,50.44,11.0
+"PB1 stand (2 x 30 x 15 mm 6061 rails, bolted to the tray)","Base, guard, aids",3-axis VMC,al6061,1,1.7,1.5,0.13,0.25,3.6,3.6,1.7,1.5,0.38,False,177.8,31.9,15.0
+"Z sensor bracket (6061, clamped to the actuator body's -x side)","Z stage, legs",3-axis VMC,al6061,1,1.7,1.5,0.12,0.25,3.6,3.6,1.7,1.5,0.37,False,177.8,40.66,15.0
+"Z lift arm (6061, 12 mm, pot-magnet coupling)","Z stage, legs",3-axis VMC,al6061,1,1.7,1.5,0.07,0.25,3.5,3.5,1.7,1.5,0.32,False,27.0,15.5,8.0
+"Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it ru",Build module,CNC lathe + VMC,ss316l,1,1.7,1.5,0.07,0.25,3.5,3.5,1.7,1.5,0.32,False,466.0,156.96,4.0
+"Overflow-jar sensor bracket (6061, 6 mm, on the front-right leg)",Powder dosing,3-axis VMC,al6061,1,1.7,1.5,0.05,0.25,3.5,3.5,1.7,1.5,0.3,False,168.95,24.87,15.0
+"Zero-point module plates (2 x 6061, 10 mm, each on two posts)",Build module,3-axis VMC,al6061,1,1.7,1.5,0.07,0.25,3.5,3.5,1.7,1.5,0.32,False,168.95,43.96,15.0
+"Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",Build module,3-axis VMC,al6061,1,1.7,1.5,0.03,0.25,3.5,3.5,1.7,1.5,0.28,False,168.95,56.6,15.0
+"Recoater arm (6061, 40 x 14 web)",Recoater,3-axis VMC,al6061,1,1.7,1.5,0.05,0.25,3.5,3.5,1.7,1.5,0.3,False,48.0,18.39,1.0
+Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal,Powder dosing,3-axis VMC,al6061,1,1.7,1.5,0.05,0.25,3.5,3.5,1.7,1.5,0.3,False,215.0,21.75,4.0
+"Reservoir M pull tab (6061, 8 mm fin, the lid's handle carried 70 mm forward, in front of ",Powder dosing,3-axis VMC,al6061,1,1.7,1.5,0.02,0.25,3.5,3.5,1.7,1.5,0.27,False,168.95,13.23,15.0
+Door handle,Chamber fittings,3-axis VMC,al6061,1,1.7,1.5,0.08,0.25,3.5,3.5,1.7,1.5,0.33,False,279.0,49.66,6.0
+"Door drive bracket (6061, 4 mm, flanged onto the chamber's left side face)",Chamber fittings,3-axis VMC,al6061,1,1.7,1.5,0.07,0.25,3.5,3.5,1.7,1.5,0.32,False,169.0,29.18,2.0
+Door drive shaft and disc (Ø6 D-shaft keyed into a 6061 disc screwed to the door's left ed,Chamber fittings,3-axis VMC,al6061,1,1.7,1.5,0.02,0.25,3.5,3.5,1.7,1.5,0.27,False,169.0,23.5,0.0
+"Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",Recoater,3-axis VMC,al6061,1,1.7,1.5,0.0,0.25,3.5,3.5,1.7,1.5,0.25,False,169.0,12.56,0.0
+"Recoater sensor clamps (6061, split clamp on each post)",Recoater,3-axis VMC,al6061,1,1.7,1.5,0.08,0.25,3.5,3.5,1.7,1.5,0.33,False,168.95,34.36,15.0

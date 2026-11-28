@@ -1,0 +1,16 @@
+{
+ "F10a": "the stock fingers met the module handle in the door opening. Round 7: the liner wand, two suction cups on a 300 mm bar",
+ "F10b": "the stock fingers met the frame in the door opening. Round 7: the liner wand, two suction cups on a 300 mm bar",
+ "F10d": "the stock fingers met the module handle in the door opening. Round 7: the liner wand",
+ "F10e": "the stock fingers met the frame in the door opening. Round 7: the liner wand",
+ "F14": "arm A had no pose behind the back wall; its holding wrist met arm B's driver. Round 7: the plenum hangs on two dowels; arm B places it and drives",
+ "F16": "arm B's driver met arm A's holding wrist on all four screws. Round 7: the adapter hangs on two dowels; no holding arm",
+ "F23": "arm B's driver met arm A's holding wrist on all four screws. Round 7: the cap hangs on two dowels; no holding arm",
+ "F25": "the motor bracket, brought in along -x, started inside the trunnion's stands. Round 7: the bracket is lowered from above (F25b)",
+ "F45b": "arm A's upper arm met the base plate. Round 7: by arm B from the back",
+ "F45c": "arm A found no pose to start from. Round 7: by arm B from the back",
+ "F52": "the fingertips holding the pin's end met the door's face, 6 mm behind the hinge axis. Round 7: the pin pusher, a magnet in a \u00d84.5 rod's tip",
+ "F52b": "the fingertips holding the pin's end met the door's face. Round 7: the pin pusher, a magnet in a \u00d84.5 rod's tip",
+ "F03": "arm A could not reach the back posts' screws under the plate. Round 7: the far arm holds each post, the near arm drives",
+ "F56b": "no IK at the start, 340 mm up. Round 7: from 60 mm above"
+}

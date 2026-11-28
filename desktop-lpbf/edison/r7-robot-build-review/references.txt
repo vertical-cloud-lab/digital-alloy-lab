@@ -1,0 +1,75 @@
+1. (feiyu2024anintelligentframework pages 43-47): Feiyu Jia. An intelligent framework for autonomous robot-based machine-tending applications. Text, 2024. URL: https://doi.org/10.7939/r3-4rwa-6849, doi:10.7939/r3-4rwa-6849. This article has 0 citations and is from a peer-reviewed journal.
+
+2. (khishtan2026areviewof pages 2-4): Ali Khishtan, Mohammad Khoshnazar, Zhicong Rong, and Jihyun Lee. A review of robotics for unmanned machining. International Journal of Precision Engineering and Manufacturing, 27(9):3837-3891, Aug 2026. URL: https://doi.org/10.1007/s12541-026-01607-4, doi:10.1007/s12541-026-01607-4. This article has 0 citations and is from a peer-reviewed journal.
+
+3. (hifi2025flexibleandintelligent pages 74-80): A Hifi. Flexible and intelligent human collaborative robotics for non-destructive evaluation. Unknown journal, 2025.
+
+4. (hifi2025flexibleandintelligent pages 69-74): A Hifi. Flexible and intelligent human collaborative robotics for non-destructive evaluation. Unknown journal, 2025.
+
+5. (hifi2025flexibleandintelligent pages 208-214): A Hifi. Flexible and intelligent human collaborative robotics for non-destructive evaluation. Unknown journal, 2025.
+
+6. (hifi2025flexibleandintelligent pages 63-69): A Hifi. Flexible and intelligent human collaborative robotics for non-destructive evaluation. Unknown journal, 2025.
+
+7. (messina2024researchopportunitiesfor pages 17-20): Elena R Messina. Research opportunities for advancing measurement science for manufacturing robotics. ArXiv, Jun 2024. URL: https://doi.org/10.6028/nist.gcr.24-054, doi:10.6028/nist.gcr.24-054. This article has 4 citations.
+
+8. (brera2022collaborativescrewdrivingintegrating pages 35-38): G Brera. Collaborative screwdriving: integrating robot optimal sequence algorithms for increased efficiency. Unknown journal, 2022.
+
+9. (brera2022collaborativescrewdrivingintegratinga pages 35-38): G Brera. Collaborative screwdriving: integrating robot optimal sequence algorithms for increased efficiency. Unknown journal, 2022.
+
+10. (schumacher2022technologyadoptionof pages 5-7): Simon Schumacher, Roland Hall, Anna Waldman-Brown, and Lindsay Sanneman. Technology adoption of collaborative robots for welding in small and medium-sized enterprises: a case study analysis. Text, Jan 2022. URL: https://doi.org/10.15488/12176, doi:10.15488/12176. This article has 16 citations and is from a peer-reviewed journal.
+
+11. (messina2024researchopportunitiesfor pages 34-37): Elena R Messina. Research opportunities for advancing measurement science for manufacturing robotics. ArXiv, Jun 2024. URL: https://doi.org/10.6028/nist.gcr.24-054, doi:10.6028/nist.gcr.24-054. This article has 4 citations.
+
+12. (messina2024researchopportunitiesfor pages 13-17): Elena R Messina. Research opportunities for advancing measurement science for manufacturing robotics. ArXiv, Jun 2024. URL: https://doi.org/10.6028/nist.gcr.24-054, doi:10.6028/nist.gcr.24-054. This article has 4 citations.
+
+13. (messina2024researchopportunitiesfor pages 20-25): Elena R Messina. Research opportunities for advancing measurement science for manufacturing robotics. ArXiv, Jun 2024. URL: https://doi.org/10.6028/nist.gcr.24-054, doi:10.6028/nist.gcr.24-054. This article has 4 citations.
+
+14. (messina2024researchopportunitiesfor pages 28-30): Elena R Messina. Research opportunities for advancing measurement science for manufacturing robotics. ArXiv, Jun 2024. URL: https://doi.org/10.6028/nist.gcr.24-054, doi:10.6028/nist.gcr.24-054. This article has 4 citations.
+
+15. (messina2024researchopportunitiesfor pages 39-42): Elena R Messina. Research opportunities for advancing measurement science for manufacturing robotics. ArXiv, Jun 2024. URL: https://doi.org/10.6028/nist.gcr.24-054, doi:10.6028/nist.gcr.24-054. This article has 4 citations.
+
+16. (feiyu2024anintelligentframework pages 47-52): Feiyu Jia. An intelligent framework for autonomous robot-based machine-tending applications. Text, 2024. URL: https://doi.org/10.7939/r3-4rwa-6849, doi:10.7939/r3-4rwa-6849. This article has 0 citations and is from a peer-reviewed journal.
+
+17. (brera2022collaborativescrewdrivingintegrating pages 31-35): G Brera. Collaborative screwdriving: integrating robot optimal sequence algorithms for increased efficiency. Unknown journal, 2022.
+
+18. (xu2019areviewon pages 16-17): Jingjing Xu, Caixia Zhang, Zhifeng Liu, and Yanhu Pei. A review on significant technologies related to the robot-guided intelligent bolt assembly under complex or uncertain working conditions. IEEE Access, 7:136752-136776, Jan 2019. URL: https://doi.org/10.1109/access.2019.2941918, doi:10.1109/access.2019.2941918. This article has 37 citations and is from a peer-reviewed journal.
+
+19. (watson2020autonomousindustrialassembly pages 16-18): James Watson, Austin Miller, and Nikolaus Correll. Autonomous industrial assembly using force, torque, and rgb-d sensing. Advanced Robotics, 34:546-559, Feb 2020. URL: https://doi.org/10.48550/arxiv.2002.02580, doi:10.48550/arxiv.2002.02580. This article has 42 citations and is from a peer-reviewed journal.
+
+20. (caporali2026roboticperceptionand pages 24-25): Alessio Caporali, Ignacio Cuiral-Zueco, Gonzalo López-Nicolás, and Gianluca Palli. Robotic perception and manipulation of deformable linear objects: a survey. The International Journal of Robotics Research, Mar 2026. URL: https://doi.org/10.1177/02783649261432253, doi:10.1177/02783649261432253. This article has 22 citations.
+
+21. (caporali2026roboticperceptionand pages 23-24): Alessio Caporali, Ignacio Cuiral-Zueco, Gonzalo López-Nicolás, and Gianluca Palli. Robotic perception and manipulation of deformable linear objects: a survey. The International Journal of Robotics Research, Mar 2026. URL: https://doi.org/10.1177/02783649261432253, doi:10.1177/02783649261432253. This article has 22 citations.
+
+22. (govoni2026designcontroland pages 31-34): A Govoni. Design, control and computational strategies for unstructured robotic applications. Unknown journal, 2026.
+
+23. (monguzzi2023roboticmanipulationof pages 99-106): A Monguzzi. Robotic manipulation of deformable linear objects for assembly operations. Unknown journal, 2023.
+
+24. (monguzzi2023roboticmanipulationof pages 12-17): A Monguzzi. Robotic manipulation of deformable linear objects for assembly operations. Unknown journal, 2023.
+
+25. (faria2020safetyrequirementsfor pages 4-6): Carlos Faria, Ana Colim, João Cunha, João Oliveira, Nelson Costa, Paula Carneiro, Sérgio Monteiro, Estela Bicho, Luís A. Rocha, and Pedro Arezes. Safety requirements for the design of collaborative robotic workstations in europe - a review. Advances in Intelligent Systems and Computing, pages 225-232, Jul 2020. URL: https://doi.org/10.1007/978-3-030-50946-0\_31, doi:10.1007/978-3-030-50946-0\_31. This article has 19 citations and is from a peer-reviewed journal.
+
+26. (vitolo2022mobilerobotsand pages 5-6): Ferdinando Vitolo, Andrea Rega, Castrese Di Marino, Agnese Pasquariello, Alessandro Zanella, and Stanislao Patalano. Mobile robots and cobots integration: a preliminary design of a mechatronic interface by using mbse approach. Applied Sciences, 12:419, Jan 2022. URL: https://doi.org/10.3390/app12010419, doi:10.3390/app12010419. This article has 60 citations.
+
+27. (alexandra2019safetyofmobile pages 2-3): Alexandra Markis, Maximilian Papa, David Kaselautzke, Michael Rathmair, Vinzenz Sattinger, and Mathias Brandstötter. Safety of mobile robot systems in industrial applications. 2019. URL: https://doi.org/10.3217/978-3-85125-663-5-04, doi:10.3217/978-3-85125-663-5-04. This article has 54 citations.
+
+28. (pagliara2025improvingdependabilityin pages 2-3): Lorenzo Pagliara, Vincenzo Petrone, V. Redondo, Enrico Ferrentino, M. Ferre, and P. Chiacchio. Improving dependability in robotized bolting operations. ArXiv, Nov 2025. URL: https://doi.org/10.48550/arxiv.2511.10448, doi:10.48550/arxiv.2511.10448. This article has 0 citations.
+
+29. (alexandra2019safetyofmobile pages 3-4): Alexandra Markis, Maximilian Papa, David Kaselautzke, Michael Rathmair, Vinzenz Sattinger, and Mathias Brandstötter. Safety of mobile robot systems in industrial applications. 2019. URL: https://doi.org/10.3217/978-3-85125-663-5-04, doi:10.3217/978-3-85125-663-5-04. This article has 54 citations.
+
+30. (duplak2025applicationofsafety pages 2-4): Ján Duplák, Filip Krajňák, Maryna Yeromina, and Marián Adamčík. Application of safety standards in the design of robotic workplaces. SAR Journal - Science and Research, pages 328, Dec 2025. URL: https://doi.org/10.18421/sar84-04, doi:10.18421/sar84-04. This article has 1 citations.
+
+31. (valori2021validatingsafetyin pages 5-6): Marcello Valori, Adriano Scibilia, Irene Fassi, José Saenz, Roland Behrens, Sebastian Herbster, Catherine Bidard, Eric Lucet, Alice Magisson, Leendert Schaake, Jule Bessler, Gerdienke B. Prange-Lasonder, Morten Kühnrich, Aske B. Lassen, and Kurt Nielsen. Validating safety in human-robot collaboration: standards and new perspectives. Robotics, 10:65, Apr 2021. URL: https://doi.org/10.3390/robotics10020065, doi:10.3390/robotics10020065. This article has 153 citations.
+
+32. (duplak2025applicationofsafety pages 4-6): Ján Duplák, Filip Krajňák, Maryna Yeromina, and Marián Adamčík. Application of safety standards in the design of robotic workplaces. SAR Journal - Science and Research, pages 328, Dec 2025. URL: https://doi.org/10.18421/sar84-04, doi:10.18421/sar84-04. This article has 1 citations.
+
+33. (vitolo2022mobilerobotsand pages 15-17): Ferdinando Vitolo, Andrea Rega, Castrese Di Marino, Agnese Pasquariello, Alessandro Zanella, and Stanislao Patalano. Mobile robots and cobots integration: a preliminary design of a mechatronic interface by using mbse approach. Applied Sciences, 12:419, Jan 2022. URL: https://doi.org/10.3390/app12010419, doi:10.3390/app12010419. This article has 60 citations.
+
+34. (scibilia2021analysisofinterlaboratory pages 1-2): Adriano Scibilia, Marcello Valori, Nicola Pedrocchi, Irene Fassi, Sebastian Herbster, Roland Behrens, Jose Saenz, Alice Magisson, Catherine Bidard, Morten Kuhnrich, Aske Bach Lassen, and Kurt Nielsen. Analysis of interlaboratory safety related tests in power and force limited collaborative robots. IEEE Access, 9:80873-80882, Jan 2021. URL: https://doi.org/10.1109/access.2021.3085109, doi:10.1109/access.2021.3085109. This article has 27 citations and is from a peer-reviewed journal.
+
+35. (scibilia2021analysisofinterlaboratory pages 2-3): Adriano Scibilia, Marcello Valori, Nicola Pedrocchi, Irene Fassi, Sebastian Herbster, Roland Behrens, Jose Saenz, Alice Magisson, Catherine Bidard, Morten Kuhnrich, Aske Bach Lassen, and Kurt Nielsen. Analysis of interlaboratory safety related tests in power and force limited collaborative robots. IEEE Access, 9:80873-80882, Jan 2021. URL: https://doi.org/10.1109/access.2021.3085109, doi:10.1109/access.2021.3085109. This article has 27 citations and is from a peer-reviewed journal.
+
+36. (mariano2026roboticsafetyin pages 3-3): Edy Mariano, Maël Löwensberg, Théo Bloesch, Giuseppe Tommaso Costanzo, and Pascal Miéville. Robotic safety in self-driving laboratories. SLAS Technology, 42:100463, Nov 2026. URL: https://doi.org/10.1016/j.slast.2026.100463, doi:10.1016/j.slast.2026.100463. This article has 1 citations and is from a peer-reviewed journal.
+
+37. (feiyu2024anintelligentframework pages 61-65): Feiyu Jia. An intelligent framework for autonomous robot-based machine-tending applications. Text, 2024. URL: https://doi.org/10.7939/r3-4rwa-6849, doi:10.7939/r3-4rwa-6849. This article has 0 citations and is from a peer-reviewed journal.
+
+38. (messina2024researchopportunitiesfor pages 11-13): Elena R Messina. Research opportunities for advancing measurement science for manufacturing robotics. ArXiv, Jun 2024. URL: https://doi.org/10.6028/nist.gcr.24-054, doi:10.6028/nist.gcr.24-054. This article has 4 citations.

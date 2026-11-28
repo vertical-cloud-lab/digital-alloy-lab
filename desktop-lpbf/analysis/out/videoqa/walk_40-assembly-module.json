@@ -1,0 +1,497 @@
+{
+ "chapter": "40-assembly-module",
+ "frames_recorded": 2983,
+ "recordings": [
+  "/tmp/robotbuild/frames/40-assembly-module/audit.part0",
+  "/tmp/robotbuild/frames/40-assembly-module/audit.part1"
+ ],
+ "people": [
+  {
+   "person": "op",
+   "frames": 451,
+   "walked_mm": 10792,
+   "stances": 53,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "worst_stances": [
+    {
+     "foot": "L",
+     "start": 454,
+     "end": 460,
+     "frames": 7,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 460,
+     "end": 467,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 467,
+     "end": 474,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 474,
+     "end": 481,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 481,
+     "end": 488,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 488,
+     "end": 496,
+     "frames": 9,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 495,
+     "end": 506,
+     "frames": 12,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 504,
+     "end": 515,
+     "frames": 12,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 513,
+     "end": 524,
+     "frames": 12,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 522,
+     "end": 550,
+     "frames": 29,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    }
+   ],
+   "slipping_frames": 0,
+   "slipping_frame_list": [],
+   "gliding_frames": 0,
+   "gliding_ranges": [],
+   "gliding_worst": [],
+   "jumps": []
+  }
+ ],
+ "mirs": [
+  {
+   "mir": "mirA",
+   "frames": 2903,
+   "driven_mm": 3734,
+   "forward": "local +x",
+   "forward_mm": 2984,
+   "reverse_mm": 750,
+   "reverse_legs": 4,
+   "longest_reverse_leg_mm": 300,
+   "reverse_leg_list": [
+    {
+     "start": 2784,
+     "end": 2787,
+     "mm": 300
+    },
+    {
+     "start": 1626,
+     "end": 1628,
+     "mm": 150
+    },
+    {
+     "start": 2126,
+     "end": 2128,
+     "mm": 150
+    },
+    {
+     "start": 2621,
+     "end": 2623,
+     "mm": 150
+    }
+   ],
+   "sideways_mm": {
+    "total": 1.3,
+    "max_frame": 0.15,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 50,
+   "turned_deg": 720.0,
+   "jumps": [
+    [
+     51,
+     161,
+     161,
+     0
+    ],
+    [
+     52,
+     187,
+     187,
+     0
+    ],
+    [
+     53,
+     204,
+     204,
+     0
+    ],
+    [
+     54,
+     212,
+     212,
+     0
+    ],
+    [
+     55,
+     211,
+     211,
+     0
+    ],
+    [
+     56,
+     201,
+     201,
+     0
+    ],
+    [
+     57,
+     182,
+     182,
+     0
+    ],
+    [
+     58,
+     154,
+     154,
+     0
+    ],
+    [
+     141,
+     186,
+     186,
+     0
+    ],
+    [
+     142,
+     262,
+     262,
+     0
+    ],
+    [
+     143,
+     323,
+     323,
+     0
+    ],
+    [
+     144,
+     370,
+     370,
+     0
+    ],
+    [
+     145,
+     402,
+     402,
+     0
+    ],
+    [
+     146,
+     420,
+     420,
+     0
+    ],
+    [
+     147,
+     423,
+     423,
+     0
+    ],
+    [
+     148,
+     411,
+     411,
+     0
+    ],
+    [
+     149,
+     385,
+     385,
+     0
+    ],
+    [
+     150,
+     344,
+     344,
+     0
+    ],
+    [
+     151,
+     288,
+     288,
+     0
+    ],
+    [
+     152,
+     218,
+     218,
+     0
+    ],
+    [
+     174,
+     156,
+     156,
+     0
+    ],
+    [
+     231,
+     173,
+     173,
+     0
+    ],
+    [
+     232,
+     234,
+     234,
+     0
+    ],
+    [
+     233,
+     289,
+     289,
+     0
+    ],
+    [
+     234,
+     340,
+     340,
+     0
+    ],
+    [
+     235,
+     387,
+     387,
+     0
+    ],
+    [
+     236,
+     428,
+     428,
+     0
+    ],
+    [
+     237,
+     464,
+     464,
+     0
+    ],
+    [
+     238,
+     496,
+     496,
+     0
+    ],
+    [
+     239,
+     522,
+     522,
+     0
+    ],
+    [
+     240,
+     544,
+     544,
+     0
+    ],
+    [
+     241,
+     561,
+     561,
+     0
+    ],
+    [
+     242,
+     573,
+     573,
+     0
+    ],
+    [
+     243,
+     580,
+     580,
+     0
+    ],
+    [
+     244,
+     582,
+     582,
+     0
+    ],
+    [
+     245,
+     579,
+     579,
+     0
+    ],
+    [
+     246,
+     572,
+     572,
+     0
+    ],
+    [
+     247,
+     559,
+     559,
+     0
+    ],
+    [
+     248,
+     542,
+     542,
+     0
+    ],
+    [
+     249,
+     520,
+     520,
+     0
+    ]
+   ]
+  },
+  {
+   "mir": "mirB",
+   "frames": 2971,
+   "driven_mm": 1313,
+   "forward": "local +x",
+   "forward_mm": 1013,
+   "reverse_mm": 300,
+   "reverse_legs": 1,
+   "longest_reverse_leg_mm": 300,
+   "reverse_leg_list": [
+    {
+     "start": 2159,
+     "end": 2162,
+     "mm": 300
+    }
+   ],
+   "sideways_mm": {
+    "total": 0.7,
+    "max_frame": 0.16,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 24,
+   "turned_deg": 355.0,
+   "jumps": [
+    [
+     1840,
+     183,
+     183,
+     0
+    ],
+    [
+     1841,
+     247,
+     247,
+     0
+    ],
+    [
+     1842,
+     290,
+     290,
+     0
+    ],
+    [
+     1843,
+     312,
+     312,
+     0
+    ],
+    [
+     1844,
+     314,
+     314,
+     0
+    ],
+    [
+     1845,
+     296,
+     296,
+     0
+    ],
+    [
+     1846,
+     257,
+     257,
+     0
+    ],
+    [
+     1847,
+     198,
+     198,
+     0
+    ],
+    [
+     1868,
+     173,
+     173,
+     0
+    ],
+    [
+     1869,
+     195,
+     195,
+     0
+    ],
+    [
+     1870,
+     183,
+     183,
+     0
+    ]
+   ]
+  }
+ ],
+ "limits": {
+  "foot_down_mm": 4.0,
+  "contact_mm": 2.0,
+  "slip_frame_mm": 5.0,
+  "glide_mm": 1.0,
+  "glide_deg": 0.3,
+  "legs_still_mm": 0.5,
+  "jump_mm": 250.0,
+  "mir_jump_mm": 150.0
+ },
+ "seconds": 1.3
+}

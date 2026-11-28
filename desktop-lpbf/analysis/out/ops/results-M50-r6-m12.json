@@ -1,0 +1,67 @@
+{
+ "module": "M50",
+ "cad": "desktop-lpbf/cad",
+ "ops": [
+  {
+   "id": "M12",
+   "kind": "maintenance",
+   "name": "HEPA element and cyclone (gas module)",
+   "where": "tray at the access opening, two people",
+   "interval": "on pressure drop across the HEPA (pain-points P11: life depends on load, not hours)",
+   "air": true,
+   "minutes": 53,
+   "steps": [
+    {
+     "id": "M12.1",
+     "op": "M12",
+     "step": "Valve the housing off under argon; passivate by a slow air bleed with a thermocouple on the housing (P10)",
+     "do": "note",
+     "minutes": 30,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "M12.2",
+     "op": "M12",
+     "step": "Hand to the lid's right bail clip (x +60 from the housing's axis)",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from above"
+    },
+    {
+     "id": "M12.3",
+     "op": "M12",
+     "step": "The inlet is on the housing's side boss, so its hose stays on: open both bail clips and lift the lid",
+     "do": "note",
+     "minutes": 2,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "M12.4",
+     "op": "M12",
+     "step": "Element out straight up: a \u00d8110 x 230 mm column above the can must be free",
+     "do": "clear",
+     "minutes": 10,
+     "note": "",
+     "status": "PASS",
+     "detail": "column clear"
+    },
+    {
+     "id": "M12.5",
+     "op": "M12",
+     "step": "Spent element under dry sand; Class D extinguisher at hand (P34, P10)",
+     "do": "note",
+     "minutes": 10,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  }
+ ]
+}

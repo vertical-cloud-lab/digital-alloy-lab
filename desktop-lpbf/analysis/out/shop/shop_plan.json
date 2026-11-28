@@ -1,0 +1,1984 @@
+{
+ "clips": {
+  "vf4_clamps": {
+   "name": "VF-4 F-S1: arm A tightens the four edge clamps (nut runner)",
+   "ok": true,
+   "fail": null,
+   "time_s": 24.8,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.343,
+   "segments": [
+    {
+     "kind": "dwell",
+     "note": "tool in hand",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "edge clamp 1: to the approach",
+     "ok": true,
+     "t_s": 0.6,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "edge clamp 1: in 90 mm",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "edge clamp 1: ('tighten to 30 N m', 2.5)",
+     "ok": true,
+     "t_s": 2.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "edge clamp 1: out 90 mm",
+     "ok": true,
+     "t_s": 0.6,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "edge clamp 2: to the approach",
+     "ok": true,
+     "t_s": 0.2,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "edge clamp 2: in 90 mm",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "edge clamp 2: ('tighten to 30 N m', 2.5)",
+     "ok": true,
+     "t_s": 2.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "edge clamp 2: out 90 mm",
+     "ok": true,
+     "t_s": 0.6,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "edge clamp 3: to the approach",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "edge clamp 3: in 90 mm",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "edge clamp 3: ('tighten to 30 N m', 2.5)",
+     "ok": true,
+     "t_s": 2.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "edge clamp 3: out 90 mm",
+     "ok": true,
+     "t_s": 0.6,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "edge clamp 4: to the approach",
+     "ok": true,
+     "t_s": 0.2,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "edge clamp 4: in 90 mm",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "edge clamp 4: ('tighten to 30 N m', 2.5)",
+     "ok": true,
+     "t_s": 2.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "edge clamp 4: out 90 mm",
+     "ok": true,
+     "t_s": 0.6,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "back to the carry pose",
+     "ok": true,
+     "t_s": 4.4,
+     "info": {
+      "planned": true,
+      "iterations": 14,
+      "nodes": 26,
+      "waypoints": 4
+     }
+    }
+   ],
+   "clamps": 4,
+   "blank_kg": 30.05,
+   "tightest_transit": {
+    "clear_mm": 6.0,
+    "robot_body": "A/wrist2",
+    "world_body": "vf4/roof panel over the table",
+    "segment": "edge clamp 1: to the approach"
+   }
+  },
+  "vf4_floor_load": {
+   "name": "VF-4 P-S1: arm A (VGP20) loads the floor plate's blank onto the parallels",
+   "ok": true,
+   "fail": null,
+   "time_s": 8.8,
+   "gripper": "VGP20",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.514,
+   "segments": [
+    {
+     "kind": "joint",
+     "note": "home -> above the part",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "down 80 mm onto the part",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {}
+    },
+    {
+     "kind": "grip",
+     "note": "vacuum on",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "lift 80 mm",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {
+      "n": 17
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "carry to above the place pose",
+     "ok": true,
+     "t_s": 2.0,
+     "info": {
+      "planned": true,
+      "iterations": 1,
+      "nodes": 13,
+      "waypoints": 3,
+      "plan_s": 12.2
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "in 80 mm to the place pose",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {}
+    },
+    {
+     "kind": "release",
+     "note": "vacuum off; the edge clamps close (nut runner, as F-S1)",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "back out",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {
+      "n": 17
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "out to home",
+     "ok": true,
+     "t_s": 1.9,
+     "info": {
+      "planned": false
+     }
+    }
+   ],
+   "part_kg": 4.98,
+   "tightest_transit": {
+    "clear_mm": 27.9,
+    "robot_body": "A/upper_arm",
+    "world_body": "vf4/front sill trim",
+    "segment": "out to home"
+   }
+  },
+  "vf4_vise_part": {
+   "name": "VF-4 vise: arm A loads a bracket's 2.5 in. blank into the Kurt XL6A",
+   "ok": true,
+   "fail": null,
+   "time_s": 10.4,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.409,
+   "segments": [
+    {
+     "kind": "joint",
+     "note": "home -> above the part",
+     "ok": true,
+     "t_s": 0.4,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "down 120 mm onto the part",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "grip",
+     "note": "close",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "lift 120 mm",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {
+      "n": 25
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "carry to above the place pose",
+     "ok": true,
+     "t_s": 2.3,
+     "info": {
+      "planned": false,
+      "plan_s": 0.8
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "in 120 mm to the place pose",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "release",
+     "note": "air vise closes (M-code); gripper opens",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "back out",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {
+      "n": 25
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "out to home",
+     "ok": true,
+     "t_s": 2.3,
+     "info": {
+      "planned": false
+     }
+    }
+   ],
+   "part_kg": 1.85166,
+   "tightest_transit": {
+    "clear_mm": 27.9,
+    "robot_body": "A/upper_arm",
+    "world_body": "vf4/front sill trim",
+    "segment": "out to home"
+   }
+  },
+  "lathe_slug": {
+   "name": "ST-10: arm A loads a 2-1/8 in. slug into the chuck from above",
+   "ok": true,
+   "fail": null,
+   "time_s": 13.0,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.352,
+   "segments": [
+    {
+     "kind": "joint",
+     "note": "home -> above the part",
+     "ok": true,
+     "t_s": 1.8,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "down 120 mm onto the part",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "grip",
+     "note": "close",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "lift 120 mm",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {
+      "n": 25
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "carry to the staging pose",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {
+      "planned": false,
+      "plan_s": 0.4
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "straight in 450 mm through the door",
+     "ok": true,
+     "t_s": 1.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "in 70 mm to the place pose",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {}
+    },
+    {
+     "kind": "release",
+     "note": "chuck closes (M-code); gripper opens",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "up 60 mm off the part",
+     "ok": true,
+     "t_s": 0.4,
+     "info": {
+      "n": 13
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "straight back out of the door",
+     "ok": true,
+     "t_s": 1.8,
+     "info": {
+      "n": 93
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "out to home",
+     "ok": true,
+     "t_s": 1.3,
+     "info": {
+      "planned": false
+     }
+    }
+   ],
+   "part_kg": 0.62,
+   "tightest_transit": {
+    "clear_mm": 15.0,
+    "robot_body": "A/upper_arm",
+    "world_body": "lathe/door",
+    "segment": "out to home"
+   }
+  },
+  "lathe_big": {
+   "name": "ST-10: arm A (3FG15) loads a \u00d84.25 in. blank from above",
+   "ok": false,
+   "fail": "staging pose outside the machine",
+   "time_s": 5.4,
+   "gripper": "3FG15L",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.456,
+   "segments": [
+    {
+     "kind": "joint",
+     "note": "home -> above the part",
+     "ok": true,
+     "t_s": 3.0,
+     "info": {
+      "planned": true,
+      "iterations": 164,
+      "nodes": 87,
+      "waypoints": 5
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "down 120 mm onto the part",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "grip",
+     "note": "close",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "lift 120 mm",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {
+      "n": 25
+     }
+    },
+    {
+     "kind": "ik",
+     "note": "staging pose outside the machine",
+     "ok": false,
+     "t_s": 0.0,
+     "info": {
+      "why": "[\"{'reason': 'collision', 'at': [6746.0, 7307.0, 991.0], 'hits': [('A/gr/finger1', 'lathe/chuck (6.5 in.)', None)]}\", \"via pose collides: [('A/upper_arm', 'lathe/chip pan'), ('A/forearm', 'lathe/chip pan')]\", \"{'reason': 'collision', 'at': [6791.0, 7307.0, 991.0], 'hits': [('A/forearm', 'lathe/headstock', None)]}\", \"{'reason': 'collision', 'at': [6746.0, 7307.0, 991.0], 'hits': [('A/gr/finger1', 'lathe/chuck (6.5 in.)', None)]}\", \"{'reason': 'collision', 'at': [6811.0, 7087.0, 991.0], 'hits': [('A/upper_arm', 'lathe/chip pan', None)]}\", \"{'reason': 'collision', 'at': [6811.0, 7087.0, 991.0], 'hits': [('A/upper_arm', 'lathe/chip pan', None)]}\", \"via pose collides: [('A/upper_arm', 'lathe/chip pan'), ('A/forearm', 'lathe/front panel below the door')]\", \"{'reason': 'collision', 'at': [6746.0, 7307.0, 991.0], 'hits': [('A/forearm', 'lathe/headstock', None), ('A/gr/finger1', 'lathe/chuck (6.5"
+     }
+    }
+   ],
+   "part_kg": 3.66,
+   "tightest_transit": null
+  },
+  "saw_bar": {
+   "name": "S-20A: arm B lays a bar on the infeed rollers",
+   "ok": true,
+   "fail": null,
+   "time_s": 12.0,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.473,
+   "segments": [
+    {
+     "kind": "joint",
+     "note": "home -> above the part",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "down 120 mm onto the part",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "grip",
+     "note": "close",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "lift 120 mm",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {
+      "n": 25
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "carry to above the place pose",
+     "ok": true,
+     "t_s": 3.0,
+     "info": {
+      "planned": true,
+      "iterations": 22,
+      "nodes": 30,
+      "waypoints": 3,
+      "plan_s": 10.6
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "in 120 mm to the place pose",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "release",
+     "note": "gripper opens",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "back out",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {
+      "n": 25
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "out to home",
+     "ok": true,
+     "t_s": 2.1,
+     "info": {
+      "planned": false
+     }
+    }
+   ],
+   "part_kg": 3.71,
+   "tightest_transit": {
+    "clear_mm": 81.5,
+    "robot_body": "B/gr/left_finger_tip",
+    "world_body": "bar 600",
+    "segment": "out to home"
+   }
+  },
+  "deburr": {
+   "name": "Deburr: arm A holds a part against the brush and the compliant spindle",
+   "ok": true,
+   "fail": null,
+   "time_s": 21.9,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.324,
+   "segments": [
+    {
+     "kind": "dwell",
+     "note": "tool in hand",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "brush, top edge: to the approach",
+     "ok": true,
+     "t_s": 1.9,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "brush, top edge: in 80 mm",
+     "ok": true,
+     "t_s": 1.3,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "brush, top edge: ('brushing', 6.0)",
+     "ok": true,
+     "t_s": 6.0,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "brush, top edge: out 80 mm",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "compliant spindle, the edge: to the approach",
+     "ok": true,
+     "t_s": 0.2,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "compliant spindle, the edge: in 80 mm",
+     "ok": true,
+     "t_s": 1.3,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "compliant spindle, the edge: ('deburring the edge', 6.0)",
+     "ok": true,
+     "t_s": 6.0,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "compliant spindle, the edge: out 80 mm",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "back to the carry pose",
+     "ok": true,
+     "t_s": 3.5,
+     "info": {
+      "planned": false
+     }
+    }
+   ],
+   "part_kg": 0.8,
+   "tightest_transit": {
+    "clear_mm": 71.9,
+    "robot_body": "A/upper_arm",
+    "world_body": "wash/bench top",
+    "segment": "back to the carry pose"
+   }
+  },
+  "wash": {
+   "name": "Wash: arm B moves the basket from the ultrasonic tank to the rinse",
+   "ok": true,
+   "fail": null,
+   "time_s": 15.0,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.51,
+   "segments": [
+    {
+     "kind": "joint",
+     "note": "home -> above the part",
+     "ok": true,
+     "t_s": 2.5,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "down 280 mm onto the part",
+     "ok": true,
+     "t_s": 1.9,
+     "info": {}
+    },
+    {
+     "kind": "grip",
+     "note": "close",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "lift 280 mm",
+     "ok": true,
+     "t_s": 1.9,
+     "info": {
+      "n": 57
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "carry to above the place pose",
+     "ok": true,
+     "t_s": 1.2,
+     "info": {
+      "planned": true,
+      "iterations": 22,
+      "nodes": 14,
+      "waypoints": 3,
+      "plan_s": 2.8
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "in 280 mm to the place pose",
+     "ok": true,
+     "t_s": 1.9,
+     "info": {}
+    },
+    {
+     "kind": "release",
+     "note": "gripper opens",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "back out",
+     "ok": true,
+     "t_s": 1.9,
+     "info": {
+      "n": 57
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "out to home",
+     "ok": true,
+     "t_s": 1.6,
+     "info": {
+      "planned": false
+     }
+    }
+   ],
+   "part_kg": 4.0,
+   "tightest_transit": {
+    "clear_mm": 48.0,
+    "robot_body": "B/upper_arm",
+    "world_body": "wash/bench top",
+    "segment": "home -> above the part"
+   }
+  },
+  "measure": {
+   "name": "Measuring: arm A sets a bracket on the granite",
+   "ok": false,
+   "fail": "carry to above the place pose",
+   "time_s": 6.6,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.412,
+   "segments": [
+    {
+     "kind": "joint",
+     "note": "home -> above the part",
+     "ok": true,
+     "t_s": 0.2,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "down 420 mm onto the part",
+     "ok": true,
+     "t_s": 2.8,
+     "info": {}
+    },
+    {
+     "kind": "grip",
+     "note": "close",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "lift 420 mm",
+     "ok": true,
+     "t_s": 2.8,
+     "info": {
+      "n": 85
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "carry to above the place pose",
+     "ok": false,
+     "t_s": 0.0,
+     "info": {
+      "reason": "no path in 3000 iterations",
+      "plan_s": 45.1
+     }
+    }
+   ],
+   "part_kg": 1.85,
+   "tightest_transit": null
+  },
+  "kit": {
+   "name": "Kitting: arm A sets the floor plate into its slot on the long table",
+   "ok": true,
+   "fail": null,
+   "time_s": 9.5,
+   "gripper": "VGP20",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.41,
+   "segments": [
+    {
+     "kind": "joint",
+     "note": "home -> above the part",
+     "ok": true,
+     "t_s": 0.3,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "down 120 mm onto the part",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "grip",
+     "note": "vacuum on",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "lift 120 mm",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {
+      "n": 25
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "carry to above the place pose",
+     "ok": true,
+     "t_s": 1.7,
+     "info": {
+      "planned": false,
+      "plan_s": 0.4
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "in 120 mm to the place pose",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "release",
+     "note": "vacuum off",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "back out",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {
+      "n": 25
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "out to home",
+     "ok": true,
+     "t_s": 1.9,
+     "info": {
+      "planned": false
+     }
+    }
+   ],
+   "part_kg": 3.03,
+   "slot": "C00a",
+   "tightest_transit": {
+    "clear_mm": 27.4,
+    "robot_body": "A/upper_arm",
+    "world_body": "floor plate",
+    "segment": "out to home"
+   }
+  },
+  "recv_tape": {
+   "name": "Receiving: arm A cuts the tape",
+   "ok": true,
+   "fail": null,
+   "time_s": 5.7,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.33,
+   "segments": [
+    {
+     "kind": "linear",
+     "note": "down to the seam (blade 8 mm in)",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {
+      "n": 41
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "cut along the 270 mm seam",
+     "ok": true,
+     "t_s": 2.7,
+     "info": {
+      "n": 55
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "lift clear",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {
+      "n": 41
+     }
+    }
+   ],
+   "box": "seals, fasteners, inserts (McMaster)",
+   "tightest_transit": {
+    "clear_mm": Infinity,
+    "robot_body": null,
+    "world_body": null,
+    "segment": null
+   }
+  },
+  "recv_unbox": {
+   "name": "Receiving: arm B lifts the tray out of the box",
+   "ok": true,
+   "fail": null,
+   "time_s": 10.5,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.522,
+   "segments": [
+    {
+     "kind": "joint",
+     "note": "home -> above the part",
+     "ok": true,
+     "t_s": 2.0,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "down 220 mm onto the part",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "grip",
+     "note": "close",
+     "ok": true,
+     "t_s": 0.8,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "lift 220 mm",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {
+      "n": 45
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "carry to above the place pose",
+     "ok": true,
+     "t_s": 2.1,
+     "info": {
+      "planned": true,
+      "iterations": 1,
+      "nodes": 13,
+      "waypoints": 3,
+      "plan_s": 2.5
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "in 60 mm to the place pose",
+     "ok": true,
+     "t_s": 0.4,
+     "info": {}
+    },
+    {
+     "kind": "release",
+     "note": "gripper opens",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "back out",
+     "ok": true,
+     "t_s": 0.4,
+     "info": {
+      "n": 13
+     }
+    },
+    {
+     "kind": "joint",
+     "note": "out to home",
+     "ok": true,
+     "t_s": 0.3,
+     "info": {
+      "planned": false
+     }
+    }
+   ],
+   "part_kg": 4.0,
+   "tightest_transit": {
+    "clear_mm": 24.3,
+    "robot_body": "B/gr/right_finger_tip",
+    "world_body": "tray",
+    "segment": "out to home"
+   }
+  },
+  "drive_vf4_lathe": {
+   "ok": true,
+   "fail": null,
+   "poses_checked": 3178,
+   "transport_turn_deg": -120.0,
+   "transport_lift_mm": 0.0,
+   "tried": [
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 0.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 30.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -30.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 90.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -90.0,
+     "hit": [
+      "drive",
+      0.241,
+      "A/upper_arm",
+      "vf4/right door handle"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 120.0,
+     "hit": [
+      "drive",
+      0.292,
+      "A/forearm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -120.0,
+     "hit": null
+    }
+   ],
+   "legs": [
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    },
+    {
+     "kind": "drive",
+     "seconds": 7.59,
+     "amount": 4253.4
+    },
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    }
+   ],
+   "drive_s": 8.74,
+   "clear_mm": 64.2,
+   "reverse_mm": 0.0,
+   "sideways_mm": 0.0,
+   "time_s": 14.61
+  },
+  "drive_vf4c_lathe": {
+   "ok": true,
+   "fail": null,
+   "poses_checked": 5568,
+   "transport_turn_deg": -120.0,
+   "transport_lift_mm": 150.0,
+   "tried": [
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 0.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 30.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -30.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 60.0,
+     "hit": [
+      "arm",
+      0.942,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 90.0,
+     "hit": [
+      "arm",
+      0.628,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -90.0,
+     "hit": [
+      "arm",
+      0.756,
+      "nut runner",
+      "mir/finger stand"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 120.0,
+     "hit": [
+      "arm",
+      0.469,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -120.0,
+     "hit": [
+      "arm",
+      0.569,
+      "nut runner",
+      "mir/finger stand"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 150.0,
+     "hit": [
+      "arm",
+      0.377,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -150.0,
+     "hit": [
+      "arm",
+      0.453,
+      "nut runner",
+      "mir/finger stand"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 180.0,
+     "hit": [
+      "arm",
+      0.312,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 0.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 30.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": -30.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": -60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 90.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": -90.0,
+     "hit": [
+      "drive",
+      0.236,
+      "A/upper_arm",
+      "vf4/right door handle"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 120.0,
+     "hit": [
+      "drive",
+      0.292,
+      "A/forearm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": -120.0,
+     "hit": null
+    }
+   ],
+   "legs": [
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    },
+    {
+     "kind": "drive",
+     "seconds": 7.59,
+     "amount": 4253.4
+    },
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    }
+   ],
+   "drive_s": 8.74,
+   "clear_mm": 64.2,
+   "reverse_mm": 0.0,
+   "sideways_mm": 0.0,
+   "time_s": 16.61
+  },
+  "drive_vf4f_lathe": {
+   "ok": true,
+   "fail": null,
+   "poses_checked": 3178,
+   "transport_turn_deg": -120.0,
+   "tried": [
+    {
+     "turn_deg": 0.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "turn_deg": 30.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "turn_deg": -30.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": 60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": -60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": 90.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": -90.0,
+     "hit": [
+      "drive",
+      0.241,
+      "A/upper_arm",
+      "vf4/right door handle"
+     ]
+    },
+    {
+     "turn_deg": 120.0,
+     "hit": [
+      "drive",
+      0.292,
+      "A/forearm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "turn_deg": -120.0,
+     "hit": null
+    }
+   ],
+   "legs": [
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    },
+    {
+     "kind": "drive",
+     "seconds": 7.59,
+     "amount": 4253.4
+    },
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    }
+   ],
+   "drive_s": 8.74,
+   "clear_mm": 64.2,
+   "reverse_mm": 0.0,
+   "sideways_mm": 0.0,
+   "time_s": 14.61
+  },
+  "drive_deburr_measure": {
+   "ok": true,
+   "fail": null,
+   "poses_checked": 79,
+   "transport_turn_deg": 0.0,
+   "tried": [
+    {
+     "turn_deg": 0.0,
+     "hit": null
+    }
+   ],
+   "legs": [
+    {
+     "kind": "drive",
+     "seconds": 4.31,
+     "amount": 1390.0
+    }
+   ],
+   "drive_s": 4.31,
+   "clear_mm": 31.6,
+   "reverse_mm": 0.0,
+   "sideways_mm": 0.0,
+   "time_s": 6.31
+  },
+  "hrt_bolts": {
+   "name": "VF-4 F-S3: arm A drives the platter screws through the frame's opening (nut runner)",
+   "ok": true,
+   "fail": null,
+   "time_s": 25.1,
+   "gripper": "2F-85",
+   "fine_audit_0p2deg": [],
+   "worst_torque_frac": 0.373,
+   "segments": [
+    {
+     "kind": "dwell",
+     "note": "tool in hand",
+     "ok": true,
+     "t_s": 0.5,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "platter screw 1: to the approach",
+     "ok": true,
+     "t_s": 0.4,
+     "info": {
+      "planned": true,
+      "iterations": 3,
+      "nodes": 6,
+      "waypoints": 3
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "platter screw 1: in 90 mm",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "platter screw 1: ('tighten to 25 N m', 2.5)",
+     "ok": true,
+     "t_s": 2.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "platter screw 1: out 90 mm",
+     "ok": true,
+     "t_s": 0.6,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "platter screw 2: to the approach",
+     "ok": true,
+     "t_s": 0.2,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "platter screw 2: in 90 mm",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "platter screw 2: ('tighten to 25 N m', 2.5)",
+     "ok": true,
+     "t_s": 2.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "platter screw 2: out 90 mm",
+     "ok": true,
+     "t_s": 0.6,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "platter screw 3: to the approach",
+     "ok": true,
+     "t_s": 0.3,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "platter screw 3: in 90 mm",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "platter screw 3: ('tighten to 25 N m', 2.5)",
+     "ok": true,
+     "t_s": 2.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "platter screw 3: out 90 mm",
+     "ok": true,
+     "t_s": 0.6,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "platter screw 4: to the approach",
+     "ok": true,
+     "t_s": 0.2,
+     "info": {
+      "planned": false
+     }
+    },
+    {
+     "kind": "linear",
+     "note": "platter screw 4: in 90 mm",
+     "ok": true,
+     "t_s": 1.5,
+     "info": {}
+    },
+    {
+     "kind": "dwell",
+     "note": "platter screw 4: ('tighten to 25 N m', 2.5)",
+     "ok": true,
+     "t_s": 2.5,
+     "info": {}
+    },
+    {
+     "kind": "linear",
+     "note": "platter screw 4: out 90 mm",
+     "ok": true,
+     "t_s": 0.6,
+     "info": {}
+    },
+    {
+     "kind": "joint",
+     "note": "back to the carry pose",
+     "ok": true,
+     "t_s": 5.2,
+     "info": {
+      "planned": true,
+      "iterations": 307,
+      "nodes": 157,
+      "waypoints": 5
+     }
+    }
+   ],
+   "screws": 4,
+   "tightest_transit": {
+    "clear_mm": 14.3,
+    "robot_body": "A/wrist2",
+    "world_body": "vf4/front panel left of the door",
+    "segment": "back to the carry pose"
+   }
+  },
+  "drive_bolts_lathe": {
+   "ok": true,
+   "fail": null,
+   "poses_checked": 5568,
+   "transport_turn_deg": -120.0,
+   "transport_lift_mm": 150.0,
+   "tried": [
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 0.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 30.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -30.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 60.0,
+     "hit": [
+      "arm",
+      0.942,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 90.0,
+     "hit": [
+      "arm",
+      0.628,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -90.0,
+     "hit": [
+      "arm",
+      0.756,
+      "nut runner",
+      "mir/finger stand"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 120.0,
+     "hit": [
+      "arm",
+      0.469,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -120.0,
+     "hit": [
+      "arm",
+      0.569,
+      "nut runner",
+      "mir/finger stand"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 150.0,
+     "hit": [
+      "arm",
+      0.377,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": -150.0,
+     "hit": [
+      "arm",
+      0.453,
+      "nut runner",
+      "mir/finger stand"
+     ]
+    },
+    {
+     "lift_mm": 0.0,
+     "turn_deg": 180.0,
+     "hit": [
+      "arm",
+      0.312,
+      "nut runner",
+      "vf4/front sill trim"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 0.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 30.0,
+     "hit": [
+      "drive",
+      0.283,
+      "A/upper_arm",
+      "vf4/right door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": -30.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": -60.0,
+     "hit": [
+      "drive",
+      0.226,
+      "A/upper_arm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 90.0,
+     "hit": [
+      "drive",
+      0.269,
+      "A/wrist2",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": -90.0,
+     "hit": [
+      "drive",
+      0.236,
+      "A/upper_arm",
+      "vf4/right door handle"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": 120.0,
+     "hit": [
+      "drive",
+      0.292,
+      "A/forearm",
+      "vf4/front panel right of the door"
+     ]
+    },
+    {
+     "lift_mm": 150.0,
+     "turn_deg": -120.0,
+     "hit": null
+    }
+   ],
+   "legs": [
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    },
+    {
+     "kind": "drive",
+     "seconds": 7.59,
+     "amount": 4253.4
+    },
+    {
+     "kind": "pivot",
+     "seconds": 0.58,
+     "amount": 2.3
+    }
+   ],
+   "drive_s": 8.74,
+   "clear_mm": 64.2,
+   "reverse_mm": 0.0,
+   "sideways_mm": 0.0,
+   "time_s": 16.61
+  },
+  "lathe_park": {
+   "ok": true,
+   "fail": null,
+   "poses_checked": 63,
+   "tried": [
+    {
+     "turn_deg": -30.0,
+     "hit": [
+      "A/upper_arm",
+      "lathe/door at 0.00"
+     ]
+    },
+    {
+     "turn_deg": 30.0,
+     "hit": null
+    }
+   ],
+   "transport_turn_deg": 30.0
+  }
+ },
+ "run_utc": "2026-11-27T20:45Z"
+}

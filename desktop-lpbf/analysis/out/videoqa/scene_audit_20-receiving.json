@@ -1,0 +1,330 @@
+{
+ "chapter": "20-receiving",
+ "threshold_mm": 1.5,
+ "opaque_min": 0.3,
+ "recordings": [
+  "/tmp/robotbuild/frames/20-receiving/audit"
+ ],
+ "frames_recorded": 448,
+ "frames_checked": 448,
+ "subsample": "every recorded frame",
+ "recorded_every": 1,
+ "actors": 222,
+ "movers": 118,
+ "mover_names": [
+  "armA/cam/0",
+  "armA/cam/1",
+  "armA/cam/2",
+  "armA/cam/3",
+  "armA/cam/4",
+  "armA/forearm/0",
+  "armA/forearm/1",
+  "armA/forearm/2",
+  "armA/forearm/3",
+  "armA/gr/adapter/0",
+  "armA/gr/adapter/1",
+  "armA/gr/base/0",
+  "armA/gr/base/1",
+  "armA/gr/camera/0",
+  "armA/gr/camera/1",
+  "armA/gr/camera/2",
+  "armA/gr/camera/3",
+  "armA/gr/camera/4",
+  "armA/gr/left_finger/0",
+  "armA/gr/left_finger/1",
+  "armA/gr/left_finger_tip/0",
+  "armA/gr/left_finger_tip/1",
+  "armA/gr/left_inner_knuckle/0",
+  "armA/gr/left_inner_knuckle/1",
+  "armA/gr/left_knuckle/0",
+  "armA/gr/right_finger/0",
+  "armA/gr/right_finger/1",
+  "armA/gr/right_finger_tip/0",
+  "armA/gr/right_finger_tip/1",
+  "armA/gr/right_inner_knuckle/0",
+  "armA/gr/right_inner_knuckle/1",
+  "armA/gr/right_knuckle/0",
+  "armA/gr/xknife/0",
+  "armA/gr/xknife/1",
+  "armA/shoulder/0",
+  "armA/shoulder/1",
+  "armA/shoulder/2",
+  "armA/upper_arm/0",
+  "armA/upper_arm/1",
+  "armA/upper_arm/2",
+  "armA/upper_arm/3",
+  "armA/wrist1/0",
+  "armA/wrist1/1",
+  "armA/wrist1/2",
+  "armA/wrist2/0",
+  "armA/wrist2/1",
+  "armA/wrist2/2",
+  "armA/wrist3/0",
+  "armB/cam/0",
+  "armB/cam/1",
+  "armB/cam/2",
+  "armB/cam/3",
+  "armB/cam/4",
+  "armB/forearm/0",
+  "armB/forearm/1",
+  "armB/forearm/2",
+  "armB/forearm/3",
+  "armB/gr/adapter/0",
+  "armB/gr/adapter/1",
+  "armB/gr/base/0",
+  "armB/gr/base/1",
+  "armB/gr/camera/0",
+  "armB/gr/camera/1",
+  "armB/gr/camera/2",
+  "armB/gr/camera/3",
+  "armB/gr/camera/4",
+  "armB/gr/left_finger/0",
+  "armB/gr/left_finger/1",
+  "armB/gr/left_finger_tip/0",
+  "armB/gr/left_finger_tip/1",
+  "armB/gr/left_inner_knuckle/0",
+  "armB/gr/left_inner_knuckle/1",
+  "armB/gr/left_knuckle/0",
+  "armB/gr/right_finger/0",
+  "armB/gr/right_finger/1",
+  "armB/gr/right_finger_tip/0",
+  "armB/gr/right_finger_tip/1",
+  "armB/gr/right_inner_knuckle/0",
+  "armB/gr/right_inner_knuckle/1",
+  "armB/gr/right_knuckle/0",
+  "armB/shoulder/0",
+  "armB/shoulder/1",
+  "armB/shoulder/2",
+  "armB/upper_arm/0",
+  "armB/upper_arm/1",
+  "armB/upper_arm/2",
+  "armB/upper_arm/3",
+  "armB/wrist1/0",
+  "armB/wrist1/1",
+  "armB/wrist1/2",
+  "armB/wrist2/0",
+  "armB/wrist2/1",
+  "armB/wrist2/2",
+  "armB/wrist3/0",
+  "jack/pallet jack forks",
+  "jack/pallet jack handle",
+  "jack/pallet jack pump",
+  "obj/crate 0",
+  "obj/crate 1",
+  "obj/crate 2",
+  "obj/pallet",
+  "obj/tray",
+  "op/brow",
+  "op/coat",
+  "op/coat skirt",
+  "op/glasses frame",
+  "op/glasses lens",
+  "op/glove",
+  "op/hair",
+  "op/iris",
+  "op/sclera",
+  "op/shirt",
+  "op/shoes",
+  "op/skin",
+  "op/trousers",
+  "recvbox/static 0",
+  "recvbox/static 1",
+  "recvbox/static 2"
+ ],
+ "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
+ "narrow_checks": 1725,
+ "pairs_tested": 1725,
+ "violations": 0,
+ "worst_mm": 0.0,
+ "worst": null,
+ "pairs": [],
+ "cad_overlaps": [],
+ "cad_overlap_note": "two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's own overlap (a groove or hole the model does not cut), listed apart and not counted",
+ "rigid_pairs": [
+  {
+   "a": "jack/pallet jack handle",
+   "b": "jack/pallet jack pump",
+   "worst_mm": 50.0,
+   "frames": 448
+  }
+ ],
+ "allowed": [
+  {
+   "rule": "person's own layers",
+   "depth_allowed_mm": null,
+   "reason": "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)",
+   "pairs_in_contact": 16,
+   "pair_frames": 2661,
+   "examples": [
+    [
+     "op/brow",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/coat skirt"
+    ],
+    [
+     "op/coat",
+     "op/glove"
+    ],
+    [
+     "op/coat",
+     "op/shirt"
+    ],
+    [
+     "op/coat",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/trousers"
+    ],
+    [
+     "op/coat skirt",
+     "op/glove"
+    ],
+    [
+     "op/coat skirt",
+     "op/trousers"
+    ],
+    [
+     "op/glasses frame",
+     "op/skin"
+    ],
+    [
+     "op/glasses lens",
+     "op/skin"
+    ],
+    [
+     "op/glove",
+     "op/trousers"
+    ],
+    [
+     "op/hair",
+     "op/skin"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "adjacent UR links",
+   "depth_allowed_mm": null,
+   "reason": "neighbouring UR12e links meet at their joint (the pieces of one link, and the planner's ADJACENT pairs in cell.py)",
+   "pairs_in_contact": 120,
+   "pair_frames": 8981,
+   "examples": [
+    [
+     "armA/base/0",
+     "armA/shoulder/1"
+    ],
+    [
+     "armA/forearm/0",
+     "armA/forearm/1"
+    ],
+    [
+     "armA/forearm/0",
+     "armA/forearm/2"
+    ],
+    [
+     "armA/forearm/0",
+     "armA/forearm/3"
+    ],
+    [
+     "armA/forearm/0",
+     "armA/upper_arm/0"
+    ],
+    [
+     "armA/forearm/0",
+     "armA/upper_arm/1"
+    ],
+    [
+     "armA/forearm/0",
+     "armA/upper_arm/3"
+    ],
+    [
+     "armA/forearm/0",
+     "armA/wrist1/0"
+    ],
+    [
+     "armA/forearm/0",
+     "armA/wrist1/1"
+    ],
+    [
+     "armA/forearm/0",
+     "armA/wrist1/2"
+    ],
+    [
+     "armA/forearm/1",
+     "armA/forearm/2"
+    ],
+    [
+     "armA/forearm/1",
+     "armA/forearm/3"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "flange stack",
+   "depth_allowed_mm": null,
+   "reason": "the tool changer, the 2F-85 and its fingers, caps and the wrist camera are bolted to the flange and to each other",
+   "pairs_in_contact": 261,
+   "pair_frames": 19624,
+   "examples": [
+    [
+     "armA/cam/0",
+     "armA/cam/1"
+    ],
+    [
+     "armA/cam/0",
+     "armA/cam/4"
+    ],
+    [
+     "armA/cam/0",
+     "armA/gr/adapter/0"
+    ],
+    [
+     "armA/cam/0",
+     "armA/gr/adapter/1"
+    ],
+    [
+     "armA/cam/0",
+     "armA/gr/base/0"
+    ],
+    [
+     "armA/cam/0",
+     "armA/gr/camera/0"
+    ],
+    [
+     "armA/cam/0",
+     "armA/gr/camera/1"
+    ],
+    [
+     "armA/cam/0",
+     "armA/gr/camera/4"
+    ],
+    [
+     "armA/cam/1",
+     "armA/cam/2"
+    ],
+    [
+     "armA/cam/1",
+     "armA/cam/4"
+    ],
+    [
+     "armA/cam/1",
+     "armA/gr/camera/0"
+    ],
+    [
+     "armA/cam/1",
+     "armA/gr/camera/1"
+    ]
+   ],
+   "worst_mm": null
+  }
+ ],
+ "seconds": 9.9,
+ "peak_rss_mb": 309,
+ "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB"
+}

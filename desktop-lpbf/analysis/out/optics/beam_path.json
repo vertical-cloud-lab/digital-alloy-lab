@@ -1,0 +1,2498 @@
+{
+ "sources": {
+  "ipg": "IPG spec G22-29856 rev. 00 for YLR-500-U3-SM-AC, as transcribed in desktop-lpbf/quotes/ipg-ylr-500-u3-sm-ac.md (1070 nm; M2 1.05 typ / 1.1 max; bare QBH divergence 130/140/150 mrad full angle, 86 %; standard collimators 5 mm or 7.5 mm)",
+  "fth": "Thorlabs FTH160-1064 (vendor-lookups.csv, fetched 2026-11-13T23:45Z, https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=6430): EFL 160 mm, scan field 110.6 x 110.6 mm, max entrance beam 12 mm, WD 182.5 mm, FFL 191.7 mm, AR 1020-1080 nm, damage threshold given only for pulses (5 J/cm2, 10 ns); drawing stn012046: input aperture 39 mm, \u00d875 protective window",
+  "bc": "SCANLAB basiCube 20: 20 mm aperture; 1000 W at 1064 nm (README 3.2, https://www.scanlab.de/en/print-product/1061)",
+  "model": "cad/lpbf_low.py (P block and sections 7 and 9): lens output end z 186.08 (raised 3.58 mm), nose z 236.28; galvo bottom z 241.11, beam input and 2nd mirror z 271.11; window \u00d850.8 x 9.53 fused silica z 146.47-156.00 (Edmund 38-990, CA \u00d845.72), flange bore \u00d842 below it, retaining ring \u00d844 above; field stop \u00d836 z 131-136; cover slide \u00d850 x 2.0 z 127.0-129.0 (Edmund 36-299, 1064 V-coat, CA \u00d842.5); drawer opening \u00d846 z 125.3-127.0; lid bore \u00d856 z 120-125; plates in \u00d825.4 / 50.8 / 76.2 bores (2026-11-25: was 8 mm window, 3 mm slide)",
+  "edmund": "Edmund Optics 36-299 (\u00d850.00 \u00b10.1 x 2.00 +0.15/-0.00 mm, CA \u00d842.50, 1064 nm V-coat, $121 / $103 at 6-25) and 38-990 (\u00d850.80 +0/-0.10 x 9.53 \u00b10.20 mm, CA \u00d845.72, 1064 nm V-coat, $295), product pages fetched 2026-11-25T00:50Z through the lab tunnel",
+  "malitson": "Malitson 1965, fused silica Sellmeier (JOSA 55, 1205; refractiveindex.info)",
+  "safety": "desktop-lpbf/safety.md section 4 and safety_calcs.py (MPE 5 mW/cm2 for t >= 10 s at 1070 nm, 7 mm pupil, NOHD form)"
+ },
+ "inputs": {
+  "lambda_nm": 1070,
+  "M2": [
+   1.05,
+   1.1
+  ],
+  "theta_full_mrad": [
+   130.0,
+   140.0,
+   150.0
+  ],
+  "n_fused_silica_1070": 1.44956,
+  "P_W": 500.0,
+  "f_mm": 160.0
+ },
+ "fibre": {
+  "mfd_um_from_divergence": {
+   "130 mrad": 11.00372791161504,
+   "140 mrad": 10.21774734649968,
+   "150 mrad": 9.536564190066368
+  },
+  "note": "second-moment beam diameter at the fibre end, from IPG's divergence spec with M2 1.05"
+ },
+ "collimators": [
+  {
+   "collimator": "IPG affixed 2.5 mm (drawn from 2026-11-23; YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 19.23076923076923,
+   "D_mm": 2.5,
+   "M2": 1.05,
+   "spot_um": 91.55101622463712,
+   "zR_mm": 5.859265038376775,
+   "dof5_mm": 1.8758800990386624,
+   "dof10_mm": 2.685052555516992,
+   "spot_f254_um": 145.33723825661147,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 91.55103910620204,
+   "spot_before_raise_um": 107.25369582432329
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm (drawn from 2026-11-23; YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 19.23076923076923,
+   "D_mm": 2.5,
+   "M2": 1.1,
+   "spot_um": 95.91058842581035,
+   "zR_mm": 6.138277659251863,
+   "dof5_mm": 1.9652077228024094,
+   "dof10_mm": 2.8129122010178027,
+   "spot_f254_um": 152.25805912597392,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 95.91061026730438,
+   "spot_before_raise_um": 110.99823272646226
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm (drawn from 2026-11-23; YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 17.857142857142854,
+   "D_mm": 2.5,
+   "M2": 1.05,
+   "spot_um": 91.55101622463712,
+   "zR_mm": 5.859265038376775,
+   "dof5_mm": 1.8758800990386624,
+   "dof10_mm": 2.685052555516992,
+   "spot_f254_um": 145.33723825661147,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 91.55103910620204,
+   "spot_before_raise_um": 107.25369582432329
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm (drawn from 2026-11-23; YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 17.857142857142854,
+   "D_mm": 2.5,
+   "M2": 1.1,
+   "spot_um": 95.91058842581035,
+   "zR_mm": 6.138277659251863,
+   "dof5_mm": 1.9652077228024094,
+   "dof10_mm": 2.8129122010178027,
+   "spot_f254_um": 152.25805912597392,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 95.91061026730438,
+   "spot_before_raise_um": 110.99823272646226
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm (drawn from 2026-11-23; YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 16.666666666666668,
+   "D_mm": 2.5,
+   "M2": 1.05,
+   "spot_um": 91.55101622463712,
+   "zR_mm": 5.859265038376775,
+   "dof5_mm": 1.8758800990386624,
+   "dof10_mm": 2.685052555516992,
+   "spot_f254_um": 145.33723825661147,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 91.55103910620204,
+   "spot_before_raise_um": 107.25369582432329
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm (drawn from 2026-11-23; YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 16.666666666666668,
+   "D_mm": 2.5,
+   "M2": 1.1,
+   "spot_um": 95.91058842581035,
+   "zR_mm": 6.138277659251863,
+   "dof5_mm": 1.9652077228024094,
+   "dof10_mm": 2.8129122010178027,
+   "spot_f254_um": 152.25805912597392,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 95.91061026730438,
+   "spot_before_raise_um": 110.99823272646226
+  },
+  {
+   "collimator": "IPG 2.5 mm + Sill S6EXK0012-328 1.2x expander (catalogue, no power rating)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 23.076923076923077,
+   "D_mm": 3.0,
+   "M2": 1.05,
+   "spot_um": 76.29251352053095,
+   "zR_mm": 4.068934054428317,
+   "dof5_mm": 1.3026945132212935,
+   "dof10_mm": 1.8646198302201336,
+   "spot_f254_um": 121.11436521384287,
+   "galvo_clip": 2.4891212533275478e-39,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 76.29255305986982,
+   "spot_before_raise_um": 101.5671780735621
+  },
+  {
+   "collimator": "IPG 2.5 mm + Sill S6EXK0012-328 1.2x expander (catalogue, no power rating)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 23.076923076923077,
+   "D_mm": 3.0,
+   "M2": 1.1,
+   "spot_um": 79.92549035484195,
+   "zR_mm": 4.262692818924904,
+   "dof5_mm": 1.3647275852794507,
+   "dof10_mm": 1.953411250706807,
+   "spot_f254_um": 126.8817159383116,
+   "galvo_clip": 2.4891212533275478e-39,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 79.925528096939,
+   "spot_before_raise_um": 104.32366965846347
+  },
+  {
+   "collimator": "IPG 2.5 mm + Sill S6EXK0012-328 1.2x expander (catalogue, no power rating)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 21.428571428571427,
+   "D_mm": 3.0,
+   "M2": 1.05,
+   "spot_um": 76.29251352053095,
+   "zR_mm": 4.068934054428317,
+   "dof5_mm": 1.3026945132212935,
+   "dof10_mm": 1.8646198302201336,
+   "spot_f254_um": 121.11436521384287,
+   "galvo_clip": 2.4891212533275478e-39,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 76.29255305986982,
+   "spot_before_raise_um": 101.5671780735621
+  },
+  {
+   "collimator": "IPG 2.5 mm + Sill S6EXK0012-328 1.2x expander (catalogue, no power rating)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 21.428571428571427,
+   "D_mm": 3.0,
+   "M2": 1.1,
+   "spot_um": 79.92549035484195,
+   "zR_mm": 4.262692818924904,
+   "dof5_mm": 1.3647275852794507,
+   "dof10_mm": 1.953411250706807,
+   "spot_f254_um": 126.8817159383116,
+   "galvo_clip": 2.4891212533275478e-39,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 79.925528096939,
+   "spot_before_raise_um": 104.32366965846347
+  },
+  {
+   "collimator": "IPG 2.5 mm + Sill S6EXK0012-328 1.2x expander (catalogue, no power rating)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 20.0,
+   "D_mm": 3.0,
+   "M2": 1.05,
+   "spot_um": 76.29251352053095,
+   "zR_mm": 4.068934054428317,
+   "dof5_mm": 1.3026945132212935,
+   "dof10_mm": 1.8646198302201336,
+   "spot_f254_um": 121.11436521384287,
+   "galvo_clip": 2.4891212533275478e-39,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 76.29255305986982,
+   "spot_before_raise_um": 101.5671780735621
+  },
+  {
+   "collimator": "IPG 2.5 mm + Sill S6EXK0012-328 1.2x expander (catalogue, no power rating)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 20.0,
+   "D_mm": 3.0,
+   "M2": 1.1,
+   "spot_um": 79.92549035484195,
+   "zR_mm": 4.262692818924904,
+   "dof5_mm": 1.3647275852794507,
+   "dof10_mm": 1.953411250706807,
+   "spot_f254_um": 126.8817159383116,
+   "galvo_clip": 2.4891212533275478e-39,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 79.925528096939,
+   "spot_before_raise_um": 104.32366965846347
+  },
+  {
+   "collimator": "D = 3.2 mm (the ~75 um target; f_c ~ 23 mm: no catalogue part found)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 24.615384615384617,
+   "D_mm": 3.2,
+   "M2": 1.05,
+   "spot_um": 71.52423142549776,
+   "zR_mm": 3.5762115712748868,
+   "dof5_mm": 1.1449463495109022,
+   "dof10_mm": 1.6388260226544138,
+   "spot_f254_um": 113.5447173879777,
+   "galvo_clip": 1.176910943921689e-34,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 71.52427941160728,
+   "spot_before_raise_um": 101.1455299856748
+  },
+  {
+   "collimator": "D = 3.2 mm (the ~75 um target; f_c ~ 23 mm: no catalogue part found)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 24.615384615384617,
+   "D_mm": 3.2,
+   "M2": 1.1,
+   "spot_um": 74.93014720766433,
+   "zR_mm": 3.7465073603832164,
+   "dof5_mm": 1.1994676042495171,
+   "dof10_mm": 1.7168653570665295,
+   "spot_f254_um": 118.95160869216711,
+   "galvo_clip": 1.176910943921689e-34,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 74.93019301258842,
+   "spot_before_raise_um": 103.58199416711925
+  },
+  {
+   "collimator": "D = 3.2 mm (the ~75 um target; f_c ~ 23 mm: no catalogue part found)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 22.857142857142858,
+   "D_mm": 3.2,
+   "M2": 1.05,
+   "spot_um": 71.52423142549776,
+   "zR_mm": 3.5762115712748868,
+   "dof5_mm": 1.1449463495109022,
+   "dof10_mm": 1.6388260226544138,
+   "spot_f254_um": 113.5447173879777,
+   "galvo_clip": 1.176910943921689e-34,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 71.52427941160728,
+   "spot_before_raise_um": 101.1455299856748
+  },
+  {
+   "collimator": "D = 3.2 mm (the ~75 um target; f_c ~ 23 mm: no catalogue part found)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 22.857142857142858,
+   "D_mm": 3.2,
+   "M2": 1.1,
+   "spot_um": 74.93014720766433,
+   "zR_mm": 3.7465073603832164,
+   "dof5_mm": 1.1994676042495171,
+   "dof10_mm": 1.7168653570665295,
+   "spot_f254_um": 118.95160869216711,
+   "galvo_clip": 1.176910943921689e-34,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 74.93019301258842,
+   "spot_before_raise_um": 103.58199416711925
+  },
+  {
+   "collimator": "D = 3.2 mm (the ~75 um target; f_c ~ 23 mm: no catalogue part found)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 21.333333333333336,
+   "D_mm": 3.2,
+   "M2": 1.05,
+   "spot_um": 71.52423142549776,
+   "zR_mm": 3.5762115712748868,
+   "dof5_mm": 1.1449463495109022,
+   "dof10_mm": 1.6388260226544138,
+   "spot_f254_um": 113.5447173879777,
+   "galvo_clip": 1.176910943921689e-34,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 71.52427941160728,
+   "spot_before_raise_um": 101.1455299856748
+  },
+  {
+   "collimator": "D = 3.2 mm (the ~75 um target; f_c ~ 23 mm: no catalogue part found)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 21.333333333333336,
+   "D_mm": 3.2,
+   "M2": 1.1,
+   "spot_um": 74.93014720766433,
+   "zR_mm": 3.7465073603832164,
+   "dof5_mm": 1.1994676042495171,
+   "dof10_mm": 1.7168653570665295,
+   "spot_f254_um": 118.95160869216711,
+   "galvo_clip": 1.176910943921689e-34,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 74.93019301258842,
+   "spot_before_raise_um": 103.58199416711925
+  },
+  {
+   "collimator": "Wavelength COL-1070-D25-F30 (QBH, f = 30 mm; also low-profile.md's label)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 30.0,
+   "D_mm": 3.9000000000000004,
+   "M2": 1.05,
+   "spot_um": 58.68654886194687,
+   "zR_mm": 2.4076532866439737,
+   "dof5_mm": 0.7708251557522444,
+   "dof10_mm": 1.1033253433255226,
+   "spot_f254_um": 93.16489631834065,
+   "galvo_clip": 1.436890587920974e-23,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 58.68663572983256,
+   "spot_before_raise_um": 105.07731653039531
+  },
+  {
+   "collimator": "Wavelength COL-1070-D25-F30 (QBH, f = 30 mm; also low-profile.md's label)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 30.0,
+   "D_mm": 3.9000000000000004,
+   "M2": 1.1,
+   "spot_um": 61.481146426801494,
+   "zR_mm": 2.5223034431508307,
+   "dof5_mm": 0.8075311155499707,
+   "dof10_mm": 1.1558646453886432,
+   "spot_f254_um": 97.60131995254737,
+   "galvo_clip": 1.436890587920974e-23,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 61.481229346152375,
+   "spot_before_raise_um": 106.66331514563484
+  },
+  {
+   "collimator": "Wavelength COL-1070-D25-F30 (QBH, f = 30 mm; also low-profile.md's label)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 30.0,
+   "D_mm": 4.2,
+   "M2": 1.05,
+   "spot_um": 54.49465251466496,
+   "zR_mm": 2.075986762463427,
+   "dof5_mm": 0.6646400577659661,
+   "dof10_mm": 0.9513366480714968,
+   "spot_f254_um": 86.51026086703064,
+   "galvo_clip": 2.0142117684944085e-20,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 54.494761010530894,
+   "spot_before_raise_um": 108.53820284160221
+  },
+  {
+   "collimator": "Wavelength COL-1070-D25-F30 (QBH, f = 30 mm; also low-profile.md's label)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 30.0,
+   "D_mm": 4.2,
+   "M2": 1.1,
+   "spot_um": 57.08963596774425,
+   "zR_mm": 2.174843274961686,
+   "dof5_mm": 0.6962895843262504,
+   "dof10_mm": 0.9966383932177588,
+   "spot_f254_um": 90.629797098794,
+   "galvo_clip": 2.0142117684944085e-20,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 57.08973953198908,
+   "spot_before_raise_um": 109.86401075111111
+  },
+  {
+   "collimator": "Wavelength COL-1070-D25-F30 (QBH, f = 30 mm; also low-profile.md's label)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 30.0,
+   "D_mm": 4.5,
+   "M2": 1.05,
+   "spot_um": 50.86167568035396,
+   "zR_mm": 1.8084151353014741,
+   "dof5_mm": 0.5789753392094638,
+   "dof10_mm": 0.8287199245422816,
+   "spot_f254_um": 80.74291014256193,
+   "galvo_clip": 6.961248457839028e-18,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 50.86180912548213,
+   "spot_before_raise_um": 112.70063952233205
+  },
+  {
+   "collimator": "Wavelength COL-1070-D25-F30 (QBH, f = 30 mm; also low-profile.md's label)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 30.0,
+   "D_mm": 4.5,
+   "M2": 1.1,
+   "spot_um": 53.2836602365613,
+   "zR_mm": 1.894530141744402,
+   "dof5_mm": 0.6065455934575337,
+   "dof10_mm": 0.8681827780919144,
+   "spot_f254_um": 84.58781062554107,
+   "galvo_clip": 6.961248457839028e-18,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 53.28378761601668,
+   "spot_before_raise_um": 113.81420185519217
+  },
+  {
+   "collimator": "IPG standard, 5 mm beam (drawn until 2026-11-22)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 38.46153846153846,
+   "D_mm": 5.0,
+   "M2": 1.05,
+   "spot_um": 45.77550811231856,
+   "zR_mm": 1.4648162595941938,
+   "dof5_mm": 0.4689700247596656,
+   "dof10_mm": 0.671263138879248,
+   "spot_f254_um": 72.66861912830574,
+   "galvo_clip": 1.2664165549094176e-14,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 45.77569116449471,
+   "spot_before_raise_um": 120.75787315033219
+  },
+  {
+   "collimator": "IPG standard, 5 mm beam (drawn until 2026-11-22)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 38.46153846153846,
+   "D_mm": 5.0,
+   "M2": 1.1,
+   "spot_um": 47.95529421290517,
+   "zR_mm": 1.5345694148129658,
+   "dof5_mm": 0.49130193070060235,
+   "dof10_mm": 0.7032280502544507,
+   "spot_f254_um": 76.12902956298696,
+   "galvo_clip": 1.2664165549094176e-14,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 47.955468944558895,
+   "spot_before_raise_um": 121.6008923811707
+  },
+  {
+   "collimator": "IPG standard, 5 mm beam (drawn until 2026-11-22)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 35.71428571428571,
+   "D_mm": 5.0,
+   "M2": 1.05,
+   "spot_um": 45.77550811231856,
+   "zR_mm": 1.4648162595941938,
+   "dof5_mm": 0.4689700247596656,
+   "dof10_mm": 0.671263138879248,
+   "spot_f254_um": 72.66861912830574,
+   "galvo_clip": 1.2664165549094176e-14,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 45.77569116449471,
+   "spot_before_raise_um": 120.75787315033219
+  },
+  {
+   "collimator": "IPG standard, 5 mm beam (drawn until 2026-11-22)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 35.71428571428571,
+   "D_mm": 5.0,
+   "M2": 1.1,
+   "spot_um": 47.95529421290517,
+   "zR_mm": 1.5345694148129658,
+   "dof5_mm": 0.49130193070060235,
+   "dof10_mm": 0.7032280502544507,
+   "spot_f254_um": 76.12902956298696,
+   "galvo_clip": 1.2664165549094176e-14,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 47.955468944558895,
+   "spot_before_raise_um": 121.6008923811707
+  },
+  {
+   "collimator": "IPG standard, 5 mm beam (drawn until 2026-11-22)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 33.333333333333336,
+   "D_mm": 5.0,
+   "M2": 1.05,
+   "spot_um": 45.77550811231856,
+   "zR_mm": 1.4648162595941938,
+   "dof5_mm": 0.4689700247596656,
+   "dof10_mm": 0.671263138879248,
+   "spot_f254_um": 72.66861912830574,
+   "galvo_clip": 1.2664165549094176e-14,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 45.77569116449471,
+   "spot_before_raise_um": 120.75787315033219
+  },
+  {
+   "collimator": "IPG standard, 5 mm beam (drawn until 2026-11-22)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 33.333333333333336,
+   "D_mm": 5.0,
+   "M2": 1.1,
+   "spot_um": 47.95529421290517,
+   "zR_mm": 1.5345694148129658,
+   "dof5_mm": 0.49130193070060235,
+   "dof10_mm": 0.7032280502544507,
+   "spot_f254_um": 76.12902956298696,
+   "galvo_clip": 1.2664165549094176e-14,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 47.955468944558895,
+   "spot_before_raise_um": 121.6008923811707
+  },
+  {
+   "collimator": "IPG standard, 7.5 mm beam",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 57.69230769230769,
+   "D_mm": 7.5,
+   "M2": 1.05,
+   "spot_um": 30.517005408212377,
+   "zR_mm": 0.6510294487085307,
+   "dof5_mm": 0.20843112211540699,
+   "dof10_mm": 0.29833917283522143,
+   "spot_f254_um": 48.44574608553715,
+   "galvo_clip": 6.658361469857315e-07,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 30.517623204288697,
+   "spot_before_raise_um": 170.3736713374431
+  },
+  {
+   "collimator": "IPG standard, 7.5 mm beam",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 57.69230769230769,
+   "D_mm": 7.5,
+   "M2": 1.1,
+   "spot_um": 31.970196141936782,
+   "zR_mm": 0.6820308510279847,
+   "dof5_mm": 0.21835641364471212,
+   "dof10_mm": 0.31254580011308913,
+   "spot_f254_um": 50.75268637532464,
+   "galvo_clip": 6.658361469857315e-07,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 31.97078585690358,
+   "spot_before_raise_um": 170.63995343197954
+  },
+  {
+   "collimator": "IPG standard, 7.5 mm beam",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 53.57142857142857,
+   "D_mm": 7.5,
+   "M2": 1.05,
+   "spot_um": 30.517005408212377,
+   "zR_mm": 0.6510294487085307,
+   "dof5_mm": 0.20843112211540699,
+   "dof10_mm": 0.29833917283522143,
+   "spot_f254_um": 48.44574608553715,
+   "galvo_clip": 6.658361469857315e-07,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 30.517623204288697,
+   "spot_before_raise_um": 170.3736713374431
+  },
+  {
+   "collimator": "IPG standard, 7.5 mm beam",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 53.57142857142857,
+   "D_mm": 7.5,
+   "M2": 1.1,
+   "spot_um": 31.970196141936782,
+   "zR_mm": 0.6820308510279847,
+   "dof5_mm": 0.21835641364471212,
+   "dof10_mm": 0.31254580011308913,
+   "spot_f254_um": 50.75268637532464,
+   "galvo_clip": 6.658361469857315e-07,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 31.97078585690358,
+   "spot_before_raise_um": 170.63995343197954
+  },
+  {
+   "collimator": "IPG standard, 7.5 mm beam",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 50.0,
+   "D_mm": 7.5,
+   "M2": 1.05,
+   "spot_um": 30.517005408212377,
+   "zR_mm": 0.6510294487085307,
+   "dof5_mm": 0.20843112211540699,
+   "dof10_mm": 0.29833917283522143,
+   "spot_f254_um": 48.44574608553715,
+   "galvo_clip": 6.658361469857315e-07,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 30.517623204288697,
+   "spot_before_raise_um": 170.3736713374431
+  },
+  {
+   "collimator": "IPG standard, 7.5 mm beam",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 50.0,
+   "D_mm": 7.5,
+   "M2": 1.1,
+   "spot_um": 31.970196141936782,
+   "zR_mm": 0.6820308510279847,
+   "dof5_mm": 0.21835641364471212,
+   "dof10_mm": 0.31254580011308913,
+   "spot_f254_um": 50.75268637532464,
+   "galvo_clip": 6.658361469857315e-07,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 31.97078585690358,
+   "spot_before_raise_um": 170.63995343197954
+  }
+ ],
+ "collimator_for_spot": {
+  "60": {
+   "D_mm": 3.996274517742098,
+   "fc_mm_at_140": 28.54481798387213,
+   "fc_range": [
+    26.641830118280655,
+    30.740573213400754
+   ]
+  },
+  "70": {
+   "D_mm": 3.425378158064655,
+   "fc_mm_at_140": 24.46698684331896,
+   "fc_range": [
+    22.8358543870977,
+    26.3490627543435
+   ]
+  },
+  "75": {
+   "D_mm": 3.197019614193678,
+   "fc_mm_at_140": 22.8358543870977,
+   "fc_range": [
+    21.31346409462452,
+    24.592458570720602
+   ]
+  },
+  "80": {
+   "D_mm": 2.997205888306573,
+   "fc_mm_at_140": 21.40861348790409,
+   "fc_range": [
+    19.981372588710485,
+    23.05542991005056
+   ]
+  },
+  "90": {
+   "D_mm": 2.664183011828065,
+   "fc_mm_at_140": 19.02987865591475,
+   "fc_range": [
+    17.761220078853768,
+    20.4937154756005
+   ]
+  },
+  "100": {
+   "D_mm": 2.3977647106452586,
+   "fc_mm_at_140": 17.126890790323273,
+   "fc_range": [
+    15.985098070968391,
+    18.44434392804045
+   ]
+  }
+ },
+ "focus_shift_mm": {
+  "plates": 3.5758574339152824,
+  "model_lens_raise": 3.58,
+  "focus_as_drawn_z": 0.0041425660847300705,
+  "plates_bom_glass": 3.575857433915282,
+  "focus_with_bom_glass_z": 0.004142566084730515,
+  "plates_old_8_3": 3.4114858432843107,
+  "shim_nominal_mm": 2.83,
+  "lens_travel_mm": {
+   "up_with_no_shims": 2.83,
+   "down_with_6mm_of_shims": 3.17
+  },
+  "budget": [
+   {
+    "item": "window 9.53 mm + slide 2.0 mm of fused silica in the converging beam (static; take out by raising the lens)",
+    "mm": 3.5758574339152824,
+    "kind": "static"
+   },
+   {
+    "item": "cover slide thickness tolerance +0.15/-0.00 mm (Edmund 36-299): focus up to this much lower",
+    "mm": 0.04652026149933151,
+    "kind": "per slide"
+   },
+   {
+    "item": "window thickness tolerance +/-0.20 mm (Edmund 38-990)",
+    "mm": 0.062027015332442016,
+    "kind": "once (the burn test takes it out)"
+   },
+   {
+    "item": "plate stack growth at 200 C (powder-spreading.md), if the blade is zeroed cold",
+    "mm": 0.112,
+    "kind": "zero the blade hot"
+   },
+   {
+    "item": "bridge posts +50 K (mech.md F)",
+    "mm": 0.07,
+    "kind": "slow drift"
+   }
+  ]
+ },
+ "field": [
+  {
+   "k": 0.3,
+   "plate": "S25",
+   "r_mm": 12.7,
+   "scan_optical_deg": 4.54785249885091,
+   "mirror_mech_deg": 2.273926249425455,
+   "aoi_deg": 1.3643557496552727,
+   "elongation_pct": 0.028358457875587995,
+   "plate_lateral_shift_mm": 0.0851702035984699,
+   "plate_focus_shift_extra_mm": 0.0001679654892394744,
+   "plate_astig_mm": 0.0023642855969967106,
+   "chief_r_at_slide": 9.65142376158192,
+   "chief_r_at_window": 9.09803572330345,
+   "chief_r_at_lens_out": 8.268132293399717
+  },
+  {
+   "k": 0.3,
+   "plate": "M50",
+   "r_mm": 25.4,
+   "scan_optical_deg": 9.09570499770182,
+   "mirror_mech_deg": 4.54785249885091,
+   "aoi_deg": 2.7287114993105455,
+   "elongation_pct": 0.11351430648742777,
+   "plate_lateral_shift_mm": 0.17046104433595613,
+   "plate_focus_shift_extra_mm": 0.0006706144736980946,
+   "plate_astig_mm": 0.009463262679300234,
+   "chief_r_at_slide": 19.29938695298906,
+   "chief_r_at_window": 18.191982701838285,
+   "chief_r_at_lens_out": 16.531233782907844
+  },
+  {
+   "k": 0.3,
+   "plate": "L75",
+   "r_mm": 38.1,
+   "scan_optical_deg": 13.643557496552729,
+   "mirror_mech_deg": 6.8217787482763645,
+   "aoi_deg": 4.093067248965818,
+   "elongation_pct": 0.2557095286553235,
+   "plate_lateral_shift_mm": 0.25599339132501536,
+   "plate_focus_shift_extra_mm": 0.001504194617985899,
+   "plate_astig_mm": 0.02131529015489079,
+   "chief_r_at_slide": 28.940413273220962,
+   "chief_r_at_window": 27.27773360449666,
+   "chief_r_at_lens_out": 24.784250795944974
+  },
+  {
+   "k": 0.5,
+   "plate": "S25",
+   "r_mm": 12.7,
+   "scan_optical_deg": 4.54785249885091,
+   "mirror_mech_deg": 2.273926249425455,
+   "aoi_deg": 2.273926249425455,
+   "elongation_pct": 0.07880660203705148,
+   "plate_lateral_shift_mm": 0.14200990622349877,
+   "plate_focus_shift_extra_mm": 0.00046605760148255015,
+   "plate_astig_mm": 0.006569978662218854,
+   "chief_r_at_slide": 7.617331153145033,
+   "chief_r_at_window": 6.694707632389758,
+   "chief_r_at_lens_out": 5.311070163884591
+  },
+  {
+   "k": 0.5,
+   "plate": "M50",
+   "r_mm": 25.4,
+   "scan_optical_deg": 9.09570499770182,
+   "mirror_mech_deg": 4.54785249885091,
+   "aoi_deg": 4.54785249885091,
+   "elongation_pct": 0.31584863306644007,
+   "plate_lateral_shift_mm": 0.28457879498018274,
+   "plate_focus_shift_extra_mm": 0.0018545821583892952,
+   "plate_astig_mm": 0.026327134591454974,
+   "chief_r_at_slide": 15.218608766213979,
+   "chief_r_at_window": 13.370447630924774,
+   "chief_r_at_lens_out": 10.598802493883571
+  },
+  {
+   "k": 0.5,
+   "plate": "L75",
+   "r_mm": 38.1,
+   "scan_optical_deg": 13.643557496552729,
+   "mirror_mech_deg": 6.8217787482763645,
+   "aoi_deg": 6.8217787482763645,
+   "elongation_pct": 0.7130047936396489,
+   "plate_lateral_shift_mm": 0.4282686276474971,
+   "plate_focus_shift_extra_mm": 0.004136416513891739,
+   "plate_astig_mm": 0.059413081370474234,
+   "chief_r_at_slide": 22.787575836950687,
+   "chief_r_at_window": 20.008011966415914,
+   "chief_r_at_lens_out": 15.83956337296706
+  },
+  {
+   "k": 0.75,
+   "plate": "S25",
+   "r_mm": 12.7,
+   "scan_optical_deg": 4.54785249885091,
+   "mirror_mech_deg": 2.273926249425455,
+   "aoi_deg": 3.4108893741381823,
+   "elongation_pct": 0.17746052484313157,
+   "plate_lateral_shift_mm": 0.21318945983411797,
+   "plate_focus_shift_extra_mm": 0.001046371193949014,
+   "plate_astig_mm": 0.014793519753941737,
+   "chief_r_at_slide": 5.070985537886508,
+   "chief_r_at_window": 3.6861406079864523,
+   "chief_r_at_lens_out": 1.6093202257025112
+  },
+  {
+   "k": 0.75,
+   "plate": "M50",
+   "r_mm": 25.4,
+   "scan_optical_deg": 9.09570499770182,
+   "mirror_mech_deg": 4.54785249885091,
+   "aoi_deg": 6.8217787482763645,
+   "elongation_pct": 0.7130047936396489,
+   "plate_lateral_shift_mm": 0.4282686276474971,
+   "plate_focus_shift_extra_mm": 0.004136416513891739,
+   "plate_astig_mm": 0.059413081370474234,
+   "chief_r_at_slide": 10.087575836950686,
+   "chief_r_at_window": 7.308011966415911,
+   "chief_r_at_lens_out": 3.139563372967057
+  },
+  {
+   "k": 0.75,
+   "plate": "L75",
+   "r_mm": 38.1,
+   "scan_optical_deg": 13.643557496552729,
+   "mirror_mech_deg": 6.8217787482763645,
+   "aoi_deg": 10.232668122414546,
+   "elongation_pct": 1.616259421323063,
+   "plate_lateral_shift_mm": 0.6471497654144889,
+   "plate_focus_shift_extra_mm": 0.009120499862552034,
+   "plate_astig_mm": 0.1345750728797797,
+   "chief_r_at_slide": 14.993813155005054,
+   "chief_r_at_window": 10.79949869138429,
+   "chief_r_at_lens_out": 4.509380874088592
+  }
+ ],
+ "k_range_thin_lens": {
+  "as drawn (2nd mirror 35 mm above the nose)": [
+   0.3279375,
+   0.6254375
+  ],
+  "before 2026-11-23 (2nd mirror 40 mm above the nose)": [
+   0.295625,
+   0.593125
+  ],
+  "Thorlabs A1 = 7.5 mm (2nd mirror 7.5 mm above the nose)": [
+   0.4987499999999999,
+   0.7962499999999999
+  ]
+ },
+ "needed_clear_diameter_L75": [
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "lid bore": 64.85361447293307,
+   "drawer opening": 64.35244124904345,
+   "cover slide clear aperture": 64.1916879296982,
+   "field stop": 63.813445450599154,
+   "window flange bore (below window)": 63.34064348868069,
+   "window clear aperture": 62.3505997288096,
+   "window retaining ring (above window)": 61.3785262846097
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.45,
+   "lid bore": 56.23012168909586,
+   "drawer opening": 55.3480774019456,
+   "cover slide clear aperture": 55.065157893639125,
+   "field stop": 54.39946556016369,
+   "window flange bore (below window)": 53.567351283917034,
+   "window clear aperture": 51.82490754921011,
+   "window retaining ring (above window)": 50.11408801042401
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.6,
+   "lid bore": 47.54757036514056,
+   "drawer opening": 46.28204654189635,
+   "cover slide clear aperture": 45.876124165129994,
+   "field stop": 44.92101332045357,
+   "window flange bore (below window)": 43.72712591033766,
+   "window clear aperture": 41.22712924932523,
+   "window retaining ring (above window)": 38.77250418065873
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "lid bore": 62.7571044994395,
+   "drawer opening": 62.163219523925726,
+   "cover slide clear aperture": 61.97272947409432,
+   "field stop": 61.52451997469026,
+   "window flange bore (below window)": 60.96426243316628,
+   "window clear aperture": 59.7910966646987,
+   "window retaining ring (above window)": 58.6392353234785
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.45,
+   "lid bore": 54.12689546018608,
+   "drawer opening": 53.151842415524804,
+   "cover slide clear aperture": 52.83909091390027,
+   "field stop": 52.10320741790966,
+   "window flange bore (below window)": 51.18335739453261,
+   "window clear aperture": 49.25720501238767,
+   "window retaining ring (above window)": 47.36602161870252
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.6,
+   "lid bore": 45.434880905035506,
+   "drawer opening": 44.07592984177782,
+   "cover slide clear aperture": 43.64004124597584,
+   "field stop": 42.614423421498586,
+   "window flange bore (below window)": 41.3324055070703,
+   "window clear aperture": 38.64787362210641,
+   "window retaining ring (above window)": 36.01207317154736
+  }
+ ],
+ "k_thin_lens_estimate": {
+  "k": 0.3279375,
+  "stop_above_lens_mm": 107.53,
+  "exit_pupil_above_lens_mm": 327.8978463884124,
+  "note": "thin lens at H' (z 160) with H = H'; the real front principal plane is unknown, so k could be ~0.3-0.8"
+ },
+ "apertures": [
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.3,
+   "lid bore": 34.26733936180002,
+   "drawer opening": 28.08877427130341,
+   "cover slide clear aperture": 25.88114683676947,
+   "field stop": 21.764487989172103,
+   "window flange bore (below window)": 25.986495465351236,
+   "window clear aperture": 29.08268126218871,
+   "window retaining ring (above window)": 28.4829744519453,
+   "field stop: beam centre on the edge (50 % passes)": 23.866002961667817
+  },
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.5,
+   "lid bore": 42.61075560149146,
+   "drawer opening": 35.390869163084076,
+   "cover slide clear aperture": 32.75053301863594,
+   "field stop": 27.83450128385575,
+   "window flange bore (below window)": 33.74059692047686,
+   "window clear aperture": 39.03188848183565,
+   "window retaining ring (above window)": 39.578614304446276,
+   "field stop: beam centre on the edge (50 % passes)": 30.5406980137326
+  },
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.75,
+   "lid bore": 60.0,
+   "drawer opening": 53.5941663582029,
+   "cover slide clear aperture": 49.986365798349524,
+   "field stop": 43.421478667759224,
+   "window flange bore (below window)": 55.50345058785138,
+   "window clear aperture": 60.0,
+   "window retaining ring (above window)": 60.0,
+   "field stop: beam centre on the edge (50 % passes)": 47.951028021865
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.3,
+   "lid bore": 32.39521889260975,
+   "drawer opening": 26.11028756449781,
+   "cover slide clear aperture": 23.867971150455055,
+   "field stop": 19.668152642206536,
+   "window flange bore (below window)": 23.78144224501845,
+   "window clear aperture": 26.6420879389633,
+   "window retaining ring (above window)": 25.799660580686982,
+   "field stop: beam centre on the edge (50 % passes)": 23.866002961667817
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.5,
+   "lid bore": 40.25557125430037,
+   "drawer opening": 32.87795178276952,
+   "cover slide clear aperture": 30.185538758748844,
+   "field stop": 25.140426313457674,
+   "window flange bore (below window)": 30.855457360640365,
+   "window clear aperture": 35.71902683740293,
+   "window retaining ring (above window)": 35.80320584464167,
+   "field stop: beam centre on the edge (50 % passes)": 30.5406980137326
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.75,
+   "lid bore": 59.1226261785079,
+   "drawer opening": 49.49525165450171,
+   "cover slide clear aperture": 45.80978385709199,
+   "field stop": 39.00643592156682,
+   "window flange bore (below window)": 50.29080383284573,
+   "window clear aperture": 60.0,
+   "window retaining ring (above window)": 60.0,
+   "field stop: beam centre on the edge (50 % passes)": 47.951028021865
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.3,
+   "lid bore": 33.74372272239565,
+   "drawer opening": 27.535363338175653,
+   "cover slide clear aperture": 25.318021391643097,
+   "field stop": 21.17807264330185,
+   "window flange bore (below window)": 25.369594736829587,
+   "window clear aperture": 28.399755192054727,
+   "window retaining ring (above window)": 27.732030763287163,
+   "field stop: beam centre on the edge (50 % passes)": 23.866002961667817
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.5,
+   "lid bore": 41.95144192408224,
+   "drawer opening": 34.687405126718474,
+   "cover slide clear aperture": 32.03250610241046,
+   "field stop": 27.080360972836964,
+   "window flange bore (below window)": 32.93267338093027,
+   "window clear aperture": 38.10362618460548,
+   "window retaining ring (above window)": 38.52025695424303,
+   "field stop: beam centre on the edge (50 % passes)": 30.5406980137326
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.75,
+   "lid bore": 60.0,
+   "drawer opening": 52.43764434181833,
+   "cover slide clear aperture": 48.80839514402607,
+   "field stop": 42.17688739612353,
+   "window flange bore (below window)": 54.025516659732176,
+   "window clear aperture": 60.0,
+   "window retaining ring (above window)": 60.0,
+   "field stop: beam centre on the edge (50 % passes)": 47.951028021865
+  }
+ ],
+ "reach_as_drawn": [
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.3279375,
+   "reach_mm": 22.446326328880108,
+   "limited_by": "field stop",
+   "per_aperture": {
+    "lid bore": 35.22440862884703,
+    "drawer opening": 28.918422812136008,
+    "cover slide clear aperture": 26.659181032132693,
+    "field stop": 22.446326328880108,
+    "window flange bore (below window)": 26.844545383144407,
+    "window clear aperture": 30.149643286541096,
+    "window retaining ring (above window)": 29.635938281458216
+   },
+   "L75_passes": false,
+   "M50_passes": false
+  },
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.4766875,
+   "reach_mm": 26.954507722659862,
+   "limited_by": "field stop",
+   "per_aperture": {
+    "lid bore": 41.42371924902343,
+    "drawer opening": 34.343116093733876,
+    "cover slide clear aperture": 31.76212673197993,
+    "field stop": 26.954507722659862,
+    "window flange bore (below window)": 32.59926248449609,
+    "window clear aperture": 37.521232896279294,
+    "window retaining ring (above window)": 37.84189047700406
+   },
+   "L75_passes": false,
+   "M50_passes": true
+  },
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.6254375,
+   "reach_mm": 33.82635010985633,
+   "limited_by": "field stop",
+   "per_aperture": {
+    "lid bore": 50.54256828095175,
+    "drawer opening": 42.44871378053991,
+    "cover slide clear aperture": 39.42577039949801,
+    "field stop": 33.82635010985633,
+    "window flange bore (below window)": 41.703629498925366,
+    "window clear aperture": 50.132057031904615,
+    "window retaining ring (above window)": 53.03488135937366
+   },
+   "L75_passes": false,
+   "M50_passes": true
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.3279375,
+   "reach_mm": 21.84133221731338,
+   "limited_by": "field stop",
+   "per_aperture": {
+    "lid bore": 34.68572281331605,
+    "drawer opening": 28.348343727098243,
+    "cover slide clear aperture": 26.078847551546602,
+    "field stop": 21.84133221731338,
+    "window flange bore (below window)": 26.206946822848007,
+    "window clear aperture": 29.441166865992724,
+    "window retaining ring (above window)": 28.854035242378988
+   },
+   "L75_passes": false,
+   "M50_passes": false
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.4766875,
+   "reach_mm": 26.225085901002895,
+   "limited_by": "field stop",
+   "per_aperture": {
+    "lid bore": 40.78443907394928,
+    "drawer opening": 33.66175295309413,
+    "cover slide clear aperture": 31.06689557552193,
+    "field stop": 26.225085901002895,
+    "window flange bore (below window)": 31.820157816146047,
+    "window clear aperture": 36.63152492113139,
+    "window retaining ring (above window)": 36.83346534786861
+   },
+   "L75_passes": false,
+   "M50_passes": true
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.6254375,
+   "reach_mm": 32.898002550065,
+   "limited_by": "field stop",
+   "per_aperture": {
+    "lid bore": 49.739626327389686,
+    "drawer opening": 41.588422722524484,
+    "cover slide clear aperture": 38.54662521896557,
+    "field stop": 32.898002550065,
+    "window flange bore (below window)": 40.68331117670173,
+    "window clear aperture": 48.894666566200954,
+    "window retaining ring (above window)": 51.54531197095682
+   },
+   "L75_passes": false,
+   "M50_passes": true
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.3279375,
+   "reach_mm": 20.283669382464883,
+   "limited_by": "field stop",
+   "per_aperture": {
+    "lid bore": 33.29852552962498,
+    "drawer opening": 26.880453424740903,
+    "cover slide clear aperture": 24.58458921009172,
+    "field stop": 20.283669382464883,
+    "window flange bore (below window)": 24.565640518010436,
+    "window clear aperture": 27.617933729950256,
+    "window retaining ring (above window)": 26.842243775244288
+   },
+   "L75_passes": false,
+   "M50_passes": false
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.4766875,
+   "reach_mm": 24.34835529958173,
+   "limited_by": "field stop",
+   "per_aperture": {
+    "lid bore": 39.13967641945996,
+    "drawer opening": 31.908737325608538,
+    "cover slide clear aperture": 29.27816679294814,
+    "field stop": 24.34835529958173,
+    "window flange bore (below window)": 29.81646543006793,
+    "window clear aperture": 34.344972597457314,
+    "window retaining ring (above window)": 34.24312909846588
+   },
+   "L75_passes": false,
+   "M50_passes": false
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.6254375,
+   "reach_mm": 30.515106389727112,
+   "limited_by": "field stop",
+   "per_aperture": {
+    "lid bore": 47.67976711685185,
+    "drawer opening": 39.38098119989903,
+    "cover slide clear aperture": 36.29049502513115,
+    "field stop": 30.515106389727112,
+    "window flange bore (below window)": 38.06848258233083,
+    "window clear aperture": 45.73378753567082,
+    "window retaining ring (above window)": 47.75323996596096
+   },
+   "L75_passes": false,
+   "M50_passes": true
+  }
+ ],
+ "reach_M50_insert": [
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.3279375,
+   "reach_mm": 25.86629064206301,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 28.035903458088256,
+   "per_aperture": {
+    "lid bore": 35.22440862884703,
+    "drawer opening": 28.918422812136008,
+    "cover slide clear aperture": 26.659181032132693,
+    "field stop": 25.86629064206301,
+    "window flange bore (below window)": 26.844545383144407,
+    "window clear aperture": 30.149643286541096,
+    "window retaining ring (above window)": 29.635938281458216
+   }
+  },
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.4766875,
+   "reach_mm": 31.071858011419227,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 33.695174032154156,
+   "per_aperture": {
+    "lid bore": 41.42371924902343,
+    "drawer opening": 34.343116093733876,
+    "cover slide clear aperture": 31.76212673197993,
+    "field stop": 31.071858011419227,
+    "window flange bore (below window)": 32.59926248449609,
+    "window clear aperture": 37.521232896279294,
+    "window retaining ring (above window)": 37.84189047700406
+   }
+  },
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.6254375,
+   "reach_mm": 39.05354352355856,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 42.427624296544764,
+   "per_aperture": {
+    "lid bore": 50.54256828095175,
+    "drawer opening": 42.44871378053991,
+    "cover slide clear aperture": 39.42577039949801,
+    "field stop": 39.05354352355856,
+    "window flange bore (below window)": 41.703629498925366,
+    "window clear aperture": 50.132057031904615,
+    "window retaining ring (above window)": 53.03488135937366
+   }
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.3279375,
+   "reach_mm": 25.26095773891422,
+   "limited_by": "field stop",
+   "M50_passes": false,
+   "runaway_mm": 28.035903458088256,
+   "per_aperture": {
+    "lid bore": 34.68572281331605,
+    "drawer opening": 28.348343727098243,
+    "cover slide clear aperture": 26.078847551546602,
+    "field stop": 25.26095773891422,
+    "window flange bore (below window)": 26.206946822848007,
+    "window clear aperture": 29.441166865992724,
+    "window retaining ring (above window)": 28.854035242378988
+   }
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.4766875,
+   "reach_mm": 30.34075844430704,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 33.695174032154156,
+   "per_aperture": {
+    "lid bore": 40.78443907394928,
+    "drawer opening": 33.66175295309413,
+    "cover slide clear aperture": 31.06689557552193,
+    "field stop": 30.34075844430704,
+    "window flange bore (below window)": 31.820157816146047,
+    "window clear aperture": 36.63152492113139,
+    "window retaining ring (above window)": 36.83346534786861
+   }
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.6254375,
+   "reach_mm": 38.11691226479379,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 42.427624296544764,
+   "per_aperture": {
+    "lid bore": 49.739626327389686,
+    "drawer opening": 41.588422722524484,
+    "cover slide clear aperture": 38.54662521896557,
+    "field stop": 38.11691226479379,
+    "window flange bore (below window)": 40.68331117670173,
+    "window clear aperture": 48.894666566200954,
+    "window retaining ring (above window)": 51.54531197095682
+   }
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.3279375,
+   "reach_mm": 23.702489326690962,
+   "limited_by": "field stop",
+   "M50_passes": false,
+   "runaway_mm": 28.035903458088256,
+   "per_aperture": {
+    "lid bore": 33.29852552962498,
+    "drawer opening": 26.880453424740903,
+    "cover slide clear aperture": 24.58458921009172,
+    "field stop": 23.702489326690962,
+    "window flange bore (below window)": 24.565640518010436,
+    "window clear aperture": 27.617933729950256,
+    "window retaining ring (above window)": 26.842243775244288
+   }
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.4766875,
+   "reach_mm": 28.46001467478298,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 33.695174032154156,
+   "per_aperture": {
+    "lid bore": 39.13967641945996,
+    "drawer opening": 31.908737325608538,
+    "cover slide clear aperture": 29.27816679294814,
+    "field stop": 28.46001467478298,
+    "window flange bore (below window)": 29.81646543006793,
+    "window clear aperture": 34.344972597457314,
+    "window retaining ring (above window)": 34.24312909846588
+   }
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.6254375,
+   "reach_mm": 35.714230301994135,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 42.427624296544764,
+   "per_aperture": {
+    "lid bore": 47.67976711685185,
+    "drawer opening": 39.38098119989903,
+    "cover slide clear aperture": 36.29049502513115,
+    "field stop": 35.714230301994135,
+    "window flange bore (below window)": 38.06848258233083,
+    "window clear aperture": 45.73378753567082,
+    "window retaining ring (above window)": 47.75323996596096
+   }
+  }
+ ],
+ "lens_input_walk": [
+  {
+   "pupil_above_nose_mm": 30.0,
+   "plate": "S25",
+   "walk_mm": 2.386263570418598,
+   "edge_mm_5mm": 6.136263570418598,
+   "lens_in_radius": 19.5
+  },
+  {
+   "pupil_above_nose_mm": 30.0,
+   "plate": "M50",
+   "walk_mm": 4.802914937242287,
+   "edge_mm_5mm": 8.552914937242287,
+   "lens_in_radius": 19.5
+  },
+  {
+   "pupil_above_nose_mm": 30.0,
+   "plate": "L75",
+   "walk_mm": 7.281909752330241,
+   "edge_mm_5mm": 11.031909752330241,
+   "lens_in_radius": 19.5
+  },
+  {
+   "pupil_above_nose_mm": 45.0,
+   "plate": "S25",
+   "walk_mm": 3.5793953556278977,
+   "edge_mm_5mm": 7.329395355627898,
+   "lens_in_radius": 19.5
+  },
+  {
+   "pupil_above_nose_mm": 45.0,
+   "plate": "M50",
+   "walk_mm": 7.204372405863431,
+   "edge_mm_5mm": 10.954372405863431,
+   "lens_in_radius": 19.5
+  },
+  {
+   "pupil_above_nose_mm": 45.0,
+   "plate": "L75",
+   "walk_mm": 10.922864628495363,
+   "edge_mm_5mm": 14.672864628495363,
+   "lens_in_radius": 19.5
+  },
+  {
+   "pupil_above_nose_mm": 60.0,
+   "plate": "S25",
+   "walk_mm": 4.772527140837196,
+   "edge_mm_5mm": 8.522527140837196,
+   "lens_in_radius": 19.5
+  },
+  {
+   "pupil_above_nose_mm": 60.0,
+   "plate": "M50",
+   "walk_mm": 9.605829874484574,
+   "edge_mm_5mm": 13.355829874484574,
+   "lens_in_radius": 19.5
+  },
+  {
+   "pupil_above_nose_mm": 60.0,
+   "plate": "L75",
+   "walk_mm": 14.563819504660483,
+   "edge_mm_5mm": 18.313819504660483,
+   "lens_in_radius": 19.5
+  }
+ ],
+ "irradiance": {
+  "IPG 5 mm, M2 1.1": [
+   {
+    "surface": "collimator output lens",
+    "beam_d_mm": 5.0,
+    "peak_W_cm2": 5092.958178940651,
+    "linear_W_cm": 1000.0,
+    "note": ""
+   },
+   {
+    "surface": "shutter mirror / dump (closed)",
+    "beam_d_mm": 5.0,
+    "peak_W_cm2": 5092.958178940651,
+    "linear_W_cm": 1000.0,
+    "note": "the dump takes all 500 W"
+   },
+   {
+    "surface": "galvo mirrors (45 deg: the footprint is 1.41x longer, so the surface irradiance is 0.71x this)",
+    "beam_d_mm": 5.0,
+    "peak_W_cm2": 5092.958178940651,
+    "linear_W_cm": 1000.0,
+    "note": ""
+   },
+   {
+    "surface": "f-theta input",
+    "beam_d_mm": 5.0,
+    "peak_W_cm2": 5092.958178940651,
+    "linear_W_cm": 1000.0,
+    "note": ""
+   },
+   {
+    "surface": "f-theta output (protective window, z 186.1)",
+    "beam_d_mm": 5.703456065482516,
+    "peak_W_cm2": 3914.1180305344237,
+    "linear_W_cm": 876.6614387125986,
+    "note": ""
+   },
+   {
+    "surface": "chamber window, top (z 156.0)",
+    "beam_d_mm": 4.7634958502272085,
+    "peak_W_cm2": 5611.236017550247,
+    "linear_W_cm": 1049.6492822097264,
+    "note": ""
+   },
+   {
+    "surface": "chamber window, bottom (z 146.5)",
+    "beam_d_mm": 4.558056333428552,
+    "peak_W_cm2": 6128.4513367146765,
+    "linear_W_cm": 1096.9587987165178,
+    "note": ""
+   },
+   {
+    "surface": "cover slide, top (z 129.0)",
+    "beam_d_mm": 4.012153160972771,
+    "peak_W_cm2": 7909.610752979399,
+    "linear_W_cm": 1246.2136412528478,
+    "note": ""
+   },
+   {
+    "surface": "cover slide, bottom (z 127.0)",
+    "beam_d_mm": 3.9690397167001286,
+    "peak_W_cm2": 8082.379326630448,
+    "linear_W_cm": 1259.7505585449305,
+    "note": "the face that fouls"
+   },
+   {
+    "surface": "plate, at focus",
+    "beam_d_mm": 0.047955294212905175,
+    "peak_W_cm2": 55365216.0564617,
+    "linear_W_cm": 104263.77487752869,
+    "note": "melts"
+   }
+  ],
+  "D 3.2 mm, M2 1.1": [
+   {
+    "surface": "collimator output lens",
+    "beam_d_mm": 3.2,
+    "peak_W_cm2": 12433.979929054323,
+    "linear_W_cm": 1562.5,
+    "note": ""
+   },
+   {
+    "surface": "shutter mirror / dump (closed)",
+    "beam_d_mm": 3.2,
+    "peak_W_cm2": 12433.979929054323,
+    "linear_W_cm": 1562.5,
+    "note": "the dump takes all 500 W"
+   },
+   {
+    "surface": "galvo mirrors (45 deg: the footprint is 1.41x longer, so the surface irradiance is 0.71x this)",
+    "beam_d_mm": 3.2,
+    "peak_W_cm2": 12433.979929054323,
+    "linear_W_cm": 1562.5,
+    "note": ""
+   },
+   {
+    "surface": "f-theta input",
+    "beam_d_mm": 3.2,
+    "peak_W_cm2": 12433.979929054323,
+    "linear_W_cm": 1562.5,
+    "note": ""
+   },
+   {
+    "surface": "f-theta output (protective window, z 186.1)",
+    "beam_d_mm": 3.6508518661366245,
+    "peak_W_cm2": 9552.60225267632,
+    "linear_W_cm": 1369.543378732334,
+    "note": ""
+   },
+   {
+    "surface": "chamber window, top (z 156.0)",
+    "beam_d_mm": 3.049403584598636,
+    "peak_W_cm2": 13692.42294778042,
+    "linear_W_cm": 1639.6648922605966,
+    "note": ""
+   },
+   {
+    "surface": "chamber window, bottom (z 146.5)",
+    "beam_d_mm": 2.9179568203624715,
+    "peak_W_cm2": 14953.82853937064,
+    "linear_W_cm": 1713.5277551430302,
+    "note": ""
+   },
+   {
+    "surface": "cover slide, top (z 129.0)",
+    "beam_d_mm": 2.5686877079868475,
+    "peak_W_cm2": 19296.89810770681,
+    "linear_W_cm": 1946.5192224237487,
+    "note": ""
+   },
+   {
+    "surface": "cover slide, bottom (z 127.0)",
+    "beam_d_mm": 2.5411049814914306,
+    "peak_W_cm2": 19718.09267632435,
+    "linear_W_cm": 1967.6479470223974,
+    "note": "the face that fouls"
+   },
+   {
+    "surface": "plate, at focus",
+    "beam_d_mm": 0.07493014720766433,
+    "peak_W_cm2": 22677592.496726714,
+    "linear_W_cm": 66728.81592161837,
+    "note": "melts"
+   }
+  ]
+ },
+ "ghosts": {
+  "R_uncoated": 0.033681993971917144,
+  "R_AR": 0.0025,
+  "rows": [
+   {
+    "D_mm": 5.0,
+    "surface": "slide bottom",
+    "height_air_mm": 127.0,
+    "core_coupling": 0.00014598298177664472,
+    "returned_W_uncoated": 0.002458498956101719,
+    "returned_W_AR": 0.0001824787272208059,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 219.21259842519686,
+    "return_focus_from_fibre_mm": 12.655452806122444,
+    "return_radius_at_fibre_mm": 0.8858816964285712
+   },
+   {
+    "D_mm": 5.0,
+    "surface": "slide top",
+    "height_air_mm": 128.3797298466756,
+    "core_coupling": 0.00014286245618391774,
+    "returned_W_uncoated": 0.002405946193999997,
+    "returned_W_AR": 0.00017857807022989718,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 220.29578645096785,
+    "return_focus_from_fibre_mm": 12.792941829427967,
+    "return_radius_at_fibre_mm": 0.8955059280599579
+   },
+   {
+    "D_mm": 5.0,
+    "surface": "window bottom",
+    "height_air_mm": 145.8497298466756,
+    "core_coupling": 0.00011069136496216059,
+    "returned_W_uncoated": 0.0018641529436993869,
+    "returned_W_AR": 0.00013836420620270073,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 232.2384387447547,
+    "return_focus_from_fibre_mm": 14.533813959530008,
+    "return_radius_at_fibre_mm": 1.0173669771671008
+   },
+   {
+    "D_mm": 5.0,
+    "surface": "window top",
+    "height_air_mm": 152.42414256608473,
+    "core_coupling": 0.00010134948289243346,
+    "returned_W_uncoated": 0.0017068263359199317,
+    "returned_W_AR": 0.00012668685361554182,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 236.02380184326472,
+    "return_focus_from_fibre_mm": 15.188949155580822,
+    "return_radius_at_fibre_mm": 1.0632264408906575
+   },
+   {
+    "D_mm": 5.0,
+    "surface": "f-theta protective window (lower face)",
+    "height_air_mm": 182.50414256608474,
+    "core_coupling": 7.069633804991905e-05,
+    "returned_W_uncoated": 0.001190596816016995,
+    "returned_W_AR": 8.83704225623988e-05,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 249.86460570140144,
+    "return_focus_from_fibre_mm": 18.18639813517266,
+    "return_radius_at_fibre_mm": 1.2730478694620864
+   },
+   {
+    "D_mm": 3.2,
+    "surface": "slide bottom",
+    "height_air_mm": 127.0,
+    "core_coupling": 0.0008694967368855602,
+    "returned_W_uncoated": 0.014643191925190532,
+    "returned_W_AR": 0.0010868709211069502,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 219.21259842519686,
+    "return_focus_from_fibre_mm": 5.183673469387755,
+    "return_radius_at_fibre_mm": 0.3628571428571428
+   },
+   {
+    "D_mm": 3.2,
+    "surface": "slide top",
+    "height_air_mm": 128.3797298466756,
+    "core_coupling": 0.0008509235762346519,
+    "returned_W_uncoated": 0.014330401382648862,
+    "returned_W_AR": 0.0010636544702933147,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 220.29578645096785,
+    "return_focus_from_fibre_mm": 5.239988973333697,
+    "return_radius_at_fibre_mm": 0.36679922813335875
+   },
+   {
+    "D_mm": 3.2,
+    "surface": "window bottom",
+    "height_air_mm": 145.8497298466756,
+    "core_coupling": 0.0006594098796655368,
+    "returned_W_uncoated": 0.01110511979595861,
+    "returned_W_AR": 0.000824262349581921,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 232.2384387447547,
+    "return_focus_from_fibre_mm": 5.953050197823493,
+    "return_radius_at_fibre_mm": 0.4167135138476445
+   },
+   {
+    "D_mm": 3.2,
+    "surface": "window top",
+    "height_air_mm": 152.42414256608473,
+    "core_coupling": 0.0006037864446923448,
+    "returned_W_uncoated": 0.010168365695226422,
+    "returned_W_AR": 0.000754733055865431,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 236.02380184326472,
+    "return_focus_from_fibre_mm": 6.221393574125907,
+    "return_radius_at_fibre_mm": 0.43549755018881353
+   },
+   {
+    "D_mm": 3.2,
+    "surface": "f-theta protective window (lower face)",
+    "height_air_mm": 182.50414256608474,
+    "core_coupling": 0.0004212352900359746,
+    "returned_W_uncoated": 0.0070940222498752335,
+    "returned_W_AR": 0.0005265441125449682,
+    "total_back_W_uncoated": 16.840996985958572,
+    "total_back_W_AR": 1.25,
+    "ghost_focus_z_thin_lens": 249.86460570140144,
+    "return_focus_from_fibre_mm": 7.449148676166724,
+    "return_radius_at_fibre_mm": 0.5214404073316706
+   }
+  ]
+ },
+ "cats_eye": [
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "r_mm": 0.0,
+   "chief_angle_mrad": 0.0,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 1.0,
+   "returned_W_at_R0p9": 441.0
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "r_mm": 1.0,
+   "chief_angle_mrad": 1.875,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.9440274829178357,
+   "returned_W_at_R0p9": 416.31611996676554
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "r_mm": 2.0,
+   "chief_angle_mrad": 3.75,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.7942158526165467,
+   "returned_W_at_R0p9": 350.2491910038971
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "r_mm": 3.0,
+   "chief_angle_mrad": 5.625,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.5954725422392698,
+   "returned_W_at_R0p9": 262.60339112751797
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "r_mm": 5.0,
+   "chief_angle_mrad": 9.375,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.23692775868212176,
+   "returned_W_at_R0p9": 104.4851415788157
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "r_mm": 8.0,
+   "chief_angle_mrad": 15.0,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.025062063262558786,
+   "returned_W_at_R0p9": 11.052369898788426
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "r_mm": 12.7,
+   "chief_angle_mrad": 23.812499999999996,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 9.231499225630152e-05,
+   "returned_W_at_R0p9": 0.04071091158502897
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "r_mm": 25.4,
+   "chief_angle_mrad": 47.62499999999999,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 7.262546906610984e-17,
+   "returned_W_at_R0p9": 3.202783185815444e-14
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.5,
+   "r_mm": 0.0,
+   "chief_angle_mrad": 0.0,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 1.0,
+   "returned_W_at_R0p9": 441.0
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.5,
+   "r_mm": 1.0,
+   "chief_angle_mrad": 3.125,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.8521437889662113,
+   "returned_W_at_R0p9": 375.7954109340992
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.5,
+   "r_mm": 2.0,
+   "chief_angle_mrad": 6.25,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.5272924240430485,
+   "returned_W_at_R0p9": 232.5359590029844
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.5,
+   "r_mm": 3.0,
+   "chief_angle_mrad": 9.375,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.23692775868212176,
+   "returned_W_at_R0p9": 104.4851415788157
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.5,
+   "r_mm": 5.0,
+   "chief_angle_mrad": 15.625,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.01831563888873418,
+   "returned_W_at_R0p9": 8.077196749931773
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.5,
+   "r_mm": 8.0,
+   "chief_angle_mrad": 25.0,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 3.5712849641635144e-05,
+   "returned_W_at_R0p9": 0.015749366691961097
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.5,
+   "r_mm": 12.7,
+   "chief_angle_mrad": 39.6875,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 6.200445324032773e-12,
+   "returned_W_at_R0p9": 2.7343963878984528e-09
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.5,
+   "r_mm": 25.4,
+   "chief_angle_mrad": 79.375,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 1.4780581784855448e-45,
+   "returned_W_at_R0p9": 6.5182365671212525e-43
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.75,
+   "r_mm": 0.0,
+   "chief_angle_mrad": 0.0,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 1.0,
+   "returned_W_at_R0p9": 441.0
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.75,
+   "r_mm": 1.0,
+   "chief_angle_mrad": 4.6875,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.697676326071031,
+   "returned_W_at_R0p9": 307.67525979732466
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.75,
+   "r_mm": 2.0,
+   "chief_angle_mrad": 9.375,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.23692775868212176,
+   "returned_W_at_R0p9": 104.4851415788157
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.75,
+   "r_mm": 3.0,
+   "chief_angle_mrad": 14.0625,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.03916389509898703,
+   "returned_W_at_R0p9": 17.271277738653282
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.75,
+   "r_mm": 5.0,
+   "chief_angle_mrad": 23.4375,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 0.00012340980408667956,
+   "returned_W_at_R0p9": 0.054423723602225686
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.75,
+   "r_mm": 8.0,
+   "chief_angle_mrad": 37.5,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 9.859505575991516e-11,
+   "returned_W_at_R0p9": 4.348041959012259e-08
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.75,
+   "r_mm": 12.7,
+   "chief_angle_mrad": 59.53124999999999,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 6.0666855487748e-26,
+   "returned_W_at_R0p9": 2.675408327009687e-23
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.75,
+   "r_mm": 25.4,
+   "chief_angle_mrad": 119.06249999999999,
+   "beam_half_angle_mrad": 15.625,
+   "core_coupling": 1.3545839949537243e-101,
+   "returned_W_at_R0p9": 5.973715417745924e-99
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "r_mm": 0.0,
+   "chief_angle_mrad": 0.0,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 1.0,
+   "returned_W_at_R0p9": 441.0
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "r_mm": 1.0,
+   "chief_angle_mrad": 1.875,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.8688150562628432,
+   "returned_W_at_R0p9": 383.14743981191384
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "r_mm": 2.0,
+   "chief_angle_mrad": 3.75,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.569782824730923,
+   "returned_W_at_R0p9": 251.27422570633703
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "r_mm": 3.0,
+   "chief_angle_mrad": 5.625,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.28206295169381546,
+   "returned_W_at_R0p9": 124.38976169697261
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "r_mm": 5.0,
+   "chief_angle_mrad": 9.375,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.02972921638615875,
+   "returned_W_at_R0p9": 13.11058442629601
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "r_mm": 8.0,
+   "chief_angle_mrad": 15.0,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.00012340980408667956,
+   "returned_W_at_R0p9": 0.054423723602225686
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "r_mm": 12.7,
+   "chief_angle_mrad": 23.812499999999996,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 1.411206031016093e-10,
+   "returned_W_at_R0p9": 6.22341859678097e-08
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "r_mm": 25.4,
+   "chief_angle_mrad": 47.62499999999999,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 3.966082056057243e-40,
+   "returned_W_at_R0p9": 1.7490421867212442e-37
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.5,
+   "r_mm": 0.0,
+   "chief_angle_mrad": 0.0,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 1.0,
+   "returned_W_at_R0p9": 441.0
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.5,
+   "r_mm": 1.0,
+   "chief_angle_mrad": 3.125,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.6766338461617288,
+   "returned_W_at_R0p9": 298.3955261573224
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.5,
+   "r_mm": 2.0,
+   "chief_angle_mrad": 6.25,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.20961138715109767,
+   "returned_W_at_R0p9": 92.43862173363408
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.5,
+   "r_mm": 3.0,
+   "chief_angle_mrad": 9.375,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.02972921638615875,
+   "returned_W_at_R0p9": 13.11058442629601
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.5,
+   "r_mm": 5.0,
+   "chief_angle_mrad": 15.625,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 5.739088873946875e-05,
+   "returned_W_at_R0p9": 0.02530938193410572
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.5,
+   "r_mm": 8.0,
+   "chief_angle_mrad": 25.0,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 1.3887943864963872e-11,
+   "returned_W_at_R0p9": 6.124583244449068e-09
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.5,
+   "r_mm": 12.7,
+   "chief_angle_mrad": 39.6875,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 4.342613491418392e-28,
+   "returned_W_at_R0p9": 1.9150925497155111e-25
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.5,
+   "r_mm": 25.4,
+   "chief_angle_mrad": 79.375,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 3.556351747377089e-110,
+   "returned_W_at_R0p9": 1.5683511205932962e-107
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.75,
+   "r_mm": 0.0,
+   "chief_angle_mrad": 0.0,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 1.0,
+   "returned_W_at_R0p9": 441.0
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.75,
+   "r_mm": 1.0,
+   "chief_angle_mrad": 4.6875,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.4152368286818413,
+   "returned_W_at_R0p9": 183.11944144869202
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.75,
+   "r_mm": 2.0,
+   "chief_angle_mrad": 9.375,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.02972921638615875,
+   "returned_W_at_R0p9": 13.11058442629601
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.75,
+   "r_mm": 3.0,
+   "chief_angle_mrad": 14.0625,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 0.0003669972327972938,
+   "returned_W_at_R0p9": 0.16184577966360655
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.75,
+   "r_mm": 5.0,
+   "chief_angle_mrad": 23.4375,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 2.866794996873118e-10,
+   "returned_W_at_R0p9": 1.264256593621045e-07
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.75,
+   "r_mm": 8.0,
+   "chief_angle_mrad": 37.5,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 3.7233631217505106e-25,
+   "returned_W_at_R0p9": 1.6420031366919751e-22
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.75,
+   "r_mm": 12.7,
+   "chief_angle_mrad": 59.53124999999999,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 2.7223261121435893e-62,
+   "returned_W_at_R0p9": 1.2005458154553228e-59
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.75,
+   "r_mm": 25.4,
+   "chief_angle_mrad": 119.06249999999999,
+   "beam_half_angle_mrad": 10.0,
+   "core_coupling": 5.4923802332385185e-247,
+   "returned_W_at_R0p9": 2.4221396828581866e-244
+  }
+ ],
+ "safety": {
+  "rows": [
+   {
+    "D_mm": 5.0,
+    "collimated_phi_mrad": 0.29972058883065733,
+    "NOHD_collimated_km": 11.88856676882743,
+    "focus_phi_mrad": 31.25,
+    "NOHD_focus_m": 114.18394343377734,
+    "NOHD_specular_Al_m": 108.32440004116921
+   },
+   {
+    "D_mm": 3.2,
+    "collimated_phi_mrad": 0.4683134200479021,
+    "NOHD_collimated_km": 7.61252631184664,
+    "focus_phi_mrad": 20.0,
+    "NOHD_focus_m": 178.41241161527708,
+    "NOHD_specular_Al_m": 169.2568750643269
+   }
+  ],
+  "NOHD_bare_fibre_m": 25.48748737361101,
+  "NOHD_bare_fibre_m_130": 27.448063325427245,
+  "OD_direct": 5.4147140386053145
+ },
+ "guard_burn": {
+  "E_J_cm2": 391.40864000000005,
+  "rows": [
+   {
+    "D_mm": 5.0,
+    "from_focus_mm": 50.0,
+    "beam_d_mm": 1.5632357340603,
+    "I_W_cm2": 22534.46658710072,
+    "t_cold_s": 0.21711665466271338,
+    "t_hot_s": 0.04342333093254268
+   },
+   {
+    "D_mm": 5.0,
+    "from_focus_mm": 150.0,
+    "beam_d_mm": 4.687745296007777,
+    "I_W_cm2": 2505.9258552974475,
+    "t_cold_s": 1.952415307762272,
+    "t_hot_s": 0.3904830615524544
+   },
+   {
+    "D_mm": 5.0,
+    "from_focus_mm": 300.0,
+    "beam_d_mm": 9.375122650410662,
+    "I_W_cm2": 626.5306393129756,
+    "t_cold_s": 7.809048261973281,
+    "t_hot_s": 1.561809652394656
+   },
+   {
+    "D_mm": 5.0,
+    "from_focus_mm": 600.0,
+    "beam_d_mm": 18.75006132550619,
+    "I_W_cm2": 156.63573359785192,
+    "t_cold_s": 31.23558007881732,
+    "t_hot_s": 6.247116015763464
+   },
+   {
+    "D_mm": 3.2,
+    "from_focus_mm": 50.0,
+    "beam_d_mm": 1.0028033341391334,
+    "I_W_cm2": 54760.157926751395,
+    "t_cold_s": 0.0893461265496071,
+    "t_hot_s": 0.017869225309921417
+   },
+   {
+    "D_mm": 3.2,
+    "from_focus_mm": 150.0,
+    "beam_d_mm": 3.0009356085995185,
+    "I_W_cm2": 6114.808727926017,
+    "t_cold_s": 0.8001244548591865,
+    "t_hot_s": 0.1600248909718373
+   },
+   {
+    "D_mm": 3.2,
+    "from_focus_mm": 300.0,
+    "beam_d_mm": 6.000467859005711,
+    "I_W_cm2": 1529.4173154179002,
+    "t_cold_s": 3.1990013129040173,
+    "t_hot_s": 0.6398002625808035
+   },
+   {
+    "D_mm": 3.2,
+    "from_focus_mm": 600.0,
+    "beam_d_mm": 12.0002339363431,
+    "I_W_cm2": 382.39905083343865,
+    "t_cold_s": 12.794508745083343,
+    "t_hot_s": 2.558901749016669
+   }
+  ]
+ },
+ "collimator_choice": {
+  "baseline": {
+   "name": "EOS M 290 / M 280, AlSi10Mg 30 um",
+   "d_um": 100.0,
+   "P": 370.0,
+   "V": 1.3,
+   "h": 0.19,
+   "t": 0.03
+  },
+  "v_galvo_m_s": 1.1,
+  "hatch_per_spot": 1.9,
+  "coupons_mm2": 300.0,
+  "recoat_s": 8.0,
+  "build_mm": 15.0,
+  "k_mid": 0.4766875,
+  "I_base_W_cm2": 9421972.631040204,
+  "rows": [
+   {
+    "option": "IPG 5 mm affixed (in the quote; drawn until 2026-11-22)",
+    "D_mm": 5.0,
+    "spot_focus_um": 47.95529421290517,
+    "defocus_mm": 0.0,
+    "spot_powder_um": 47.95529421290517,
+    "zR_mm": 1.5345694148129658,
+    "band10_mm": 0.7032280502544507,
+    "growth_pct": 0.2659841635406668,
+    "err1mm_um": [
+     57.23873463875923,
+     57.23873463875923
+    ],
+    "err1mm_pct": 19.35853085300394,
+    "film_um": [
+     59.37361224959846,
+     59.37361224959846
+    ],
+    "film_mm": 1.120235672813465,
+    "I350_MW_cm2": 38.75565123952319,
+    "I500_MW_cm2": 55.3652160564617,
+    "I350_x_base": 4.113326662809939,
+    "ke350": 3.0966121549089562,
+    "ke500": 4.4237316498699375,
+    "p_same_ke_W": 113.02674745533008,
+    "hatch_mm": 0.09111505900451983,
+    "rate_mm3_s": 3.0067969471491542,
+    "scan_s_layer": 3.1932184175367095,
+    "build_min": 93.27682014613924,
+    "scan_share": 0.2852815247966403,
+    "PD_kW_cm": 1.0,
+    "galvo_fill": 0.25,
+    "lens_fill": 0.4166666666666667,
+    "cats_eye_r10_mm": 5.1026164341451565,
+    "stop_reach_mm": 24.34835529958173,
+    "extra": ""
+   },
+   {
+    "option": "Wavelength COL-1070-D25-F30 (QBH, f 30 mm)",
+    "D_mm": 4.2,
+    "spot_focus_um": 57.08963596774425,
+    "defocus_mm": 0.0,
+    "spot_powder_um": 57.08963596774425,
+    "zR_mm": 2.174843274961686,
+    "band10_mm": 0.9966383932177588,
+    "growth_pct": 0.13251421311462064,
+    "err1mm_um": [
+     62.83541226831856,
+     62.83541226831856
+    ],
+    "err1mm_pct": 10.064482288555276,
+    "film_um": [
+     70.68287172571245,
+     70.68287172571245
+    ],
+    "film_mm": 1.5876355907220308,
+    "I350_MW_cm2": 27.34598751460757,
+    "I500_MW_cm2": 39.06569644943939,
+    "I350_x_base": 2.9023632932786945,
+    "ke350": 2.3839972124288225,
+    "ke500": 3.4057103034697462,
+    "p_same_ke_W": 146.81225220201458,
+    "hatch_mm": 0.10847030833871407,
+    "rate_mm3_s": 3.579520175177564,
+    "scan_s_layer": 2.714303470730836,
+    "build_min": 89.2858622560903,
+    "scan_share": 0.25333457075821375,
+    "PD_kW_cm": 1.1904761904761905,
+    "galvo_fill": 0.21000000000000002,
+    "lens_fill": 0.35000000000000003,
+    "cats_eye_r10_mm": 4.286197804681931,
+    "stop_reach_mm": 25.182354945910564,
+    "extra": ""
+   },
+   {
+    "option": "custom collimator, f ~ 23 mm (D 3.2 mm)",
+    "D_mm": 3.2,
+    "spot_focus_um": 74.93014720766433,
+    "defocus_mm": 0.0,
+    "spot_powder_um": 74.93014720766433,
+    "zR_mm": 3.7465073603832164,
+    "band10_mm": 1.7168653570665295,
+    "growth_pct": 0.044674106131781244,
+    "err1mm_um": [
+     77.55338136124205,
+     77.55338136124205
+    ],
+    "err1mm_pct": 3.5009061790677976,
+    "film_um": [
+     92.7712691399976,
+     92.7712691399976
+    ],
+    "film_mm": 2.734950373079748,
+    "I350_MW_cm2": 15.8743147477087,
+    "I500_MW_cm2": 22.677592496726714,
+    "I350_x_base": 1.6848186010869515,
+    "ke350": 1.5854654233133851,
+    "ke500": 2.264950604733407,
+    "p_same_ke_W": 220.75536612369157,
+    "hatch_mm": 0.14236727969456223,
+    "rate_mm3_s": 4.698120229920553,
+    "scan_s_layer": 2.1156597872234943,
+    "build_min": 84.29716489352911,
+    "scan_share": 0.20914698909661456,
+    "PD_kW_cm": 1.5625,
+    "galvo_fill": 0.16,
+    "lens_fill": 0.26666666666666666,
+    "cats_eye_r10_mm": 3.2656745178529,
+    "stop_reach_mm": 26.225085901002895,
+    "extra": ""
+   },
+   {
+    "option": "IPG 5 mm + 1.5x Galilean expander used backwards (D 3.33 mm)",
+    "D_mm": 3.3333333333333335,
+    "spot_focus_um": 71.93294131935775,
+    "defocus_mm": 0.0,
+    "spot_powder_um": 71.93294131935775,
+    "zR_mm": 3.4527811833291713,
+    "band10_mm": 1.582263113072513,
+    "growth_pct": 0.052596124074111295,
+    "err1mm_um": [
+     74.88909015759201,
+     74.88909015759201
+    ],
+    "err1mm_pct": 4.109589826321658,
+    "film_um": [
+     89.06041837439768,
+     89.06041837439768
+    ],
+    "film_mm": 2.520530263830295,
+    "I350_MW_cm2": 17.22473388423253,
+    "I500_MW_cm2": 24.606762691760757,
+    "I350_x_base": 1.8281451834710847,
+    "ke350": 1.6855821579616004,
+    "ke500": 2.4079745113737148,
+    "p_same_ke_W": 207.64339391398178,
+    "hatch_mm": 0.13667258850677974,
+    "rate_mm3_s": 4.510195420723732,
+    "scan_s_layer": 2.195478945024473,
+    "build_min": 84.9623245418706,
+    "scan_share": 0.21533848060133512,
+    "PD_kW_cm": 1.4999999999999998,
+    "galvo_fill": 0.16666666666666669,
+    "lens_fill": 0.2777777777777778,
+    "cats_eye_r10_mm": 3.4017442894301047,
+    "stop_reach_mm": 26.086065532609258,
+    "extra": "2 more lenses in the 500 W beam"
+   },
+   {
+    "option": "IPG 2.5 mm + Sill 1.2x expander (D 3.0 mm)",
+    "D_mm": 3.0,
+    "spot_focus_um": 79.92549035484195,
+    "defocus_mm": 0.0,
+    "spot_powder_um": 79.92549035484195,
+    "zR_mm": 4.262692818924905,
+    "band10_mm": 1.9534112507068075,
+    "growth_pct": 0.034511436827266984,
+    "err1mm_um": [
+     82.09535010256022,
+     82.09535010256022
+    ],
+    "err1mm_pct": 2.7148532190228947,
+    "film_um": [
+     98.95602041599743,
+     98.95602041599743
+    ],
+    "film_mm": 3.1117657578151805,
+    "I350_MW_cm2": 13.952034446228351,
+    "I500_MW_cm2": 19.931477780326215,
+    "I350_x_base": 1.4807975986115787,
+    "ke350": 1.4391752766751018,
+    "ke500": 2.055964680964431,
+    "p_same_ke_W": 243.19483920582496,
+    "hatch_mm": 0.1518584316741997,
+    "rate_mm3_s": 5.01132824524859,
+    "scan_s_layer": 1.9959310505220256,
+    "build_min": 83.29942542101688,
+    "scan_share": 0.1996743515370477,
+    "PD_kW_cm": 1.6666666666666667,
+    "galvo_fill": 0.15,
+    "lens_fill": 0.25,
+    "cats_eye_r10_mm": 3.0615698604870936,
+    "stop_reach_mm": 26.43358762902675,
+    "extra": "2 more lenses in the 500 W beam"
+   },
+   {
+    "option": "IPG 2.5 mm affixed (drawn since 2026-11-23)",
+    "D_mm": 2.5,
+    "spot_focus_um": 95.91058842581035,
+    "defocus_mm": 0.0,
+    "spot_powder_um": 95.91058842581035,
+    "zR_mm": 6.138277659251863,
+    "band10_mm": 2.8129122010178027,
+    "growth_pct": 0.016644733602766415,
+    "err1mm_um": [
+     97.17500500223906,
+     97.17500500223906
+    ],
+    "err1mm_pct": 1.3183284527617856,
+    "film_um": [
+     118.74722449919692,
+     118.74722449919692
+    ],
+    "film_mm": 4.48094269125386,
+    "I350_MW_cm2": 9.688912809880797,
+    "I500_MW_cm2": 13.841304014115424,
+    "I350_x_base": 1.0283316657024848,
+    "ke350": 1.0948177267204053,
+    "ke500": 1.5640253238862931,
+    "p_same_ke_W": 319.68791832449307,
+    "hatch_mm": 0.18223011800903965,
+    "rate_mm3_s": 6.0135938942983085,
+    "scan_s_layer": 1.6966092087683546,
+    "build_min": 80.80507673973628,
+    "scan_share": 0.17496932919954758,
+    "PD_kW_cm": 2.0,
+    "galvo_fill": 0.125,
+    "lens_fill": 0.20833333333333334,
+    "cats_eye_r10_mm": 2.5513082170725783,
+    "stop_reach_mm": 26.954507722659862,
+    "extra": ""
+   },
+   {
+    "option": "IPG 5 mm, run out of focus so the powder sees 75 um",
+    "D_mm": 5.0,
+    "spot_focus_um": 47.95529421290517,
+    "defocus_mm": 1.8452904137616368,
+    "spot_powder_um": 74.99999999999999,
+    "zR_mm": 1.5345694148129658,
+    "band10_mm": null,
+    "growth_pct": 3.6310316288652222,
+    "err1mm_um": [
+     54.74924347077138,
+     101.02299411212377
+    ],
+    "err1mm_pct": 34.69732548283171,
+    "film_um": [
+     53.038603149716096,
+     104.3452814120776
+    ],
+    "film_mm": 1.120235672813465,
+    "I350_MW_cm2": 15.844758778926472,
+    "I500_MW_cm2": 22.635369684180677,
+    "I350_x_base": 1.681681681681682,
+    "ke350": 1.5832509553967336,
+    "ke500": 2.2617870791381907,
+    "p_same_ke_W": 221.06413314135438,
+    "hatch_mm": 0.1425,
+    "rate_mm3_s": 4.7025,
+    "scan_s_layer": 2.1138755980861244,
+    "build_min": 84.2822966507177,
+    "scan_share": 0.2090074746901315,
+    "PD_kW_cm": 1.0,
+    "galvo_fill": 0.25,
+    "lens_fill": 0.4166666666666667,
+    "cats_eye_r10_mm": 5.1026164341451565,
+    "stop_reach_mm": 24.34835529958173,
+    "extra": ""
+   }
+  ]
+ }
+}

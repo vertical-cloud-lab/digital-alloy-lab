@@ -1,0 +1,91 @@
+1. (alsaddah2023multilaserpowderbeda pages 137-144): M Alsaddah. Multi-laser powder bed fusion using 808 nm sources. Unknown journal, 2023.
+
+2. (alsaddah2023multilaserpowderbed pages 137-144): M Alsaddah. Multi-laser powder bed fusion using 808 nm sources. Unknown journal, 2023.
+
+3. (alsaddah2022diodeareamelting pages 2-3): Mohammed Alsaddah, Ashfaq Khan, Kristian Groom, and Kamran Mumtaz. Diode area melting of ti6al4v using 808 nm laser sources and variable multi-beam profiles. Materials &amp; Design, 215:110518, Mar 2022. URL: https://doi.org/10.1016/j.matdes.2022.110518, doi:10.1016/j.matdes.2022.110518. This article has 24 citations and is from a highest quality peer-reviewed journal.
+
+4. (veetil2024diodeareamelting pages 164-169): S Alayil Veetil. Diode area melting of ti6al4v: probing the multi-laser interaction and residual stress evolution. Unknown journal, 2024.
+
+5. (veetil2024diodeareameltinga pages 164-169): S Alayil Veetil. Diode area melting of ti6al4v: probing the multi-laser interaction and residual stress evolution. Unknown journal, 2024.
+
+6. (liang2026diodeareamelting pages 1-2): Anqi Liang, Sarath Veetil, Kristian Groom, and Kamran Mumtaz. Diode area melting of ti6al4v: effects of multi-laser processing on microstructure and residual stress. Progress in Additive Manufacturing, 11:11255-11270, Sep 2026. URL: https://doi.org/10.1007/s40964-026-01951-x, doi:10.1007/s40964-026-01951-x. This article has 0 citations and is from a peer-reviewed journal.
+
+7. (liang2026diodeareamelting pages 11-13): Anqi Liang, Sarath Veetil, Kristian Groom, and Kamran Mumtaz. Diode area melting of ti6al4v: effects of multi-laser processing on microstructure and residual stress. Progress in Additive Manufacturing, 11:11255-11270, Sep 2026. URL: https://doi.org/10.1007/s40964-026-01951-x, doi:10.1007/s40964-026-01951-x. This article has 0 citations and is from a peer-reviewed journal.
+
+8. (caglar2024hybridmultilaserpowderb pages 36-43): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+9. (caglar2024hybridmultilaserpowdera pages 36-43): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+10. (erman2025diodeareamelting pages 4-6): Sefer Can Erman, Alkim Aydin, Kristian Groom, and Kamran Mumtaz. Diode area melting of ss316l using low power 450 nm lasers. The International Journal of Advanced Manufacturing Technology, 136:4471-4490, Jan 2025. URL: https://doi.org/10.1007/s00170-025-15090-0, doi:10.1007/s00170-025-15090-0. This article has 9 citations.
+
+11. (caglar2024hybridmultilaserpowder pages 76-81): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+12. (caglar2024hybridmultilaserpowdera pages 76-81): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+13. (caglar2024hybridmultilaserpowderb pages 76-81): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+14. (caglar2024hybridmultilaserpowdera pages 123-128): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+15. (erman2025diodeareamelting pages 1-2): Sefer Can Erman, Alkim Aydin, Kristian Groom, and Kamran Mumtaz. Diode area melting of ss316l using low power 450 nm lasers. The International Journal of Advanced Manufacturing Technology, 136:4471-4490, Jan 2025. URL: https://doi.org/10.1007/s00170-025-15090-0, doi:10.1007/s00170-025-15090-0. This article has 9 citations.
+
+16. (erman2025diodeareamelting pages 12-13): Sefer Can Erman, Alkim Aydin, Kristian Groom, and Kamran Mumtaz. Diode area melting of ss316l using low power 450 nm lasers. The International Journal of Advanced Manufacturing Technology, 136:4471-4490, Jan 2025. URL: https://doi.org/10.1007/s00170-025-15090-0, doi:10.1007/s00170-025-15090-0. This article has 9 citations.
+
+17. (caglar2024hybridmultilaserpowder pages 36-43): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+18. (aydin2025theuseofa pages 110-114): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+19. (aydin2025theuseofa pages 106-110): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+20. (aydin2025theuseofa pages 191-195): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+21. (aydin2025theuseofa pages 156-160): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+22. (aydin2025theuseof pages 156-160): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+23. (aydin2025theuseof pages 94-96): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+24. (yin2021dualbeamlasermatterinteraction pages 1-2): Jie Yin, Dengzhi Wang, Huiliang Wei, Liangliang Yang, Linda Ke, Mingyong Hu, Wei Xiong, Guoqing Wang, Haihong Zhu, and Xiaoyan Zeng. Dual-beam laser-matter interaction at overlap region during multi-laser powder bed fusion manufacturing. Additive manufacturing, 46:102178, Oct 2021. URL: https://doi.org/10.1016/j.addma.2021.102178, doi:10.1016/j.addma.2021.102178. This article has 103 citations and is from a highest quality peer-reviewed journal.
+
+25. (zhang2022processparametersoptimisation pages 10-12): Wenyou Zhang, William M. Abbott, Arnoldas Sasnauskas, and Rocco Lupoi. Process parameters optimisation for mitigating residual stress in dual-laser beam powder bed fusion additive manufacturing. Metals, 12:420, Feb 2022. URL: https://doi.org/10.3390/met12030420, doi:10.3390/met12030420. This article has 29 citations.
+
+26. (nagalingam2025impactofmultiplelaser pages 2-4): Arun Prasanth Nagalingam, Erkan Bugra Tureyen, Abdul Haque, Adrian Sharman, Ozgur Poyraz, Evren Yasa, and James Hughes. Impact of multiple-laser processing on the low-cycle fatigue behaviour of laser-powder bed fused alsi10mg alloy. Metals, 15:807, Jul 2025. URL: https://doi.org/10.3390/met15070807, doi:10.3390/met15070807. This article has 3 citations.
+
+27. (rindler2022aninvestigationof pages 88-97): JJ Rindler. An investigation of stitch zones in multi-laser powder bed fusion additive manufacturing: tying process to structure to mechanical properties. Unknown journal, 2022.
+
+28. (caglar2024hybridmultilaserpowdera pages 32-36): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+29. (caglar2024hybridmultilaserpowderb pages 32-36): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+30. (caglar2024hybridmultilaserpowder pages 32-36): HE CAGLAR. Hybrid multi-laser powder bed fusion. Unknown journal, 2024.
+
+31. (caglar2023multiple450nm pages 1-3): H. Caglar, A. Liang, and K. Mumtaz. Multiple 450 nm diode laser processing of ti64 powder. ConferencePaper, Jan 2023. URL: https://doi.org/10.26153/tsw/51029, doi:10.26153/tsw/51029. This article has 0 citations.
+
+32. (veetil2024diodeareameltinga pages 187-193): S Alayil Veetil. Diode area melting of ti6al4v: probing the multi-laser interaction and residual stress evolution. Unknown journal, 2024.
+
+33. (veetil2024diodeareamelting pages 199-206): S Alayil Veetil. Diode area melting of ti6al4v: probing the multi-laser interaction and residual stress evolution. Unknown journal, 2024.
+
+34. (revanur2024novelscanstrategies pages 38-41): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+35. (revanur2024novelscanstrategies pages 36-38): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+36. (santecchia2020materialreusein pages 5-8): Eleonora Santecchia, Stefano Spigarelli, and Marcello Cabibbo. Material reuse in laser powder bed fusion: side effects of the laser—metal powder interaction. Metals, 10:341, Mar 2020. URL: https://doi.org/10.3390/met10030341, doi:10.3390/met10030341. This article has 199 citations.
+
+37. (weaver2021inertgasflow pages 20-23): Jordan S Weaver, Alec Schlenoff, David C Deisenroth, and Shawn P Moylan. Inert gas flow speed measurements in laser powder bed fusion additive manufacturing. ArXiv, Oct 2021. URL: https://doi.org/10.6028/nist.ams.100-43, doi:10.6028/nist.ams.100-43. This article has 36 citations.
+
+38. (alsaddah2023multilaserpowderbeda pages 149-153): M Alsaddah. Multi-laser powder bed fusion using 808 nm sources. Unknown journal, 2023.
+
+39. (alsaddah2023multilaserpowderbed pages 149-153): M Alsaddah. Multi-laser powder bed fusion using 808 nm sources. Unknown journal, 2023.
+
+40. (alsaddah2023multilaserpowderbed pages 153-158): M Alsaddah. Multi-laser powder bed fusion using 808 nm sources. Unknown journal, 2023.
+
+41. (alsaddah2023multilaserpowderbeda pages 153-158): M Alsaddah. Multi-laser powder bed fusion using 808 nm sources. Unknown journal, 2023.
+
+42. (aydin2025theuseofa pages 78-82): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+43. (aydin2025theuseof pages 78-82): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+44. (erman2025diodeareamelting pages 6-8): Sefer Can Erman, Alkim Aydin, Kristian Groom, and Kamran Mumtaz. Diode area melting of ss316l using low power 450 nm lasers. The International Journal of Advanced Manufacturing Technology, 136:4471-4490, Jan 2025. URL: https://doi.org/10.1007/s00170-025-15090-0, doi:10.1007/s00170-025-15090-0. This article has 9 citations.
+
+45. (caglar2023multiple450nm pages 3-6): H. Caglar, A. Liang, and K. Mumtaz. Multiple 450 nm diode laser processing of ti64 powder. ConferencePaper, Jan 2023. URL: https://doi.org/10.26153/tsw/51029, doi:10.26153/tsw/51029. This article has 0 citations.
+
+46. (liang2026diodeareamelting pages 4-6): Anqi Liang, Sarath Veetil, Kristian Groom, and Kamran Mumtaz. Diode area melting of ti6al4v: effects of multi-laser processing on microstructure and residual stress. Progress in Additive Manufacturing, 11:11255-11270, Sep 2026. URL: https://doi.org/10.1007/s40964-026-01951-x, doi:10.1007/s40964-026-01951-x. This article has 0 citations and is from a peer-reviewed journal.

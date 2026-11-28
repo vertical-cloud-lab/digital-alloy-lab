@@ -1,0 +1,98 @@
+(Exported by FreeCAD)
+(Post Processor: Path.Post.scripts.linuxcnc_post)
+(Output Time:2026-11-27 10:45:44.176931)
+(begin preamble)
+G17 G54 G40 G49 G80 G90
+G21
+(begin operation: TC1_bracket_op2)
+(machine units: mm/min)
+(TC1_bracket_op2) 
+M5
+M6 T1 
+G43 H1 
+M3 S3000 
+(finish operation: TC1_bracket_op2)
+(begin operation: Face the bottom to 60 thick)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(Face the bottom to 60 thick) 
+G0 Z6.750 
+G0 X45.100 Y48.050 
+G0 Z4.750 
+G1 X45.100 Y48.050 Z0.000 F609.600 
+G1 X45.100 Y85.300 Z0.000 F1219.200 
+G1 X-45.100 Y85.300 Z0.000 F1219.200 
+G1 X-45.100 Y48.050 Z0.000 F1219.200 
+G1 X45.100 Y48.050 Z0.000 F1219.200 
+G1 X45.100 Y3.600 Z0.000 F1219.200 
+G1 X-45.100 Y3.600 Z0.000 F1219.200 
+G1 X-45.100 Y-40.850 Z0.000 F1219.200 
+G1 X45.100 Y-40.850 Z0.000 F1219.200 
+G1 X45.100 Y-85.300 Z0.000 F1219.200 
+G1 X-45.100 Y-85.300 Z0.000 F1219.200 
+G0 Z6.750 
+G0 Z6.750 
+(finish operation: Face the bottom to 60 thick)
+(Coolant Off:Flood)
+M9
+(begin operation: TC2_bracket_op2)
+(machine units: mm/min)
+(TC2_bracket_op2) 
+M5
+M6 T2 
+G43 H2 
+M3 S5100 
+(finish operation: TC2_bracket_op2)
+(begin operation: Outline rough 0.3 mm radial, the last 21.5 mm)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(Outline rough 0.3 mm radial, the last 21.5 mm) 
+(Compensated Tool Path. Diameter: 19.05) 
+G0 Z6.750 
+G0 X51.947 Y92.147 
+G0 Z4.750 
+G1 X51.947 Y92.147 Z-21.500 F971.550 
+G2 X54.825 Y85.200 Z-21.500 I-6.947 J-6.947 F1943.100 
+G1 X54.825 Y-85.200 Z-21.500 F1943.100 
+G2 X45.000 Y-95.025 Z-21.500 I-9.825 J0.000 F1943.100 
+G1 X-45.000 Y-95.025 Z-21.500 F1943.100 
+G2 X-54.825 Y-85.200 Z-21.500 I0.000 J9.825 F1943.100 
+G1 X-54.825 Y85.200 Z-21.500 F1943.100 
+G2 X-45.000 Y95.025 Z-21.500 I9.825 J-0.000 F1943.100 
+G1 X45.000 Y95.025 Z-21.500 F1943.100 
+G2 X51.947 Y92.147 Z-21.500 I-0.000 J-9.825 F1943.100 
+G0 Z6.750 
+G0 Z6.750 
+(finish operation: Outline rough 0.3 mm radial, the last 21.5 mm)
+(Coolant Off:Flood)
+M9
+(begin operation: Outline finish, the last 21.5 mm)
+(machine units: mm/min)
+(Coolant On:Flood)
+M8
+(Outline finish, the last 21.5 mm) 
+(Compensated Tool Path. Diameter: 19.05) 
+G0 Z6.750 
+G0 X51.735 Y91.935 
+G0 Z4.750 
+G1 X51.735 Y91.935 Z-21.500 F971.550 
+G2 X54.525 Y85.200 Z-21.500 I-6.735 J-6.735 F1943.100 
+G1 X54.525 Y-85.200 Z-21.500 F1943.100 
+G2 X45.000 Y-94.725 Z-21.500 I-9.525 J-0.000 F1943.100 
+G1 X-45.000 Y-94.725 Z-21.500 F1943.100 
+G2 X-54.525 Y-85.200 Z-21.500 I-0.000 J9.525 F1943.100 
+G1 X-54.525 Y85.200 Z-21.500 F1943.100 
+G2 X-45.000 Y94.725 Z-21.500 I9.525 J0.000 F1943.100 
+G1 X45.000 Y94.725 Z-21.500 F1943.100 
+G2 X51.735 Y91.935 Z-21.500 I0.000 J-9.525 F1943.100 
+G0 Z6.750 
+G0 Z6.750 
+(finish operation: Outline finish, the last 21.5 mm)
+(Coolant Off:Flood)
+M9
+(begin postamble)
+M05
+G17 G54 G90 G80 G40
+M2

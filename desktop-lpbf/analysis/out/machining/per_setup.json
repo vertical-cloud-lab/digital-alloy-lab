@@ -1,0 +1,147 @@
+{
+ "process_chamber_body": {
+  "waste_cm3": 2502.3,
+  "setups": {
+   "+z": {
+    "removable_cm3": 1942.7,
+    "only_this_setup_cm3": 27.55
+   },
+   "-z": {
+    "removable_cm3": 1966.3,
+    "only_this_setup_cm3": 41.72
+   },
+   "+x": {
+    "removable_cm3": 1450.6,
+    "only_this_setup_cm3": 12.22
+   },
+   "-x": {
+    "removable_cm3": 1437.0,
+    "only_this_setup_cm3": 1.11
+   },
+   "+y": {
+    "removable_cm3": 1359.2,
+    "only_this_setup_cm3": 13.51
+   },
+   "-y": {
+    "removable_cm3": 1759.9,
+    "only_this_setup_cm3": 318.85
+   }
+  }
+ },
+ "chamber_floor_plate": {
+  "waste_cm3": 925.1,
+  "setups": {
+   "+z": {
+    "removable_cm3": 747.0,
+    "only_this_setup_cm3": 18.62
+   },
+   "-z": {
+    "removable_cm3": 713.8,
+    "only_this_setup_cm3": 13.52
+   },
+   "+x": {
+    "removable_cm3": 546.8,
+    "only_this_setup_cm3": 0.0
+   },
+   "-x": {
+    "removable_cm3": 548.3,
+    "only_this_setup_cm3": 0.0
+   },
+   "+y": {
+    "removable_cm3": 535.9,
+    "only_this_setup_cm3": 0.0
+   },
+   "-y": {
+    "removable_cm3": 536.9,
+    "only_this_setup_cm3": 0.0
+   }
+  }
+ },
+ "chamber_lid": {
+  "waste_cm3": 650.3,
+  "setups": {
+   "+z": {
+    "removable_cm3": 393.3,
+    "only_this_setup_cm3": 13.16
+   },
+   "-z": {
+    "removable_cm3": 390.3,
+    "only_this_setup_cm3": 10.07
+   },
+   "+x": {
+    "removable_cm3": 416.0,
+    "only_this_setup_cm3": 0.0
+   },
+   "-x": {
+    "removable_cm3": 416.0,
+    "only_this_setup_cm3": 0.0
+   },
+   "+y": {
+    "removable_cm3": 423.5,
+    "only_this_setup_cm3": 0.0
+   },
+   "-y": {
+    "removable_cm3": 469.2,
+    "only_this_setup_cm3": 35.85
+   }
+  }
+ },
+ "chamber_door": {
+  "waste_cm3": 338.2,
+  "setups": {
+   "+z": {
+    "removable_cm3": 270.5,
+    "only_this_setup_cm3": 0.0
+   },
+   "-z": {
+    "removable_cm3": 270.5,
+    "only_this_setup_cm3": 0.0
+   },
+   "+x": {
+    "removable_cm3": 256.3,
+    "only_this_setup_cm3": 0.0
+   },
+   "-x": {
+    "removable_cm3": 256.3,
+    "only_this_setup_cm3": 0.0
+   },
+   "+y": {
+    "removable_cm3": 237.5,
+    "only_this_setup_cm3": 1.58
+   },
+   "-y": {
+    "removable_cm3": 236.3,
+    "only_this_setup_cm3": 0.38
+   }
+  }
+ },
+ "build_module_m50_spigot": {
+  "waste_cm3": 1432.7,
+  "setups": {
+   "+z": {
+    "removable_cm3": 1010.3,
+    "only_this_setup_cm3": 0.05
+   },
+   "-z": {
+    "removable_cm3": 1228.0,
+    "only_this_setup_cm3": 0.62
+   },
+   "+x": {
+    "removable_cm3": 982.9,
+    "only_this_setup_cm3": 0.06
+   },
+   "-x": {
+    "removable_cm3": 982.8,
+    "only_this_setup_cm3": 0.06
+   },
+   "+y": {
+    "removable_cm3": 1003.4,
+    "only_this_setup_cm3": 0.06
+   },
+   "-y": {
+    "removable_cm3": 1015.9,
+    "only_this_setup_cm3": 0.06
+   }
+  }
+ }
+}

@@ -1,0 +1,50 @@
+[
+ [
+  "render_cell.png",
+  "The cell: two UR12e on MiR250s, the bench with the module nests, Fixture P, the trunnion, and Fixture B with the finished process module"
+ ],
+ [
+  "render_F05b_mid.png",
+  "Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion to Fixture B"
+ ],
+ [
+  "render_C01b.png",
+  "The trunnion has turned the chamber upside down for the under-floor work"
+ ],
+ [
+  "render_M22_1.png",
+  "Heater stack into the bore: the rod on its bullet passes the two rod O-rings"
+ ],
+ [
+  "render_M20.png",
+  "Spigot O-ring: mandrel on the spigot, pusher stroke"
+ ],
+ [
+  "render_C10_1.png",
+  "Build module (upside down) into the floor port, chamber in the trunnion"
+ ],
+ [
+  "render_F29_A_0.png",
+  "Lid cord rolled into the body's gland (roller on arm A)"
+ ],
+ [
+  "carry_F05b.gif",
+  "Chamber assembly carried by both arms from the trunnion to Fixture B (F05b), every few frames of the checked path"
+ ],
+ [
+  "render_screw_F06.png",
+  "F06: base-plate-to-leg M6 driven up from under the plate (angle-head nutrunner)"
+ ],
+ [
+  "render_screw_C00d.png",
+  "C00d: floor-plate M4 driven up through a U-notch (angle-head nutrunner)"
+ ],
+ [
+  "render_screw_F31.png",
+  "F31: lid M5 (OnRobot Screwdriver, side-mounted)"
+ ],
+ [
+  "render_screw_F18h.png",
+  "F18: rail M4 driven from inside the chamber (angle-head nutrunner)"
+ ]
+]

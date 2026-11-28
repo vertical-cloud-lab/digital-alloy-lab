@@ -1,0 +1,9 @@
+route,label,labour_h,labour_usd_at_65,outside_usd,materials_and_tools_usd,equipment_usd,total_usd_at_65,total_usd_at_95,total_usd_labour_free,ready_working_days,ready_calendar_days,ready_weeks,critical_path
+a1,"All in house, one machinist (full-time)",291.3,18934,400,9317,,"[28652, 28652]","[37390, 37390]",9717,"[38.9, 60]","[54, 84]","[7.8, 12.0]",machining
+a2,"All in house, two machinists (one programs, one runs)",291.3,18934,400,9317,,"[28652, 28652]","[37390, 37390]",9717,"[35, 60]","[49, 84]","[7.0, 12.0]",honing loop
+a3,"All in house, shop shared: 20 h a week",291.3,18934,400,9317,,"[28652, 28652]","[37390, 37390]",9717,"[74.8, 76.8]","[105, 108]","[15.0, 15.4]",machining
+b_cn,All outsourced: JLCCNC (China) + a US specialist for the module,72.0,4680,6456,0,,"[11136, 11136]","[13296, 13296]",6456,"[37.0, 63.0]","[52, 88]","[7.4, 12.6]","the module weldment (welded, bored and honed outside)"
+b_us,All outsourced: US instant quotes + job shops,72.0,4680,28494,0,,"[33174, 33174]","[35334, 35334]",28494,"[37.0, 63.0]","[52, 88]","[7.4, 12.6]","the module weldment (welded, bored and honed outside)"
+c_cn,"Hybrid: make the seal and module parts, buy 12 catalogue swaps, outsource the rest to JLCCNC",134.1,8716,4529,6377,,"[19622, 19622]","[23646, 23646]",10906,"[35, 60]","[49, 84]","[7.0, 12.0]",honing loop
+c_us,Hybrid with US instant quotes (SendCutSend etc.),134.1,8716,11872,6377,,"[26966, 26966]","[30988, 30988]",18249,"[35, 60]","[49, 84]","[7.0, 12.0]",honing loop
+d,Robot shop: two UR12e on MiR250s tend the VF-4 and lathe (robot-shop.md),"[1430, 2850]","[92950.0, 185250.0]",400,9317,329339,"[432006, 524306]","[474906, 609806]",339056,"[110.0, 212.0]","[154, 297]","[22.0, 42.4]","commissioning the cell (Edison r7 robot-build review, section 5: estimates)"

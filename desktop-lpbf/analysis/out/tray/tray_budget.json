@@ -1,0 +1,325 @@
+{
+ "sources": {
+  "ipg": "IPG spec sheet G22-29856 rev. 00 for YLR-500-U3-SM-AC (quotes/ipg-ylr-500-u3-sm-ac.md): 1,500 W typ / 1,700 W max, 1,600 VA typ / 1,900 VA max at 500 W out; 200-240 VAC 1-phase; forced air; 10-35 C ambient",
+  "pump": "Edwards nXDS6i A73501983 (bom.csv G2), nXDS instruction manual A73501880 issue I (idealvac.com mirror, sha256 d04f0234..., read 2026-11-23 22:28Z): 100-127 V or 200-240 V +/-10 %, 1-phase 50/60 Hz, auto-sensing inverter drive; continuous rating 10 A rms at 100-127 V, 6 A rms at 200-240 V (Table 8); supply protection 10 A (Table 9); time-lag fuses or breakers, 'current transients can exceed the rated values' (issue B 3.6.1); RCD >= 30 mA 'to avoid trip during start up'; 260 W at ultimate, 170 W standby (Edwards catalogue page, search snippet). Taken at 208 V across L1-L2 at its 6 A rating while purging (power factor 0.6 assumed, so 749 W: a high side for the heat; the catalogue's 260 W at ultimate is the low side)",
+  "blower_hi": "McMaster 9960K51 regenerative blower (mcmaster-parts.csv): 1/8 hp, 115 V; taken as the upper bound",
+  "blower_lo": "sealed 24 V brushless blower: ~2.4 L/s (144 L/min, 2.5 m/s through 120 x 8 mm) against ~2 kPa is ~5 W of gas power; at 10-25 % blower efficiency, 20-50 W (estimate)",
+  "heat": "modules.md / analysis/out/thermal: 2 / 3 / 5 x 50 W cartridges (S25 / M50 / L75), worst steady 44 / 72 / 97 W at 200 C; Mean Well LRS-350-24 about 89 % efficient (datasheet)",
+  "pc": "2U scan/laser controller PC with an RTC6 card: 80 W typical, 200 W rated (estimate)",
+  "galvo": "SCANLAB basiCube 20 on one 24 V rail, <= 2.6 A (SCANLAB basiCube series data, electrical.md section 0 point 4; it is not +/-15 V), through a Mean Well HDR-100-24 (~90 % efficient): 69 W rated, ~30 W typical (estimate)",
+  "servo": "three Teknic ClearPath-SD axes (recoater, Z, metering roller): ~10 W each holding/average, 100 W each peak (estimate)",
+  "gas_inst": "O2 analyzer (zirconia cell heater ~10-20 W), dew-point transmitter (~2 W), pressure transmitters, two 24 V solenoids (~8 W each when held) (estimates)",
+  "ctrl": "Pi 5 + cameras ~15 W, safety relay + guard lock + panel lamps ~15 W, network switch ~10 W, 24 V supply losses ~15 W (estimates)",
+  "ups": "Eaton 5PX1500RTG2 (bom.csv D2, the model's 2U unit, electrical.md 1.2): line-interactive, 1,500 VA / 1,500 W; ENERGY STAR UPS dataset (data.energystar.gov resource ifxy-2uty, read 2026-11-23 22:48Z): efficiency 98.6 % at 50 % and 75 % load, 98.4 % at 100 %, weighted 98.6 %; battery runtime 14 min at 50 % and 7 min at 100 % load. No 25 % or no-load figure is listed: 98.6 % at 25 % and a 10 W no-load draw are assumed. The Vertiv GXT5LI-1500 that byu-vcl PR 318 standardises on (online, 1,350 W, 88.8 % at 25 %, 29.1 W no-load) is D2's alternative",
+  "dock": "byu-vcl PR 318 services.py: dock 208Y/120 V, L1, L2, N, PE, 30 A breaker; CombiTac O3 mm contacts 39 A",
+  "shuttle": "byu-vcl PR 318 services.heat_budget: Shuttle enclosure 2.83 x 3.12 x 3.95 m, 55.9 m2 of walls and roof, 5.5 W/m2K for painted sheet steel in still air; Shuttle 1 idle 1,317 W (4.3 K), Shuttle 1 with a printer and the furnace working 3,720 W (12.1 K)",
+  "chiller": "byu-vcl PR 318: the shared chiller is a Thermo Scientific ThermoFlex 900, 900 W at +20 C"
+ },
+ "laser_model": {
+  "ready_w": 150.0,
+  "wall_plug_eff": 0.323,
+  "pf": 0.895,
+  "al_power_w": 350.0,
+  "duty": 0.6
+ },
+ "ups": {
+  "model": "Eaton 5PX1500RTG2",
+  "rated_w": 1500.0,
+  "backed_rated_w": 684.3333333333334,
+  "fits": true
+ },
+ "phases": {
+  "standby (docked, nothing running)": {
+   "loads": {
+    "laser": {
+     "w": 0.0,
+     "volts": 208,
+     "backed": false
+    },
+    "pc": {
+     "w": 80.0,
+     "volts": 120,
+     "backed": true
+    },
+    "gas_instruments": {
+     "w": 35.0,
+     "volts": 120,
+     "backed": true
+    },
+    "controls": {
+     "w": 55.0,
+     "volts": 120,
+     "backed": true
+    },
+    "ups loss": {
+     "w": 7.9,
+     "volts": 120,
+     "backed": false
+    }
+   },
+   "total_w": 178,
+   "backed_w": 170,
+   "optical_w": 0,
+   "heat_to_enclosure_air_cooled_w": 178,
+   "heat_to_enclosure_water_cooled_w": 178,
+   "shuttle_rise_k_alone": 0.6,
+   "shuttle_rise_k_with_idle_shuttle": 4.9,
+   "shuttle_rise_k_with_busy_shuttle": 12.7,
+   "shuttle_rise_k_with_busy_shuttle_water_cooled": 12.7,
+   "airflow_m3h_for_5k": 106,
+   "airflow_m3h_for_10k": 53,
+   "dock_leg_amps": [
+    1.6,
+    0.0
+   ],
+   "dock_ok": true
+  },
+  "purge (pump on, 3 cycles, ~10-15 min)": {
+   "loads": {
+    "pump": {
+     "w": 748.8,
+     "volts": 208,
+     "backed": false
+    },
+    "laser": {
+     "w": 150.0,
+     "volts": 208,
+     "backed": false
+    },
+    "pc": {
+     "w": 80.0,
+     "volts": 120,
+     "backed": true
+    },
+    "gas_instruments": {
+     "w": 35.0,
+     "volts": 120,
+     "backed": true
+    },
+    "controls": {
+     "w": 55.0,
+     "volts": 120,
+     "backed": true
+    },
+    "blower": {
+     "w": 50.0,
+     "volts": 120,
+     "backed": false
+    },
+    "ups loss": {
+     "w": 7.9,
+     "volts": 120,
+     "backed": false
+    }
+   },
+   "total_w": 1127,
+   "backed_w": 170,
+   "optical_w": 0,
+   "heat_to_enclosure_air_cooled_w": 1127,
+   "heat_to_enclosure_water_cooled_w": 999,
+   "shuttle_rise_k_alone": 3.7,
+   "shuttle_rise_k_with_idle_shuttle": 7.9,
+   "shuttle_rise_k_with_busy_shuttle": 15.8,
+   "shuttle_rise_k_with_busy_shuttle_water_cooled": 15.3,
+   "airflow_m3h_for_5k": 673,
+   "airflow_m3h_for_10k": 336,
+   "dock_leg_amps": [
+    8.4,
+    7.2
+   ],
+   "dock_ok": true
+  },
+  "preheat (heaters at full power, ~15-40 min)": {
+   "loads": {
+    "heaters": {
+     "w": 280.9,
+     "volts": 120,
+     "backed": false
+    },
+    "laser": {
+     "w": 150.0,
+     "volts": 208,
+     "backed": false
+    },
+    "blower": {
+     "w": 50.0,
+     "volts": 120,
+     "backed": false
+    },
+    "pc": {
+     "w": 80.0,
+     "volts": 120,
+     "backed": true
+    },
+    "gas_instruments": {
+     "w": 35.0,
+     "volts": 120,
+     "backed": true
+    },
+    "controls": {
+     "w": 55.0,
+     "volts": 120,
+     "backed": true
+    },
+    "ups loss": {
+     "w": 7.9,
+     "volts": 120,
+     "backed": false
+    }
+   },
+   "total_w": 659,
+   "backed_w": 170,
+   "optical_w": 0,
+   "heat_to_enclosure_air_cooled_w": 659,
+   "heat_to_enclosure_water_cooled_w": 531,
+   "shuttle_rise_k_alone": 2.1,
+   "shuttle_rise_k_with_idle_shuttle": 6.4,
+   "shuttle_rise_k_with_busy_shuttle": 14.2,
+   "shuttle_rise_k_with_busy_shuttle_water_cooled": 13.8,
+   "airflow_m3h_for_5k": 393,
+   "airflow_m3h_for_10k": 197,
+   "dock_leg_amps": [
+    2.8,
+    3.3
+   ],
+   "dock_ok": true
+  },
+  "building, typical (Al at 350 W, beam on 60 %)": {
+   "loads": {
+    "laser": {
+     "w": 801.0,
+     "volts": 208,
+     "backed": false
+    },
+    "heaters": {
+     "w": 109.0,
+     "volts": 120,
+     "backed": false
+    },
+    "blower": {
+     "w": 50.0,
+     "volts": 120,
+     "backed": false
+    },
+    "pc": {
+     "w": 80.0,
+     "volts": 120,
+     "backed": true
+    },
+    "galvo": {
+     "w": 30.0,
+     "volts": 120,
+     "backed": true
+    },
+    "servos": {
+     "w": 30.0,
+     "volts": 120,
+     "backed": true
+    },
+    "gas_instruments": {
+     "w": 35.0,
+     "volts": 120,
+     "backed": true
+    },
+    "controls": {
+     "w": 55.0,
+     "volts": 120,
+     "backed": true
+    },
+    "ups loss": {
+     "w": 7.1,
+     "volts": 120,
+     "backed": false
+    }
+   },
+   "total_w": 1197,
+   "backed_w": 230,
+   "optical_w": 210,
+   "heat_to_enclosure_air_cooled_w": 1197,
+   "heat_to_enclosure_water_cooled_w": 695,
+   "shuttle_rise_k_alone": 3.9,
+   "shuttle_rise_k_with_idle_shuttle": 8.2,
+   "shuttle_rise_k_with_busy_shuttle": 16.0,
+   "shuttle_rise_k_with_busy_shuttle_water_cooled": 14.4,
+   "airflow_m3h_for_5k": 715,
+   "airflow_m3h_for_10k": 357,
+   "dock_leg_amps": [
+    6.4,
+    5.7
+   ],
+   "dock_ok": true
+  },
+  "building, worst (500 W, beam on continuously)": {
+   "loads": {
+    "laser": {
+     "w": 1700.0,
+     "volts": 208,
+     "backed": false
+    },
+    "heaters": {
+     "w": 280.9,
+     "volts": 120,
+     "backed": false
+    },
+    "blower": {
+     "w": 230.0,
+     "volts": 120,
+     "backed": false
+    },
+    "pc": {
+     "w": 200.0,
+     "volts": 120,
+     "backed": true
+    },
+    "galvo": {
+     "w": 69.3,
+     "volts": 120,
+     "backed": true
+    },
+    "servos": {
+     "w": 30.0,
+     "volts": 120,
+     "backed": true
+    },
+    "gas_instruments": {
+     "w": 35.0,
+     "volts": 120,
+     "backed": true
+    },
+    "controls": {
+     "w": 55.0,
+     "volts": 120,
+     "backed": true
+    },
+    "ups loss": {
+     "w": 5.5,
+     "volts": 120,
+     "backed": false
+    }
+   },
+   "total_w": 2606,
+   "backed_w": 389,
+   "optical_w": 500,
+   "heat_to_enclosure_air_cooled_w": 2606,
+   "heat_to_enclosure_water_cooled_w": 1586,
+   "shuttle_rise_k_alone": 8.5,
+   "shuttle_rise_k_with_idle_shuttle": 12.8,
+   "shuttle_rise_k_with_busy_shuttle": 20.6,
+   "shuttle_rise_k_with_busy_shuttle_water_cooled": 17.3,
+   "airflow_m3h_for_5k": 1556,
+   "airflow_m3h_for_10k": 778,
+   "dock_leg_amps": [
+    12.6,
+    13.6
+   ],
+   "dock_ok": true
+  }
+ },
+ "shuttle": {
+  "area_m2": 55.9,
+  "k_w_m2k": 5.5,
+  "room_c": 22.0,
+  "idle_w": 1317.0,
+  "busy_w": 3720.0
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "before": {
+  "file": "results_run10.json",
+  "checked": 108,
+  "passed": 98,
+  "screws_ok": 124,
+  "screws": 129
+ },
+ "after": {
+  "file": "results_run11.json",
+  "checked": 108,
+  "passed": 99,
+  "screws_ok": 124,
+  "screws": 129
+ },
+ "fetch": {
+  "steps": 74,
+  "passed": 57,
+  "person": 0,
+  "failed": [
+   {
+    "id": "M04",
+    "why": "pick at the table (M04): lift: left_finger_tip hits M04 riser"
+   },
+   {
+    "id": "F02b",
+    "why": "pick at the table (F02b): lift: left_finger_tip hits F02b rim 3"
+   },
+   {
+    "id": "F18",
+    "why": "pick at the table (F18): in to the grasp: left_finger_tip hits Recoater guide rail (15 mm, 260 mm)"
+   },
+   {
+    "id": "F36",
+    "why": "pick at the table (F36): lift: right_finger_tip hits O2 sample line (1/8 in. 316L)"
+   },
+   {
+    "id": "F39",
+    "why": "pick at the table (F39): in to the grasp: left_finger_tip hits Drawer latches: 2 x quarter-turn latch studs (enve"
+   },
+   {
+    "id": "F45",
+    "why": "at x 8882: B cabinet hits Zero-point release-air line (\u00d84 tube, valve to a u"
+   },
+   {
+    "id": "F45b",
+    "why": "at x 8880: B cabinet hits Zero-point release-air line (\u00d84 tube, valve to a u"
+   },
+   {
+    "id": "F45d",
+    "why": "pick at the table (F45d#1): lift: left_finger_tip hits F45d#1 rim 1"
+   }
+  ]
+ },
+ "presenter": {
+  "planned": 119,
+  "driven": 124
+ },
+ "still_failing": [
+  {
+   "id": "C00d",
+   "label": "Eighteen M4 x 16 floor-plate screws up through the U-notches into the frame's skirt, from ",
+   "why": "in the: approach: no path in 2000 iterations"
+  },
+  {
+   "id": "F15",
+   "label": "Nine M4 x 16 inlet-plenum screws into the back wall (100 mm bit extension: runs 9-10 met t",
+   "why": "316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner"
+  },
+  {
+   "id": "F18",
+   "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assemble",
+   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/forearm hits Base plate, process module (MIC-6, 15 mm); also no way with nu"
+  },
+  {
+   "id": "F26",
+   "label": "Blade holder and blade, in through the door opening and up under the recoater arm",
+   "why": "arm A: A/gr/right_finger_tip hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 117 mm along the insertion"
+  },
+  {
+   "id": "F27",
+   "label": "Two M3 x 8 blade screws by arm B from the back (100 mm bit extension: run 7's driver met t",
+   "why": "316 #1: screwdriver: B/tool/screwdriver hits Overflow funnel block (316L, bolted, FKM face O-ring); 316 #2: screwdriver: B/tool/screwdriver hits Overflow funnel block (316L, bolted, FKM face O-ring)"
+  },
+  {
+   "id": "F45d",
+   "label": "Load cell, then the dock rails on it, the NFC reader, side port blank and docked sensor, f",
+   "why": "released 36 mm short and pushed home with the closed fingers; released 18 mm short and pushed home with the closed fingers; sweep: NFC reader antenna blocked by Metering base (6061, fluted roller over"
+  },
+  {
+   "id": "F48b",
+   "label": "Camera window gasket (1 mm FKM flat ring), window and flat ring into the counterbore along",
+   "why": "arm A: A/tool/ringpad hits Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals) at 63 mm along the insertion"
+  },
+  {
+   "id": "F54",
+   "label": "Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist lifts, both",
+   "why": "no collision-free pair of arm poses at the start of the carry"
+  },
+  {
+   "id": "F57",
+   "label": "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
+   "why": "released 9 mm short and pushed home with the closed fingers; arm A: held:F57:Enclosed beam tubes #1 hits Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg: reflects 1070 nm into the galvo, passes"
+  }
+ ],
+ "fixed": [
+  "F45"
+ ],
+ "time": {
+  "robot_h": 2.9,
+  "person_h": 6.37,
+  "elapsed_h": 9.76,
+  "by_chapter": {
+   "module": 0.54,
+   "chamber": 9.21
+  }
+ }
+}

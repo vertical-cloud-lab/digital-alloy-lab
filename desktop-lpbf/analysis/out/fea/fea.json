@@ -1,0 +1,647 @@
+{
+ "7": {
+  "case": "7 laser window, \u00d850.8 x 8 mm UV fused silica",
+  "material": "UV fused silica",
+  "load": "0.1013 MPa, simply supported on \u00d848 (unclamped, O-ring)",
+  "nodes": 16253,
+  "elements": 9749,
+  "s1_max": 1.1762971245665215,
+  "s1_max_at": [
+   -8.784595419598569,
+   23.811687819841755,
+   0.0
+  ],
+  "roark_ss": 1.080631125,
+  "sf_fea": 44.54656812946812,
+  "sf_formula": 45.96869260081696,
+  "t_required_mm": {
+   "4": 2.359874495304313,
+   "6": 2.8902441852517717
+  },
+  "u_max_um": 0.7357879338238368,
+  "criterion": "SF >= 4-6 against the 52.4 MPa abraded modulus of rupture (Corning 7980)",
+  "pass": true
+ },
+ "5": {
+  "case": "5 Z lift arm",
+  "material": "6061-T6 aluminium",
+  "load": "50 N down + 10 N in x at the rod bore; carriage face (y = 56) fixed",
+  "nodes": 16985,
+  "elements": 9969,
+  "vm_max": 2.8170537970975564,
+  "vm_max_at": [
+   24.307307317745614,
+   54.928538874187495,
+   -153.0
+  ],
+  "u_rod_um": [
+   0.09119192307692309,
+   0.5413434461538461,
+   -5.5290515384615375
+  ],
+  "u_max": 0.008455514511384685,
+  "tilt_urad": 140.527779176441,
+  "plate_tilt_um_over_50mm": 7.02638895882205,
+  "sf_yield": 97.97469976766722,
+  "criterion": "plate tilt < 10 um across \u00d850 (arm only; the carriage, rail and actuator add their own compliance)",
+  "pass": true,
+  "png": "c5_zarm_vm.png"
+ },
+ "3": {
+  "case": "3 door, vacuum",
+  "material": "6061-T6 aluminium",
+  "load": "2445 N over the area inside the O-ring; y fixed on the land outside the groove",
+  "nodes": 39920,
+  "elements": 23081,
+  "vm_max": 7.175530372646244,
+  "vm_max_at": [
+   2.473306490954466,
+   -112.32,
+   0.8500000000000014
+  ],
+  "u_max": 0.005270787672308672,
+  "sf_yield": 38.464055709684736,
+  "overpressure_50mbar_total_N": 120.63999999999999,
+  "overpressure_per_latch_N": 60.31999999999999,
+  "latch_rating_N": 3558.4000000000005,
+  "sf_latch": 58.992042440318315,
+  "criterion": "SF >= 2 on yield; at +50 mbar each of the 2 toggle latches (McMaster 1807A61, 800 lb) carries half the door load",
+  "pass": true,
+  "png": "c3_door_vm.png"
+ },
+ "2": {
+  "case": "2 lid, vacuum",
+  "material": "6061-T6 aluminium",
+  "load": "0.1013 MPa on the top face; window 250 N, dose slot and camera port carried round their flanges; z fixed on the outer sealing land, 4 bolt points pinned in-plane",
+  "nodes": 265140,
+  "elements": 164615,
+  "vm_max": 47.28030472828195,
+  "vm_max_at": [
+   -44.565784930203606,
+   -107.4875,
+   120.0
+  ],
+  "vm_p995": 15.696003745635373,
+  "u_max": 0.06804774603259986,
+  "window_seat_uz": -0.067628,
+  "window_seat_tilt_urad": 155.7935177768185,
+  "camera_port_uz": -0.0355585,
+  "sf_yield": 5.8375258278507545,
+  "criterion": "window seat sag << Rayleigh range (\u00b13.7 mm) and seat tilt negligible; SF >= 2 on yield",
+  "pass": true,
+  "png": "c2_lid_vm.png",
+  "run": {
+   "utc": "2026-11-22 06:16",
+   "commit": "9f45d80",
+   "nodes": 265140,
+   "solver": "ITERATIVE CHOLESKY"
+  }
+ },
+ "4": {
+  "case": "4 recoater carriage block + arm + blade holder",
+  "material": "6061-T6 aluminium",
+  "load": "spread: 10 N up + 10 N drag (-x) over the holder's bottom face; hit: 50 N (-x) on its front end; carriage face fixed in y,z, nut bore in x",
+  "variants": [
+   {
+    "variant": "first layout",
+    "nodes": 114961,
+    "elements": 74428,
+    "spread": {
+     "vm_max": 13.068857615319713,
+     "vm_max_at": [
+      -110.74569857102847,
+      33.0,
+      14.588451605609905
+     ],
+     "uz_max_um": 28.1477,
+     "ux_max_um": 23.5233,
+     "uz_range_over_plate_um": 15.7447,
+     "uz_tip_um": 28.1477,
+     "uz_root_um": -0.894278,
+     "sf_yield": 21.1189078742785,
+     "png": "c4a_recoater_vm.png"
+    },
+    "hit": {
+     "vm_max": 75.14260158791416,
+     "vm_max_at": [
+      -111.5,
+      33.0,
+      14.0
+     ],
+     "uz_max_um": 0.638889,
+     "ux_max_um": 262.755,
+     "uz_range_over_plate_um": 0.8471710000000001,
+     "uz_tip_um": -0.638889,
+     "uz_root_um": -0.156406,
+     "sf_yield": 3.6730162939206976
+    },
+    "run": {
+     "utc": "2026-11-22 06:33",
+     "commit": "9f45d80",
+     "nodes": 114961,
+     "solver": "ITERATIVE CHOLESKY"
+    },
+    "pass": false
+   },
+   {
+    "variant": "as built in lpbf_low.py",
+    "nodes": 300172,
+    "elements": 206414,
+    "spread": {
+     "vm_max": 2.1178511635143296,
+     "vm_max_at": [
+      -113.5,
+      53.0,
+      33.86602540378444
+     ],
+     "uz_max_um": 5.070189999999999,
+     "ux_max_um": 2.9279599999999997,
+     "uz_range_over_plate_um": 2.38063,
+     "uz_tip_um": 4.895359999999999,
+     "uz_root_um": -0.0984471,
+     "sf_yield": 130.32077265619074,
+     "png": "c4b_recoater_vm.png"
+    },
+    "hit": {
+     "vm_max": 11.436702399221202,
+     "vm_max_at": [
+      -97.20474489798858,
+      52.62107869166122,
+      32.86950259529941
+     ],
+     "uz_max_um": 0.163982,
+     "ux_max_um": 33.6248,
+     "uz_range_over_plate_um": 0.18742509999999998,
+     "uz_tip_um": -0.163982,
+     "uz_root_um": -0.0143244,
+     "sf_yield": 24.132830458086815
+    },
+    "run": {
+     "utc": "2026-11-22 06:45",
+     "commit": "9f45d80",
+     "nodes": 300172,
+     "solver": "ITERATIVE CHOLESKY"
+    },
+    "pass": false
+   }
+  ],
+  "criterion": "blade deflection < 5 um under the spreading load (1/6 of a 30 um layer); no yield in the hit"
+ },
+ "6": {
+  "case": "6 optics bridge + posts",
+  "material": "6061-T6 aluminium",
+  "load": "gravity + galvo/lens 3.1 kg, shutter 1.2 kg, collimator 0.5 kg as rigid masses at their centres of mass; post feet fixed",
+  "variants": [
+   {
+    "variant": "first layout: 15 mm plate, 40x40x4 posts",
+    "nodes": 64271,
+    "elements": 31797,
+    "gravity": {
+     "lens_bore_sag_um": -15.69667695652174,
+     "u_max_um": 22.347102938117168,
+     "vm_max": 2.0854646234501315
+    },
+    "png": "c6a_bridge_mode1.png",
+    "modes": [
+     {
+      "f_hz": 73.65614,
+      "galvo_dir": [
+       -1.0,
+       0.02,
+       -0.07
+      ],
+      "max_at": [
+       -116.0,
+       -170.0,
+       236.0
+      ],
+      "galvo_rel": 0.951402679976194,
+      "galvo_tilt_rel": 0.06440027118955537
+     },
+     {
+      "f_hz": 79.50394,
+      "galvo_dir": [
+       0.01,
+       1.0,
+       0.01
+      ],
+      "max_at": [
+       215.0,
+       170.0,
+       236.0
+      ],
+      "galvo_rel": 0.9851807793653156,
+      "galvo_tilt_rel": 0.02095413310073335
+     },
+     {
+      "f_hz": 130.0535,
+      "galvo_dir": [
+       0.0,
+       0.07,
+       1.0
+      ],
+      "max_at": [
+       -64.0,
+       -170.0,
+       236.0
+      ],
+      "galvo_rel": 0.590559733973062,
+      "galvo_tilt_rel": 0.3202029302415927
+     },
+     {
+      "f_hz": 145.8655,
+      "galvo_dir": [
+       0.13,
+       0.91,
+       -0.39
+      ],
+      "max_at": [
+       -345.0,
+       -170.0,
+       236.0
+      ],
+      "galvo_rel": 0.2676319589644302,
+      "galvo_tilt_rel": 0.08232312697946645
+     },
+     {
+      "f_hz": 314.4177,
+      "galvo_dir": [
+       0.12,
+       0.24,
+       -0.96
+      ],
+      "max_at": [
+       -64.0,
+       -170.0,
+       221.0
+      ],
+      "galvo_rel": 0.30461087096114725,
+      "galvo_tilt_rel": 0.47014685329135725
+     },
+     {
+      "f_hz": 413.9573,
+      "galvo_dir": [
+       -0.06,
+       -0.88,
+       -0.46
+      ],
+      "max_at": [
+       -116.0,
+       -170.0,
+       221.0
+      ],
+      "galvo_rel": 0.07320531312430256,
+      "galvo_tilt_rel": 0.32065666116228586
+     }
+    ],
+    "run": {
+     "utc": "2026-11-23 23:03",
+     "commit": "ca392b5",
+     "nodes": 64271,
+     "solver": "SPOOLES (gravity), SPOOLES (modes)",
+     "mesh": {
+      "hmax": 10.0,
+      "hmin": 3.0,
+      "per_circle": 6.0
+     }
+    },
+    "pass": false,
+    "optics_kg": 6.9
+   },
+   {
+    "variant": "as built in lpbf_low.py",
+    "nodes": 133809,
+    "elements": 74247,
+    "gravity": {
+     "lens_bore_sag_um": -4.989864572649573,
+     "u_max_um": 7.078072843725543,
+     "vm_max": 1.0857004302740283
+    },
+    "png": "c6b_bridge_mode1.png",
+    "modes": [
+     {
+      "f_hz": 128.2472,
+      "galvo_dir": [
+       -1.0,
+       0.0,
+       -0.1
+      ],
+      "max_at": [
+       -118.0,
+       -190.0,
+       236.0
+      ],
+      "galvo_rel": 0.9162220154504799,
+      "galvo_tilt_rel": 0.07011121770375334
+     },
+     {
+      "f_hz": 140.7439,
+      "galvo_dir": [
+       0.02,
+       -1.0,
+       0.0
+      ],
+      "max_at": [
+       -62.0,
+       -190.0,
+       236.0
+      ],
+      "galvo_rel": 0.9731664766159327,
+      "galvo_tilt_rel": 0.025145526122101854
+     },
+     {
+      "f_hz": 225.5957,
+      "galvo_dir": [
+       -0.07,
+       -0.55,
+       -0.83
+      ],
+      "max_at": [
+       245.0,
+       -190.0,
+       236.0
+      ],
+      "galvo_rel": 0.42550224293520106,
+      "galvo_tilt_rel": 0.19885913722716428
+     },
+     {
+      "f_hz": 240.2532,
+      "galvo_dir": [
+       -0.04,
+       0.18,
+       -0.98
+      ],
+      "max_at": [
+       -62.0,
+       -190.0,
+       211.0
+      ],
+      "galvo_rel": 0.6186499389963884,
+      "galvo_tilt_rel": 0.3136526549515045
+     },
+     {
+      "f_hz": 486.8887,
+      "galvo_dir": [
+       0.39,
+       -0.02,
+       -0.92
+      ],
+      "max_at": [
+       -62.0,
+       -190.0,
+       211.0
+      ],
+      "galvo_rel": 0.25796180904634,
+      "galvo_tilt_rel": 0.380271674692781
+     },
+     {
+      "f_hz": 536.4119,
+      "galvo_dir": [
+       0.9,
+       -0.42,
+       0.12
+      ],
+      "max_at": [
+       -360.0,
+       -190.0,
+       236.0
+      ],
+      "galvo_rel": 0.2372473293118588,
+      "galvo_tilt_rel": 0.26060630708276755
+     }
+    ],
+    "run": {
+     "utc": "2026-11-23 23:08",
+     "commit": "ca392b5+dirty",
+     "nodes": 133809,
+     "solver": "SPOOLES (gravity), SPOOLES (modes)",
+     "mesh": {
+      "hmax": 10.0,
+      "hmin": 3.0,
+      "per_circle": 6.0
+     }
+    },
+    "pass": true,
+    "optics_kg": 6.9
+   }
+  ],
+  "criterion": "first mode > 100 Hz (60 Hz minimum) so building and VLM vibration don't excite the galvo"
+ },
+ "1": {
+  "case": "1 chamber: frame + floor plate (bonded across the floor joint), open top, full vacuum",
+  "material": "6061-T6 aluminium",
+  "load": "-0.1013 MPa on 1416 cm2 of wetted faces; lid 5907 N on the top land; door 2445 N on its land; module 733 N, outlet plenum 185 N and funnel 257 N up on the floor plate round their openings; 4 leg pads under the floor plate fixed",
+  "nodes": 138021,
+  "elements": 80636,
+  "vm_max": 53.875655006718944,
+  "vm_max_at": [
+   106.75,
+   -95.0,
+   99.12916512459884
+  ],
+  "vm_p995": 22.49126958427568,
+  "u_max": 0.20816383437699057,
+  "u_max_at": [
+   4.263256414560601e-13,
+   -95.0,
+   120.0
+  ],
+  "door_land_uy_range": 0.1939951,
+  "door_land_u_max": 0.191881,
+  "lid_land_uz_range": 0.08305003,
+  "floor_joint_sz": {
+   "n": 419,
+   "mean": -0.8831371249642004,
+   "min": -12.6911,
+   "max": 0.310093
+  },
+  "sf_yield": 5.122907553802909,
+  "sf_haz": 2.04173851782,
+  "sf_fatigue_goodman": 2.731906866178477,
+  "sf_yield_p995": 12.271428207545911,
+  "criterion": "SF >= 2 on yield at the peak; seal faces move << the O-rings' squeeze; Goodman SF >= 2 for vacuum cycles",
+  "pass": true,
+  "png": "c1_chamber_vm.png",
+  "run": {
+   "utc": "2026-11-23 22:27",
+   "commit": "0dbb5a3",
+   "nodes": 138021,
+   "solver": "ITERATIVE CHOLESKY"
+  }
+ },
+ "1b": {
+  "case": "1b chamber: frame + floor plate + lid bonded, full vacuum and +20 mbar",
+  "material": "6061-T6 aluminium",
+  "load": "vacuum: suction inside incl. the lid underside, door on its land, window/dose/camera covers round their flanges, module/plenum/funnel loads under the floor; +20 mbar: the same loads reversed and scaled by 0.002/0.101325 (linear); 4 leg pads fixed",
+  "nodes": 280819,
+  "elements": 162669,
+  "vm_max": 28.761521877959776,
+  "vm_max_at": [
+   60.0,
+   95.0,
+   8.0
+  ],
+  "vm_p995": 9.64665810597239,
+  "u_max": 0.06239583447726884,
+  "u_max_at": [
+   1.793000237060511,
+   -4.561370388153904,
+   -2.0
+  ],
+  "door_land_uy_range": 0.0042755499999999995,
+  "window_seat_uz": -0.0487161,
+  "floor_joint_sz": {
+   "n": 417,
+   "mean": -0.864001997908873,
+   "min": -9.06365,
+   "max": 0.252846
+  },
+  "sf_yield": 9.596154235896028,
+  "sf_haz": 3.8245542244513158,
+  "sf_fatigue_goodman": 5.117367309603538,
+  "plus20mbar": {
+   "vm_max": 0.5677224555303189,
+   "vm_max_at": [
+    60.0,
+    95.0,
+    8.0
+   ],
+   "vm_p995": 0.1904114313446323,
+   "u_max": 0.0012315983127231575,
+   "u_max_at": [
+    1.793000237060511,
+    -4.561370388153904,
+    -2.0
+   ],
+   "door_land_uy_range": 8.439170000000001e-05,
+   "window_seat_uz": 0.000961572,
+   "floor_joint_sz": {
+    "n": 417,
+    "mean": 0.017054077158752998,
+    "min": -0.0049886,
+    "max": 0.178904
+   },
+   "sf_yield": 486.1530441704721,
+   "sf_haz": 193.75664803895629,
+   "sf_fatigue_goodman": 259.2521581610367
+  },
+  "criterion": "as case 1",
+  "pass": true,
+  "png": "c1b_chamber_lid_vm.png",
+  "run": {
+   "utc": "2026-11-23 22:53",
+   "commit": "0dbb5a3",
+   "nodes": 280819,
+   "solver": "ITERATIVE CHOLESKY"
+  }
+ },
+ "1f": {
+  "case": "1f floor-plate bolted joint (Shigley) and floor O-ring gland (Parker)",
+  "screws": "18 x McMaster 92290A154 (M4 x 16, 316), tapped 6061",
+  "proof_MPa": 210.0,
+  "tensile_MPa": 482.63299,
+  "preload_N": 1382.85,
+  "torque_Nm": 1.10628,
+  "nut_factor": 0.2,
+  "grip_mm": 8.1,
+  "kb_N_per_mm": 167776.23762376237,
+  "km_N_per_mm": 304157.8859076404,
+  "C": 0.3555077483448777,
+  "oring_N_per_mm": {
+   "nominal": 4.17235544544956,
+   "max_tolerance": 5.368682548808374,
+   "parker_80A": 9.631496062992127
+  },
+  "oring_force_N": {
+   "nominal": 3950.0021006368984,
+   "max_tolerance": 5082.574488847464,
+   "parker_80A": 9118.213962951502
+  },
+  "seal_area_mm2": 56666.28490494964,
+  "cases": {
+   "nominal O-ring, +20 mbar": {
+    "load_total_N": 4063.3346704467976,
+    "load_per_screw_N": 225.7408150248221,
+    "n_load": 5.743738509607806,
+    "n_sep": 9.5048941522036,
+    "screw_force_N": 1463.102608859012
+   },
+   "O-ring at max squeeze, +50 mbar (relief valve +34)": {
+    "load_total_N": 5365.905913372212,
+    "load_per_screw_N": 298.105884076234,
+    "n_load": 4.349448574174226,
+    "n_sep": 7.197585379074253,
+    "screw_force_N": 1488.828951616301
+   },
+   "Parker 80A bar, +50 mbar": {
+    "load_total_N": 9401.54538747625,
+    "load_per_screw_N": 522.3080770820138,
+    "n_load": 2.4824356913874204,
+    "n_sep": 4.1080018609518705,
+    "screw_force_N": 1568.5345684257695
+   },
+   "Parker 80A bar, +0.5 bar regulator fault": {
+    "load_total_N": 11951.528208198984,
+    "load_per_screw_N": 663.973789344388,
+    "n_load": 1.9527822231184615,
+    "n_sep": 3.2315169470194407,
+    "screw_force_N": 1618.8978268098394
+   },
+   "nominal O-ring, full vacuum": {
+    "load_total_N": -1791.709217357124,
+    "load_per_screw_N": -99.53940096428467,
+    "n_load": null,
+    "n_sep": null,
+    "screw_force_N": 1347.462971691589
+   }
+  },
+  "thread_engagement_mm": 7.9,
+  "thread_strip_N": 7904.817629657811,
+  "screw_proof_N": 1843.8,
+  "screw_break_N": 4237.5176522,
+  "preload_total_N": 24891.3,
+  "land_area_mm2": 2982.130065303097,
+  "land_pressure_preload_MPa": 8.346819037039587,
+  "head_bearing_MPa": 61.24171493693981,
+  "gland": {
+   "cs": 3.53,
+   "depth": 2.65,
+   "width": 4.6,
+   "squeeze_nom": 24.929178470254957,
+   "squeeze_min": 21.236872812135363,
+   "squeeze_max": 28.414096916299552,
+   "fill_nom": 80.2852171803057,
+   "fill_max_cold": 87.57836164156399,
+   "parker_range": {
+    "depth": [
+     2.57,
+     2.72
+    ],
+    "width_face": [
+     4.5,
+     4.75
+    ]
+   },
+   "path_mm": 946.7079572390784,
+   "splice": "vulcanized cord, made to length: no stretch"
+  },
+  "dowels": "2 x McMaster 93600A686 (\u00d86 x 20, m6), pressed into the plate, slip fit in the frame",
+  "criterion": "separation factor n_sep >= 2 and load factor n_load >= 1.5 in every case; thread strip > screw break",
+  "pass": true
+ },
+ "notes": {
+  "checks": [
+   "Solver, 2026-11-22, model 9f45d80, the same mesh solved twice. Door (case 3, 39,950 nodes), SPOOLES / ITERATIVE CHOLESKY: peak von Mises 6.883 / 6.882 MPa (\u22120.01 %), max displacement 5.278 \u00b5m in both. Z lift arm (case 5, 16,887 nodes): peak 2.953 / 2.898 MPa (\u22121.9 %), max displacement +0.07 %, plate tilt 7.027 / 7.025 \u00b5m. Re-meshing moves a peak more than the solver does: the door's peak was 7.18 MPa on the 2026-11-21 mesh (39,920 nodes) of the same part.",
+   "Bridge mesh, case 6a on 9f45d80. Old mesh (hmax 7, 141,517 nodes): f1\u2013f6 = 78.5, 86.8, 140.0, 153.2, 318.7, 395.1 Hz, lens bore sag 13.4 \u00b5m. New mesh (hmax 10, 63,484 nodes): 78.7, 87.0, 141.2, 153.6, 320.7, 397.5 Hz (+0.2 to +0.9 %), 13.2 \u00b5m. On the old mesh the gravity step took 19 min with ITERATIVE CHOLESKY (the rigid masses slow PCG down); on the new one, 13 s with SPOOLES.",
+   "Memory, peak of the whole run under a 4.5 GB cap: lid 1.5 GB with ITERATIVE CHOLESKY (with SPOOLES it passed 4.2 GB and was killed); bridge 3.5 GB (SPOOLES, 6b's modes on 131,318 nodes); recoater 1.5 GB with ITERATIVE CHOLESKY (SPOOLES on 4a's 115,000 nodes passed 4.4 GB and was killed)."
+  ],
+  "changes": [
+   "The old results for cases 2, 4 and 6 date from 2026-11-17 (78afc86). Since then the chamber has grown 40 mm in y (inner half-width iy 75 \u2192 95 mm, so the lid is 222 mm across, was 182), the dose slot and the blade have grown from \u00b130 to \u00b150 mm (dose_y), and joints.py has cut the screw and insert holes. This run (cases 2, 4 and 6) used the model at commit 9f45d80 (9f45d80745b77afb2c7b884fde5d0b435439105d), from a separate worktree, while the model was being edited.",
+   "Lid (case 2): window-seat sag 27.8 \u2192 67.6 \u00b5m, peak 15.2 \u2192 47.3 MPa (SF 18 \u2192 5.8), 99.5th percentile 7.2 \u2192 15.7 MPa, seat tilt 8 \u2192 156 \u00b5rad, camera port 17.0 \u2192 35.6 \u00b5m. Mostly the wider lid: its span between the sealing lands grew from ~164 to ~204 mm in y, and a plate's sag grows as about the fourth power of its short span (\u00d72.4). The cover-slide drawer slot, added after the old run, leaves two 5 mm skins from the front edge to y = +35 mm, past the window bore: it tilts the seat, and the peak sits on the top face at the slot's front corner, beside the drawer-latch receptacle. Still a pass: SF \u2265 2, the sag is far inside the \u00b13.7 mm Rayleigh range, and tilting an 8 mm window by 156 \u00b5rad shifts the beam ~0.4 \u00b5m.",
+   "Recoater (case 4), as built: blade |uz| 3.4 \u2192 5.1 \u00b5m (tip 4.9), |ux| 1.7 \u2192 2.9 \u00b5m, so it is now just over the 5 \u00b5m criterion and the table says FAIL. The blade holder is 114 mm long (was 74), because the blade now spans \u00b150 mm, though 31 mm deep (was 19). Hit peak 14.5 \u2192 11.4 MPa (SF 24). The first layout, rebuilt from today's parameters (a 94 mm holder), went 17.2 \u2192 28.1 \u00b5m.",
+   "Bridge (case 6b): modes 1\u20134 unchanged within 1 % (133 \u2192 134, 148 \u2192 150, 235 \u2192 235, 254 \u2192 253 Hz). Modes 5\u20136 dropped from 499 to 488 Hz and from 573 to 536 Hz. The posts have gained welded end caps and M6 screw holes since the old run. The coarser mesh raises 6a's modes 5\u20136 by 0.6 %, so the drop is not the mesh. Lens bore sag 4.3 \u2192 4.4 \u00b5m.",
+   "Cases 1 and 1b, re-run 2026-11-23 on the model at 0dbb5a3: the first run of either under the 4.5 GB cap (ITERATIVE CHOLESKY on 138,021 and 280,819 nodes; the cgroup's memory peak was 2.0 GB for the whole run, 1b's two ccx steps 12 min each). The old results predate the run record (before 2026-11-22). Case 1: 139,613 \u2192 138,021 nodes; peak von Mises 54.4 \u2192 53.9 MPa at the same top corner of the door opening (now the +x one; the two corners mirror each other), 99.5th percentile 22.3 \u2192 22.5 MPa, largest displacement 208 \u2192 208 \u00b5m, door land \u0394y 194 \u2192 194 \u00b5m, lid land \u0394z 84 \u2192 83 \u00b5m; floor joint \u03c3z mean -0.86 \u2192 -0.88 MPa, most tension +0.34 \u2192 +0.31 MPa; SF yield 5.1 \u2192 5.1, Goodman 2.7 \u2192 2.7, HAZ 2.0 \u2192 2.0.",
+   "Case 1b: 284,108 \u2192 280,819 nodes; peak 28.0 \u2192 28.8 MPa, still at the inlet slot's round end (back wall, x 60, z 8), 99.5th percentile 9.6 \u2192 9.6 MPa, largest displacement 63 \u2192 62 \u00b5m, door land \u0394y 4.3 \u00b5m in both, window seat 49 \u00b5m in both; floor joint \u03c3z mean -0.82 \u2192 -0.86 MPa, most tension +0.20 \u2192 +0.25 MPa; SF yield 9.9 \u2192 9.6, Goodman 5.3 \u2192 5.1, HAZ 3.9 \u2192 3.8. At +20 mbar: peak 0.55 \u2192 0.57 MPa, joint tension +0.17 \u2192 +0.18 MPa. Peaks, displacements and safety factors moved by 3 % or less (re-meshing alone moves a peak about that much; see the checks above); the joint's local tension, though up by a quarter, stays far below the 8.3 MPa of screw preload on the lands. The chamber's structure conclusions stand. 1b's run record names 0dbb5a3 although HEAD had moved to b09e506 by the end of the run: the commits between touch nothing in cad/."
+  ]
+ }
+}

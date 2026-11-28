@@ -1,0 +1,49 @@
+{
+ "note": "The assembly chapters' camera, round 8: fixed tripods, cuts only (asm_render.py's rig). From each rendered frame's meta (`cam`). Round 7 measured on the finished MP4 (video_qa.py): 84-103 picture jumps a minute, steady 0.2-0.4 s.",
+ "chapters": {
+  "40-assembly-module": {
+   "frames": 3448,
+   "minutes": 4.79,
+   "shots": 32,
+   "median_shot_s": 5.12,
+   "mean_shot_s": 8.98,
+   "cuts_per_min": 6.47,
+   "shots_under_4s": 5,
+   "longest_shot_s": 35.2,
+   "camera_motion_inside_a_shot": "none: every frame of a shot uses the same tripod (position, focal point, view angle)",
+   "tripods_used": 14,
+   "frames_by_tripod_kind": {
+    "cell": 135,
+    "T": 694,
+    "lane_A": 150,
+    "bench": 2177,
+    "bench_A": 292
+   }
+  },
+  "41-assembly-chamber": {
+   "frames": 10325,
+   "minutes": 14.34,
+   "shots": 147,
+   "median_shot_s": 4.17,
+   "mean_shot_s": 5.85,
+   "cuts_per_min": 10.18,
+   "shots_under_4s": 71,
+   "longest_shot_s": 33.7,
+   "camera_motion_inside_a_shot": "none: every frame of a shot uses the same tripod (position, focal point, view angle)",
+   "tripods_used": 31,
+   "frames_by_tripod_kind": {
+    "cell": 268,
+    "T": 512,
+    "lane_A": 135,
+    "PT": 1738,
+    "PT_B": 417,
+    "PT_A": 284,
+    "B": 3894,
+    "bench": 16,
+    "B_end": 2926,
+    "B_A": 66,
+    "B_B": 69
+   }
+  }
+ }
+}

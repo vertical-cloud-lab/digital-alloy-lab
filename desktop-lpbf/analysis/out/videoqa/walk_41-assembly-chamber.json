@@ -1,0 +1,619 @@
+{
+ "chapter": "41-assembly-chamber",
+ "frames_recorded": 12821,
+ "recordings": [
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part0",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part1",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part2",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part3",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part4",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part5",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part6",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part7",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part8",
+  "/tmp/robotbuild/frames/41-assembly-chamber/audit.part9"
+ ],
+ "people": [
+  {
+   "person": "op",
+   "frames": 3093,
+   "walked_mm": 69024,
+   "stances": 367,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "worst_stances": [
+    {
+     "foot": "L",
+     "start": 48,
+     "end": 83,
+     "frames": 36,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 48,
+     "end": 83,
+     "frames": 36,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 84,
+     "end": 90,
+     "frames": 7,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 90,
+     "end": 97,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 97,
+     "end": 104,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 104,
+     "end": 111,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 111,
+     "end": 118,
+     "frames": 8,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 118,
+     "end": 127,
+     "frames": 10,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 125,
+     "end": 169,
+     "frames": 45,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 134,
+     "end": 176,
+     "frames": 43,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    }
+   ],
+   "slipping_frames": 0,
+   "slipping_frame_list": [],
+   "gliding_frames": 0,
+   "gliding_ranges": [],
+   "gliding_worst": [],
+   "jumps": [
+    [
+     84,
+     2534
+    ],
+    [
+     11446,
+     2666
+    ],
+    [
+     12796,
+     2386
+    ]
+   ]
+  }
+ ],
+ "mirs": [
+  {
+   "mir": "mirA",
+   "frames": 12677,
+   "driven_mm": 16116,
+   "forward": "local +x",
+   "forward_mm": 10346,
+   "reverse_mm": 5770,
+   "reverse_legs": 13,
+   "longest_reverse_leg_mm": 1800,
+   "reverse_leg_list": [
+    {
+     "start": 3174,
+     "end": 3235,
+     "mm": 1800
+    },
+    {
+     "start": 3916,
+     "end": 3921,
+     "mm": 500
+    },
+    {
+     "start": 6050,
+     "end": 6054,
+     "mm": 440
+    },
+    {
+     "start": 7768,
+     "end": 7772,
+     "mm": 440
+    },
+    {
+     "start": 10972,
+     "end": 10976,
+     "mm": 440
+    },
+    {
+     "start": 1057,
+     "end": 1061,
+     "mm": 350
+    },
+    {
+     "start": 2388,
+     "end": 2392,
+     "mm": 350
+    },
+    {
+     "start": 2963,
+     "end": 2967,
+     "mm": 350
+    },
+    {
+     "start": 3565,
+     "end": 3568,
+     "mm": 220
+    },
+    {
+     "start": 4349,
+     "end": 4352,
+     "mm": 220
+    },
+    {
+     "start": 7215,
+     "end": 7218,
+     "mm": 220
+    },
+    {
+     "start": 7484,
+     "end": 7487,
+     "mm": 220
+    },
+    {
+     "start": 9118,
+     "end": 9121,
+     "mm": 220
+    }
+   ],
+   "sideways_mm": {
+    "total": 1.2,
+    "max_frame": 0.14,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 78,
+   "turned_deg": 1080.0,
+   "jumps": [
+    [
+     218,
+     173,
+     173,
+     0
+    ],
+    [
+     219,
+     177,
+     177,
+     0
+    ],
+    [
+     1434,
+     173,
+     173,
+     0
+    ],
+    [
+     1435,
+     234,
+     234,
+     0
+    ],
+    [
+     1436,
+     290,
+     290,
+     0
+    ],
+    [
+     1437,
+     341,
+     341,
+     0
+    ],
+    [
+     1438,
+     387,
+     387,
+     0
+    ],
+    [
+     1439,
+     428,
+     428,
+     0
+    ],
+    [
+     1440,
+     464,
+     464,
+     0
+    ],
+    [
+     1441,
+     496,
+     496,
+     0
+    ],
+    [
+     1442,
+     522,
+     522,
+     0
+    ],
+    [
+     1443,
+     544,
+     544,
+     0
+    ],
+    [
+     1444,
+     561,
+     561,
+     0
+    ],
+    [
+     1445,
+     573,
+     573,
+     0
+    ],
+    [
+     1446,
+     580,
+     580,
+     0
+    ],
+    [
+     1447,
+     582,
+     582,
+     0
+    ],
+    [
+     1448,
+     580,
+     580,
+     0
+    ],
+    [
+     1449,
+     572,
+     572,
+     0
+    ],
+    [
+     1450,
+     560,
+     560,
+     0
+    ],
+    [
+     1451,
+     542,
+     542,
+     0
+    ],
+    [
+     1452,
+     520,
+     520,
+     0
+    ],
+    [
+     1453,
+     493,
+     493,
+     0
+    ],
+    [
+     1454,
+     461,
+     461,
+     0
+    ],
+    [
+     1455,
+     424,
+     424,
+     0
+    ],
+    [
+     1456,
+     383,
+     383,
+     0
+    ],
+    [
+     1457,
+     336,
+     336,
+     0
+    ],
+    [
+     1458,
+     284,
+     284,
+     0
+    ],
+    [
+     1459,
+     228,
+     228,
+     0
+    ],
+    [
+     1460,
+     167,
+     167,
+     0
+    ],
+    [
+     1541,
+     176,
+     176,
+     0
+    ],
+    [
+     1542,
+     238,
+     238,
+     0
+    ],
+    [
+     1543,
+     295,
+     295,
+     0
+    ],
+    [
+     1544,
+     346,
+     346,
+     0
+    ],
+    [
+     1545,
+     393,
+     393,
+     0
+    ],
+    [
+     1546,
+     434,
+     434,
+     0
+    ],
+    [
+     1547,
+     470,
+     470,
+     0
+    ],
+    [
+     1548,
+     501,
+     501,
+     0
+    ],
+    [
+     1549,
+     528,
+     528,
+     0
+    ],
+    [
+     1550,
+     549,
+     549,
+     0
+    ],
+    [
+     1551,
+     565,
+     565,
+     0
+    ]
+   ]
+  },
+  {
+   "mir": "mirB",
+   "frames": 12795,
+   "driven_mm": 5548,
+   "forward": "local +x",
+   "forward_mm": 4168,
+   "reverse_mm": 1380,
+   "reverse_legs": 5,
+   "longest_reverse_leg_mm": 440,
+   "reverse_leg_list": [
+    {
+     "start": 5528,
+     "end": 5532,
+     "mm": 440
+    },
+    {
+     "start": 3933,
+     "end": 3936,
+     "mm": 280
+    },
+    {
+     "start": 5788,
+     "end": 5791,
+     "mm": 220
+    },
+    {
+     "start": 6200,
+     "end": 6203,
+     "mm": 220
+    },
+    {
+     "start": 7367,
+     "end": 7370,
+     "mm": 220
+    }
+   ],
+   "sideways_mm": {
+    "total": 0.5,
+    "max_frame": 0.13,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 26,
+   "turned_deg": 360.0,
+   "jumps": [
+    [
+     535,
+     178,
+     178,
+     0
+    ],
+    [
+     536,
+     193,
+     193,
+     0
+    ],
+    [
+     537,
+     176,
+     176,
+     0
+    ],
+    [
+     2203,
+     172,
+     172,
+     0
+    ],
+    [
+     2204,
+     185,
+     185,
+     0
+    ],
+    [
+     2205,
+     166,
+     166,
+     0
+    ],
+    [
+     2701,
+     190,
+     190,
+     0
+    ],
+    [
+     2702,
+     209,
+     209,
+     0
+    ],
+    [
+     2703,
+     198,
+     198,
+     0
+    ],
+    [
+     2704,
+     157,
+     157,
+     0
+    ],
+    [
+     3321,
+     186,
+     186,
+     0
+    ],
+    [
+     3322,
+     212,
+     212,
+     0
+    ],
+    [
+     3323,
+     210,
+     210,
+     0
+    ],
+    [
+     3324,
+     180,
+     180,
+     0
+    ],
+    [
+     9796,
+     220,
+     220,
+     0
+    ],
+    [
+     10962,
+     440,
+     -440,
+     0
+    ],
+    [
+     12290,
+     440,
+     -440,
+     0
+    ]
+   ]
+  }
+ ],
+ "limits": {
+  "foot_down_mm": 4.0,
+  "contact_mm": 2.0,
+  "slip_frame_mm": 5.0,
+  "glide_mm": 1.0,
+  "glide_deg": 0.3,
+  "legs_still_mm": 0.5,
+  "jump_mm": 250.0,
+  "mir_jump_mm": 150.0
+ },
+ "seconds": 2.9
+}

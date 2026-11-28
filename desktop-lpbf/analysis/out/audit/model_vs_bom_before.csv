@@ -1,0 +1,224 @@
+part,module,material,mass_kg,kind,model_bom_tag,model_mcm,part_numbers,bom_line,purchase_refs,unit_price_usd,status,note
+"Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U)",rack,mixed (vendor unit; mass from datasheet or estimate),40.0,bought,L1,,YLR-500-U3-SM-AC,L1,vendor-parts.csv:row17 vendor-parts.csv:row18,23000.0,real part priced,
+"Dry scroll pump (≤ 0.3 mbar, 6 m3/h class)",gas,mixed (vendor unit; mass from datasheet or estimate),26.0,bought,G2,PUMP,A73501983,G2,,,inconsistent,model draws a dry scroll pump; G2's candidate is the McMaster 4396K21 rotary-vane pump (tray_budget.md also uses 4396K21)
+"UPS (Eaton 5PX1500RTG2, 2U)",rack,mixed (vendor unit; mass from datasheet or estimate),23.0,bought,C6,,5PX1500RTG2,,vendor-parts.csv:row19,,inconsistent,"model tag is C6 (controls enclosure), which has no UPS; model tag C6 does not cover it; model draws an Eaton 5PX1500RTG2; analysis/out/tray/tray_budget.md sizes the UPS as a Vertiv GXT5LI-1500"
+"19 in. rack frame (12U, 560 mm tall)",rack,bearing / alloy steel,22.0,bought,S9,,,,,,missing from BOM,"12U open frame, 560 mm tall: not chosen (StarTech 4POSTRACK12U class, price not shown); model tag S9 does not cover it"
+"Optics bridge (6061, 25 mm)",process,6061-T6 aluminium,13.319,custom (machined),F5,,,,,,missing from BOM,model tag F5 has no bom.csv line
+"Base plate, gas module (MIC-6, 15 mm)",gas,MIC-6 cast tooling plate,12.891,custom (machined),F4,,,,,,missing from BOM,model tag F4 has no bom.csv line
+"Base plate, process module (MIC-6, 15 mm)",process,MIC-6 cast tooling plate,11.992,custom (machined),F4,,,,,,missing from BOM,model tag F4 has no bom.csv line
+"DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (4U: the safety controller stands 129 mm off its rail)",rack,mixed (vendor unit; mass from datasheet or estimate),9.0,bought,C3,,,,,,inconsistent,"contents in C3, C4, S1, C2; model tag C3 does not cover it; model draws a 3U 19 in. DIN-rail drawer; C6 is a McMaster 7812K14 NEMA wall box"
+"Sealed side-channel blower (gas-tight, ~100 L/min)",gas,mixed (vendor unit; mass from datasheet or estimate),9.0,bought,G4,BLOWER,,G4,,,inconsistent,"no gas-tight blower of this size found (real-parts.md); model label says ~100 L/min; the CFD needs 140-200 L/min at 1.5-3 kPa (gas-flow.md, G4 spec)"
+Scan + laser controller PC (2U),rack,mixed (vendor unit; mass from datasheet or estimate),8.0,bought,C1,,,,,,missing from BOM,C1 is the RTC6 card; no 2U PC is chosen; model tag C1 does not cover it
+Guard frame (20 mm T-slot),process,6061-T6 aluminium,6.302,bought,S9,TSLOT,5537T101,S9,,,inconsistent,model draws 20 mm T-slot; S9 lists 30 mm 5537T97 for the old cabinet
+"Tray dock (CombiTac-type, mates sideways)",tray,mixed (vendor unit; mass from datasheet or estimate),6.0,bought,D1,,,,,,missing from BOM,model tag D1 has no bom.csv line
+Laser guard panels (1.5 mm aluminium),process,6061-T6 aluminium,5.533,custom (sheet),S9,SHEET,88895K51,S9,mcmaster-parts.csv:S9,72.58,custom,cut from 5052 sheet
+Trace O2 analyzer + dew-point transmitter (panel box),gas,mixed (vendor unit; mass from datasheet or estimate),5.0,bought,G6,,Microx,G6,,,real part priced,dew-point transmitter is line G9
+"Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",process,6061-T6 aluminium,4.896,custom (machined),F5,,,,,,missing from BOM,model tag F5 has no bom.csv line
+"Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",process,6061-T6 aluminium,4.273,custom (machined),G1,PLATE_CHAMBER,,,,,inconsistent,model tag G1 does not cover it; G1 still describes the tall model's welded 1/2 in. 89155K135 box
+"Sealed cyclone + HEPA housing (316L, valves off for passivation)",gas,316L stainless,4.0,bought,G5,FILTER,5169K72,G5,mcmaster-parts.csv:G5 vendor-parts.csv:row13,107.84,real part priced,cyclone stage not chosen
+Umbilical duct along the back edge,tray,6061-T6 aluminium,4.0,custom (sheet),D1,,,,,,missing from BOM,model tag D1 has no bom.csv line
+2-axis galvo scan head (SCANLAB basiCube 20),process,mixed (vendor unit; mass from datasheet or estimate),3.75,bought,L5,,basiCube 20,L5,vendor-parts.csv:row16,,real part priced,
+Rack side panels (vented),rack,6061-T6 aluminium,3.499,custom (sheet),S9,,,,,,missing from BOM,vented sheet panels; model tag S9 does not cover it
+"Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",process,6061-T6 aluminium,3.01,custom (machined),G1,PLATE_CHAMBER,,,,,inconsistent,model tag G1 does not cover it; G1 still describes the tall model's welded 1/2 in. 89155K135 box
+Gas-loop + vacuum hoses (KF-25 SS bellows),process,316L stainless,3.0,bought,G7,HOSE_KF25,3497N23,G7,mcmaster-parts.csv:G2 mcmaster-parts.csv:G7,384.45,real part priced,real-parts.md: routed lengths not matched to the 24 in. hose
+"Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",process,6061-T6 aluminium,2.651,custom (machined),G1,PLATE_CHAMBER,,G1,,,inconsistent,G1 still describes the tall model's welded 1/2 in. 89155K135 box
+Recoater motor bracket,process,6061-T6 aluminium,2.484,custom (machined),M1,,,M1,,,custom,
+Argon solenoid manifold (purge / make-up / vent),gas,brass,2.0,bought,G7,8077K237,8077K237,G7,mcmaster-parts.csv:G7 safety-parts.csv:SP4,173.09,real part priced,custom manifold block not costed
+Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve),process,304 stainless,1.844,bought,G7,VALVE_KF25,4123K45,G7,mcmaster-parts.csv:G7 vendor-parts.csv:row11,300.8,real part priced,
+"Build module M50: spigot, flange, honed 316L cylinder (Ø50.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",process,316L stainless,1.734,custom (machined),B1,,,B1,,,custom,
+Chilled-water supply + return to the laser,tray,mixed (vendor unit; mass from datasheet or estimate),1.5,bought,D1,,,,,,inconsistent,"model tag D1 has no bom.csv line; model runs chilled water to the laser; the quoted IPG YLR-500-U3-SM-AC is air-cooled (L2), and heat.md says decide water vs air first"
+"Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",process,bearing / alloy steel,1.4,bought,M3,ACT_Z,KR2602A-0110-0-01A0,,,,inconsistent,the carriage is part of the actuator; model tag M3 does not cover it; model draws an integrated actuator; M3 lists a 6638K11 ball screw on a 6709K33 rail for the tall model's piston
+"Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",process,6061-T6 aluminium,1.293,custom (machined),G1,PLATE_CHAMBER,,,,,inconsistent,model tag G1 does not cover it; G1 still describes the tall model's welded 1/2 in. 89155K135 box
+Operator panel box (on the rack's front post),rack,6061-T6 aluminium,1.285,custom (sheet),S4,,,S4,,,custom,
+"Chamber legs (6061, 30 x 30)",process,6061-T6 aluminium,1.22,custom (machined),G1,,,,,,missing from BOM,model tag G1 does not cover it
+Safety shutter + beam dump,process,mixed (vendor unit; mass from datasheet or estimate),1.2,bought,L4,,,L4,,,generic,no shutter chosen (L4: quote)
+Argon pressure regulator + flowmeter,gas,brass,1.2,bought,G3,,78595A5,G3,vendor-lookups.csv:row22,334.1,real part priced,
+"f-theta lens, f = 160 mm (Thorlabs FTH160-1064)",process,mixed (vendor unit; mass from datasheet or estimate),0.8,bought,L6,,FTH160-1064,L6,vendor-lookups.csv:row2 vendor-parts.csv:row15,1011.78,inconsistent,"model uses f = 160 mm (Thorlabs FTH160-1064, $1,011.78 in vendor-lookups.csv); L6 still specifies f = 254 mm"
+Z bracket + fold-back belt housing (2:1),process,6061-T6 aluminium,0.755,custom (machined),M3,,,,,,missing from BOM,model tag M3 does not cover it
+Guard door rail (top + bottom),process,bearing / alloy steel,0.666,bought,S9,,5537T353,,,,inconsistent,rails are the frame's own 20 mm T-slot; McMaster 5537T353 rollers; model tag S9 does not cover it; model's guard door slides; S9 lists rail-to-rail hinges (5537T847) for a swinging door
+Sliding guard door (aluminium),process,6061-T6 aluminium,0.627,custom (sheet),S9,SHEET,,,,,inconsistent,model tag S9 does not cover it; model's guard door slides; S9 lists rail-to-rail hinges (5537T847) for a swinging door
+"Z servo (ClearPath-SD, NEMA 23, folded)",process,mixed (vendor unit; mass from datasheet or estimate),0.6,bought,M2,,CPM-SDSK-2311S-RLN,M2,vendor-parts.csv:row2,293.0,real part priced,
+"Cross-flow inlet plenum + nozzle (316L, bolted flange)",process,316L stainless,0.6,custom (sheet),G4,,,,,,missing from BOM,"model tag G4 (blower), which does not cost them; model tag G4 does not cover it"
+"Recoater servo (ClearPath-SD, NEMA 23)",process,mixed (vendor unit; mass from datasheet or estimate),0.6,bought,M2,,CPM-SDSK-2311S-RLN,M2,vendor-parts.csv:row2,293.0,real part priced,
+"Process fiber (armoured, ≥ 100 mm bend radius)",rack,mixed (vendor unit; mass from datasheet or estimate),0.6,bought,L1,,YLR-500-U3-SM-AC,L1,vendor-parts.csv:row17 vendor-parts.csv:row18,23000.0,real part priced,comes fitted to the laser
+"Overflow funnel block (316L, bolted, FKM face O-ring)",process,316L stainless,0.593,custom (machined),M4,,,,,,missing from BOM,model tag M4 does not cover it
+"Galvo riser plate (6061, 10 mm)",process,6061-T6 aluminium,0.544,custom (machined),L5,,,,,,missing from BOM,model tag L5 does not cover it
+"Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",process,316L stainless,0.528,custom (machined),B1,,2-114,B1,seal-parts.csv:row3,10.44,custom,
+"Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",process,316L stainless,0.527,custom (sheet),G4,,,,,,missing from BOM,"model tag G4 (blower), which does not cost them; model tag G4 does not cover it"
+"Draw latches on the chamber's side faces (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",process,304 stainless,0.5,bought,G1,1807A61,1807A61,G1,mcmaster-parts.csv:G1 seal-parts.csv:row23,51.77,real part priced,
+"Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount",process,mixed (vendor unit; mass from datasheet or estimate),0.5,bought,L3,,,L3,,,inconsistent,custom-diameter IPG collimator: not priced by IPG yet; low-profile.md §2: f = 160 mm needs a ~3.2 mm beam for the 75 um spot; the model and L3 keep IPG's 5 mm collimator (sized for f = 254 mm; ~48 um at f = 160)
+Pump exhaust to the dock,tray,mixed (vendor unit; mass from datasheet or estimate),0.5,bought,D1,,,,,,missing from BOM,model tag D1 has no bom.csv line
+"OD 7+ viewing window (1070 nm, polycarbonate)",process,laser-safety polycarbonate,0.494,bought,S5,,LW1P1/M,S5,safety-parts.csv:SP18 vendor-lookups.csv:row9,411.95,real part priced,
+"Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",process,6061-T6 aluminium,0.471,custom (machined),M4,,,M4,,,custom,
+Recoater fixed bearing: magnetic-fluid rotary feedthrough Ferrotec SFL-006-NN on the left wall (Ferrotec SFL-006-NN; FKM face O-ring),process,mixed (vendor unit; mass from datasheet or estimate),0.45,bought,M1,Ferrotec SFL-006-NN,SFL-006-NN,M1,seal-parts.csv:row28,,real part unpriced,
+"Recoater guide rail (15 mm, 260 mm)",process,bearing / alloy steel,0.413,bought,M1,6709K33,6709K33,M1,mcmaster-parts.csv:M1 mcmaster-parts.csv:M3 vendor-parts.csv:row4,86.8,real part priced,
+Argon supply from the dock,tray,316L stainless,0.404,bought,D1,,,,,,missing from BOM,model tag D1 has no bom.csv line
+Guard-locking door switch (Omron D4JL),process,mixed (vendor unit; mass from datasheet or estimate),0.4,bought,S2,,D4JL-4NFA-C5-NPT,S2,safety-parts.csv:SP14 vendor-lookups.csv:row31,803.42,real part priced,
+"Window flange (6061, two FKM O-ring grooves)",process,6061-T6 aluminium,0.351,custom (machined),L7,,,,,,missing from BOM,model tag L7 does not cover it
+Dosing stepper (NEMA 17),process,mixed (vendor unit; mass from datasheet or estimate),0.32,bought,M4,6627T91,6627T91,M4,mcmaster-parts.csv:M4 vendor-parts.csv:row6,81.74,real part priced,
+"Door drive: pneumatic rotary actuator on the hinge axis, SMC CRQ2 size 20 class (~1.8 N m at 0.5 MPa, stroke set to 95 deg, meter-out flow controls; envelope 47 x 47 x 42 mm). Passive alternative: McMaster 6597K124 one-way damper, same envelope",process,mixed (vendor unit; mass from datasheet or estimate),0.3,bought,RA2,,6597K124 CDRQ2BS20-180,,robot-tooling.csv:RA2 robot-tooling.csv:RA2b,,missing from BOM,model tag RA2 has no bom.csv line
+Recoater carriage (15 mm rail),process,bearing / alloy steel,0.266,bought,M1,6709K12,6709K12,M1,mcmaster-parts.csv:M1 mcmaster-parts.csv:M3 vendor-parts.csv:row3,144.71,real part priced,
+"Recoater ball screw (M12, 10 mm lead)",process,bearing / alloy steel,0.265,bought,M1,4566N101,4566N101,M1,mcmaster-parts.csv:M1 vendor-lookups.csv:row20,188.22,real part priced,
+"Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",process,6061-T6 aluminium,0.255,custom (machined),B1,,,B1,,,custom,
+"Leveling mounts, process module (McMaster 5537T983: Ø25 base, M8 stem threaded up through the plate)",process,bearing / alloy steel,0.241,bought,F3,5537T983,5537T983,S9,mcmaster-parts.csv:S9,7.62,real part priced,
+"Leveling mounts, gas module (McMaster 5537T983: Ø25 base, M8 stem threaded up through the plate)",gas,bearing / alloy steel,0.241,bought,F3,5537T983,5537T983,S9,mcmaster-parts.csv:S9,7.62,real part priced,
+"Draw-latch actuators: 2 x Ø20 compact air cylinders (SMC CJ2/CQ2 class, 157 N at 0.5 MPa) that throw the latch levers",process,mixed (vendor unit; mass from datasheet or estimate),0.24,bought,RA3,,CDQ2B20-15DZ-F7PS,,,,missing from BOM,model tag RA3 has no bom.csv line
+"Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 module; same 30 x 112 mm dock plate for every size)",process,304 stainless,0.235,custom (sheet),R1,HOPPER,,R1,,,custom,
+Argon line (1/4 in. 316L),process,316L stainless,0.223,bought,G7,TUBE_SS,89785K824,G7,mcmaster-parts.csv:G7,27.6,real part priced,
+"Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",process,304 stainless,0.22,bought,M4,KF40_NIPPLE,4518K42,,,,missing from BOM,model tag M4 does not cover it
+Dose chute (316L),process,316L stainless,0.217,custom (sheet),M4,,,M4,,,custom,
+Pressure transducer (7/16-20 SAE-4 O-ring-boss port),process,316L stainless,0.184,bought,G7,TRANSDUCER,3861N11,G7,mcmaster-parts.csv:G7 vendor-parts.csv:row12,358.05,inconsistent,lid port is SAE-4 (7/16-20); G7's 3861N11 needs an adapter (vendor-parts.csv)
+Recoater carriage block (6061),process,6061-T6 aluminium,0.182,custom (machined),M1,,,M1,,,custom,
+"Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",process,316L stainless,0.181,custom (sheet),A2,,2317K278,A2,options-mcmaster.csv:A2,36.88,custom,
+Z mounting flange (bolted under the floor),process,6061-T6 aluminium,0.176,custom (machined),M3,,,,,,missing from BOM,model tag M3 does not cover it
+"Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",process,6061-T6 aluminium,0.175,custom (machined),A2,,,,,,missing from BOM,model tag A2 does not cover it
+"Blade holder (6061, 18 x 31, quick-swap)",process,6061-T6 aluminium,0.17,custom (machined),M5,,,M5,,,custom,
+"Vacuum port adapter plate (304, 8 mm, FKM face O-ring)",process,304 stainless,0.167,custom (machined),G7,,,,,,missing from BOM,machined 304; not in analysis/out/machining/hours.csv; model tag G7 does not cover it
+"f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)",process,6061-T6 aluminium,0.165,custom (machined),L6,,,,,,missing from BOM,model tag L6 does not cover it
+Layer camera (Pi HQ + C-mount lens),process,mixed (vendor unit; mass from datasheet or estimate),0.15,bought,M6,,4561,M6,,,real part unpriced,
+Recoater ball nut (flange on the +x face),process,bearing / alloy steel,0.147,bought,M1,4566N401,4566N401,M1,mcmaster-parts.csv:M1 vendor-parts.csv:row5,244.44,real part priced,
+"Z lift arm (6061, 12 mm, pot-magnet coupling)",process,6061-T6 aluminium,0.141,custom (machined),M3,,,,,,missing from BOM,model tag M3 does not cover it
+Z carriage,process,bearing / alloy steel,0.132,bought,M3,,KR2602A-0110-0-01A0,,,,inconsistent,the carriage is part of the actuator; model tag M3 does not cover it; model draws an integrated actuator; M3 lists a 6638K11 ball screw on a 6709K33 rail for the tall model's piston
+"Lid screws, M5 x 25 316 socket head (20 x McMaster 92290A252)",process,316L stainless,0.102,fastener,G1,92290A252,92290A252,FX,fasteners.csv:row26,15.11,real part priced,
+O2 sample line (1/8 in. 316L),process,316L stainless,0.101,bought,G6,TUBE_SS,,,,,inconsistent,model tag G6 does not cover it; model draws a 1/8 in. O2 sample line; G7 lists only 1/4 in. 316 tube (89785K824) for the argon and O2 lines
+E-stop,rack,mixed (vendor unit; mass from datasheet or estimate),0.1,bought,S3,,XA1E-BV3U02-R,S3,safety-parts.csv:SP30 vendor-lookups.csv:row32,76.67,real part priced,
+Key switch,rack,mixed (vendor unit; mass from datasheet or estimate),0.1,bought,S4,,6749K3,S4,mcmaster-parts.csv:S4,63.8,real part priced,
+Emission indicator,rack,mixed (vendor unit; mass from datasheet or estimate),0.1,bought,S4,,7545K316,S4,mcmaster-parts.csv:S4 safety-parts.csv:SP13,37.07,real part priced,
+Reset button,rack,mixed (vendor unit; mass from datasheet or estimate),0.1,bought,S4,,6749K201,S4,mcmaster-parts.csv:S4,48.29,real part priced,
+Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry),process,6061-T6 aluminium,0.086,custom (machined),L7,,,,,,missing from BOM,model tag L7 does not cover it
+Door hinge knuckles on the chamber (304 SS),process,304 stainless,0.085,custom (machined),G1,1151A87,1151A87,G1,mcmaster-parts.csv:G1,16.83,inconsistent,not in machining/hours.csv; model labels the hinge McMaster 1151A87 but draws custom 304 knuckles; the real 1151A87 is a 3 x 3 in. two-leaf lift-off hinge (real-parts.md)
+Overflow clamp (KF-40),process,6061-T6 aluminium,0.081,bought,G7,KF40_CLAMP,4518K73,G7,mcmaster-parts.csv:G7 vendor-parts.csv:row10,15.31,real part priced,
+Reservoir M powder,process,AlSi10Mg powder (~50 % packing),0.08,excluded,R1,,,,,,excluded,"powder feedstock, not a machine part; model tag R1 does not cover it"
+"Overpressure relief valve (316 SS, FKM seat, +34 mbar; SAE-4 O-ring-boss port)",process,316L stainless,0.079,bought,G7,RELIEF,,G7,,,inconsistent,model's relief is 316 SS with an FKM seat on an SAE-4 port; G7 lists the nylon/Buna-N 4277T52 (low-profile.md §3 says replace it)
+"Optics-bridge screws, M6 x 35 316 (8 x McMaster 92290A334)",process,316L stainless,0.079,fastener,F5,92290A334,92290A334,FX,fasteners.csv:row28,9.75,real part priced,
+"Camera viewport adapter + boss (6061; Ø1 in. window, 1070 nm blocking filter; FKM face O-rings)",process,6061-T6 aluminium,0.078,custom (machined),M6,,,,,,missing from BOM,model tag M6 does not cover it
+"Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",process,6061-T6 aluminium,0.075,custom (machined),B1,,,B1,,,custom,
+"Heater block M50 (6061-T6, bayonet socket)",process,6061-T6 aluminium,0.068,custom (machined),H1,,,H1,,,custom,
+"Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",process,304 stainless,0.063,custom (machined),G1,1151A87,1151A87,G1,mcmaster-parts.csv:G1,16.83,inconsistent,not in machining/hours.csv; model labels the hinge McMaster 1151A87 but draws custom 304 knuckles; the real 1151A87 is a 3 x 3 in. two-leaf lift-off hinge (real-parts.md)
+Overflow port (KF-40),process,304 stainless,0.061,bought,G7,KF40_WELD,5786N25,G7,mcmaster-parts.csv:G7 vendor-parts.csv:row8,17.31,real part priced,
+"Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",process,316L stainless,0.061,fastener,G1,92290A330,92290A330,FX,fasteners.csv:row27,17.54,real part priced,
+"Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",process,316L stainless,0.061,fastener,F5,92290A330,92290A330,FX,fasteners.csv:row27,17.54,real part priced,
+Roller shaft: magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN in the metering base (M8 x 1 nose; FKM face O-ring),process,mixed (vendor unit; mass from datasheet or estimate),0.06,bought,M4,Ferrotec SSL-005-NN,SSL-005-NN,,seal-parts.csv:row29,,missing from BOM,model tag M4 does not cover it
+Draw-latch strikes on the door's ears (1807A61 strike plates),process,304 stainless,0.06,bought,G1,1807A61,1807A61,G1,mcmaster-parts.csv:G1 seal-parts.csv:row23,51.77,real part priced,
+"Guard-door handle for the robot (Ø12 x 130 bar on two Ø10 standoffs, 6061)",process,6061-T6 aluminium,0.057,custom (machined),RA1,,,,,,missing from BOM,model tag RA1 has no bom.csv line
+Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring),process,316L stainless,0.055,custom (machined),M4,,,R1,,,custom,machined 316L; not in hours.csv
+"Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",process,bearing / alloy steel,0.054,bought,M4,LOADCELL_SP,ALLUE3,A1,options-vendors.csv:A1,122.0,inconsistent,model label 2 kg; A1 lists a 3 kg Laumas ALLUE3
+"Build plate M50 (Ø50.5 x 10, 6061-T6; bayonet spigot, gripper groove)",process,6061-T6 aluminium,0.053,custom (machined),B1,,,B1,,,custom,
+Layer-light LED bar,process,mixed (vendor unit; mass from datasheet or estimate),0.05,bought,M6,,,M6,,,generic,
+Pump inlet (KF-25),gas,304 stainless,0.05,bought,G7,KF25_WELD,4518K49,G2,mcmaster-parts.csv:G7,42.13,real part priced,the nXDS6i inlet is NW25; only the 4396K21 alternative needs a flare-to-NPT adapter + 4518K49
+Filter inlet (KF-25),gas,304 stainless,0.05,bought,G7,,,G7,,,generic,adapters to the filter's 1/2 NPSC ports / the blower not chosen
+Filter outlet (KF-25),gas,304 stainless,0.05,bought,G7,,,G7,,,generic,adapters to the filter's 1/2 NPSC ports / the blower not chosen
+Blower inlet (KF-25),gas,304 stainless,0.05,bought,G7,,,G7,,,generic,adapters to the filter's 1/2 NPSC ports / the blower not chosen
+Blower outlet (KF-25),gas,304 stainless,0.05,bought,G7,,,G7,,,generic,adapters to the filter's 1/2 NPSC ports / the blower not chosen
+Recoater motor standoff,process,6061-T6 aluminium,0.048,custom (machined),M1,,,M1,,,custom,
+Inlet plenum port (KF-25),process,304 stainless,0.046,bought,G7,KF25_WELD,5786N23,G7,mcmaster-parts.csv:G7 vendor-parts.csv:row7,13.65,real part priced,
+Outlet plenum port (KF-25),process,304 stainless,0.046,bought,G7,KF25_WELD,5786N23,G7,mcmaster-parts.csv:G7 vendor-parts.csv:row7,13.65,real part priced,
+"Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",process,316L stainless,0.044,custom (machined),H2,,,B1,,,custom,
+"Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)",process,6061-T6 aluminium,0.044,custom (machined),M1,,,M1,,,custom,
+"Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",process,316L stainless,0.043,custom (machined),B1,,,B1,,,custom,
+"Recoater floating bearing housing (blind cap, FKM face O-ring)",process,6061-T6 aluminium,0.043,custom (machined),M1,,,M1,,,custom,
+"Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",process,316L stainless,0.042,fastener,G1,92290A154,92290A154,FX,fasteners.csv:row22,19.02,real part priced,
+"Ø2 in. fused-silica window, 8 mm, AR 1064",process,UV fused silica,0.036,bought,L7,,,L7,,,generic,L7 names a Ø1 in. Thorlabs WG41050-C; the model's Ø2 in. x 8 mm window has no part number
+Door handle,process,6061-T6 aluminium,0.033,custom (machined),G1,,,,,,missing from BOM,model tag G1 does not cover it
+Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame),process,6061-T6 aluminium,0.032,custom (machined),R1,,,R1,,,custom,
+"Side reservoir port (KF-16 flange machined in the 6061 base, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",process,304 stainless,0.031,bought,R1,,,,,,missing from BOM,KF-16 blank: no part number; model tag R1 does not cover it
+"Leg-to-floor screws, M6 x 25 316, up each leg's Ø11 bore (4 x McMaster 92290A330)",process,316L stainless,0.031,fastener,G1,92290A330,92290A330,FX,fasteners.csv:row27,17.54,real part priced,
+"Vacuum port (KF-25, stub welded into the adapter plate)",process,304 stainless,0.03,bought,G7,KF25_WELD,5786N23,G7,mcmaster-parts.csv:G7 vendor-parts.csv:row7,13.65,real part priced,
+"Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",process,mixed (vendor unit; mass from datasheet or estimate),0.03,bought,A1,,E32-T61-S,A1,options-vendors.csv:A1,547.09,real part priced,
+"Pot magnet (NdFeB in a steel cup, Ø25 x 7, 44 lbf, holds the rod's striker)",process,bearing / alloy steel,0.027,bought,B2,,5679K95,B2,options-mcmaster.csv:B2,8.93,real part priced,heat.md: swap the NdFeB cup for SmCo
+Enclosed beam tube,process,6061-T6 aluminium,0.025,custom (machined),L4,,,,,,missing from BOM,model tag L4 does not cover it
+Roller drive coupling (5 mm to 5 mm),process,bearing / alloy steel,0.024,bought,M4,,,,,,missing from BOM,model tag M4 does not cover it
+"Door drive bracket (6061, 4 mm, flanged onto the chamber's left side face)",process,6061-T6 aluminium,0.023,custom (machined),RA2,,,,,,missing from BOM,model tag RA2 has no bom.csv line; not in machining/hours.csv
+"HSS recoater blade (1.5 mm, wide nose)",process,bearing / alloy steel,0.022,bought,M5,9011K104,2634T15 9011K104,M5,mcmaster-parts.csv:M5,21.41,inconsistent,cut from M2 HSS sheet; model blade is HSS; M5 lists 9011K104 18-8 shim (low-profile.md §5)
+"Reservoir M shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",process,304 stainless,0.021,custom (sheet),R1,,,R1,,,custom,
+"Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",process,316L stainless,0.02,bought,H2,,HGG.1B.310.CLLPV,H1,seal-parts.csv:row33,,inconsistent,seal-parts.csv: the drawn LEMO 1B receptacle fails the spec; the Accu-Glass 9C-K16 that meets it needs a KF-16 port on the rod end
+"Overflow-jar present sensor (inductive M12, PNP)",process,mixed (vendor unit; mass from datasheet or estimate),0.02,bought,A1,,PAM-AP-1H,A1,options-vendors.csv:A1,12.5,real part priced,
+"Module-present sensor (inductive M12, under the floor, sees the module flange)",process,mixed (vendor unit; mass from datasheet or estimate),0.02,bought,A1,,PAM-AP-1H,A1,options-vendors.csv:A1,12.5,real part priced,
+Drawer latches: 2 x quarter-turn latch studs (envelope),process,304 stainless,0.02,bought,A2,,,,,,missing from BOM,seals.md: no catalogue quarter-turn latch fits the 20 mm plate; model tag A2 does not cover it
+"Drawer-closed sensor (inductive M12, on the lid's front face, sees the plate's end)",process,mixed (vendor unit; mass from datasheet or estimate),0.02,bought,A1,,PAM-AP-1H,A1,options-vendors.csv:A1,12.5,real part priced,
+"Reservoir-docked sensor (inductive M12, at the back of the dock)",process,mixed (vendor unit; mass from datasheet or estimate),0.02,bought,A1,,PAM-AP-1H,A1,options-vendors.csv:A1,12.5,real part priced,
+"Liner pull tabs (316L, 2 mm, 12 mm off each side liner, spot-welded)",process,316L stainless,0.02,custom (machined),RA6,,,,,,missing from BOM,model tag RA6 has no bom.csv line; not in machining/hours.csv
+"AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-registration)",process,6061-T6 aluminium,0.02,custom (machined),RA7,,,,,,missing from BOM,model tag RA7 has no bom.csv line
+"Field-stop aperture (Ø36, passive beam limit)",process,6061-T6 aluminium,0.019,custom (machined),L7,,,,,,missing from BOM,model tag L7 does not cover it
+"Striker disc M50 (416 stainless, on the pot magnet)",process,bearing / alloy steel,0.018,custom (machined),B2,,89095K23,B2,options-mcmaster.csv:B2,17.35,custom,
+"Gas knife (cover-slide purge, 316L)",process,316L stainless,0.018,custom (sheet),L7,,,,,,missing from BOM,model tag L7 does not cover it
+"Vacuum-port adapter screws, M5 x 20 316 (4 x McMaster 92290A242)",process,316L stainless,0.018,fastener,G7,92290A242,92290A242,FX,fasteners.csv:row25,14.3,real part priced,
+"Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",process,FKM (Viton) 75A,0.017,bought,G8,ORING_CORD,96515K127,,vendor-lookups.csv:row37,,inconsistent,model tag G8 does not cover it; model uses FKM 75A cord; G8 lists 0.070 in. 90A cord 1165N11
+"Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",process,FKM (Viton) 75A,0.017,bought,G8,ORING_CORD,96515K127,,vendor-lookups.csv:row37,,inconsistent,model tag G8 does not cover it; model uses FKM 75A cord; G8 lists 0.070 in. 90A cord 1165N11
+"Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",process,316L stainless,0.016,fastener,B1,92290A168,92290A168,FX,fasteners.csv:row23,10.4,real part priced,
+"Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws) (7 x McMaster 92290A154)",process,316L stainless,0.016,fastener,G4,92290A154,92290A154,FX,fasteners.csv:row22,19.02,real part priced,
+"Cartridge heaters M50 (3 x 50 W, 24 V, Ø6 x 22)",process,bearing / alloy steel,0.015,bought,H1,,3714N36,H1,options-mcmaster.csv:H1,30.14,real part priced,
+"Lid screw helical inserts, M5 x 7.5 18-8, in the chamber body (20 x McMaster 91732A261)",process,304 stainless,0.015,fastener,G1,91732A261,91732A261,FX,fasteners.csv:row10,3.82,real part priced,
+"Hinge pins (Ø5, 316)",process,316L stainless,0.014,custom (machined),G1,,,,,,missing from BOM,model tag G1 does not cover it; not in machining/hours.csv
+"Window-flange screws, M4 x 16 316 (6 x McMaster 92290A154)",process,316L stainless,0.014,fastener,L7,92290A154,92290A154,FX,fasteners.csv:row22,19.02,real part priced,
+"Z-flange screws, M5 x 12 316, counterbored (4 x McMaster 92290A228)",process,316L stainless,0.014,fastener,M3,92290A228,92290A228,FX,fasteners.csv:row24,11.47,real part priced,
+"Recoater shaft coupling (clamp type, 6 to 8 mm, in the wall bore)",process,bearing / alloy steel,0.013,bought,M1,,,M1,,,inconsistent,"drawn coupling is 6 to 8 mm (the Ferrotec SFL-006 has a 6 mm shaft); M1 lists 6446K781, 3/8 in. x 8 mm"
+"Cover slide (Ø2 in. x 3 mm fused silica, consumable)",process,UV fused silica,0.013,bought,A2,,25-250,A2,options-vendors.csv:A2,105.0,real part priced,
+"Recoater arm (6061, 40 x 14 web)",process,6061-T6 aluminium,0.012,custom (machined),M5,,,M1,,,custom,
+"Outlet-plenum screws, M4 x 12 316, counterbored (6 x McMaster 92290A148)",process,316L stainless,0.012,fastener,G4,92290A148,92290A148,FX,fasteners.csv:row21,18.62,real part priced,
+"Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",process,304 stainless,0.011,fastener,B2,95966A705,95966A705,B2,fasteners.csv:row2 options-mcmaster.csv:B2,10.64,real part priced,
+"Bearing-cap screws, M4 x 20 316 (4 x McMaster 92290A168)",process,316L stainless,0.011,fastener,M1,92290A168,92290A168,FX,fasteners.csv:row23,10.4,real part priced,
+Drawer latch receptacles in the lid (2 x quarter-turn latch),process,304 stainless,0.01,bought,A2,,,,,,missing from BOM,seals.md: no catalogue quarter-turn latch fits the 20 mm plate; model tag A2 does not cover it
+"NFC reader antenna (in the dock's side face, reads the tag on the reservoir plate's edge)",process,mixed (vendor unit; mass from datasheet or estimate),0.01,bought,A1,,364,A1,options-vendors.csv:A1,39.95,real part priced,
+"Floor-plate dowels, Ø6 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",process,316L stainless,0.009,fastener,G1,93600A686,93600A686,FX,fasteners.csv:row4,7.89,real part priced,
+"Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), Ø6 x 20 316, pressed into the floor (2 x McMaster 93600A686)",process,316L stainless,0.009,fastener,B2,93600A686,93600A686,FX,fasteners.csv:row4,7.89,real part priced,
+"Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall (4 x McMaster 92290A154)",process,316L stainless,0.009,fastener,M1,92290A154,92290A154,FX,fasteners.csv:row22,19.02,real part priced,
+"Metering-base screws, M4 x 16 316 (4 x McMaster 92290A154)",process,316L stainless,0.009,fastener,M4,92290A154,92290A154,FX,fasteners.csv:row22,19.02,real part priced,
+"Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",process,316L stainless,0.008,custom (sheet),H1,,2317K275,H1,options-mcmaster.csv:H1,20.16,inconsistent,model's shields are 0.3 mm; H1's 2317K275 shim is 0.005 in. (0.13 mm)
+"Overflow-funnel screws, M4 x 12 316, counterbored (4 x McMaster 92290A148)",process,316L stainless,0.008,fastener,M4,92290A148,92290A148,FX,fasteners.csv:row21,18.62,real part priced,
+"Rail-hole plug screws, M4 x 10 316, on bonded seal washers (outer face of the back wall) (4 x McMaster 92290A144)",process,316L stainless,0.007,fastener,M1,92290A144,92290A144,FX,fasteners.csv:row20,17.81,real part priced,
+"Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root Ø90.5 x 4.8)",process,FKM (Viton) 75A,0.006,bought,B2,,2-238,B2,seal-parts.csv:row2,11.25,real part priced,
+"Window retaining-ring screws, M3 x 10 316 (6 x McMaster 92290A115)",process,316L stainless,0.006,fastener,L7,92290A115,92290A115,FX,fasteners.csv:row18,14.84,real part priced,
+Camera window retaining ring (bottoms metal-to-metal on the boss),process,6061-T6 aluminium,0.005,custom (machined),M6,,,,,,missing from BOM,model tag M6 does not cover it
+"Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",process,316L stainless,0.005,fastener,H1,92290A124,92290A124,FX,fasteners.csv:row19,19.97,real part priced,
+"Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",process,304 stainless,0.005,fastener,G1,91732A262,91732A262,FX,fasteners.csv:row11,6.71,real part priced,
+"Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",process,304 stainless,0.005,custom (machined),RA4,,,,,,missing from BOM,model tag RA4 has no bom.csv line; not in machining/hours.csv
+"Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",process,304 stainless,0.005,custom (machined),RA4,,,,,,missing from BOM,model tag RA4 has no bom.csv line; not in machining/hours.csv
+"Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",process,316L stainless,0.004,fastener,B1,92290A144,92290A144,FX,fasteners.csv:row20,17.81,real part priced,
+Door drive shaft and disc (Ø6 D-shaft keyed into a 6061 disc screwed to the door's left edge),process,6061-T6 aluminium,0.004,custom (machined),RA2,,,,,,missing from BOM,model tag RA2 has no bom.csv line; not in machining/hours.csv
+"Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating)",process,UV fused silica,0.003,bought,M6,,FESH0900 FESH0950,,,,missing from BOM,no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs short-pass filter); model tag M6 does not cover it
+"Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",process,304 stainless,0.003,fastener,B2,91732A782,91732A782,B2,fasteners.csv:row12 options-mcmaster.csv:B2,4.56,real part priced,
+"Inlet-plenum helical inserts, M4 x 6 18-8, in the back wall (7 x McMaster 91732A656)",process,304 stainless,0.003,fastener,G4,91732A656,91732A656,FX,fasteners.csv:row9,3.68,real part priced,
+"Outlet-plenum helical inserts, M4 x 6 18-8, in the floor (6 x McMaster 91732A656)",process,304 stainless,0.003,fastener,G4,91732A656,91732A656,FX,fasteners.csv:row9,3.68,real part priced,
+"Vacuum-port adapter helical inserts, M5 x 7.5 18-8, in the right wall (4 x McMaster 91732A261)",process,304 stainless,0.003,fastener,G7,91732A261,91732A261,FX,fasteners.csv:row10,3.82,real part priced,
+"Z-flange helical inserts, M5 x 7.5 18-8, in the floor (4 x McMaster 91732A261)",process,304 stainless,0.003,fastener,M3,91732A261,91732A261,FX,fasteners.csv:row10,3.82,real part priced,
+"Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",process,6061-T6 aluminium,0.003,custom (machined),RA5,,,,,,missing from BOM,model tag RA5 has no bom.csv line
+"Thermal cutoff M50 (240 C, in series with the heaters)",process,mixed (vendor unit; mass from datasheet or estimate),0.002,bought,H2,,RT240,H1,options-vendors.csv:H1,1.06,real part priced,model tag H2; the RT240 is costed in H1
+"Macor standoff rings M50 (3 standoffs x 3 rings, Ø8, cut from 8489K75 rod; thermal break)",process,Macor machinable glass-ceramic,0.002,custom (machined),H1,,8489K75,H1,options-mcmaster.csv:H1,68.59,custom,cut from 8489K75 rod
+"Inlet plenum O-ring (FKM 75A 2-044, face seal on the back wall)",process,FKM (Viton) 75A,0.002,bought,G8,,2-044,,seal-parts.csv:row10,,missing from BOM,model tag G8 does not cover it
+"Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)",process,FKM (Viton) 75A,0.002,bought,G8,,2-044,,seal-parts.csv:row10,,missing from BOM,model tag G8 does not cover it
+"Door O-ring (FKM 75A 1.78 mm cord, vulcanized splice, in a half-dovetail groove)",process,FKM (Viton) 75A,0.002,bought,G8,ORING_CORD,96515K123,G8,seal-parts.csv:row22,1.4,inconsistent,model uses FKM 75A cord; G8 lists 0.070 in. 90A cord 1165N11
+"Rod set screws M50, M4 cup point 316 (2 x McMaster 92029A152)",process,316L stainless,0.002,fastener,B1,92029A152,92029A152,FX,fasteners.csv:row15,4.95,real part priced,
+"Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",process,316L stainless,0.002,fastener,B2,93395A204,93395A204,FX,fasteners.csv:row5,15.65,real part priced,
+"Blade screws, M3 x 8 316 (heads 11-17 mm above the plate, over the powder heap) (2 x McMaster 92290A113)",process,316L stainless,0.002,fastener,M5,92290A113,92290A113,FX,fasteners.csv:row17,14.3,real part priced,
+"Window-flange helical inserts, M4 x 4 18-8, in the lid (6 x McMaster 91732A649)",process,304 stainless,0.002,fastener,L7,91732A649,91732A649,FX,fasteners.csv:row8,3.56,real part priced,
+"Metering-base helical inserts, M4 x 6 18-8, in the lid (4 x McMaster 91732A656)",process,304 stainless,0.002,fastener,M4,91732A656,91732A656,FX,fasteners.csv:row9,3.68,real part priced,
+"Overflow-funnel helical inserts, M4 x 6 18-8, in the floor (4 x McMaster 91732A656)",process,304 stainless,0.002,fastener,M4,91732A656,91732A656,FX,fasteners.csv:row9,3.68,real part priced,
+"Bearing-cap helical inserts, M4 x 6 18-8, in the right wall (4 x McMaster 91732A656)",process,304 stainless,0.002,fastener,M1,91732A656,91732A656,FX,fasteners.csv:row9,3.68,real part priced,
+"Reservoir M lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",process,316L stainless,0.002,fastener,R1,92290A113,92290A113,FX,fasteners.csv:row17,14.3,real part priced,
+"Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",process,FKM (Viton) 75A,0.001,bought,B2,,2-034,,seal-parts.csv:row6,,missing from BOM,model tag B2 does not cover it
+"Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",process,FKM (Viton) 75A,0.001,bought,B2,,2-114,B2,seal-parts.csv:row3,10.44,real part priced,
+Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap),process,PTFE,0.001,bought,B2,,,,,,missing from BOM,carbon-filled PTFE / aramid felt: no stock part number chosen; model tag B2 does not cover it
+Bore seal M50 (aramid felt + carbon-filled PTFE scraper),process,aramid felt,0.001,bought,B1,SEAL_PISTON,,,,,missing from BOM,carbon-filled PTFE / aramid felt: no stock part number chosen; model tag B1 does not cover it
+"Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",process,FKM (Viton) 75A,0.001,bought,M4,,2-042,,seal-parts.csv:row9,,missing from BOM,model tag M4 does not cover it
+Vacuum port adapter O-ring (FKM 75A 2-024),process,FKM (Viton) 75A,0.001,bought,G8,,2-024,,seal-parts.csv:row5,,missing from BOM,model tag G8 does not cover it
+"Recoater feedthrough O-rings (2 x FKM 75A 2-024, spacer to wall and to flange)",process,FKM (Viton) 75A,0.001,bought,M1,,2-024,,seal-parts.csv:row5,,missing from BOM,model tag M1 does not cover it
+"Window O-ring, lower (FKM 75A 2-031, under the window)",process,FKM (Viton) 75A,0.001,bought,G8,,2-031,,seal-parts.csv:row13,,missing from BOM,model tag G8 does not cover it
+"Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)",process,FKM (Viton) 75A,0.001,bought,G8,,,,,,missing from BOM,FKM sheet: part number not confirmed (seal-parts.csv); model tag G8 does not cover it
+"Window-flange O-ring (FKM 75A 2-036, face seal on the lid)",process,FKM (Viton) 75A,0.001,bought,G8,,2-036,,seal-parts.csv:row14,,missing from BOM,model tag G8 does not cover it
+"Drawer O-ring (FKM 75A 2-033 in a half-dovetail groove, seals on the lid's front face)",process,FKM (Viton) 75A,0.001,bought,A2,,2-033,,seal-parts.csv:row12,,missing from BOM,model tag A2 does not cover it
+"Metering-base O-ring on the lid (FKM 75A 2-040, round the dose slot)",process,FKM (Viton) 75A,0.001,bought,M4,,2-040,,seal-parts.csv:row11,,missing from BOM,model tag M4 does not cover it
+"Metering-base dock-face O-ring (FKM 75A 2-040, seals the reservoir's base plate)",process,FKM (Viton) 75A,0.001,bought,M4,,2-040,,seal-parts.csv:row11,,missing from BOM,model tag M4 does not cover it
+Reservoir M lid O-ring (FKM 75A 2-030),process,FKM (Viton) 75A,0.001,bought,R1,,2-030,,seal-parts.csv:row15,,missing from BOM,model tag R1 does not cover it
+"Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",process,304 stainless,0.001,fastener,H1,91732A647,91732A647,FX,fasteners.csv:row7,3.85,real part priced,
+"Rail-hole bonded seal washers (4 x M4, 316 ring + FKM lip, Dowty type; seal the through-tapped rail holes)",process,FKM (Viton) 75A,0.001,bought,M1,,,,,,missing from BOM,Dowty-type M4 washer: no part number chosen; model tag M1 does not cover it
+"Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",process,bearing / alloy steel,0.0,bought,H1,,3871K606,H1,options-mcmaster.csv:H1,148.67,real part priced,
+"Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)",process,FKM (Viton) 75A,0.0,bought,H2,,2-014,,seal-parts.csv:row8,,missing from BOM,model tag H2 does not cover it
+"Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",process,FKM (Viton) 75A,0.0,bought,A1,,2-010,,seal-parts.csv:row20,,missing from BOM,model tag A1 does not cover it
+Recoater bearing-cap O-ring (FKM 75A 2-019),process,FKM (Viton) 75A,0.0,bought,M1,,2-019,,seal-parts.csv:row17,,missing from BOM,model tag M1 does not cover it
+"Roller feedthrough O-ring (FKM 75A 2-012, under the housing's shoulder)",process,FKM (Viton) 75A,0.0,bought,M4,,2-012,,seal-parts.csv:row19,,missing from BOM,model tag M4 does not cover it
+"Camera adapter O-ring (FKM 75A 2-022, face seal on the lid)",process,FKM (Viton) 75A,0.0,bought,M6,,2-022,,seal-parts.csv:row16,,missing from BOM,model tag M6 does not cover it
+"Camera window O-ring (FKM 75A 2-017, under the window)",process,FKM (Viton) 75A,0.0,bought,M6,,2-017,,seal-parts.csv:row18,,missing from BOM,model tag M6 does not cover it
+"Camera window flat ring (FKM 75A sheet, 1.0 mm, squeezed to 0.75)",process,FKM (Viton) 75A,0.0,bought,M6,,,,,,missing from BOM,FKM sheet: part number not confirmed (seal-parts.csv); model tag M6 does not cover it
+Captive-screw retainers (18-8) (2 x McMaster 91065A610),process,304 stainless,0.0,fastener,B2,91065A610,91065A610,B2,fasteners.csv:row13 options-mcmaster.csv:B2,13.54,real part priced,
+Disc springs under the stack screws M50 (3 x McMaster 9713K54),process,304 stainless,0.0,fastener,H1,9713K54,9713K54,FX,fasteners.csv:row3,11.81,real part priced,

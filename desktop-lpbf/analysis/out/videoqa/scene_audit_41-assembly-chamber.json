@@ -1,0 +1,1820 @@
+{
+ "chapter": "41-assembly-chamber",
+ "threshold_mm": 1.5,
+ "opaque_min": 0.3,
+ "recordings": [
+  "/tmp/robotbuild/frames/41-assembly-chamber.part0/audit",
+  "/tmp/robotbuild/frames/41-assembly-chamber.part11/audit",
+  "/tmp/robotbuild/frames/41-assembly-chamber.part21/audit",
+  "/tmp/robotbuild/frames/41-assembly-chamber.part22/audit",
+  "/tmp/robotbuild/frames/41-assembly-chamber.part31/audit",
+  "/tmp/robotbuild/frames/41-assembly-chamber.part41/audit",
+  "/tmp/robotbuild/frames/41-assembly-chamber.part42/audit",
+  "/tmp/robotbuild/frames/41-assembly-chamber.part5/audit",
+  "/tmp/robotbuild/frames/41-assembly-chamber.part6/audit",
+  "/tmp/robotbuild/frames/41-assembly-chamber.part7/audit"
+ ],
+ "frames_recorded": 12821,
+ "frames_checked": 12821,
+ "narrow_checks": 226406,
+ "pairs_tested": 226406,
+ "seconds": 1083.0,
+ "peak_rss_mb": 622,
+ "merged_from": [
+  "/tmp/r10/w3/audit/41-assembly-chamber/p0/scene_audit_41-assembly-chamber.json",
+  "/tmp/r10/w3/audit/41-assembly-chamber/p11/scene_audit_41-assembly-chamber.json",
+  "/tmp/r10/w3/audit/41-assembly-chamber/p21/scene_audit_41-assembly-chamber.json",
+  "/tmp/r11/audit41/p22/scene_audit_41-assembly-chamber.json",
+  "/tmp/r11/audit41/p31/scene_audit_41-assembly-chamber.json",
+  "/tmp/r11/audit41/p41/scene_audit_41-assembly-chamber.json",
+  "/tmp/r11/audit41/p42/scene_audit_41-assembly-chamber.json",
+  "/tmp/r10/w3/audit/41-assembly-chamber/p5/scene_audit_41-assembly-chamber.json",
+  "/tmp/r10/w3/audit/41-assembly-chamber/p6/scene_audit_41-assembly-chamber.json",
+  "/tmp/r11/audit41/p7/scene_audit_41-assembly-chamber.json"
+ ],
+ "subsample": "every recorded frame",
+ "recorded_every": 1,
+ "method": "translational penetration depth (26 directions, ladder 1.5-100 mm, bisection-refined), python-fcl BVH meshes of the recorded triangles, containment by winding numbers; a pair is re-checked when a mesh or the relative pose changes; a pair deeper than its limit is re-checked every frame at the limit, its depth re-measured at most every 6 frames",
+ "memory": "streamed: BVHs dropped every 200 recorded frames and past 1800 MB",
+ "cad_overlap_note": "two parts drawn at their designed relative pose (one machine frame) and overlapping there: the CAD's own overlap (a groove or hole the model does not cut), listed apart and not counted",
+ "violations": 74,
+ "worst_mm": 34.4,
+ "worst": {
+  "a": "mirA/A screw presenter",
+  "b": "o410",
+  "b_is": "shcs: Optics-bridge screws, M6 x 35 316 #1",
+  "worst_mm": 34.4,
+  "worst_frame": 11902,
+  "frames": 4,
+  "frame_ranges": [
+   [
+    11902,
+    11905
+   ]
+  ],
+  "limit_mm": 1.5,
+  "rule": null
+ },
+ "pairs": [
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o410",
+   "b_is": "shcs: Optics-bridge screws, M6 x 35 316 #1",
+   "worst_mm": 34.4,
+   "worst_frame": 11902,
+   "frames": 4,
+   "frame_ranges": [
+    [
+     11902,
+     11905
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o396",
+   "b_is": "shcs: Base-plate-to-leg screws, M6 x 25 316 #1",
+   "worst_mm": 24.2,
+   "worst_frame": 4126,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     4126,
+     4128
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o196",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #2",
+   "worst_mm": 24.2,
+   "worst_frame": 7398,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     7398,
+     7400
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o204",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #10",
+   "worst_mm": 24.2,
+   "worst_frame": 7451,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     7451,
+     7453
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o195",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #1",
+   "worst_mm": 24.2,
+   "worst_frame": 7515,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     7515,
+     7517
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o418",
+   "b_is": "shcs: Optics-post base screws, M6 x 25 316 #1",
+   "worst_mm": 24.2,
+   "worst_frame": 11018,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     11018,
+     11020
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o419",
+   "b_is": "shcs: Optics-post base screws, M6 x 25 316 #2",
+   "worst_mm": 24.2,
+   "worst_frame": 11051,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     11051,
+     11053
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o420",
+   "b_is": "shcs: Optics-post base screws, M6 x 25 316 #3",
+   "worst_mm": 24.2,
+   "worst_frame": 11122,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     11122,
+     11124
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o421",
+   "b_is": "shcs: Optics-post base screws, M6 x 25 316 #4",
+   "worst_mm": 24.2,
+   "worst_frame": 11155,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     11155,
+     11157
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o422",
+   "b_is": "shcs: Optics-post base screws, M6 x 25 316 #5",
+   "worst_mm": 24.2,
+   "worst_frame": 11260,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     11260,
+     11262
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o423",
+   "b_is": "shcs: Optics-post base screws, M6 x 25 316 #6",
+   "worst_mm": 24.2,
+   "worst_frame": 11288,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     11288,
+     11290
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o424",
+   "b_is": "shcs: Optics-post base screws, M6 x 25 316 #7",
+   "worst_mm": 24.2,
+   "worst_frame": 11359,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     11359,
+     11361
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o425",
+   "b_is": "shcs: Optics-post base screws, M6 x 25 316 #8",
+   "worst_mm": 24.2,
+   "worst_frame": 11387,
+   "frames": 3,
+   "frame_ranges": [
+    [
+     11387,
+     11389
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o358",
+   "b_is": "shcs: Vacuum-port adapter screws, M5 x 20 316 #1",
+   "worst_mm": 18.5,
+   "worst_frame": 5930,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     5930,
+     5931
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o368",
+   "b_is": "shcs: Bearing-cap screws, M4 x 20 316 #1",
+   "worst_mm": 18.5,
+   "worst_frame": 6646,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6646,
+     6647
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o411",
+   "b_is": "shcs: Optics-bridge screws, M6 x 35 316 #2",
+   "worst_mm": 18.5,
+   "worst_frame": 11946,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     11946,
+     11946
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o412",
+   "b_is": "shcs: Optics-bridge screws, M6 x 35 316 #3",
+   "worst_mm": 18.5,
+   "worst_frame": 11963,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     11963,
+     11963
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o413",
+   "b_is": "shcs: Optics-bridge screws, M6 x 35 316 #4",
+   "worst_mm": 18.5,
+   "worst_frame": 11980,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     11980,
+     11980
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o414",
+   "b_is": "shcs: Optics-bridge screws, M6 x 35 316 #5",
+   "worst_mm": 18.5,
+   "worst_frame": 12031,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     12031,
+     12031
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o415",
+   "b_is": "shcs: Optics-bridge screws, M6 x 35 316 #6",
+   "worst_mm": 18.5,
+   "worst_frame": 12046,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     12046,
+     12046
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o416",
+   "b_is": "shcs: Optics-bridge screws, M6 x 35 316 #7",
+   "worst_mm": 18.5,
+   "worst_frame": 12063,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     12063,
+     12063
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o417",
+   "b_is": "shcs: Optics-bridge screws, M6 x 35 316 #8",
+   "worst_mm": 18.5,
+   "worst_frame": 12080,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     12080,
+     12080
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o235",
+   "b_is": "shcs: Floor-plate screws, M4 x 16 316, up through U-notches in the plate's e",
+   "worst_mm": 14.4,
+   "worst_frame": 770,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     770,
+     771
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o241",
+   "b_is": "shcs: Floor-plate screws, M4 x 16 316, up through U-notches in the plate's e",
+   "worst_mm": 14.4,
+   "worst_frame": 905,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     905,
+     906
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o322",
+   "b_is": "shcs: Inlet-plenum screws, M4 x 16 316 #1",
+   "worst_mm": 14.4,
+   "worst_frame": 5647,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     5647,
+     5648
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o282",
+   "b_is": "shcs: Recoater rail screws, M4 x 16 316, into M4 holes tapped through the ba",
+   "worst_mm": 14.4,
+   "worst_frame": 6083,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6083,
+     6084
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o283",
+   "b_is": "shcs: Recoater rail screws, M4 x 16 316, into M4 holes tapped through the ba",
+   "worst_mm": 14.4,
+   "worst_frame": 6136,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6136,
+     6137
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o284",
+   "b_is": "shcs: Recoater rail screws, M4 x 16 316, into M4 holes tapped through the ba",
+   "worst_mm": 14.4,
+   "worst_frame": 6164,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     6164,
+     6165
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o296",
+   "b_is": "shcs: Window-flange screws, M4 x 16 316 #1",
+   "worst_mm": 14.4,
+   "worst_frame": 8008,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     8008,
+     8009
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o314",
+   "b_is": "shcs: Metering-base screws, M4 x 16 316 #1",
+   "worst_mm": 14.4,
+   "worst_frame": 9573,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     9573,
+     9574
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o380",
+   "b_is": "shcs: Z-flange screws, M5 x 12 316, counterbored #1",
+   "worst_mm": 10.5,
+   "worst_frame": 2336,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     2336,
+     2336
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o340",
+   "b_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #3",
+   "worst_mm": 10.1,
+   "worst_frame": 1695,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     1695,
+     1695
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o338",
+   "b_is": "shcs: Outlet-plenum screws, M4 x 12 316, counterbored #1",
+   "worst_mm": 10.1,
+   "worst_frame": 1755,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     1755,
+     1755
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o397",
+   "b_is": "shcs: Base-plate-to-leg screws, M6 x 25 316 #2",
+   "worst_mm": 8.2,
+   "worst_frame": 4159,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     4159,
+     4159
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o400",
+   "b_is": "shcs: Base-plate-to-leg screws, M6 x 25 316 #5",
+   "worst_mm": 8.2,
+   "worst_frame": 4321,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     4321,
+     4321
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o401",
+   "b_is": "shcs: Base-plate-to-leg screws, M6 x 25 316 #6",
+   "worst_mm": 8.2,
+   "worst_frame": 4368,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     4368,
+     4368
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o402",
+   "b_is": "shcs: Base-plate-to-leg screws, M6 x 25 316 #7",
+   "worst_mm": 8.2,
+   "worst_frame": 4413,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     4413,
+     4413
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirB/B screw presenter",
+   "b": "o403",
+   "b_is": "shcs: Base-plate-to-leg screws, M6 x 25 316 #8",
+   "worst_mm": 8.2,
+   "worst_frame": 4445,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     4445,
+     4445
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o198",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #4",
+   "worst_mm": 8.2,
+   "worst_frame": 7583,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7583,
+     7583
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o197",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #3",
+   "worst_mm": 7.9,
+   "worst_frame": 7568,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7568,
+     7568
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o199",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #5",
+   "worst_mm": 7.9,
+   "worst_frame": 7598,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7598,
+     7598
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o201",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #7",
+   "worst_mm": 7.9,
+   "worst_frame": 7620,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7620,
+     7620
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o202",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #8",
+   "worst_mm": 7.9,
+   "worst_frame": 7634,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7634,
+     7634
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o205",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #11",
+   "worst_mm": 7.9,
+   "worst_frame": 7663,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7663,
+     7663
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o206",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #12",
+   "worst_mm": 7.9,
+   "worst_frame": 7679,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7679,
+     7679
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o208",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #14",
+   "worst_mm": 7.9,
+   "worst_frame": 7707,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7707,
+     7707
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o209",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #15",
+   "worst_mm": 7.9,
+   "worst_frame": 7739,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7739,
+     7739
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o211",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #17",
+   "worst_mm": 7.9,
+   "worst_frame": 7789,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7789,
+     7789
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o212",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #18",
+   "worst_mm": 7.9,
+   "worst_frame": 7803,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7803,
+     7803
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o213",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #19",
+   "worst_mm": 7.9,
+   "worst_frame": 7837,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7837,
+     7837
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o214",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #20",
+   "worst_mm": 7.9,
+   "worst_frame": 7851,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7851,
+     7851
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o203",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #9",
+   "worst_mm": 7.5,
+   "worst_frame": 7649,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7649,
+     7649
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o207",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #13",
+   "worst_mm": 7.5,
+   "worst_frame": 7693,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7693,
+     7693
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o210",
+   "b_is": "shcs: Lid screws, M5 x 25 316 socket head #16",
+   "worst_mm": 7.5,
+   "worst_frame": 7755,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     7755,
+     7755
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o308",
+   "b_is": "shcs: Window retaining-ring screws, M3 x 10 316 #1",
+   "worst_mm": 7.5,
+   "worst_frame": 8637,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     8637,
+     8637
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o290",
+   "b_is": "shcs: Blade screws, M3 x 8 316 #1",
+   "worst_mm": 5.2,
+   "worst_frame": 6948,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6948,
+     6948
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/cap/ring/left_finger_tip",
+   "b": "o96",
+   "b_is": "part: Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "worst_mm": 4.7,
+   "worst_frame": 8165,
+   "frames": 22,
+   "frame_ranges": [
+    [
+     8165,
+     8186
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/cap/ring/right_finger_tip",
+   "b": "o96",
+   "b_is": "part: Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "worst_mm": 4.7,
+   "worst_frame": 8165,
+   "frames": 22,
+   "frame_ranges": [
+    [
+     8165,
+     8186
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o95",
+   "b_is": "part: \u00d82 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)",
+   "worst_mm": 3.4,
+   "worst_frame": 8494,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     8494,
+     8495
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o95",
+   "b_is": "part: \u00d82 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)",
+   "worst_mm": 3.4,
+   "worst_frame": 8494,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     8494,
+     8495
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/left_finger_tip/0",
+   "b": "o78",
+   "b_is": "part: Recoater carriage block (6061)",
+   "worst_mm": 2.9,
+   "worst_frame": 6043,
+   "frames": 5,
+   "frame_ranges": [
+    [
+     6043,
+     6044
+    ],
+    [
+     6187,
+     6189
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/right_finger_tip/0",
+   "b": "o78",
+   "b_is": "part: Recoater carriage block (6061)",
+   "worst_mm": 2.9,
+   "worst_frame": 6043,
+   "frames": 5,
+   "frame_ranges": [
+    [
+     6043,
+     6044
+    ],
+    [
+     6187,
+     6189
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o359",
+   "b_is": "shcs: Vacuum-port adapter screws, M5 x 20 316 #2",
+   "worst_mm": 2.5,
+   "worst_frame": 5969,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     5969,
+     5969
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o360",
+   "b_is": "shcs: Vacuum-port adapter screws, M5 x 20 316 #3",
+   "worst_mm": 2.5,
+   "worst_frame": 5987,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     5987,
+     5987
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o361",
+   "b_is": "shcs: Vacuum-port adapter screws, M5 x 20 316 #4",
+   "worst_mm": 2.5,
+   "worst_frame": 6005,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6005,
+     6005
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/left_finger_tip/0",
+   "b": "o96",
+   "b_is": "part: Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "worst_mm": 2.2,
+   "worst_frame": 8165,
+   "frames": 22,
+   "frame_ranges": [
+    [
+     8165,
+     8186
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "B/gr/right_finger_tip/0",
+   "b": "o96",
+   "b_is": "part: Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "worst_mm": 2.2,
+   "worst_frame": 8165,
+   "frames": 22,
+   "frame_ranges": [
+    [
+     8165,
+     8186
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o369",
+   "b_is": "shcs: Bearing-cap screws, M4 x 20 316 #2",
+   "worst_mm": 2.0,
+   "worst_frame": 6690,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6690,
+     6690
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o370",
+   "b_is": "shcs: Bearing-cap screws, M4 x 20 316 #3",
+   "worst_mm": 2.0,
+   "worst_frame": 6707,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6707,
+     6707
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "mirA/A screw presenter",
+   "b": "o371",
+   "b_is": "shcs: Bearing-cap screws, M4 x 20 316 #4",
+   "worst_mm": 2.0,
+   "worst_frame": 6724,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6724,
+     6724
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o12",
+   "b_is": "part: Z mounting flange (bolted under the floor)",
+   "worst_mm": 1.8,
+   "worst_frame": 2296,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     2296,
+     2297
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o12",
+   "b_is": "part: Z mounting flange (bolted under the floor)",
+   "worst_mm": 1.8,
+   "worst_frame": 2296,
+   "frames": 2,
+   "frame_ranges": [
+    [
+     2296,
+     2297
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/left_finger_tip/0",
+   "b": "o88",
+   "b_is": "part: Recoater floating bearing housing (blind cap, FKM face O-ring)",
+   "worst_mm": 1.7,
+   "worst_frame": 6604,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6604,
+     6604
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  },
+  {
+   "a": "A/gr/right_finger_tip/0",
+   "b": "o88",
+   "b_is": "part: Recoater floating bearing housing (blind cap, FKM face O-ring)",
+   "worst_mm": 1.7,
+   "worst_frame": 6604,
+   "frames": 1,
+   "frame_ranges": [
+    [
+     6604,
+     6604
+    ]
+   ],
+   "limit_mm": 1.5,
+   "rule": null
+  }
+ ],
+ "cad_overlaps": [
+  {
+   "a": "o19",
+   "b": "o35",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
+   "worst_mm": 48.4,
+   "worst_frame": 3690,
+   "pair_frames": 41
+  },
+  {
+   "a": "o23",
+   "b": "o36",
+   "a_is": "part: Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod g",
+   "b_is": "part: Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <",
+   "worst_mm": 20.1,
+   "worst_frame": 2741,
+   "pair_frames": 2
+  },
+  {
+   "a": "o19",
+   "b": "o20",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
+   "worst_mm": 16.9,
+   "worst_frame": 0,
+   "pair_frames": 6320
+  },
+  {
+   "a": "o29",
+   "b": "o30",
+   "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
+   "b_is": "part: Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "worst_mm": 13.6,
+   "worst_frame": 2742,
+   "pair_frames": 8
+  },
+  {
+   "a": "o105",
+   "b": "o93",
+   "a_is": "part: Drawer latch receptacles in the lid (2 x quarter-turn latch)",
+   "b_is": "part: Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "worst_mm": 12.8,
+   "worst_frame": 7353,
+   "pair_frames": 3410
+  },
+  {
+   "a": "o21",
+   "b": "o23",
+   "a_is": "part: Module M50 bottom flange: gland plate (316L, bolted to the welded coll",
+   "b_is": "part: Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod g",
+   "worst_mm": 12.0,
+   "worst_frame": 2745,
+   "pair_frames": 391
+  },
+  {
+   "a": "o29",
+   "b": "o31",
+   "a_is": "part: Heater block M50 (6061-T6, bayonet socket)",
+   "b_is": "part: Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 3",
+   "worst_mm": 10.9,
+   "worst_frame": 2744,
+   "pair_frames": 8
+  },
+  {
+   "a": "o490",
+   "b": "o492",
+   "a_is": "part: Zero-point arms M50 #2",
+   "b_is": "part: Zero-point clamping pins M50 #2",
+   "worst_mm": 10.1,
+   "worst_frame": 3693,
+   "pair_frames": 6659
+  },
+  {
+   "a": "o84",
+   "b": "o86",
+   "a_is": "part: Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both si",
+   "b_is": "part: Recoater feedthrough O-rings (2 x FKM 75A 2-024, spacer to wall and to",
+   "worst_mm": 9.8,
+   "worst_frame": 6498,
+   "pair_frames": 24
+  },
+  {
+   "a": "o489",
+   "b": "o491",
+   "a_is": "part: Zero-point arms M50 #1",
+   "b_is": "part: Zero-point clamping pins M50 #1",
+   "worst_mm": 8.6,
+   "worst_frame": 3675,
+   "pair_frames": 6659
+  },
+  {
+   "a": "o20",
+   "b": "o54",
+   "a_is": "part: Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove ro",
+   "b_is": "part: Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-r",
+   "worst_mm": 8.6,
+   "worst_frame": 3675,
+   "pair_frames": 136
+  },
+  {
+   "a": "o265",
+   "b": "o34",
+   "a_is": "disc: Disc springs under the stack screws M50 #1",
+   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
+   "worst_mm": 8.2,
+   "worst_frame": 2741,
+   "pair_frames": 4
+  },
+  {
+   "a": "o17",
+   "b": "o18",
+   "a_is": "part: Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "b_is": "part: Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's str",
+   "worst_mm": 8.2,
+   "worst_frame": 3691,
+   "pair_frames": 50
+  },
+  {
+   "a": "o85",
+   "b": "o87",
+   "a_is": "part: Recoater fixed bearing: magnetic-fluid rotary feedthrough Ferrotec SFL",
+   "b_is": "part: Recoater shaft coupling (clamp type, 6 to 8 mm, in the wall bore)",
+   "worst_mm": 7.9,
+   "worst_frame": 6497,
+   "pair_frames": 8
+  },
+  {
+   "a": "o266",
+   "b": "o34",
+   "a_is": "disc: Disc springs under the stack screws M50 #2",
+   "b_is": "part: Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a ",
+   "worst_mm": 7.5,
+   "worst_frame": 3674,
+   "pair_frames": 6
+  },
+  {
+   "a": "o127",
+   "b": "o130",
+   "a_is": "part: Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d8",
+   "b_is": "part: Camera window gasket, under the window (FKM 75A sheet, 1.0 mm, squeeze",
+   "worst_mm": 4.7,
+   "worst_frame": 10322,
+   "pair_frames": 500
+  },
+  {
+   "a": "o37",
+   "b": "o39",
+   "a_is": "part: Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 ",
+   "b_is": "part: Striker disc M50 (416 stainless, on the pot magnet)",
+   "worst_mm": 4.5,
+   "worst_frame": 2741,
+   "pair_frames": 4
+  },
+  {
+   "a": "o27",
+   "b": "o29",
+   "a_is": "part: Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "b_is": "part: Heater block M50 (6061-T6, bayonet socket)",
+   "worst_mm": 4.3,
+   "worst_frame": 2745,
+   "pair_frames": 6722
+  },
+  {
+   "a": "o19",
+   "b": "o28",
+   "a_is": "part: Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 m",
+   "b_is": "part: Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out o",
+   "worst_mm": 3.0,
+   "worst_frame": 3675,
+   "pair_frames": 292
+  },
+  {
+   "a": "o54",
+   "b": "o55",
+   "a_is": "part: Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-r",
+   "b_is": "part: Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; ",
+   "worst_mm": 2.7,
+   "worst_frame": 3701,
+   "pair_frames": 32
+  }
+ ],
+ "rigid_pairs": [
+  {
+   "a": "mirA/A MiR250",
+   "b": "mirA/light strip",
+   "worst_mm": ">100",
+   "frames": 2862
+  },
+  {
+   "a": "mirB/B MiR250",
+   "b": "mirB/light strip",
+   "worst_mm": ">100",
+   "frames": 2862
+  },
+  {
+   "a": "mirA/A MiR250",
+   "b": "mirA/top",
+   "worst_mm": 4.1,
+   "frames": 2862
+  },
+  {
+   "a": "mirB/B MiR250",
+   "b": "mirB/top",
+   "worst_mm": 4.1,
+   "frames": 2862
+  },
+  {
+   "a": "mirA/A cabinet",
+   "b": "mirA/top",
+   "worst_mm": 2.1,
+   "frames": 2862
+  },
+  {
+   "a": "mirB/B cabinet",
+   "b": "mirB/top",
+   "worst_mm": 2.1,
+   "frames": 2862
+  }
+ ],
+ "allowed": [
+  {
+   "rule": "person's own layers",
+   "depth_allowed_mm": null,
+   "reason": "one person's skin, clothes, shoes and glasses are layers of one skinned body (people.py offsets the clothes from it)",
+   "pairs_in_contact": 21,
+   "pair_frames": 55324,
+   "examples": [
+    [
+     "op/brow",
+     "op/coat"
+    ],
+    [
+     "op/brow",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/coat skirt"
+    ],
+    [
+     "op/coat",
+     "op/glasses frame"
+    ],
+    [
+     "op/coat",
+     "op/glasses lens"
+    ],
+    [
+     "op/coat",
+     "op/glove"
+    ],
+    [
+     "op/coat",
+     "op/iris"
+    ],
+    [
+     "op/coat",
+     "op/sclera"
+    ],
+    [
+     "op/coat",
+     "op/shirt"
+    ],
+    [
+     "op/coat",
+     "op/skin"
+    ],
+    [
+     "op/coat",
+     "op/trousers"
+    ],
+    [
+     "op/coat skirt",
+     "op/glove"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "adjacent UR links",
+   "depth_allowed_mm": null,
+   "reason": "neighbouring UR12e links meet at their joint (the pieces of one link, and the planner's ADJACENT pairs in cell.py)",
+   "pairs_in_contact": 147,
+   "pair_frames": 950735,
+   "examples": [
+    [
+     "A/base/0",
+     "A/base/1"
+    ],
+    [
+     "A/base/0",
+     "A/shoulder/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/2"
+    ],
+    [
+     "A/forearm/0",
+     "A/forearm/3"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/0"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/2"
+    ],
+    [
+     "A/forearm/0",
+     "A/upper_arm/3"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/0"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/1"
+    ],
+    [
+     "A/forearm/0",
+     "A/wrist1/2"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "flange stack",
+   "depth_allowed_mm": null,
+   "reason": "the tool changer, the 2F-85 and its fingers, caps and the wrist camera are bolted to the flange and to each other",
+   "pairs_in_contact": 329,
+   "pair_frames": 1135146,
+   "examples": [
+    [
+     "A/changer",
+     "A/gr/adapter/0"
+    ],
+    [
+     "A/changer",
+     "A/gr/adapter/1"
+    ],
+    [
+     "A/changer",
+     "A/gr/base/0"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/0"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/1"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/2"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/3"
+    ],
+    [
+     "A/changer",
+     "A/gr/camera/4"
+    ],
+    [
+     "A/changer",
+     "A/wrist3/0"
+    ],
+    [
+     "A/gr/adapter/0",
+     "A/gr/adapter/1"
+    ],
+    [
+     "A/gr/adapter/0",
+     "A/gr/base/0"
+    ],
+    [
+     "A/gr/adapter/1",
+     "A/gr/base/0"
+    ]
+   ],
+   "worst_mm": null
+  },
+  {
+   "rule": "screw in its hole",
+   "depth_allowed_mm": 40.0,
+   "reason": "a socket-head, flat-head or set screw, insert, dowel or plunger drawn in its hole: its thread or shank is drawn inside the part it fastens (the CAD's holes are not threaded), up to 40 mm",
+   "pairs_in_contact": 94,
+   "pair_frames": 465814,
+   "examples": [
+    [
+     "o19",
+     "o255"
+    ],
+    [
+     "o19",
+     "o256"
+    ],
+    [
+     "o19",
+     "o257"
+    ],
+    [
+     "o19",
+     "o258"
+    ],
+    [
+     "o215",
+     "o53"
+    ],
+    [
+     "o216",
+     "o53"
+    ],
+    [
+     "o217",
+     "o53"
+    ],
+    [
+     "o218",
+     "o53"
+    ],
+    [
+     "o219",
+     "o53"
+    ],
+    [
+     "o220",
+     "o53"
+    ],
+    [
+     "o221",
+     "o53"
+    ],
+    [
+     "o222",
+     "o53"
+    ]
+   ],
+   "worst_mm": 25.0
+  },
+  {
+   "rule": "screw in its insert",
+   "depth_allowed_mm": 40.0,
+   "reason": "a screw threaded into its threaded insert (round 9: chapter 41's 19 insert x screw pairs, up to 10.5 mm in round 8; the inserts are drawn as solid sleeves), up to 40 mm",
+   "pairs_in_contact": 20,
+   "pair_frames": 40775,
+   "examples": [
+    [
+     "o259",
+     "o262"
+    ],
+    [
+     "o260",
+     "o263"
+    ],
+    [
+     "o261",
+     "o264"
+    ]
+   ],
+   "worst_mm": 12.0
+  },
+  {
+   "rule": "hands on the part they set",
+   "depth_allowed_mm": 25.0,
+   "reason": "round 9: the person's hands on a part they set in its seat or a screw they drive after a step the arms failed (people.py's fingers curl a little into what they hold), up to 25 mm",
+   "pairs_in_contact": 1,
+   "pair_frames": 87,
+   "examples": [
+    [
+     "o489",
+     "op/glove"
+    ]
+   ],
+   "worst_mm": 25.0
+  },
+  {
+   "rule": "driver on its screw",
+   "depth_allowed_mm": 30.0,
+   "reason": "the nutrunner's or screwdriver's bit or socket on the screw it turns, up to 30 mm (the socket's depth)",
+   "pairs_in_contact": 34,
+   "pair_frames": 1866,
+   "examples": [
+    [
+     "A/tool/nutrunner/60/3.6",
+     "o341"
+    ],
+    [
+     "A/tool/nutrunner/60/3.6",
+     "o343"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o235"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o236"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o237"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o238"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o239"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o240"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o242"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o245"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o246"
+    ],
+    [
+     "A/tool/nutrunner_angle/0/3.6",
+     "o247"
+    ]
+   ],
+   "worst_mm": 6.0
+  },
+  {
+   "rule": "hand driver in the hand",
+   "depth_allowed_mm": null,
+   "reason": "the person's hand driver is held in their right hand",
+   "pairs_in_contact": 1,
+   "pair_frames": 48,
+   "examples": [
+    [
+     "op/glove",
+     "op/tool/driver_long"
+    ]
+   ],
+   "worst_mm": null
+  }
+ ],
+ "stills": [
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_41-assembly-chamber_1.png",
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_41-assembly-chamber_2.png",
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_41-assembly-chamber_3.png",
+  "desktop-lpbf/analysis/out/videoqa/scene_audit_41-assembly-chamber_4.png"
+ ]
+}

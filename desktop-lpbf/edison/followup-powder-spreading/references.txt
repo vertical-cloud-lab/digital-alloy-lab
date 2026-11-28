@@ -1,0 +1,77 @@
+1. (girnth2024dimensionlessquantitiesin pages 9-11): Simon Girnth, Tim Heitkamp, Christian Wacker, Nils Waldt, Günter Klawitter, and Klaus Dröder. Dimensionless quantities in discrete element method: powder model parameterization for additive manufacturing. Progress in Additive Manufacturing, 9:1967-1983, Jan 2024. URL: https://doi.org/10.1007/s40964-023-00543-3, doi:10.1007/s40964-023-00543-3. This article has 4 citations and is from a peer-reviewed journal.
+
+2. (ye2026digitaltwindrivenmanufacturing pages 7-10): Meng Ye, Chen-Xi Cai, Guangjun Mu, Hanyang Li, Xue-Kun Li, and Greg Zhu. Digital twin-driven manufacturing of diamond-reinforced metal matrix composites: a case study on spreading behaviour of alsi10mg/diamond powder in selective laser melting. Digital Twin, Aug 2026. URL: https://doi.org/10.1080/27525783.2026.2694875, doi:10.1080/27525783.2026.2694875. This article has 0 citations and is from a peer-reviewed journal.
+
+3. (haapa2023simulationofmetal pages 118-121): E Haapa. Simulation of metal powder packing behaviour in laser-based powder bed fusion. Unknown journal, 2023.
+
+4. (ye2026digitaltwindrivenmanufacturing pages 6-7): Meng Ye, Chen-Xi Cai, Guangjun Mu, Hanyang Li, Xue-Kun Li, and Greg Zhu. Digital twin-driven manufacturing of diamond-reinforced metal matrix composites: a case study on spreading behaviour of alsi10mg/diamond powder in selective laser melting. Digital Twin, Aug 2026. URL: https://doi.org/10.1080/27525783.2026.2694875, doi:10.1080/27525783.2026.2694875. This article has 0 citations and is from a peer-reviewed journal.
+
+5. (haapa2023simulationofmetal pages 33-36): E Haapa. Simulation of metal powder packing behaviour in laser-based powder bed fusion. Unknown journal, 2023.
+
+6. (marchais2021a3ddem pages 4-6): K. Marchais, J. Girardot, C. Metton, and I. Iordanoff. A 3d dem simulation to study the influence of material and process parameters on spreading of metallic powder in additive manufacturing. Computational Particle Mechanics, 8:943-953, Jul 2021. URL: https://doi.org/10.1007/s40571-020-00380-z, doi:10.1007/s40571-020-00380-z. This article has 35 citations.
+
+7. (shaheen2020theinfluenceof pages 17-22): Mohamad Yousef Shaheen, Anthony R. Thornton, Stefan Luding, and Thomas Weinhart. The influence of material properties and process parameters on the spreading process in additive manufacturing. Text, Jan 2020. URL: https://doi.org/10.48550/arxiv.2007.10125, doi:10.48550/arxiv.2007.10125. This article has 1 citations and is from a peer-reviewed journal.
+
+8. (girnth2024dimensionlessquantitiesin pages 7-9): Simon Girnth, Tim Heitkamp, Christian Wacker, Nils Waldt, Günter Klawitter, and Klaus Dröder. Dimensionless quantities in discrete element method: powder model parameterization for additive manufacturing. Progress in Additive Manufacturing, 9:1967-1983, Jan 2024. URL: https://doi.org/10.1007/s40964-023-00543-3, doi:10.1007/s40964-023-00543-3. This article has 4 citations and is from a peer-reviewed journal.
+
+9. (haapa2023simulationofmetal pages 36-38): E Haapa. Simulation of metal powder packing behaviour in laser-based powder bed fusion. Unknown journal, 2023.
+
+10. (lupo2021calibrationofdem pages 5-7): Marco Lupo, Diego Barletta, Daniele Sofia, and Massimo Poletto. Calibration of dem for cohesive particles in the sls powder spreading process. Processes, 9:1715, Sep 2021. URL: https://doi.org/10.3390/pr9101715, doi:10.3390/pr9101715. This article has 16 citations.
+
+11. (girnth2024dimensionlessquantitiesin pages 5-7): Simon Girnth, Tim Heitkamp, Christian Wacker, Nils Waldt, Günter Klawitter, and Klaus Dröder. Dimensionless quantities in discrete element method: powder model parameterization for additive manufacturing. Progress in Additive Manufacturing, 9:1967-1983, Jan 2024. URL: https://doi.org/10.1007/s40964-023-00543-3, doi:10.1007/s40964-023-00543-3. This article has 4 citations and is from a peer-reviewed journal.
+
+12. (ajabshir2024effectoftemperaturea pages 121-126): S Zinatlou Ajabshir. Effect of temperature on the powder flow properties and their dispersion in sls process. Unknown journal, 2024.
+
+13. (lupo2021calibrationofdem pages 2-3): Marco Lupo, Diego Barletta, Daniele Sofia, and Massimo Poletto. Calibration of dem for cohesive particles in the sls powder spreading process. Processes, 9:1715, Sep 2021. URL: https://doi.org/10.3390/pr9101715, doi:10.3390/pr9101715. This article has 16 citations.
+
+14. (pekok2022alcumgalloypowder pages 9-12): Mulla Ahmet Pekok, Rossitza Setchi, Michael Ryan, Heng Gu, Quanquan Han, and Dongdong Gu. Al-cu-mg alloy powder reinforced with graphene nanoplatelets: morphology, flowability and discrete element simulation. Journal of Manufacturing and Materials Processing, 6:148, Nov 2022. URL: https://doi.org/10.3390/jmmp6060148, doi:10.3390/jmmp6060148. This article has 9 citations.
+
+15. (salehi2023optimisingspreadlayerquality pages 2-3): Hamid Salehi, John Cummins, Enrico Gallino, Vivek Garg, Tong Deng, Ali Hassanpour, and Mike Bradley. Optimising spread-layer quality in powder additive manufacturing: assessing packing fraction and segregation tendency. Processes, 11:2276, Jul 2023. URL: https://doi.org/10.3390/pr11082276, doi:10.3390/pr11082276. This article has 19 citations.
+
+16. (burgess2024discreteelementmethod pages 88-94): AJ Burgess. Discrete element method investigation of stainless steel 3161 powder flow in vacuum conditions during additive manufacturing. Unknown journal, 2024.
+
+17. (wang2021particlescalemodelling pages 121-125): LIN WANG. Particle scale modelling of powder spreading in powder bed fusion additive manufacturing. ArXiv, Feb 2021. URL: https://doi.org/10.26180/14111912.v1, doi:10.26180/14111912.v1. This article has 3 citations.
+
+18. (brocksieper2026investigationofflowability pages 7-9): Tim Robert Brocksieper, Tobias Grimm, and Jan T. Sehrt. Investigation of flowability and spreadability of metal powders for powder bed fusion additive manufacturing. Progress in Additive Manufacturing, 11:6661-6673, Apr 2026. URL: https://doi.org/10.1007/s40964-026-01690-z, doi:10.1007/s40964-026-01690-z. This article has 4 citations and is from a peer-reviewed journal.
+
+19. (haydari2021thespreadingbehaviour pages 46-48): Z Haydari. The spreading behaviour of stainless steel powders for additive manufacturing. Unknown journal, 2021.
+
+20. (haydari2021thespreadingbehaviour pages 51-54): Z Haydari. The spreading behaviour of stainless steel powders for additive manufacturing. Unknown journal, 2021.
+
+21. (salehi2023optimisingspreadlayerquality pages 12-13): Hamid Salehi, John Cummins, Enrico Gallino, Vivek Garg, Tong Deng, Ali Hassanpour, and Mike Bradley. Optimising spread-layer quality in powder additive manufacturing: assessing packing fraction and segregation tendency. Processes, 11:2276, Jul 2023. URL: https://doi.org/10.3390/pr11082276, doi:10.3390/pr11082276. This article has 19 citations.
+
+22. (haydari2021thespreadingbehaviour pages 48-51): Z Haydari. The spreading behaviour of stainless steel powders for additive manufacturing. Unknown journal, 2021.
+
+23. (burgess2024discreteelementmethod pages 85-88): AJ Burgess. Discrete element method investigation of stainless steel 3161 powder flow in vacuum conditions during additive manufacturing. Unknown journal, 2024.
+
+24. (lu2026exploringtheactual pages 8-12): Pan Lu, Zhang Chen-lin, Liu Tong, Liu Jiang-lin, Zhang Heng-hua, and Zhang Mei. Exploring the actual stacking height of metal powder bed in laser powder bed fusion additive manufacturing. Scientific Reports, Jan 2026. URL: https://doi.org/10.1038/s41598-025-29968-2, doi:10.1038/s41598-025-29968-2. This article has 4 citations and is from a peer-reviewed journal.
+
+25. (lu2026exploringtheactual pages 12-16): Pan Lu, Zhang Chen-lin, Liu Tong, Liu Jiang-lin, Zhang Heng-hua, and Zhang Mei. Exploring the actual stacking height of metal powder bed in laser powder bed fusion additive manufacturing. Scientific Reports, Jan 2026. URL: https://doi.org/10.1038/s41598-025-29968-2, doi:10.1038/s41598-025-29968-2. This article has 4 citations and is from a peer-reviewed journal.
+
+26. (lu2026exploringtheactual pages 16-19): Pan Lu, Zhang Chen-lin, Liu Tong, Liu Jiang-lin, Zhang Heng-hua, and Zhang Mei. Exploring the actual stacking height of metal powder bed in laser powder bed fusion additive manufacturing. Scientific Reports, Jan 2026. URL: https://doi.org/10.1038/s41598-025-29968-2, doi:10.1038/s41598-025-29968-2. This article has 4 citations and is from a peer-reviewed journal.
+
+27. (lu2026exploringtheactual pages 6-8): Pan Lu, Zhang Chen-lin, Liu Tong, Liu Jiang-lin, Zhang Heng-hua, and Zhang Mei. Exploring the actual stacking height of metal powder bed in laser powder bed fusion additive manufacturing. Scientific Reports, Jan 2026. URL: https://doi.org/10.1038/s41598-025-29968-2, doi:10.1038/s41598-025-29968-2. This article has 4 citations and is from a peer-reviewed journal.
+
+28. (elton2023electrostaticpowderspreading pages 14-19): Eric S. Elton, Ziheng Wu, Michael Troksa, and Gabe Guss. Electrostatic powder spreading for metal powder bed fusion applications. Additive Manufacturing, 61:103330, Jan 2023. URL: https://doi.org/10.1016/j.addma.2022.103330, doi:10.1016/j.addma.2022.103330. This article has 17 citations and is from a highest quality peer-reviewed journal.
+
+29. (bogdanova2024mesoscalesimulationof pages 10-13): Maria Bogdanova, Stanislav Chernyshikhin, Andrey Zakirov, Boris Zotov, Leonid Fedorenko, Sergei Belousov, Anastasia Perepelkina, Boris Korneev, Maria Lyange, Ivan Pelevin, Inna Iskandarova, Ella Dzidziguri, Boris Potapkin, and Alexander Gromov. Mesoscale simulation of laser powder bed fusion with an increased layer thickness for alsi10mg alloy. Journal of Manufacturing and Materials Processing, 8:7, Jan 2024. URL: https://doi.org/10.3390/jmmp8010007, doi:10.3390/jmmp8010007. This article has 26 citations.
+
+30. (kraner2020characterizationofnonferrous pages 2-3): Characterization of non-ferrous metal powders
+
+31. (spierings2018powderspreadabilityand pages 115-119): Powder Spreadability and Characterization of Sc- and Zr-modified Aluminium Alloys processed by Selective Laser Melting: Quality Management System for additive manufacturing This article has 33 citations.
+
+32. (munizlerma2018acomprehensiveapproach pages 8-11): Jose Alberto Muñiz-Lerma, Amy Nommeots-Nomm, Kristian Edmund Waters, and Mathieu Brochu. A comprehensive approach to powder feedstock characterization for powder bed fusion additive manufacturing: a case study on alsi7mg. Materials, 11:2386, Nov 2018. URL: https://doi.org/10.3390/ma11122386, doi:10.3390/ma11122386. This article has 173 citations.
+
+33. (chen2010characterizationofparticle pages 6-8): Yuhua Chen, Laila Jallo, Miguel A.S. Quintanilla, and Rajesh Dave. Characterization of particle and bulk level cohesion reduction of surface modified fine aluminum powders. Colloids and Surfaces A: Physicochemical and Engineering Aspects, 361:66-80, May 2010. URL: https://doi.org/10.1016/j.colsurfa.2010.03.015, doi:10.1016/j.colsurfa.2010.03.015. This article has 151 citations and is from a peer-reviewed journal.
+
+34. (munizlerma2018acomprehensiveapproach pages 5-8): Jose Alberto Muñiz-Lerma, Amy Nommeots-Nomm, Kristian Edmund Waters, and Mathieu Brochu. A comprehensive approach to powder feedstock characterization for powder bed fusion additive manufacturing: a case study on alsi7mg. Materials, 11:2386, Nov 2018. URL: https://doi.org/10.3390/ma11122386, doi:10.3390/ma11122386. This article has 173 citations.
+
+35. (rezaei2026powderdegradationand pages 24-25): Sina Rezaei, Sara Biamino, Federica Bondioli, Daniele Ugues, Paolo Fino, and Mariangela Lombardi. Powder degradation and recycling strategies for aluminum alloys in additive manufacturing: a comprehensive review. Jul 2026. URL: https://doi.org/10.3390/app16136822, doi:10.3390/app16136822. This article has 1 citations.
+
+36. (maynard2013tenstepsto pages 2-4): E Maynard. Ten steps to an effective bin design. Unknown journal, 2013.
+
+37. (maynard2013tenstepsto pages 4-5): E Maynard. Ten steps to an effective bin design. Unknown journal, 2013.
+
+38. (EP3363566B1 pages 5-6): David Roberts Mcmurtry. Powder bed fusion apparatus. Patent (WO,EP,US,CN,JP), 2020.
+
+39. (deridov2024analysisofpowder pages 31-36): K Deridov. Analysis of powder handling mechanism in a selective laser sintering (sls) 3d printing system. Unknown journal, 2024.

@@ -1,0 +1,904 @@
+{
+ "video": {
+  "url": "https://www.youtube.com/watch?v=_SYhCRwacDs",
+  "youtube_id": "_SYhCRwacDs",
+  "file": "intro.mp4",
+  "sha256": "4c69d76229ce93a878a4037dbaa72b8063a238d831303f9e3ddd39b1cbe8c7f2",
+  "title": "ClearPath: Teknic's Integrated Brushless Servo Motor, Drive and Encoder (Teknic)",
+  "linked_from": "https://teknic.com/products/clearpath-brushless-dc-servo-motors/",
+  "segment_s": [
+   598.6,
+   606.0
+  ],
+  "fps_sampled": 10,
+  "frame_px": [
+   1280,
+   720
+  ]
+ },
+ "colmap": {
+  "version": "3.12.6 (Ubuntu apt build, no CUDA)",
+  "args": {
+   "feature_extractor": [
+    "--ImageReader.camera_model",
+    "SIMPLE_RADIAL",
+    "--ImageReader.single_camera",
+    "1",
+    "--SiftExtraction.use_gpu",
+    "0",
+    "--SiftExtraction.num_threads",
+    "2",
+    "--SiftExtraction.max_image_size",
+    "1280",
+    "--SiftExtraction.max_num_features",
+    "8192"
+   ],
+   "exhaustive_matcher": [
+    "--SiftMatching.use_gpu",
+    "0",
+    "--SiftMatching.num_threads",
+    "2",
+    "--SiftMatching.guided_matching",
+    "1"
+   ],
+   "mapper": [
+    "--Mapper.num_threads",
+    "2",
+    "--Mapper.ba_refine_principal_point",
+    "0",
+    "--Mapper.multiple_models",
+    "0"
+   ]
+  },
+  "camera_model": "SIMPLE_RADIAL"
+ },
+ "sfm": {
+  "frames": 74,
+  "registered": 74,
+  "points3D": 13502,
+  "mean_track_length": 4.88,
+  "mean_reprojection_error_px": 0.838,
+  "median_reprojection_error_px": 0.642,
+  "f_px": 2673.0,
+  "f_35mm_equiv_mm": 78.8,
+  "cx": 640.0,
+  "cy": 360.0,
+  "k1": -0.36155,
+  "mean_observations_per_image": 890.3,
+  "orbit": {
+   "arc_deg": 281.9,
+   "radius_cv_pct": 19.87,
+   "out_of_plane_rms_over_radius_pct": 0.41
+  }
+ },
+ "cloud": {
+  "points_kept": 9966,
+  "filter": "reprojection error < 2 px, track >= 3, kNN(8) mean-distance outliers > mean + 2.5 sd removed"
+ },
+ "alignment": {
+  "method": "turntable frame (orbit axis = model +y, connector block up), turn about it scanned in 10 deg steps x 6 scales by silhouette IoU on every 6th view, then Nelder-Mead over 5 DoF (turn about the vertical, translation, scale; the model kept upright) on the T220 masks of every 3rd view (25), half resolution, silhouettes splatted from 120,000 surface samples, two passes, 356 evaluations",
+  "turn_scan_best": [
+   0.6211,
+   230,
+   0.9
+  ],
+  "fit_mean_iou_before": 0.6239,
+  "fit_mean_iou_after": 0.8072,
+  "silhouette_scale_mm_per_unit": 122.993,
+  "rejected_free_rotation": "an earlier run with the 3-D rotation free as well tipped the model shaft-up within one 350-evaluation pass (mean IoU 0.76 on the fitted views, not converged); the frames show the shaft level, so the rotation is held upright",
+  "rejected": "unconstrained start (centroid + principal axes, 24 axis rotations, trimmed ICP with scale): best trimmed mean 1.11 mm at 84.4 mm per unit, but a median silhouette IoU of 0.53 at that pose, so it converged on a wrong fit of the sparse cloud"
+ },
+ "scale": {
+  "at_silhouette_pose": {
+   "flange_plate_points": 111,
+   "flange_width_x_y_mm": [
+    61.36,
+    62.94
+   ],
+   "shaft_points": 12,
+   "shaft_d_mm": 10.76,
+   "rear_z_p0_5_mm": -83.86,
+   "front_z_p99_5_mm": 15.53
+  },
+  "flange_drawing_mm": 59.1,
+  "shaft_drawing_mm": 9.5,
+  "rear_drawing_mm": -84.81,
+  "flange_scale_vs_silhouette_scale_pct": -4.91,
+  "similarity_icp_vs_silhouette_scale_pct": -3.26
+ },
+ "distance": {
+  "silhouette_pose": {
+   "scale": 122.99304,
+   "mean_mm": 2.257,
+   "median_mm": 1.162,
+   "p95_mm": 8.343,
+   "max_mm": 15.84,
+   "within_0_5mm_pct": 22.5,
+   "within_1mm_pct": 44.3,
+   "within_2mm_pct": 62.6
+  },
+  "rigid_icp_silhouette_scale": {
+   "scale": 122.99304,
+   "mean_mm": 1.894,
+   "median_mm": 1.036,
+   "p95_mm": 6.542,
+   "max_mm": 12.38,
+   "within_0_5mm_pct": 24.9,
+   "within_1mm_pct": 48.5,
+   "within_2mm_pct": 68.9
+  },
+  "flange_scaled_rigid_icp": {
+   "scale": 116.95718,
+   "mean_mm": 1.903,
+   "median_mm": 1.028,
+   "p95_mm": 6.833,
+   "max_mm": 16.25,
+   "within_0_5mm_pct": 25.4,
+   "within_1mm_pct": 48.7,
+   "within_2mm_pct": 69.6
+  },
+  "similarity_icp": {
+   "scale": 118.97737,
+   "mean_mm": 1.893,
+   "median_mm": 1.017,
+   "p95_mm": 6.951,
+   "max_mm": 14.75,
+   "within_0_5mm_pct": 26.3,
+   "within_1mm_pct": 49.3,
+   "within_2mm_pct": 69.9
+  }
+ },
+ "primary": "flange_scaled_rigid_icp",
+ "silhouette": {
+  "views": 74,
+  "silhouette_pose": {
+   "T180": {
+    "median": 0.8014,
+    "min": 0.6713,
+    "max": 0.8959,
+    "mean": 0.7995
+   },
+   "T200": {
+    "median": 0.8135,
+    "min": 0.6844,
+    "max": 0.8884,
+    "mean": 0.8125
+   },
+   "T220": {
+    "median": 0.8119,
+    "min": 0.735,
+    "max": 0.8742,
+    "mean": 0.8073
+   },
+   "T220_shadow_rows_cut": {
+    "median": 0.8223,
+    "min": 0.7405,
+    "max": 0.8742,
+    "mean": 0.8114
+   }
+  },
+  "flange_scaled_rigid_icp": {
+   "T220": {
+    "median": 0.7934,
+    "min": 0.7141,
+    "max": 0.8939,
+    "mean": 0.7901
+   },
+   "T220_shadow_rows_cut": {
+    "median": 0.7954,
+    "min": 0.7141,
+    "max": 0.8939,
+    "mean": 0.793
+   }
+  },
+  "per_view": [
+   {
+    "name": "f_001.png",
+    "silhouette_pose_T180": 0.6798,
+    "silhouette_pose_T200": 0.7311,
+    "silhouette_pose_T220": 0.7571,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7571,
+    "flange_scaled_rigid_icp_T220": 0.7475,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7486
+   },
+   {
+    "name": "f_002.png",
+    "silhouette_pose_T180": 0.687,
+    "silhouette_pose_T200": 0.7388,
+    "silhouette_pose_T220": 0.7612,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7612,
+    "flange_scaled_rigid_icp_T220": 0.7564,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7596
+   },
+   {
+    "name": "f_003.png",
+    "silhouette_pose_T180": 0.7309,
+    "silhouette_pose_T200": 0.7572,
+    "silhouette_pose_T220": 0.7528,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7536,
+    "flange_scaled_rigid_icp_T220": 0.7512,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7586
+   },
+   {
+    "name": "f_004.png",
+    "silhouette_pose_T180": 0.7264,
+    "silhouette_pose_T200": 0.757,
+    "silhouette_pose_T220": 0.7462,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7493,
+    "flange_scaled_rigid_icp_T220": 0.7479,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7603
+   },
+   {
+    "name": "f_005.png",
+    "silhouette_pose_T180": 0.7224,
+    "silhouette_pose_T200": 0.7421,
+    "silhouette_pose_T220": 0.735,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7416,
+    "flange_scaled_rigid_icp_T220": 0.7381,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7539
+   },
+   {
+    "name": "f_006.png",
+    "silhouette_pose_T180": 0.7309,
+    "silhouette_pose_T200": 0.7486,
+    "silhouette_pose_T220": 0.7398,
+    "silhouette_pose_T220_shadow_rows_cut": 0.75,
+    "flange_scaled_rigid_icp_T220": 0.7415,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7637
+   },
+   {
+    "name": "f_007.png",
+    "silhouette_pose_T180": 0.7531,
+    "silhouette_pose_T200": 0.7577,
+    "silhouette_pose_T220": 0.7487,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7643,
+    "flange_scaled_rigid_icp_T220": 0.7481,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.775
+   },
+   {
+    "name": "f_008.png",
+    "silhouette_pose_T180": 0.7657,
+    "silhouette_pose_T200": 0.7682,
+    "silhouette_pose_T220": 0.7627,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7831,
+    "flange_scaled_rigid_icp_T220": 0.755,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7754
+   },
+   {
+    "name": "f_009.png",
+    "silhouette_pose_T180": 0.7814,
+    "silhouette_pose_T200": 0.778,
+    "silhouette_pose_T220": 0.7749,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8026,
+    "flange_scaled_rigid_icp_T220": 0.7631,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.778
+   },
+   {
+    "name": "f_010.png",
+    "silhouette_pose_T180": 0.793,
+    "silhouette_pose_T200": 0.7886,
+    "silhouette_pose_T220": 0.7863,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8104,
+    "flange_scaled_rigid_icp_T220": 0.7733,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7828
+   },
+   {
+    "name": "f_011.png",
+    "silhouette_pose_T180": 0.8024,
+    "silhouette_pose_T200": 0.7987,
+    "silhouette_pose_T220": 0.7976,
+    "silhouette_pose_T220_shadow_rows_cut": 0.814,
+    "flange_scaled_rigid_icp_T220": 0.7831,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7883
+   },
+   {
+    "name": "f_012.png",
+    "silhouette_pose_T180": 0.81,
+    "silhouette_pose_T200": 0.8081,
+    "silhouette_pose_T220": 0.809,
+    "silhouette_pose_T220_shadow_rows_cut": 0.821,
+    "flange_scaled_rigid_icp_T220": 0.7919,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7945
+   },
+   {
+    "name": "f_013.png",
+    "silhouette_pose_T180": 0.8158,
+    "silhouette_pose_T200": 0.8161,
+    "silhouette_pose_T220": 0.8179,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8249,
+    "flange_scaled_rigid_icp_T220": 0.798,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7983
+   },
+   {
+    "name": "f_014.png",
+    "silhouette_pose_T180": 0.823,
+    "silhouette_pose_T200": 0.8235,
+    "silhouette_pose_T220": 0.8264,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8309,
+    "flange_scaled_rigid_icp_T220": 0.8038,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8038
+   },
+   {
+    "name": "f_015.png",
+    "silhouette_pose_T180": 0.8303,
+    "silhouette_pose_T200": 0.8301,
+    "silhouette_pose_T220": 0.8322,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8349,
+    "flange_scaled_rigid_icp_T220": 0.8093,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8093
+   },
+   {
+    "name": "f_016.png",
+    "silhouette_pose_T180": 0.8371,
+    "silhouette_pose_T200": 0.8345,
+    "silhouette_pose_T220": 0.8377,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8385,
+    "flange_scaled_rigid_icp_T220": 0.8169,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8169
+   },
+   {
+    "name": "f_017.png",
+    "silhouette_pose_T180": 0.8432,
+    "silhouette_pose_T200": 0.8384,
+    "silhouette_pose_T220": 0.8431,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8434,
+    "flange_scaled_rigid_icp_T220": 0.824,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.824
+   },
+   {
+    "name": "f_018.png",
+    "silhouette_pose_T180": 0.8578,
+    "silhouette_pose_T200": 0.8526,
+    "silhouette_pose_T220": 0.8486,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8486,
+    "flange_scaled_rigid_icp_T220": 0.8286,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8286
+   },
+   {
+    "name": "f_019.png",
+    "silhouette_pose_T180": 0.8254,
+    "silhouette_pose_T200": 0.8583,
+    "silhouette_pose_T220": 0.8531,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8531,
+    "flange_scaled_rigid_icp_T220": 0.8324,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8324
+   },
+   {
+    "name": "f_020.png",
+    "silhouette_pose_T180": 0.8259,
+    "silhouette_pose_T200": 0.8626,
+    "silhouette_pose_T220": 0.8568,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8568,
+    "flange_scaled_rigid_icp_T220": 0.8336,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8336
+   },
+   {
+    "name": "f_021.png",
+    "silhouette_pose_T180": 0.8287,
+    "silhouette_pose_T200": 0.8681,
+    "silhouette_pose_T220": 0.8606,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8606,
+    "flange_scaled_rigid_icp_T220": 0.8348,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8348
+   },
+   {
+    "name": "f_022.png",
+    "silhouette_pose_T180": 0.8283,
+    "silhouette_pose_T200": 0.8728,
+    "silhouette_pose_T220": 0.8627,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8627,
+    "flange_scaled_rigid_icp_T220": 0.8346,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8346
+   },
+   {
+    "name": "f_023.png",
+    "silhouette_pose_T180": 0.8214,
+    "silhouette_pose_T200": 0.8705,
+    "silhouette_pose_T220": 0.8572,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8572,
+    "flange_scaled_rigid_icp_T220": 0.8318,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8318
+   },
+   {
+    "name": "f_024.png",
+    "silhouette_pose_T180": 0.8156,
+    "silhouette_pose_T200": 0.868,
+    "silhouette_pose_T220": 0.8535,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8535,
+    "flange_scaled_rigid_icp_T220": 0.8305,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8305
+   },
+   {
+    "name": "f_025.png",
+    "silhouette_pose_T180": 0.8147,
+    "silhouette_pose_T200": 0.8689,
+    "silhouette_pose_T220": 0.852,
+    "silhouette_pose_T220_shadow_rows_cut": 0.852,
+    "flange_scaled_rigid_icp_T220": 0.8334,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8334
+   },
+   {
+    "name": "f_026.png",
+    "silhouette_pose_T180": 0.8768,
+    "silhouette_pose_T200": 0.8685,
+    "silhouette_pose_T220": 0.8497,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8497,
+    "flange_scaled_rigid_icp_T220": 0.8343,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8343
+   },
+   {
+    "name": "f_027.png",
+    "silhouette_pose_T180": 0.8793,
+    "silhouette_pose_T200": 0.8708,
+    "silhouette_pose_T220": 0.8509,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8509,
+    "flange_scaled_rigid_icp_T220": 0.8367,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8367
+   },
+   {
+    "name": "f_028.png",
+    "silhouette_pose_T180": 0.8817,
+    "silhouette_pose_T200": 0.8693,
+    "silhouette_pose_T220": 0.8491,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8491,
+    "flange_scaled_rigid_icp_T220": 0.8342,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8342
+   },
+   {
+    "name": "f_029.png",
+    "silhouette_pose_T180": 0.8845,
+    "silhouette_pose_T200": 0.8715,
+    "silhouette_pose_T220": 0.8527,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8527,
+    "flange_scaled_rigid_icp_T220": 0.8352,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8352
+   },
+   {
+    "name": "f_030.png",
+    "silhouette_pose_T180": 0.8871,
+    "silhouette_pose_T200": 0.8776,
+    "silhouette_pose_T220": 0.8603,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8603,
+    "flange_scaled_rigid_icp_T220": 0.8425,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8425
+   },
+   {
+    "name": "f_031.png",
+    "silhouette_pose_T180": 0.8959,
+    "silhouette_pose_T200": 0.8865,
+    "silhouette_pose_T220": 0.8705,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8705,
+    "flange_scaled_rigid_icp_T220": 0.8578,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8578
+   },
+   {
+    "name": "f_032.png",
+    "silhouette_pose_T180": 0.8956,
+    "silhouette_pose_T200": 0.8884,
+    "silhouette_pose_T220": 0.8742,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8742,
+    "flange_scaled_rigid_icp_T220": 0.8939,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8939
+   },
+   {
+    "name": "f_033.png",
+    "silhouette_pose_T180": 0.8945,
+    "silhouette_pose_T200": 0.8876,
+    "silhouette_pose_T220": 0.8712,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8712,
+    "flange_scaled_rigid_icp_T220": 0.8859,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8859
+   },
+   {
+    "name": "f_034.png",
+    "silhouette_pose_T180": 0.8897,
+    "silhouette_pose_T200": 0.8792,
+    "silhouette_pose_T220": 0.8661,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8661,
+    "flange_scaled_rigid_icp_T220": 0.8771,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8771
+   },
+   {
+    "name": "f_035.png",
+    "silhouette_pose_T180": 0.8852,
+    "silhouette_pose_T200": 0.877,
+    "silhouette_pose_T220": 0.865,
+    "silhouette_pose_T220_shadow_rows_cut": 0.865,
+    "flange_scaled_rigid_icp_T220": 0.8703,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8703
+   },
+   {
+    "name": "f_036.png",
+    "silhouette_pose_T180": 0.8816,
+    "silhouette_pose_T200": 0.8741,
+    "silhouette_pose_T220": 0.8638,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8638,
+    "flange_scaled_rigid_icp_T220": 0.8632,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8632
+   },
+   {
+    "name": "f_037.png",
+    "silhouette_pose_T180": 0.8793,
+    "silhouette_pose_T200": 0.8722,
+    "silhouette_pose_T220": 0.8626,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8626,
+    "flange_scaled_rigid_icp_T220": 0.8549,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8549
+   },
+   {
+    "name": "f_038.png",
+    "silhouette_pose_T180": 0.8782,
+    "silhouette_pose_T200": 0.8725,
+    "silhouette_pose_T220": 0.8635,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8635,
+    "flange_scaled_rigid_icp_T220": 0.847,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.847
+   },
+   {
+    "name": "f_039.png",
+    "silhouette_pose_T180": 0.876,
+    "silhouette_pose_T200": 0.8713,
+    "silhouette_pose_T220": 0.862,
+    "silhouette_pose_T220_shadow_rows_cut": 0.862,
+    "flange_scaled_rigid_icp_T220": 0.839,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.839
+   },
+   {
+    "name": "f_040.png",
+    "silhouette_pose_T180": 0.8753,
+    "silhouette_pose_T200": 0.8695,
+    "silhouette_pose_T220": 0.8601,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8601,
+    "flange_scaled_rigid_icp_T220": 0.8317,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8317
+   },
+   {
+    "name": "f_041.png",
+    "silhouette_pose_T180": 0.87,
+    "silhouette_pose_T200": 0.8645,
+    "silhouette_pose_T220": 0.8567,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8567,
+    "flange_scaled_rigid_icp_T220": 0.8259,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8259
+   },
+   {
+    "name": "f_042.png",
+    "silhouette_pose_T180": 0.8641,
+    "silhouette_pose_T200": 0.8586,
+    "silhouette_pose_T220": 0.8512,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8512,
+    "flange_scaled_rigid_icp_T220": 0.824,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.824
+   },
+   {
+    "name": "f_043.png",
+    "silhouette_pose_T180": 0.8588,
+    "silhouette_pose_T200": 0.8531,
+    "silhouette_pose_T220": 0.8472,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8472,
+    "flange_scaled_rigid_icp_T220": 0.8221,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8221
+   },
+   {
+    "name": "f_044.png",
+    "silhouette_pose_T180": 0.8515,
+    "silhouette_pose_T200": 0.8467,
+    "silhouette_pose_T220": 0.8416,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8416,
+    "flange_scaled_rigid_icp_T220": 0.8181,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8181
+   },
+   {
+    "name": "f_045.png",
+    "silhouette_pose_T180": 0.8322,
+    "silhouette_pose_T200": 0.8393,
+    "silhouette_pose_T220": 0.8346,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8348,
+    "flange_scaled_rigid_icp_T220": 0.8132,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.8132
+   },
+   {
+    "name": "f_046.png",
+    "silhouette_pose_T180": 0.7987,
+    "silhouette_pose_T200": 0.8337,
+    "silhouette_pose_T220": 0.8293,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8312,
+    "flange_scaled_rigid_icp_T220": 0.809,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.809
+   },
+   {
+    "name": "f_047.png",
+    "silhouette_pose_T180": 0.7925,
+    "silhouette_pose_T200": 0.8285,
+    "silhouette_pose_T220": 0.8247,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8287,
+    "flange_scaled_rigid_icp_T220": 0.805,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.805
+   },
+   {
+    "name": "f_048.png",
+    "silhouette_pose_T180": 0.8035,
+    "silhouette_pose_T200": 0.8232,
+    "silhouette_pose_T220": 0.8197,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8258,
+    "flange_scaled_rigid_icp_T220": 0.7999,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7999
+   },
+   {
+    "name": "f_049.png",
+    "silhouette_pose_T180": 0.8077,
+    "silhouette_pose_T200": 0.819,
+    "silhouette_pose_T220": 0.8147,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8237,
+    "flange_scaled_rigid_icp_T220": 0.795,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7962
+   },
+   {
+    "name": "f_050.png",
+    "silhouette_pose_T180": 0.8004,
+    "silhouette_pose_T200": 0.8109,
+    "silhouette_pose_T220": 0.8068,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8204,
+    "flange_scaled_rigid_icp_T220": 0.7893,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7925
+   },
+   {
+    "name": "f_051.png",
+    "silhouette_pose_T180": 0.7926,
+    "silhouette_pose_T200": 0.8021,
+    "silhouette_pose_T220": 0.7975,
+    "silhouette_pose_T220_shadow_rows_cut": 0.8151,
+    "flange_scaled_rigid_icp_T220": 0.7813,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7878
+   },
+   {
+    "name": "f_052.png",
+    "silhouette_pose_T180": 0.7842,
+    "silhouette_pose_T200": 0.7936,
+    "silhouette_pose_T220": 0.7875,
+    "silhouette_pose_T220_shadow_rows_cut": 0.81,
+    "flange_scaled_rigid_icp_T220": 0.771,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7811
+   },
+   {
+    "name": "f_053.png",
+    "silhouette_pose_T180": 0.7755,
+    "silhouette_pose_T200": 0.785,
+    "silhouette_pose_T220": 0.7791,
+    "silhouette_pose_T220_shadow_rows_cut": 0.803,
+    "flange_scaled_rigid_icp_T220": 0.7635,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7765
+   },
+   {
+    "name": "f_054.png",
+    "silhouette_pose_T180": 0.7644,
+    "silhouette_pose_T200": 0.7818,
+    "silhouette_pose_T220": 0.7704,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7888,
+    "flange_scaled_rigid_icp_T220": 0.7552,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7701
+   },
+   {
+    "name": "f_055.png",
+    "silhouette_pose_T180": 0.7554,
+    "silhouette_pose_T200": 0.7696,
+    "silhouette_pose_T220": 0.7583,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7708,
+    "flange_scaled_rigid_icp_T220": 0.7448,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7546
+   },
+   {
+    "name": "f_056.png",
+    "silhouette_pose_T180": 0.7486,
+    "silhouette_pose_T200": 0.7636,
+    "silhouette_pose_T220": 0.7459,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7557,
+    "flange_scaled_rigid_icp_T220": 0.7325,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7386
+   },
+   {
+    "name": "f_057.png",
+    "silhouette_pose_T180": 0.7492,
+    "silhouette_pose_T200": 0.7592,
+    "silhouette_pose_T220": 0.7391,
+    "silhouette_pose_T220_shadow_rows_cut": 0.746,
+    "flange_scaled_rigid_icp_T220": 0.7283,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7323
+   },
+   {
+    "name": "f_058.png",
+    "silhouette_pose_T180": 0.7539,
+    "silhouette_pose_T200": 0.761,
+    "silhouette_pose_T220": 0.7481,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7515,
+    "flange_scaled_rigid_icp_T220": 0.7335,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7354
+   },
+   {
+    "name": "f_059.png",
+    "silhouette_pose_T180": 0.7634,
+    "silhouette_pose_T200": 0.7649,
+    "silhouette_pose_T220": 0.7551,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7564,
+    "flange_scaled_rigid_icp_T220": 0.7369,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7371
+   },
+   {
+    "name": "f_060.png",
+    "silhouette_pose_T180": 0.7611,
+    "silhouette_pose_T200": 0.7654,
+    "silhouette_pose_T220": 0.7609,
+    "silhouette_pose_T220_shadow_rows_cut": 0.761,
+    "flange_scaled_rigid_icp_T220": 0.7414,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7414
+   },
+   {
+    "name": "f_061.png",
+    "silhouette_pose_T180": 0.7553,
+    "silhouette_pose_T200": 0.7713,
+    "silhouette_pose_T220": 0.7653,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7653,
+    "flange_scaled_rigid_icp_T220": 0.7443,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7443
+   },
+   {
+    "name": "f_062.png",
+    "silhouette_pose_T180": 0.7542,
+    "silhouette_pose_T200": 0.7819,
+    "silhouette_pose_T220": 0.7711,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7711,
+    "flange_scaled_rigid_icp_T220": 0.7476,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7476
+   },
+   {
+    "name": "f_063.png",
+    "silhouette_pose_T180": 0.7597,
+    "silhouette_pose_T200": 0.7723,
+    "silhouette_pose_T220": 0.7735,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7735,
+    "flange_scaled_rigid_icp_T220": 0.7499,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7499
+   },
+   {
+    "name": "f_064.png",
+    "silhouette_pose_T180": 0.7579,
+    "silhouette_pose_T200": 0.7721,
+    "silhouette_pose_T220": 0.7732,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7732,
+    "flange_scaled_rigid_icp_T220": 0.7481,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7481
+   },
+   {
+    "name": "f_065.png",
+    "silhouette_pose_T180": 0.7631,
+    "silhouette_pose_T200": 0.7692,
+    "silhouette_pose_T220": 0.7753,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7753,
+    "flange_scaled_rigid_icp_T220": 0.7475,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7475
+   },
+   {
+    "name": "f_066.png",
+    "silhouette_pose_T180": 0.7668,
+    "silhouette_pose_T200": 0.7697,
+    "silhouette_pose_T220": 0.7754,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7754,
+    "flange_scaled_rigid_icp_T220": 0.7457,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7457
+   },
+   {
+    "name": "f_067.png",
+    "silhouette_pose_T180": 0.7678,
+    "silhouette_pose_T200": 0.7671,
+    "silhouette_pose_T220": 0.7685,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7685,
+    "flange_scaled_rigid_icp_T220": 0.7344,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7344
+   },
+   {
+    "name": "f_068.png",
+    "silhouette_pose_T180": 0.7437,
+    "silhouette_pose_T200": 0.7662,
+    "silhouette_pose_T220": 0.7655,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7655,
+    "flange_scaled_rigid_icp_T220": 0.7301,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7301
+   },
+   {
+    "name": "f_069.png",
+    "silhouette_pose_T180": 0.6938,
+    "silhouette_pose_T200": 0.7646,
+    "silhouette_pose_T220": 0.7651,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7651,
+    "flange_scaled_rigid_icp_T220": 0.7293,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7293
+   },
+   {
+    "name": "f_070.png",
+    "silhouette_pose_T180": 0.6815,
+    "silhouette_pose_T200": 0.6844,
+    "silhouette_pose_T220": 0.7605,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7605,
+    "flange_scaled_rigid_icp_T220": 0.7241,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7241
+   },
+   {
+    "name": "f_071.png",
+    "silhouette_pose_T180": 0.6735,
+    "silhouette_pose_T200": 0.7517,
+    "silhouette_pose_T220": 0.753,
+    "silhouette_pose_T220_shadow_rows_cut": 0.753,
+    "flange_scaled_rigid_icp_T220": 0.7188,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7188
+   },
+   {
+    "name": "f_072.png",
+    "silhouette_pose_T180": 0.6795,
+    "silhouette_pose_T200": 0.7556,
+    "silhouette_pose_T220": 0.7471,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7471,
+    "flange_scaled_rigid_icp_T220": 0.7153,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7153
+   },
+   {
+    "name": "f_073.png",
+    "silhouette_pose_T180": 0.6713,
+    "silhouette_pose_T200": 0.7511,
+    "silhouette_pose_T220": 0.7425,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7425,
+    "flange_scaled_rigid_icp_T220": 0.7141,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7141
+   },
+   {
+    "name": "f_074.png",
+    "silhouette_pose_T180": 0.7589,
+    "silhouette_pose_T200": 0.7467,
+    "silhouette_pose_T220": 0.7405,
+    "silhouette_pose_T220_shadow_rows_cut": 0.7405,
+    "flange_scaled_rigid_icp_T220": 0.7154,
+    "flange_scaled_rigid_icp_T220_shadow_rows_cut": 0.7154
+   }
+  ]
+ },
+ "visual_hull": {
+  "pitch_mm": 1.0,
+  "mask": "T220 dilated 1 px",
+  "views": 74,
+  "variants": {
+   "all_views": {
+    "hull_volume_cm3": 331.3,
+    "volume_iou": 0.6191,
+    "model_inside_hull_pct": 84.4
+   },
+   "95pct_views": {
+    "hull_volume_cm3": 372.0,
+    "volume_iou": 0.6052,
+    "model_inside_hull_pct": 88.8
+   }
+  },
+  "kept": "voxels inside the mask in >= 95 % of the solved views",
+  "hull_volume_cm3": 372.0,
+  "model_volume_cm3_voxels": 274.4,
+  "model_volume_cm3_exact": 271.6,
+  "volume_iou": 0.6052,
+  "hull_to_model_mean_mm": 5.04,
+  "hull_to_model_p95_mm": 11.95,
+  "model_to_hull_mean_mm": 4.37,
+  "model_to_hull_p95_mm": 9.87,
+  "chamfer_mean_mm": 4.7
+ },
+ "anisotropy": {
+  "per_axis_scale": {
+   "x": 0.8622,
+   "y": 1.0172,
+   "z": 1.0878
+  },
+  "spread_pct": 26.2,
+  "distance_after": {
+   "median_mm": 0.872,
+   "within_0_5mm_pct": 28.0,
+   "within_1mm_pct": 56.8
+  },
+  "note": "diagnostic only: per-axis scales are not a valid correction of a reconstruction"
+ }
+}

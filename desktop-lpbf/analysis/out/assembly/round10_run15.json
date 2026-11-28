@@ -1,0 +1,80 @@
+{
+ "before": {
+  "file": "results_run14.json",
+  "checked": 110,
+  "passed": 105,
+  "screws_ok": 125,
+  "screws": 129
+ },
+ "after": {
+  "file": "results_run15.json",
+  "checked": 112,
+  "passed": 108,
+  "screws_ok": 128,
+  "screws": 129
+ },
+ "fetch": {
+  "steps": 78,
+  "passed": 62,
+  "person": 2,
+  "failed": [
+   {
+    "id": "M04",
+    "why": "pick at the table (M04): lift: left_finger_tip hits M04 riser"
+   },
+   {
+    "id": "F02b",
+    "why": "pick at the table (F02b): lift: left_finger_tip hits F02b rim 3"
+   },
+   {
+    "id": "F39",
+    "why": "pick at the table (F39): in to the grasp: left_finger_tip hits Drawer latches: 2 x quarter-turn latch studs (enve"
+   },
+   {
+    "id": "F45d",
+    "why": "pick at the table (F45d#1): lift: left_finger_tip hits F45d#1 rim 1"
+   }
+  ]
+ },
+ "presenter": {
+  "planned": 111,
+  "driven": 122
+ },
+ "still_failing": [
+  {
+   "id": "F18",
+   "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assemble",
+   "why": "released 24 mm short and pushed home with the closed fingers; screws after the slide: d thro: screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with "
+  },
+  {
+   "id": "F18s",
+   "label": "Recoater rail with its carriage, carriage block, b: screws of rail the carriage covered, d",
+   "why": "d thro: screwdriver: A/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with "
+  },
+  {
+   "id": "F35",
+   "label": "Window O-ring (2-031) into the flange's seat groove",
+   "why": "B/gr/left_finger_tip hits Window flange (6061, two FKM O-ring grooves) (3.0 mm deep); pushed home instead, but no clear way to close the fingers behind it (backing off: B/cap/left_finger_tip hits Wind"
+  },
+  {
+   "id": "F39",
+   "label": "Cover-slide drawer (2-033 in its half-dovetail, put in on the bench) into the lid's front ",
+   "why": "arm A: A/gr/left_finger_tip hits Lid screws, M5 x 25 316 socket head #9; pushed home instead, but no clear way to close the fingers behind it (backing off: A/gr/left_finger_tip hits released part (3.0"
+  }
+ ],
+ "fixed": [
+  "F15",
+  "F27",
+  "F26",
+  "F57"
+ ],
+ "time": {
+  "robot_h": 3.43,
+  "person_h": 6.38,
+  "elapsed_h": 10.31,
+  "by_chapter": {
+   "module": 0.62,
+   "chamber": 9.69
+  }
+ }
+}

@@ -1,0 +1,1263 @@
+{
+ "fits": {
+  "S25_start": {
+   "C_F_JK": 32.76287677931832,
+   "C_S_JK": 57789.58853016791,
+   "G_FS_WK": 0.2323398677314296,
+   "G_Sa_WK": 1.7963173693218848,
+   "G_Fa_WK": 0.012209408164858,
+   "k_r": 1.2093904932332242e-10,
+   "r_B_KW": 0.5004437726084515,
+   "seals": {
+    "bore seal": 0.19345413793947616,
+    "rod gland": 0.10635979464227913,
+    "magnet face": 0.0726783416072756
+   },
+   "fit": {
+    "heat_S25": {
+     "rms_K": 2.7380225808598695,
+     "max_K_first_30min": 8.658638050781178
+    },
+    "steady_points_max_K": 3.1701339197450977
+   }
+  },
+  "S25_end": {
+   "C_F_JK": 39.362147020621705,
+   "C_S_JK": 302.86534279377753,
+   "G_FS_WK": 0.1572754167114439,
+   "G_Sa_WK": 0.2864792984409285,
+   "G_Fa_WK": 0.06156970348621705,
+   "k_r": 4.1016366922123285e-11,
+   "r_B_KW": 0.5004437726084515,
+   "seals": {
+    "bore seal": 0.47797215175070124,
+    "rod gland": 0.4481108530824673,
+    "magnet face": 0.16707212821959894
+   },
+   "fit": {
+    "cool_S25": {
+     "rms_K": 0.5461818442184857,
+     "max_K_first_30min": 2.9190253086372024
+    },
+    "steady_points_max_K": 6.022658934458008
+   }
+  },
+  "M50_start": {
+   "C_F_JK": 124.328939879034,
+   "C_S_JK": 1547.634435632046,
+   "G_FS_WK": 0.27342294904588293,
+   "G_Sa_WK": 1.4580728988566272,
+   "G_Fa_WK": 0.09296939280526176,
+   "k_r": 3.4098101548579544e-10,
+   "r_B_KW": 0.0870658839157626,
+   "seals": {
+    "bore seal": 0.2520500669999824,
+    "rod gland": 0.13037638260062787,
+    "magnet face": 0.08789092129163183
+   },
+   "fit": {
+    "heat_M50": {
+     "rms_K": 1.933228092589712,
+     "max_K_first_30min": 3.5319366518906676
+    },
+    "steady_points_max_K": 6.10716191595634
+   }
+  },
+  "M50_end": {
+   "C_F_JK": 137.72883442801222,
+   "C_S_JK": 670.4240908653555,
+   "G_FS_WK": 0.2771737879305718,
+   "G_Sa_WK": 0.43794593645571606,
+   "G_Fa_WK": 0.10055877623408518,
+   "k_r": 1.0178408026090407e-10,
+   "r_B_KW": 0.0870658839157626,
+   "seals": {
+    "bore seal": 0.5121661350705778,
+    "rod gland": 0.4859342838625474,
+    "magnet face": 0.18238733196839266
+   },
+   "fit": {
+    "cool_M50": {
+     "rms_K": 0.29888947470342203,
+     "max_K_first_30min": 0.7235967839928605
+    },
+    "steady_points_max_K": 1.393860249974125
+   }
+  },
+  "L75_start": {
+   "C_F_JK": 275.51671885820593,
+   "C_S_JK": 74902.85882000861,
+   "G_FS_WK": 0.47499427788179066,
+   "G_Sa_WK": 8.456772396844249,
+   "G_Fa_WK": 0.0009642300830357382,
+   "k_r": 4.206512463266248e-10,
+   "r_B_KW": 0.03783980704727184,
+   "seals": {
+    "bore seal": 0.23024179764474664,
+    "rod gland": 0.1175963035171992,
+    "magnet face": 0.07903043988075638
+   },
+   "fit": {
+    "heat_L75": {
+     "rms_K": 1.2838281641150522,
+     "max_K_first_30min": 2.961721282905785
+    },
+    "heatS_L75": {
+     "rms_K": 0.9326708630400332,
+     "max_K_first_30min": 1.5700577944575151
+    },
+    "steady_points_max_K": 1.1626396085385124
+   }
+  },
+  "L75_end": {
+   "C_F_JK": 301.35596153091166,
+   "C_S_JK": 1513.1816416198324,
+   "G_FS_WK": 0.4182058617864536,
+   "G_Sa_WK": 0.8057117339575116,
+   "G_Fa_WK": 0.09251906024396776,
+   "k_r": 1.648407214352616e-10,
+   "r_B_KW": 0.03783980704727184,
+   "seals": {
+    "bore seal": 0.4953036329259172,
+    "rod gland": 0.46828304996224784,
+    "magnet face": 0.1769783924491938
+   },
+   "fit": {
+    "cool_L75": {
+     "rms_K": 0.28124070167097504,
+     "max_K_first_30min": 0.6983222621554717
+    },
+    "steady_points_max_K": 0.7509488872863415
+   }
+  }
+ },
+ "tuning": {
+  "S25": {
+   "K_per_duty": 334.97717396943045,
+   "tau_s": 110.0,
+   "theta_s": 2.5,
+   "tau_c_s": 60.0,
+   "Kp_per_K": 0.08,
+   "Ti_s": 960.0,
+   "P0_W": 43.245019377782015,
+   "grid_best": {
+    "Kp": 0.08,
+    "Ti": 960.0,
+    "settle_s": 136.0,
+    "overshoot_K": 0.0,
+    "laser_step_K": 5.581856260330511,
+    "score": 303.45568780991533
+   },
+   "grid": [
+    {
+     "Kp": 0.01,
+     "Ti": 60.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.164899891573668,
+     "score": 530.94699674721
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 120.0,
+     "settle_s": 138.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.168153561017448,
+     "score": 533.0446068305234
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 240.0,
+     "settle_s": 140.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.174586377046865,
+     "score": 535.2375913114059
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 480.0,
+     "settle_s": 154.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.187170687375243,
+     "score": 549.6151206212573
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 960.0,
+     "settle_s": 346.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.213937358307106,
+     "score": 742.4181207492131
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 60.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.15601522490087,
+     "score": 530.680456747026
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 120.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.154479808173448,
+     "score": 530.6343942452035
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 240.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.149826155817237,
+     "score": 530.4947846745172
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 480.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.117918186939733,
+     "score": 529.537545608192
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 960.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 12.686791110125824,
+     "score": 516.6037333037748
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 60.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.020841712337557,
+     "score": 526.6252513701268
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 120.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 13.132346801745967,
+     "score": 529.9704040523791
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 240.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 12.765572256308758,
+     "score": 518.9671676892627
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 480.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 9.98607660335162,
+     "score": 435.5822981005486
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 960.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 7.995938608746627,
+     "score": 375.8781582623988
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 60.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 10.821834311075378,
+     "score": 460.65502933226134
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 120.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 11.834014164023301,
+     "score": 491.02042492069904
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 240.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 11.570902527046712,
+     "score": 483.12707581140137
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 480.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 7.762126909570327,
+     "score": 368.8638072871098
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 960.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 5.581856260330511,
+     "score": 303.45568780991533
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 60.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 10.368518984932905,
+     "score": 447.05556954798715
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 120.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 11.26929474784319,
+     "score": 474.0788424352957
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 240.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 12.064480840597952,
+     "score": 497.93442521793855
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 480.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 11.580473362802906,
+     "score": 483.41420088408717
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 960.0,
+     "settle_s": 136.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 9.434171419283302,
+     "score": 419.02514257849907
+    }
+   ]
+  },
+  "M50": {
+   "K_per_duty": 309.7116548098674,
+   "tau_s": 269.0,
+   "theta_s": 2.5,
+   "tau_c_s": 60.0,
+   "Kp_per_K": 0.15,
+   "Ti_s": 60.0,
+   "P0_W": 70.95765975884889,
+   "grid_best": {
+    "Kp": 0.15,
+    "Ti": 60.0,
+    "settle_s": 196.0,
+    "overshoot_K": 0.01436671297270209,
+    "laser_step_K": 1.0329880314579896,
+    "score": 227.8516437221018
+   },
+   "grid": [
+    {
+     "Kp": 0.01,
+     "Ti": 60.0,
+     "settle_s": 444.0,
+     "overshoot_K": 12.997350653259701,
+     "laser_step_K": 8.901032576214106,
+     "score": 1490.8720164820054
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 120.0,
+     "settle_s": 592.0,
+     "overshoot_K": 8.208090735265529,
+     "laser_step_K": 10.361638513633608,
+     "score": 1395.3345995249401
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 240.0,
+     "settle_s": 786.0,
+     "overshoot_K": 4.503599795859287,
+     "laser_step_K": 11.77889193140723,
+     "score": 1409.5827456937743
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 480.0,
+     "settle_s": 712.0,
+     "overshoot_K": 2.0514664851995406,
+     "laser_step_K": 13.331554486755863,
+     "score": 1235.0346237146482
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 960.0,
+     "settle_s": 344.0,
+     "overshoot_K": 1.2297369181166857,
+     "laser_step_K": 14.477807764299655,
+     "score": 852.1184480159908
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 60.0,
+     "settle_s": 354.0,
+     "overshoot_K": 4.765535520603265,
+     "laser_step_K": 5.624225900509742,
+     "score": 808.6589082514881
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 120.0,
+     "settle_s": 382.0,
+     "overshoot_K": 2.637390233834708,
+     "laser_step_K": 6.404802152272907,
+     "score": 732.3874785982697
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 240.0,
+     "settle_s": 240.0,
+     "overshoot_K": 1.1344049061817714,
+     "laser_step_K": 7.1235437225711,
+     "score": 521.7706060480393
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 480.0,
+     "settle_s": 256.0,
+     "overshoot_K": 0.5101013787671889,
+     "laser_step_K": 7.81969580906798,
+     "score": 521.1969569980707
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 960.0,
+     "settle_s": 272.0,
+     "overshoot_K": 0.44868869464434624,
+     "laser_step_K": 8.31238231266829,
+     "score": 548.2927910587096
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 60.0,
+     "settle_s": 206.0,
+     "overshoot_K": 1.3441174455352325,
+     "laser_step_K": 3.3455325801663776,
+     "score": 387.0130241371053
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 120.0,
+     "settle_s": 212.0,
+     "overshoot_K": 0.5547925509129072,
+     "laser_step_K": 3.7162677174468683,
+     "score": 356.7755845781805
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 240.0,
+     "settle_s": 216.0,
+     "overshoot_K": 0.17196069853545737,
+     "laser_step_K": 4.044529751005541,
+     "score": 347.6535344422937
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 480.0,
+     "settle_s": 220.0,
+     "overshoot_K": 0.18246615222321338,
+     "laser_step_K": 4.341528807465409,
+     "score": 361.19383335735506
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 960.0,
+     "settle_s": 222.0,
+     "overshoot_K": 0.18233571723465047,
+     "laser_step_K": 4.534386946948729,
+     "score": 368.9717514425409
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 60.0,
+     "settle_s": 200.0,
+     "overshoot_K": 0.2001852303004057,
+     "laser_step_K": 1.8368612785014022,
+     "score": 267.1169521730664
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 120.0,
+     "settle_s": 200.0,
+     "overshoot_K": 0.04991542963134066,
+     "laser_step_K": 1.9950487024917152,
+     "score": 262.8463868526319
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 240.0,
+     "settle_s": 202.0,
+     "overshoot_K": 0.06510743574830258,
+     "laser_step_K": 2.1503592528133595,
+     "score": 270.41722372929894
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 480.0,
+     "settle_s": 202.0,
+     "overshoot_K": 0.07856756119642228,
+     "laser_step_K": 2.2873218992950513,
+     "score": 275.3337106506369
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 960.0,
+     "settle_s": 202.0,
+     "overshoot_K": 0.08024816576050853,
+     "laser_step_K": 2.370146984174994,
+     "score": 277.91929947088033
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 60.0,
+     "settle_s": 196.0,
+     "overshoot_K": 0.01436671297270209,
+     "laser_step_K": 1.0329880314579896,
+     "score": 227.8516437221018
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 120.0,
+     "settle_s": 196.0,
+     "overshoot_K": 0.022337407727320624,
+     "laser_step_K": 1.0576264298505862,
+     "score": 229.06903735915682
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 240.0,
+     "settle_s": 196.0,
+     "overshoot_K": 0.03167171163508442,
+     "laser_step_K": 1.159296938259331,
+     "score": 232.679210845885
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 480.0,
+     "settle_s": 196.0,
+     "overshoot_K": 0.039156801496176286,
+     "laser_step_K": 1.232851323534078,
+     "score": 235.3349477957929
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 960.0,
+     "settle_s": 196.0,
+     "overshoot_K": 0.03998302553182498,
+     "laser_step_K": 1.2826612676645937,
+     "score": 236.8788195618473
+    }
+   ]
+  },
+  "L75": {
+   "K_per_duty": 373.4698809784365,
+   "tau_s": 410.0,
+   "theta_s": 2.5,
+   "tau_c_s": 60.0,
+   "Kp_per_K": 0.15,
+   "Ti_s": 240.0,
+   "P0_W": 96.63045326528142,
+   "grid_best": {
+    "Kp": 0.15,
+    "Ti": 240.0,
+    "settle_s": 240.0,
+    "overshoot_K": 0.002793739475947632,
+    "laser_step_K": 0.6939739216246323,
+    "score": 260.9868420172958
+   },
+   "grid": [
+    {
+     "Kp": 0.01,
+     "Ti": 60.0,
+     "settle_s": 728.0,
+     "overshoot_K": 17.91711750739725,
+     "laser_step_K": 5.085299713376884,
+     "score": 1955.5860418451414
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 120.0,
+     "settle_s": 670.0,
+     "overshoot_K": 13.348596064563282,
+     "laser_step_K": 6.020801880645138,
+     "score": 1651.539820293151
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 240.0,
+     "settle_s": 902.0,
+     "overshoot_K": 8.406172522133033,
+     "laser_step_K": 6.9111160908960585,
+     "score": 1613.7038340548638
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 480.0,
+     "settle_s": 1134.0,
+     "overshoot_K": 4.758795689240003,
+     "laser_step_K": 8.04516017157772,
+     "score": 1660.8825465017317
+    },
+    {
+     "Kp": 0.01,
+     "Ti": 960.0,
+     "settle_s": 944.0,
+     "overshoot_K": 2.292078629796322,
+     "laser_step_K": 9.078623542517192,
+     "score": 1353.883424063295
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 60.0,
+     "settle_s": 428.0,
+     "overshoot_K": 7.510110415502936,
+     "laser_step_K": 3.2154962330308763,
+     "score": 975.0715119211025
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 120.0,
+     "settle_s": 506.0,
+     "overshoot_K": 4.808423134110285,
+     "laser_step_K": 3.7150153265818346,
+     "score": 905.9558478440722
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 240.0,
+     "settle_s": 538.0,
+     "overshoot_K": 2.779039087876299,
+     "laser_step_K": 4.167712368445336,
+     "score": 829.773716325938
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 480.0,
+     "settle_s": 300.0,
+     "overshoot_K": 1.375995502052774,
+     "laser_step_K": 4.621611015780047,
+     "score": 521.2080605965679
+    },
+    {
+     "Kp": 0.02,
+     "Ti": 960.0,
+     "settle_s": 314.0,
+     "overshoot_K": 0.4807287874926658,
+     "laser_step_K": 4.970138644262704,
+     "score": 491.94788657744107
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 60.0,
+     "settle_s": 334.0,
+     "overshoot_K": 2.5381827246308717,
+     "laser_step_K": 1.9321045169655804,
+     "score": 544.2540989868197
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 120.0,
+     "settle_s": 256.0,
+     "overshoot_K": 1.4766280588001734,
+     "laser_step_K": 2.17057302203591,
+     "score": 409.7148741890877
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 240.0,
+     "settle_s": 262.0,
+     "overshoot_K": 0.738863749034806,
+     "laser_step_K": 2.374255704107611,
+     "score": 377.5594960653167
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 480.0,
+     "settle_s": 266.0,
+     "overshoot_K": 0.26214688705229605,
+     "laser_step_K": 2.548251255311868,
+     "score": 358.1763508824938
+    },
+    {
+     "Kp": 0.04,
+     "Ti": 960.0,
+     "settle_s": 268.0,
+     "overshoot_K": 0.026727181654848664,
+     "laser_step_K": 2.652006672827042,
+     "score": 349.1638310841022
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 60.0,
+     "settle_s": 244.0,
+     "overshoot_K": 0.6604029236135318,
+     "laser_step_K": 1.0907313761657633,
+     "score": 316.3461167017848
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 120.0,
+     "settle_s": 246.0,
+     "overshoot_K": 0.3338765567346229,
+     "laser_step_K": 1.1938552841225771,
+     "score": 301.8482519277547
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 240.0,
+     "settle_s": 246.0,
+     "overshoot_K": 0.11550743153517828,
+     "laser_step_K": 1.2807736915654004,
+     "score": 291.3536566390727
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 480.0,
+     "settle_s": 246.0,
+     "overshoot_K": 0.009293573094140584,
+     "laser_step_K": 1.347631662385993,
+     "score": 286.9865642572282
+    },
+    {
+     "Kp": 0.08,
+     "Ti": 960.0,
+     "settle_s": 246.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 1.3760339193869129,
+     "score": 287.2810175816074
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 60.0,
+     "settle_s": 240.0,
+     "overshoot_K": 0.11709466303719296,
+     "laser_step_K": 0.6052179048392361,
+     "score": 265.18221692740866
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 120.0,
+     "settle_s": 240.0,
+     "overshoot_K": 0.04224299709051138,
+     "laser_step_K": 0.6393656292609649,
+     "score": 261.7155487032596
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 240.0,
+     "settle_s": 240.0,
+     "overshoot_K": 0.002793739475947632,
+     "laser_step_K": 0.6939739216246323,
+     "score": 260.9868420172958
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 480.0,
+     "settle_s": 240.0,
+     "overshoot_K": 0.0027892069426798116,
+     "laser_step_K": 0.7295892396811325,
+     "score": 262.05502960699476
+    },
+    {
+     "Kp": 0.15,
+     "Ti": 960.0,
+     "settle_s": 240.0,
+     "overshoot_K": 0.0,
+     "laser_step_K": 0.741789356152907,
+     "score": 262.2536806845872
+    }
+   ]
+  }
+ },
+ "heatup": {
+  "S25": {
+   "t_within_2K_min": 2.3,
+   "t_settled_2K_min": 2.2666666666666666,
+   "overshoot_K": 0.0,
+   "block_peak_C": 224.0004240505101,
+   "tripped": false
+  },
+  "M50": {
+   "t_within_2K_min": 3.3,
+   "t_settled_2K_min": 3.2666666666666666,
+   "overshoot_K": 0.01436671297270209,
+   "block_peak_C": 211.45374691022042,
+   "tripped": false
+  },
+  "L75": {
+   "t_within_2K_min": 4.033333333333333,
+   "t_settled_2K_min": 4.0,
+   "overshoot_K": 0.002793739475947632,
+   "block_peak_C": 207.36307111117407,
+   "tripped": false
+  }
+ },
+ "build": {
+  "S25": {
+   "q_scan_W": 157.5,
+   "t_scan_s": 2.47,
+   "t_recoat_s": 8.0,
+   "mean_laser_W": 34.8,
+   "no dwell": {
+    "plate_max_C": 236.80780618306088,
+    "plate_last30min_mean_C": 26.712811494100634,
+    "plate_last30min_band_K": 3.1373670913027496,
+    "limit_tripped": true,
+    "t_trip_min": 11.766666666666667,
+    "layers_in_90min": 67,
+    "nominal_layers": 515.7593123209168,
+    "time_penalty_pct": 669.790018389428,
+    "heater_mean_W": 0.0
+   },
+   "dwell at +3 K": {
+    "plate_max_C": 210.12946356279267,
+    "plate_last30min_mean_C": 205.26877196375432,
+    "plate_last30min_band_K": 8.407171910116205,
+    "limit_tripped": false,
+    "t_trip_min": null,
+    "layers_in_90min": 424,
+    "nominal_layers": 515.7593123209168,
+    "time_penalty_pct": 21.641347245499244,
+    "heater_mean_W": 0.017473339460127312
+   }
+  },
+  "M50": {
+   "q_scan_W": 157.5,
+   "t_scan_s": 8.7,
+   "t_recoat_s": 8.0,
+   "mean_laser_W": 81.1,
+   "no dwell": {
+    "plate_max_C": 236.59326176729698,
+    "plate_last30min_mean_C": 29.96071189968918,
+    "plate_last30min_band_K": 6.048459952862096,
+    "limit_tripped": true,
+    "t_trip_min": 3.341666666666667,
+    "layers_in_90min": 12,
+    "nominal_layers": 323.3532934131737,
+    "time_penalty_pct": 2594.6107784431138,
+    "heater_mean_W": 0.0
+   },
+   "dwell at +3 K": {
+    "plate_max_C": 208.75981985900404,
+    "plate_last30min_mean_C": 205.4418171978344,
+    "plate_last30min_band_K": 6.701469949991491,
+    "limit_tripped": false,
+    "t_trip_min": null,
+    "layers_in_90min": 210,
+    "nominal_layers": 323.3532934131737,
+    "time_penalty_pct": 53.97775876817794,
+    "heater_mean_W": 0.0
+   }
+  },
+  "L75": {
+   "q_scan_W": 157.5,
+   "t_scan_s": 19.09,
+   "t_recoat_s": 8.0,
+   "mean_laser_W": 110.6,
+   "no dwell": {
+    "plate_max_C": 236.35027947586718,
+    "plate_last30min_mean_C": 37.17638976714459,
+    "plate_last30min_band_K": 11.072816500570688,
+    "limit_tripped": true,
+    "t_trip_min": 5.841666666666667,
+    "layers_in_90min": 13,
+    "nominal_layers": 199.33554817275748,
+    "time_penalty_pct": 1433.350370559673,
+    "heater_mean_W": 0.0
+   },
+   "dwell at +3 K": {
+    "plate_max_C": 207.8110031640191,
+    "plate_last30min_mean_C": 205.12370576501726,
+    "plate_last30min_band_K": 5.4091186225503805,
+    "limit_tripped": false,
+    "t_trip_min": null,
+    "layers_in_90min": 132,
+    "nominal_layers": 199.33554817275748,
+    "time_penalty_pct": 51.01177891875568,
+    "heater_mean_W": 0.0
+   }
+  }
+ },
+ "ssr_short": {
+  "S25": {
+   "start": {
+    "limit trips": {
+     "t_to_trip_s": 5.5,
+     "t_to_tco_s": null,
+     "plate_peak_C": 209.32925570149493,
+     "block_peak_C": 245.25984967740072,
+     "bore seal_peak_C": 58.85511388711582,
+     "rod gland_peak_C": 43.613315791421115,
+     "magnet face_peak_C": 37.7189501266229
+    },
+    "limit failed, RT240 (240 C) would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 4.25,
+     "plate_peak_C": 207.25556003624862,
+     "block_peak_C": 240.75805725680777,
+     "bore seal_peak_C": 58.854959965700296,
+     "rod gland_peak_C": 43.61323116645356,
+     "magnet face_peak_C": 37.71889230023915
+    },
+    "limit failed, a 257 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 9.5,
+     "plate_peak_C": 215.80798738834207,
+     "block_peak_C": 257.35995582623184,
+     "bore seal_peak_C": 58.85583993121167,
+     "rod gland_peak_C": 43.61371496562208,
+     "magnet face_peak_C": 37.71922289246488
+    },
+    "limit failed, a 280 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 20.5,
+     "plate_peak_C": 232.43824954740765,
+     "block_peak_C": 280.38201222843617,
+     "bore seal_peak_C": 58.85940657967998,
+     "rod gland_peak_C": 43.61567588515935,
+     "magnet face_peak_C": 37.720562838451734
+    },
+    "no protection (1 h)": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": null,
+     "plate_peak_C": 372.8327253254302,
+     "block_peak_C": 422.8771025862752,
+     "bore seal_peak_C": 62.64971316867237,
+     "rod gland_peak_C": 45.69956116531104,
+     "magnet face_peak_C": 39.14453443195303
+    },
+    "steady, no protection": {
+     "plate_C": 384.4538377353343,
+     "block_C": 434.4982149961794,
+     "bore seal_C": 94.53783230812545,
+     "rod gland_C": 63.23143636490928,
+     "magnet face_C": 51.12450881097484
+    }
+   },
+   "end": {
+    "limit trips": {
+     "t_to_trip_s": 6.0,
+     "t_to_tco_s": null,
+     "plate_peak_C": 211.07792231533367,
+     "block_peak_C": 245.42755650084104,
+     "bore seal_peak_C": 108.73945943950064,
+     "rod gland_peak_C": 103.50783872795837,
+     "magnet face_peak_C": 54.27059589825911
+    },
+    "limit failed, RT240 (240 C) would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 4.75,
+     "plate_peak_C": 208.93720855168417,
+     "block_peak_C": 240.5867619744458,
+     "bore seal_peak_C": 108.71330710346435,
+     "rod gland_peak_C": 103.48332025848605,
+     "magnet face_peak_C": 54.261454515390895
+    },
+    "limit failed, a 257 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 9.75,
+     "plate_peak_C": 217.40415125982096,
+     "block_peak_C": 257.7002047858017,
+     "bore seal_peak_C": 108.8468443235878,
+     "rod gland_peak_C": 103.60851474399865,
+     "magnet face_peak_C": 54.30813160208065
+    },
+    "limit failed, a 280 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 19.5,
+     "plate_peak_C": 233.1971395549976,
+     "block_peak_C": 280.4154212189295,
+     "bore seal_peak_C": 109.29664463793779,
+     "rod gland_peak_C": 104.03021379454347,
+     "magnet face_peak_C": 54.46535644356366
+    },
+    "no protection (1 h)": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": null,
+     "plate_peak_C": 532.1109826076248,
+     "block_peak_C": 582.1553598684699,
+     "bore seal_peak_C": 264.81877644509837,
+     "rod gland_peak_C": 249.83610416294277,
+     "magnet face_peak_C": 108.82712930229629
+    },
+    "steady, no protection": {
+     "plate_C": 533.5802791886307,
+     "block_C": 583.6246564494759,
+     "bore seal_C": 268.0872103817622,
+     "rod gland_C": 252.90034276813668,
+     "magnet face_C": 109.96958961456234
+    }
+   }
+  },
+  "M50": {
+   "start": {
+    "limit trips": {
+     "t_to_trip_s": 39.75,
+     "t_to_tco_s": null,
+     "plate_peak_C": 223.43576154341713,
+     "block_peak_C": 236.4527073314533,
+     "bore seal_peak_C": 69.35874732427982,
+     "rod gland_peak_C": 47.9451754632356,
+     "magnet face_peak_C": 40.468082258728124
+    },
+    "limit failed, RT240 (240 C) would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 46.5,
+     "plate_peak_C": 227.01417866568917,
+     "block_peak_C": 240.05584135317014,
+     "bore seal_peak_C": 69.43872438472289,
+     "rod gland_peak_C": 47.9865447037032,
+     "magnet face_peak_C": 40.495970596978545
+    },
+    "limit failed, a 257 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 81.5,
+     "plate_peak_C": 243.97869903974194,
+     "block_peak_C": 257.038367739235,
+     "bore seal_peak_C": 69.97207128363809,
+     "rod gland_peak_C": 48.26242576249234,
+     "magnet face_peak_C": 40.68195090982526
+    },
+    "limit failed, a 280 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 139.75,
+     "plate_peak_C": 266.9622777916659,
+     "block_peak_C": 280.0221602479565,
+     "bore seal_peak_C": 71.14683739992111,
+     "rod gland_peak_C": 48.87008978125564,
+     "magnet face_peak_C": 41.09159680871849
+    },
+    "no protection (1 h)": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": null,
+     "plate_peak_C": 343.8319433083927,
+     "block_peak_C": 356.89182589575705,
+     "bore seal_peak_C": 104.27576994240582,
+     "rod gland_peak_C": 66.00648825842676,
+     "magnet face_peak_C": 52.64379529540847
+    },
+    "steady, no protection": {
+     "plate_C": 344.1928380840437,
+     "block_C": 357.25272067140804,
+     "bore seal_C": 105.45257622499774,
+     "rod gland_C": 66.61520758142554,
+     "magnet face_C": 53.05415260889727
+    }
+   },
+   "end": {
+    "limit trips": {
+     "t_to_trip_s": 34.75,
+     "t_to_tco_s": null,
+     "plate_peak_C": 223.72057258596442,
+     "block_peak_C": 236.6796822731148,
+     "bore seal_peak_C": 115.19782393732439,
+     "rod gland_peak_C": 110.57812002721332,
+     "magnet face_peak_C": 57.12032059678532
+    },
+    "limit failed, RT240 (240 C) would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 40.0,
+     "plate_peak_C": 227.0639205540031,
+     "block_peak_C": 240.07206750643311,
+     "bore seal_peak_C": 115.35937905101491,
+     "rod gland_peak_C": 110.73140069748786,
+     "magnet face_peak_C": 57.17785194088289
+    },
+    "limit failed, a 257 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 68.0,
+     "plate_peak_C": 244.00941035104992,
+     "block_peak_C": 257.0678155253977,
+     "bore seal_peak_C": 116.4539212670317,
+     "rod gland_peak_C": 111.76988323562786,
+     "magnet face_peak_C": 57.56762904802912
+    },
+    "limit failed, a 280 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 110.25,
+     "plate_peak_C": 266.9555076384084,
+     "block_peak_C": 280.01538331889384,
+     "bore seal_peak_C": 118.62909239795592,
+     "rod gland_peak_C": 113.83364761481408,
+     "magnet face_peak_C": 58.342228600748996
+    },
+    "no protection (1 h)": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": null,
+     "plate_peak_C": 463.7525504963266,
+     "block_peak_C": 476.81243308369096,
+     "bore seal_peak_C": 241.9185874090452,
+     "rod gland_peak_C": 230.80856720361692,
+     "magnet face_peak_C": 102.24681446663085
+    },
+    "steady, no protection": {
+     "plate_C": 468.7987945657946,
+     "block_C": 481.85867715315896,
+     "bore seal_C": 252.29871336174438,
+     "rod gland_C": 240.65704941639117,
+     "magnet face_C": 105.94327807164407
+    }
+   }
+  },
+  "L75": {
+   "start": {
+    "limit trips": {
+     "t_to_trip_s": 51.0,
+     "t_to_tco_s": null,
+     "plate_peak_C": 226.84722755850714,
+     "block_peak_C": 236.29850881146976,
+     "bore seal_peak_C": 65.33659093062153,
+     "rod gland_peak_C": 45.60196731631409,
+     "magnet face_peak_C": 38.84552482280309
+    },
+    "limit failed, RT240 (240 C) would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 58.75,
+     "plate_peak_C": 230.62005525375034,
+     "block_peak_C": 240.0767665473447,
+     "bore seal_peak_C": 65.34961714765058,
+     "rod gland_peak_C": 45.60862047393838,
+     "magnet face_peak_C": 38.84999606856438
+    },
+    "limit failed, a 257 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 95.75,
+     "plate_peak_C": 247.64708906726273,
+     "block_peak_C": 257.1070113209524,
+     "bore seal_peak_C": 65.42898242904553,
+     "rod gland_peak_C": 45.64915639667318,
+     "magnet face_peak_C": 38.87723818169963
+    },
+    "limit failed, a 280 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 152.0,
+     "plate_peak_C": 270.58699938157383,
+     "block_peak_C": 280.0469511200799,
+     "bore seal_peak_C": 65.59110766357875,
+     "rod gland_peak_C": 45.73196207523804,
+     "magnet face_peak_C": 38.93288762820327
+    },
+    "no protection (1 h)": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": null,
+     "plate_peak_C": 394.2298599363753,
+     "block_peak_C": 403.68981169819324,
+     "bore seal_peak_C": 79.49892831050542,
+     "rod gland_peak_C": 52.83539991662546,
+     "magnet face_peak_C": 43.706743612446445
+    },
+    "steady, no protection": {
+     "plate_C": 397.8583984136222,
+     "block_C": 407.3183501754401,
+     "bore seal_C": 110.84758791769352,
+     "rod gland_C": 68.8467693887851,
+     "magnet face_C": 54.46716323986288
+    }
+   },
+   "end": {
+    "limit trips": {
+     "t_to_trip_s": 47.5,
+     "t_to_tco_s": null,
+     "plate_peak_C": 227.05246979222494,
+     "block_peak_C": 236.49667632027086,
+     "bore seal_peak_C": 112.43251947676266,
+     "rod gland_peak_C": 107.66276313096606,
+     "magnet face_peak_C": 56.240769734258514
+    },
+    "limit failed, RT240 (240 C) would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 54.25,
+     "plate_peak_C": 230.67757232416375,
+     "block_peak_C": 240.1308427173782,
+     "bore seal_peak_C": 112.63230509084251,
+     "rod gland_peak_C": 107.85164972593655,
+     "magnet face_peak_C": 56.31215571744918
+    },
+    "limit failed, a 257 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 87.0,
+     "plate_peak_C": 247.60177455174522,
+     "block_peak_C": 257.0616219376798,
+     "bore seal_peak_C": 113.82300683795624,
+     "rod gland_peak_C": 108.97739443820518,
+     "magnet face_peak_C": 56.737608847776116
+    },
+    "limit failed, a 280 C cutoff would open": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": 135.25,
+     "plate_peak_C": 270.6273792994498,
+     "block_peak_C": 280.08733083351626,
+     "bore seal_peak_C": 116.05663827457725,
+     "rod gland_peak_C": 111.08917329888818,
+     "magnet face_peak_C": 57.535714241516075
+    },
+    "no protection (1 h)": {
+     "t_to_trip_s": null,
+     "t_to_tco_s": null,
+     "plate_peak_C": 515.3617233209405,
+     "block_peak_C": 524.8216750827585,
+     "bore seal_peak_C": 249.8039059372962,
+     "rod gland_peak_C": 237.54004961334272,
+     "magnet face_peak_C": 105.32534236435366
+    },
+    "steady, no protection": {
+     "plate_C": 525.7008362794091,
+     "block_C": 535.1607880412271,
+     "bore seal_C": 272.99894321823626,
+     "rod gland_C": 259.46971473156987,
+     "magnet face_C": 113.6132291026968
+    }
+   }
+  }
+ },
+ "notes": {
+  "T_SET": 200.0,
+  "BLOCK_CAP": 225.0,
+  "T_LIMIT": 235.0,
+  "TCO": null,
+  "TCO_CANDIDATES": {
+   "Cantherm RT240 (the old part)": {
+    "Tf": 240.0,
+    "Th": 205.0,
+    "dc": "not rated for DC",
+    "src": "Cantherm RT series"
+   },
+   "Therm-O-Disc Microtemp G4, 257 C": {
+    "Tf": 257.0,
+    "Th": 220.0,
+    "dc": "5 A at 24 V DC",
+    "src": "farnell.com/datasheets/3689251.pdf p.4, read 2026-11-23 22:31Z"
+   },
+   "Cantherm SDF DF280S": {
+    "Tf": 280.0,
+    "Th": 230.0,
+    "dc": "AC only (250 V 10 A, 125 V 15 A); UL, VDE, CCC applied for",
+    "src": "Cantherm SDF datasheet p.4 (mirror datasheet.chipsmall.com/SDF-DF091S/256659.pdf), read 2026-11-23 22:46Z"
+   }
+  },
+  "TAU_TC": 2.0,
+  "TAU_B": 8.0,
+  "DT": 0.25
+ }
+}

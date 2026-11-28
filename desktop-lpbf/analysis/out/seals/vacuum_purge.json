@@ -1,0 +1,246 @@
+{
+ "permeation": {
+  "block": {
+   "design": "solid block (no floor joint, rail inserts blind in the wall)",
+   "O2_sccs": 5.5736734821407945e-06,
+   "N2_sccs": 2.847110350642536e-06,
+   "H2O_sccs": 5.020547087851929e-05,
+   "O2_ppm_per_h_build": 1.7389681837547362,
+   "H2O_ppm_per_h_build": 15.66394529351524,
+   "makeup_sccm_for_10ppm_O2": 37.157823214271964,
+   "vacuum_hold_gas_mbarLs": 5.9403052586227385e-05,
+   "rate_of_rise_mbar_per_min": 0.00031498975387417305
+  },
+  "frame": {
+   "design": "frame + floor plate (as drawn)",
+   "O2_sccs": 7.01753581529711e-06,
+   "N2_sccs": 3.5846554197615283e-06,
+   "H2O_sccs": 6.321121808494297e-05,
+   "O2_ppm_per_h_build": 2.189448583642877,
+   "H2O_ppm_per_h_build": 19.72169655404315,
+   "makeup_sccm_for_10ppm_O2": 46.78357210198073,
+   "vacuum_hold_gas_mbarLs": 7.479143699349163e-05,
+   "rate_of_rise_mbar_per_min": 0.00039658797494083163
+  },
+  "floor_joint": {
+   "design": "the floor joint alone (947 mm cord at 60 C + 4 bonded washers)",
+   "O2_sccs": 1.4438623331563156e-06,
+   "N2_sccs": 7.375450691189925e-07,
+   "H2O_sccs": 1.3005747206423673e-05,
+   "O2_ppm_per_h_build": 0.4504803998881412,
+   "H2O_ppm_per_h_build": 4.057751260527913,
+   "makeup_sccm_for_10ppm_O2": 9.62574888770877,
+   "vacuum_hold_gas_mbarLs": 1.5388384407264242e-05,
+   "rate_of_rise_mbar_per_min": 8.159822106665856e-05
+  },
+  "n2_per_o2": 0.5108139828723853,
+  "floor_T_C": 60.0,
+  "floor_share_at_40C": 0.42467314938004663,
+  "washers_O2_sccs": 3.534920185940684e-08,
+  "frame_over_block_O2": 1.2590503978718433
+ },
+ "defects": [
+  {
+   "a_um": 2,
+   "air_in_at_vacuum_mbarLs": 7.972893729558008e-07,
+   "argon_out_at_20mbar_sccm": 1.5141036729994237e-06,
+   "exit_velocity_m_s": 0.006308765304164265,
+   "peclet": 0.6308765304164264,
+   "o2_backdiffusion_factor": 0.5321251726306339,
+   "o2_in_during_build_sccs": 5.6028445786420864e-09,
+   "rate_of_rise_mbar_per_min": 4.227694914992767e-06,
+   "o2_ppm_per_h_if_it_leaked_in": 0.05143201072485756
+  },
+  {
+   "a_um": 5,
+   "air_in_at_vacuum_mbarLs": 3.1144116131085975e-05,
+   "argon_out_at_20mbar_sccm": 5.9144674726539975e-05,
+   "exit_velocity_m_s": 0.03942978315102666,
+   "peclet": 3.9429783151026654,
+   "o2_backdiffusion_factor": 0.019390378004461545,
+   "o2_in_during_build_sccs": 3.805174792299225e-09,
+   "rate_of_rise_mbar_per_min": 0.00016514433261690498,
+   "o2_ppm_per_h_if_it_leaked_in": 2.009062918939749
+  },
+  {
+   "a_um": 10,
+   "air_in_at_vacuum_mbarLs": 0.0004983058580973756,
+   "argon_out_at_20mbar_sccm": 0.0009463147956246396,
+   "exit_velocity_m_s": 0.15771913260410664,
+   "peclet": 15.771913260410662,
+   "o2_backdiffusion_factor": 1.4136604306056131e-07,
+   "o2_in_during_build_sccs": 4.3526087613843085e-13,
+   "rate_of_rise_mbar_per_min": 0.0026423093218704797,
+   "o2_ppm_per_h_if_it_leaked_in": 32.14500670303598
+  },
+  {
+   "a_um": 20,
+   "air_in_at_vacuum_mbarLs": 0.00797289372955801,
+   "argon_out_at_20mbar_sccm": 0.015141036729994234,
+   "exit_velocity_m_s": 0.6308765304164266,
+   "peclet": 63.087653041642646,
+   "o2_backdiffusion_factor": 3.993745698920973e-28,
+   "o2_in_during_build_sccs": 1.9674552316665045e-32,
+   "rate_of_rise_mbar_per_min": 0.042276949149927676,
+   "o2_ppm_per_h_if_it_leaked_in": 514.3201072485757
+  },
+  {
+   "a_um": 45,
+   "air_in_at_vacuum_mbarLs": 0.20433654593605505,
+   "argon_out_at_20mbar_sccm": 0.3880482108808289,
+   "exit_velocity_m_s": 3.1938124352331605,
+   "peclet": 319.381243523316,
+   "o2_backdiffusion_factor": 1.9701001969576733e-139,
+   "o2_in_during_build_sccs": 2.487384009631604e-142,
+   "rate_of_rise_mbar_per_min": 1.0835119662995134,
+   "o2_ppm_per_h_if_it_leaked_in": 13181.461811163692
+  }
+ ],
+ "virtual": {
+  "floor crevice": {
+   "volume_mm3": 35.25,
+   "n": 1,
+   "conductance_Ls": 0.20811395420893306,
+   "tau_s_molecular": 0.00016937835876498346,
+   "air_content_mbarL": 0.0357170625,
+   "o2_ppm_if_released_after_backfill": 0.6400158963161762
+  },
+  "plugged rail hole": {
+   "volume_mm3": 20.263583199277853,
+   "n": 4,
+   "conductance_Ls": 1.0312000785110949e-06,
+   "tau_s_molecular": 19.650486478371455,
+   "air_content_mbarL": 0.08212830270667314,
+   "o2_ppm_if_released_after_backfill": 1.4716613178851883
+  }
+ },
+ "purge": {
+  "S0_Ls": 1.7222222222222223,
+  "p_ult_mbar": 0.02,
+  "S_eff_Ls": {
+   "800": 1.721940842247348,
+   "100": 1.7199743715469127,
+   "10": 1.700066477473444,
+   "1": 1.5284112791139854,
+   "0.1": 0.8455611397401919,
+   "0.05": 0.5965482586521088
+  },
+  "pump_down_s": {
+   "to_100_mbar_s": 36.471761801352926,
+   "to_10_mbar_s": 51.67749141883662,
+   "to_1_mbar_s": 67.5687721806309,
+   "to_0.1_mbar_s": 89.48641458412254,
+   "to_0.05_mbar_s": 100.64194435632592
+  },
+  "base_pressure": [
+   {
+    "minutes_after_closing": 5,
+    "outgassing_mbarLs": 0.0007223539686656897,
+    "base_pressure_mbar": 0.021210889409513718
+   },
+   {
+    "minutes_after_closing": 15,
+    "outgassing_mbarLs": 0.00024078465622189656,
+    "base_pressure_mbar": 0.02040362980317124
+   },
+   {
+    "minutes_after_closing": 60,
+    "outgassing_mbarLs": 6.019616405547414e-05,
+    "base_pressure_mbar": 0.02010090745079281
+   }
+  ],
+  "cycles": {
+   "1 mbar (the plan)": {
+    "p_base": 1.0,
+    "ar_1ppm": [
+     203.97234776132703,
+     1.4114693173505783,
+     1.2154268509155661
+    ],
+    "ar_2ppm": [
+     204.97137994134155,
+     2.4114683806750543,
+     2.215426850009033
+    ]
+   },
+   "0.1 mbar": {
+    "p_base": 0.1,
+    "ar_1ppm": [
+     21.49076053655084,
+     1.2170117594433227,
+     1.2150496255186087
+    ],
+    "ar_2ppm": [
+     22.49066375455229,
+     2.217011750076568,
+     2.2150496255177026
+    ]
+   },
+   "0.05 mbar (scroll near its ultimate)": {
+    "p_base": 0.05,
+    "ar_1ppm": [
+     11.352894579618832,
+     1.2155296096009087,
+     1.215039052380003
+    ],
+    "ar_2ppm": [
+     12.352846188619557,
+     2.2155296072592203,
+     2.2150390523798897
+    ]
+   },
+   "1e-5 mbar (with a turbo)": {
+    "p_base": 1e-05,
+    "ar_1ppm": [
+     1.2170561958782076,
+     1.2150286247875344,
+     1.2150286247679112
+    ],
+    "ar_2ppm": [
+     2.2170561862000078,
+     2.2150286247875344,
+     2.2150286247679114
+    ]
+   }
+  },
+  "one_cycle_s": 215.26136560216096,
+  "three_cycles_min": 10.76306828010805,
+  "note": "soft pump at V/S = 16 s to 100 mbar (seals.py), then full speed; 2 min hold; back-fill at 25 L/min"
+ },
+ "water": {
+  "hold_10_min": {
+   "wall_water_first_hour_mbarL": 0.42169077565108476,
+   "ppm_without_makeup": 36.068252461412136
+  },
+  "hold_30_min": {
+   "wall_water_first_hour_mbarL": 0.2380760840232916,
+   "ppm_without_makeup": 20.363234861654867
+  },
+  "hold_60_min": {
+   "wall_water_first_hour_mbarL": 0.15020928502407294,
+   "ppm_without_makeup": 12.847770753181612
+  },
+  "powder": {
+   "powder_H2O_mg": [
+    22.5,
+    45.0
+   ],
+   "mbarL": [
+    30.440246877601997,
+    60.88049375520399
+   ],
+   "ppm_if_released": [
+    2474.02471036637,
+    4948.04942073274
+   ]
+  }
+ },
+ "sources": {
+  "1": "Parker O-Ring Handbook ORD 5700 \u00a73.12.1 (leak rate L = 0.7 F D P Q (1-S)^2) and Table 3-24 (permeability); via seals.py",
+  "2": "Sturm et al. (2004) J. Geophys. Res. 109, D04309, https://doi.org/10.1029/2003JD004073: water permeation of Viton O-rings; via seals.py",
+  "3": "O'Hanlon, A User's Guide to Vacuum Technology, 3rd ed. (Wiley 2003): viscous and molecular conductance (C = 135 d^4 p / L, C = 12.1 d^3 / L for air, d and L in cm), outgassing of unbaked Al and Viton after 1 h, falling ~1/t",
+  "4": "Edwards nXDS6i dry scroll pump (BOM G2, A73501983): peak pumping speed 6.2 m3/h (displacement 6.8 m3/h), ultimate 0.020 mbar, maximum continuous inlet pressure 200 mbar; Marshall Scientific spec sheet https://marshallscientific.com/v/vspfiles/specs/Edwards%20nXDS%20Dry%20Scroll%20Pump%20-%20Marshall%20Scientific.pdf (read 2026-11-23); the BOM's 6.8 m3/h is the displacement",
+  "5": "Shah & London (1978): laminar flow in a square duct, Q = 0.03514 a^4 dp / (mu L)",
+  "6": "Airgas/Linde argon 5.0 (UHP): O2 <= 1-2 ppm, H2O <= 1-3 ppm (seals.py source 9)"
+ }
+}

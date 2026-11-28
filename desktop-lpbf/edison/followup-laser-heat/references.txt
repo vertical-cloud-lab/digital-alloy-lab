@@ -1,0 +1,91 @@
+1. (chaudry2022experimentalandnumerical pages 7-9): Mohsin Ali Chaudry, Gunther Mohr, and Kai Hilgenberg. Experimental and numerical comparison of heat accumulation during laser powder bed fusion of 316l stainless steel. Progress in Additive Manufacturing, 7:1071-1083, Mar 2022. URL: https://doi.org/10.1007/s40964-022-00282-x, doi:10.1007/s40964-022-00282-x. This article has 55 citations and is from a peer-reviewed journal.
+
+2. (chaudry2022experimentalandnumerical pages 9-10): Mohsin Ali Chaudry, Gunther Mohr, and Kai Hilgenberg. Experimental and numerical comparison of heat accumulation during laser powder bed fusion of 316l stainless steel. Progress in Additive Manufacturing, 7:1071-1083, Mar 2022. URL: https://doi.org/10.1007/s40964-022-00282-x, doi:10.1007/s40964-022-00282-x. This article has 55 citations and is from a peer-reviewed journal.
+
+3. (lu2023thermomechanicalsimulationof pages 6-8): Xufei Lu, Chao Chen, Guohao Zhang, Michele Chiumenti, Miguel Cervera, Haoliang Yin, Liang Ma, and Xin Lin. Thermo-mechanical simulation of annealing heat treatment of ni-based gh4099 superalloy made by laser powder bed fusion. Additive Manufacturing, 73:103703, Jul 2023. URL: https://doi.org/10.1016/j.addma.2023.103703, doi:10.1016/j.addma.2023.103703. This article has 46 citations and is from a highest quality peer-reviewed journal.
+
+4. (chaudry2022experimentalandnumerical pages 1-2): Mohsin Ali Chaudry, Gunther Mohr, and Kai Hilgenberg. Experimental and numerical comparison of heat accumulation during laser powder bed fusion of 316l stainless steel. Progress in Additive Manufacturing, 7:1071-1083, Mar 2022. URL: https://doi.org/10.1007/s40964-022-00282-x, doi:10.1007/s40964-022-00282-x. This article has 55 citations and is from a peer-reviewed journal.
+
+5. (heugue2026insituageing pages 4-6): Pierre Heugue, Philippe Nugues, René Billardon, Romain Bergeron, Paul Martin, Loïc Ferrage, Emmanuel Loubère, Thomas Perrin, and Arthur Desprès. In situ ageing assessment during the manufacturing of a large-scale a357-alsi7mg0.6 component by laser powder bed fusion. Metals, 16:854, Aug 2026. URL: https://doi.org/10.3390/met16080854, doi:10.3390/met16080854. This article has 0 citations.
+
+6. (heugue2026insituageing pages 15-16): Pierre Heugue, Philippe Nugues, René Billardon, Romain Bergeron, Paul Martin, Loïc Ferrage, Emmanuel Loubère, Thomas Perrin, and Arthur Desprès. In situ ageing assessment during the manufacturing of a large-scale a357-alsi7mg0.6 component by laser powder bed fusion. Metals, 16:854, Aug 2026. URL: https://doi.org/10.3390/met16080854, doi:10.3390/met16080854. This article has 0 citations.
+
+7. (rothfelder2023abriefhistory pages 10-11): Richard Rothfelder, Florian Nahr, Lova Chechik, Dominic Bartels, and Michael Schmidt. A brief history of the progress of laser powder bed fusion of metals in europe. Journal of Manufacturing Science and Engineering, Aug 2023. URL: https://doi.org/10.1115/1.4062788, doi:10.1115/1.4062788. This article has 17 citations.
+
+8. (wartbichler2022laserpowderbed pages 2-4): Reinhold Wartbichler, Tobias Maiwald-Immer, Fabian Pürstl, and Helmut Clemens. Laser powder bed fusion of intermetallic titanium aluminide alloys using a novel process chamber heating system: a study on feasibility and microstructural optimization for creep performance. Metals, 12:2087, Dec 2022. URL: https://doi.org/10.3390/met12122087, doi:10.3390/met12122087. This article has 8 citations.
+
+9. (wartbichler2022laserpowderbed pages 4-5): Reinhold Wartbichler, Tobias Maiwald-Immer, Fabian Pürstl, and Helmut Clemens. Laser powder bed fusion of intermetallic titanium aluminide alloys using a novel process chamber heating system: a study on feasibility and microstructural optimization for creep performance. Metals, 12:2087, Dec 2022. URL: https://doi.org/10.3390/met12122087, doi:10.3390/met12122087. This article has 8 citations.
+
+10. (maddison2022insitumonitoringand pages 12-16): G Maddison. In-situ monitoring and control during laser powder bed fusion of nickel superalloys. Unknown journal, 2022.
+
+11. (maddison2022insitumonitoringand pages 170-176): G Maddison. In-situ monitoring and control during laser powder bed fusion of nickel superalloys. Unknown journal, 2022.
+
+12. (bugatti2024predictingtheroughness pages 2-3): Matteo Bugatti and Bianca Maria Colosimo. Predicting the roughness of overhanging surfaces in laser powder bed fusion via in-situ thermal imaging. Journal of Manufacturing Processes, 124:1340-1348, Aug 2024. URL: https://doi.org/10.1016/j.jmapro.2024.06.050, doi:10.1016/j.jmapro.2024.06.050. This article has 23 citations and is from a peer-reviewed journal.
+
+13. (bosio2021productionstrategyfor pages 4-8): Federico Bosio, Haopeng Shen, Yang Liu, Mariangela Lombardi, Paul Rometsch, Xinhua Wu, Yuman Zhu, and Aijun Huang. Production strategy for manufacturing large-scale alsi10mg components by laser powder bed fusion. JOM, 73:770-780, Jan 2021. URL: https://doi.org/10.1007/s11837-020-04523-8, doi:10.1007/s11837-020-04523-8. This article has 42 citations and is from a peer-reviewed journal.
+
+14. (bosio2021productionstrategyfor pages 2-4): Federico Bosio, Haopeng Shen, Yang Liu, Mariangela Lombardi, Paul Rometsch, Xinhua Wu, Yuman Zhu, and Aijun Huang. Production strategy for manufacturing large-scale alsi10mg components by laser powder bed fusion. JOM, 73:770-780, Jan 2021. URL: https://doi.org/10.1007/s11837-020-04523-8, doi:10.1007/s11837-020-04523-8. This article has 42 citations and is from a peer-reviewed journal.
+
+15. (bosio2021productionstrategyfor pages 1-2): Federico Bosio, Haopeng Shen, Yang Liu, Mariangela Lombardi, Paul Rometsch, Xinhua Wu, Yuman Zhu, and Aijun Huang. Production strategy for manufacturing large-scale alsi10mg components by laser powder bed fusion. JOM, 73:770-780, Jan 2021. URL: https://doi.org/10.1007/s11837-020-04523-8, doi:10.1007/s11837-020-04523-8. This article has 42 citations and is from a peer-reviewed journal.
+
+16. (macias2020influenceonmicrostructure pages 1-5): Juan Guillermo Santos Macías, Thierry Douillard, Lv Zhao, Eric Maire, Grzegorz Pyka, and Aude Simar. Influence on microstructure, strength and ductility of build platform temperature during laser powder bed fusion of alsi10mg. Acta Materialia, 201:231-243, Dec 2020. URL: https://doi.org/10.1016/j.actamat.2020.10.001, doi:10.1016/j.actamat.2020.10.001. This article has 276 citations and is from a highest quality peer-reviewed journal.
+
+17. (heugue2026insituageing pages 1-2): Pierre Heugue, Philippe Nugues, René Billardon, Romain Bergeron, Paul Martin, Loïc Ferrage, Emmanuel Loubère, Thomas Perrin, and Arthur Desprès. In situ ageing assessment during the manufacturing of a large-scale a357-alsi7mg0.6 component by laser powder bed fusion. Metals, 16:854, Aug 2026. URL: https://doi.org/10.3390/met16080854, doi:10.3390/met16080854. This article has 0 citations.
+
+18. (heugue2026insituageing pages 12-15): Pierre Heugue, Philippe Nugues, René Billardon, Romain Bergeron, Paul Martin, Loïc Ferrage, Emmanuel Loubère, Thomas Perrin, and Arthur Desprès. In situ ageing assessment during the manufacturing of a large-scale a357-alsi7mg0.6 component by laser powder bed fusion. Metals, 16:854, Aug 2026. URL: https://doi.org/10.3390/met16080854, doi:10.3390/met16080854. This article has 0 citations.
+
+19. (lehmhus2022hightemperaturemechanicalproperties pages 22-23): Dirk Lehmhus, Thomas Rahn, Adrian Struss, Phillip Gromzig, Tim Wischeropp, and Holger Becker. High-temperature mechanical properties of stress-relieved alsi10mg produced via laser powder bed fusion additive manufacturing. Materials, 15:7386, Oct 2022. URL: https://doi.org/10.3390/ma15207386, doi:10.3390/ma15207386. This article has 38 citations.
+
+20. (velikajne2026influenceofbase pages 1-2): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+21. (velikajne2026influenceofbase pages 4-6): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+22. (velikajne2026influenceofbase pages 8-11): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+23. (li2024additivemanufacturingof pages 38-42): Ying-Jie Li. Additive manufacturing of 6061 and 7075 aluminium alloy with selective laser melting. Unknown journal, 2024. URL: https://doi.org/10.70675/5f083431z1407z40f1z83bfz19a675dc42f6, doi:10.70675/5f083431z1407z40f1z83bfz19a675dc42f6.
+
+24. (stopyra2020laserpowderbed pages 27-31): Wojciech Stopyra, Konrad Gruber, Irina Smolina, Tomasz Kurzynowski, and Bogumiła Kuźnicka. Laser powder bed fusion of aa7075 alloy: influence of process parameters on porosity and hot cracking. Additive manufacturing, 35:101270, Oct 2020. URL: https://doi.org/10.1016/j.addma.2020.101270, doi:10.1016/j.addma.2020.101270. This article has 355 citations and is from a highest quality peer-reviewed journal.
+
+25. (babu2020laserpowderbed pages 4-4): A.P. Babu, S.K. Kairy, A. Huang, and N. Birbilis. Laser powder bed fusion of high solute al-zn-mg alloys: processing, characterisation and properties. Materials & Design, 196:109183, Nov 2020. URL: https://doi.org/10.1016/j.matdes.2020.109183, doi:10.1016/j.matdes.2020.109183. This article has 43 citations and is from a highest quality peer-reviewed journal.
+
+26. (zhou2020processdependentcompositionmicrostructure pages 1-2): Le Zhou, Holden Hyer, Saket Thapliyal, Rajiv S. Mishra, Brandon McWilliams, Kyu Cho, and Yongho Sohn. Process-dependent composition, microstructure, and printability of al-zn-mg and al-zn-mg-sc-zr alloys manufactured by laser powder bed fusion. Metallurgical and Materials Transactions A, 51:3215-3227, Apr 2020. URL: https://doi.org/10.1007/s11661-020-05768-3, doi:10.1007/s11661-020-05768-3. This article has 108 citations.
+
+27. (schuster2022processabilitymicrostructureand pages 9-10): Marvin Schuster, Anthony De Luca, Remo Widmer, Xavier Maeder, and Christian Leinenbach. Processability, microstructure and precipitation of a zr-modified 2618 aluminium alloy fabricated by laser powder bed fusion. Journal of Alloys and Compounds, 913:165346, Aug 2022. URL: https://doi.org/10.1016/j.jallcom.2022.165346, doi:10.1016/j.jallcom.2022.165346. This article has 41 citations and is from a peer-reviewed journal.
+
+28. (solutions2016oringsandbackup pages 31-33): TS SOlUTIONS. O-rings and back-up rings. Unknown journal, 2016.
+
+29. (solutions2016oringsandbackup pages 43-45): TS SOlUTIONS. O-rings and back-up rings. Unknown journal, 2016.
+
+30. (solutions2016oringsandbackup pages 45-47): TS SOlUTIONS. O-rings and back-up rings. Unknown journal, 2016.
+
+31. (solutions2016oringsandbackup pages 29-31): TS SOlUTIONS. O-rings and back-up rings. Unknown journal, 2016.
+
+32. (solutions2016oringsandbackup pages 110-111): TS SOlUTIONS. O-rings and back-up rings. Unknown journal, 2016.
+
+33. (liu2019sm–cohightemperaturepermanent pages 1-3): Shiqiang Liu. Sm–co high-temperature permanent magnet materials. Chinese Physics B, 28:017501, Jan 2019. URL: https://doi.org/10.1088/1674-1056/28/1/017501, doi:10.1088/1674-1056/28/1/017501. This article has 118 citations and is from a peer-reviewed journal.
+
+34. (liu2019sm–cohightemperaturepermanent pages 18-19): Shiqiang Liu. Sm–co high-temperature permanent magnet materials. Chinese Physics B, 28:017501, Jan 2019. URL: https://doi.org/10.1088/1674-1056/28/1/017501, doi:10.1088/1674-1056/28/1/017501. This article has 118 citations and is from a peer-reviewed journal.
+
+35. (an2019magneticpropertiesof pages 1-3): Shizhong An, Zhenhui Ma, Wuhui Li, Huifang Zhang, and Ting Yin. Magnetic properties of anisotropic bonded ndfeb/smco permanent magnets. AIP Advances, 9:125146, Dec 2019. URL: https://doi.org/10.1063/1.5129255, doi:10.1063/1.5129255. This article has 26 citations and is from a peer-reviewed journal.
+
+36. (liu2019sm–cohightemperaturepermanent pages 5-7): Shiqiang Liu. Sm–co high-temperature permanent magnet materials. Chinese Physics B, 28:017501, Jan 2019. URL: https://doi.org/10.1088/1674-1056/28/1/017501, doi:10.1088/1674-1056/28/1/017501. This article has 118 citations and is from a peer-reviewed journal.
+
+37. (liu2019sm–cohightemperaturepermanent pages 10-11): Shiqiang Liu. Sm–co high-temperature permanent magnet materials. Chinese Physics B, 28:017501, Jan 2019. URL: https://doi.org/10.1088/1674-1056/28/1/017501, doi:10.1088/1674-1056/28/1/017501. This article has 118 citations and is from a peer-reviewed journal.
+
+38. (liu2019sm–cohightemperaturepermanent pages 8-10): Shiqiang Liu. Sm–co high-temperature permanent magnet materials. Chinese Physics B, 28:017501, Jan 2019. URL: https://doi.org/10.1088/1674-1056/28/1/017501, doi:10.1088/1674-1056/28/1/017501. This article has 118 citations and is from a peer-reviewed journal.
+
+39. (usmani2024elastomericsealassessment pages 30-34): MT Usmani. Elastomeric seal assessment for hydraulic floating piston compressor. Unknown journal, 2024.
+
+40. (ballato2024prospectsandchallenges pages 1-3): J. Ballato, Peter D. Dragic, and Michel J. F. Digonnet. Prospects and challenges for all-optical thermal management of fiber lasers. Jan 2024. URL: https://doi.org/10.1088/1361-6463/ad1ddc, doi:10.1088/1361-6463/ad1ddc. This article has 33 citations and is from a peer-reviewed journal.
+
+41. (zervas2014highpowerfiber pages 14-15): Michalis N. Zervas and Christophe A. Codemard. High power fiber lasers: a review. IEEE Journal of Selected Topics in Quantum Electronics, 20:219-241, Sep 2014. URL: https://doi.org/10.1109/jstqe.2014.2321279, doi:10.1109/jstqe.2014.2321279. This article has 1614 citations and is from a domain leading peer-reviewed journal.
+
+42. (ballato2024prospectsandchallenges pages 4-6): J. Ballato, Peter D. Dragic, and Michel J. F. Digonnet. Prospects and challenges for all-optical thermal management of fiber lasers. Jan 2024. URL: https://doi.org/10.1088/1361-6463/ad1ddc, doi:10.1088/1361-6463/ad1ddc. This article has 33 citations and is from a peer-reviewed journal.
+
+43. (ballato2024prospectsandchallenges pages 3-4): J. Ballato, Peter D. Dragic, and Michel J. F. Digonnet. Prospects and challenges for all-optical thermal management of fiber lasers. Jan 2024. URL: https://doi.org/10.1088/1361-6463/ad1ddc, doi:10.1088/1361-6463/ad1ddc. This article has 33 citations and is from a peer-reviewed journal.
+
+44. (nemova2024briefreviewof pages 2-4): Galina Nemova. Brief review of recent developments in fiber lasers. Applied Sciences, 14:2323, Mar 2024. URL: https://doi.org/10.3390/app14062323, doi:10.3390/app14062323. This article has 83 citations.
+
+45. (haavisto2013studiesonthe pages 32-36): M Haavisto. Studies on the time-dependent demagnetization of sintered ndfeb permanent magnets. Unknown journal, 2013.
+
+46. (liu2019sm–cohightemperaturepermanent pages 7-8): Shiqiang Liu. Sm–co high-temperature permanent magnet materials. Chinese Physics B, 28:017501, Jan 2019. URL: https://doi.org/10.1088/1674-1056/28/1/017501, doi:10.1088/1674-1056/28/1/017501. This article has 118 citations and is from a peer-reviewed journal.

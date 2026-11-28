@@ -1,0 +1,1996 @@
+{
+ "geometry": {
+  "lid_path": 955.1902574037721,
+  "jar_depth_mm": 47.0,
+  "glands_model": {
+   "spigot": {
+    "kind": "radial",
+    "ring": "2-238",
+    "cs": 3.53,
+    "depth": 2.75,
+    "width": 4.8,
+    "groove_d": 90.5,
+    "groove_mat": "ss",
+    "T": 60.0,
+    "closure": "module spigot in the floor port",
+    "ring_id": 88.49,
+    "path": 292.9535149472482
+   },
+   "gland_plate_M50": {
+    "kind": "face",
+    "ring": "2-034",
+    "cs": 1.78,
+    "depth": 1.3,
+    "width": 2.6,
+    "groove_id": 54.5,
+    "groove_mat": "ss",
+    "T": 60.0,
+    "closure": "gland plate on the welded collar (M50)",
+    "ring_id": 53.7,
+    "path": 179.3849405199772
+   },
+   "rod_M50": {
+    "kind": "rod",
+    "ring": "2-114",
+    "cs": 2.62,
+    "depth": 2.0625,
+    "width": 3.6,
+    "groove_d": 20.0,
+    "rod_d": 15.875,
+    "groove_mat": "ss",
+    "T": 110.0,
+    "n": 2,
+    "closure": "hollow rod through the gland plate (M50)",
+    "ring_id": 15.54,
+    "path": 112.70463644753383
+   },
+   "overflow_funnel": {
+    "kind": "face",
+    "ring": "2-042",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 263.6280041630489,
+    "groove_mat": "ss",
+    "T": 50.0,
+    "closure": "overflow funnel block (316L) under the floor",
+    "ring_id": 82.27,
+    "path": 270.8536672663054
+   },
+   "floor": {
+    "kind": "face",
+    "ring": "cord",
+    "cs": 3.53,
+    "depth": 2.65,
+    "width": 4.6,
+    "inner_perimeter": 932.2566310325652,
+    "groove_mat": "al",
+    "T": 60.0,
+    "closure": "chamber floor plate on the frame (18 x M4)",
+    "path": 946.7079572390783
+   },
+   "inlet_plenum": {
+    "kind": "face",
+    "ring": "2-044",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 304.3241953976511,
+    "groove_mat": "ss",
+    "T": 45.0,
+    "closure": "inlet plenum (316L) on the back wall (6061)",
+    "ring_id": 94.97,
+    "path": 311.54985850090765
+   },
+   "outlet_plenum": {
+    "kind": "face",
+    "ring": "2-044",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 304.3241953976511,
+    "groove_mat": "ss",
+    "T": 45.0,
+    "closure": "outlet plenum (316L) under the floor (6061)",
+    "ring_id": 94.97,
+    "path": 311.54985850090765
+   },
+   "vacuum_port": {
+    "kind": "face",
+    "ring": "2-024",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "groove_id": 29.0,
+    "groove_mat": "ss",
+    "T": 40.0,
+    "closure": "KF-25 vacuum-port adapter plate on the right wall",
+    "ring_id": 28.3,
+    "path": 98.33185005736053
+   },
+   "fibre_heads": {
+    "kind": "face",
+    "ring": "2-010",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "groove_id": 6.2,
+    "groove_mat": "al",
+    "T": 45.0,
+    "n": 2,
+    "closure": "threaded fibre heads in the side walls",
+    "ring_id": 6.07,
+    "path": 26.703537555513243
+   },
+   "recoater_feedthrough": {
+    "kind": "face",
+    "ring": "2-024",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "groove_id": 29.0,
+    "groove_mat": "ss",
+    "T": 40.0,
+    "closure": "recoater feedthrough flange on the left wall",
+    "ring_id": 28.3,
+    "path": 98.33185005736053
+   },
+   "recoater_cap": {
+    "kind": "face",
+    "ring": "2-019",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "groove_id": 20.8,
+    "groove_mat": "al",
+    "T": 40.0,
+    "closure": "blind bearing cap on the right wall",
+    "ring_id": 20.35,
+    "path": 72.57079029792422
+   },
+   "window_lower": {
+    "kind": "face",
+    "ring": "2-031",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "groove_id": 44.9,
+    "groove_mat": "al",
+    "T": 80.0,
+    "closure": "window on its seat",
+    "ring_id": 44.17,
+    "path": 148.28317324943822
+   },
+   "window_flange": {
+    "kind": "face",
+    "ring": "2-036",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "groove_id": 61.6,
+    "groove_mat": "al",
+    "T": 60.0,
+    "closure": "window flange on the lid",
+    "ring_id": 60.05,
+    "path": 200.74777056438776
+   },
+   "drawer": {
+    "kind": "face",
+    "ring": "2-033",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 161.88752607654348,
+    "groove_mat": "al",
+    "T": 60.0,
+    "dovetail": true,
+    "closure": "cover-slide drawer on the lid's front face",
+    "ring_id": 50.52,
+    "path": 169.1131891798
+   },
+   "metering_base": {
+    "kind": "face",
+    "ring": "2-040",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 233.1218828596306,
+    "groove_mat": "al",
+    "T": 45.0,
+    "closure": "metering base on the lid (4 x M4)",
+    "ring_id": 72.75,
+    "path": 240.34754596288712
+   },
+   "reservoir_dock": {
+    "kind": "face",
+    "ring": "2-040",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 233.1218828596306,
+    "groove_mat": "al",
+    "T": 45.0,
+    "closure": "reservoir base plate on the dock face (wedge rails + detent)",
+    "ring_id": 72.75,
+    "path": 240.34754596288712
+   },
+   "roller_feedthrough": {
+    "kind": "face",
+    "ring": "2-012",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "groove_id": 9.5,
+    "groove_mat": "al",
+    "T": 45.0,
+    "closure": "roller feedthrough in the metering base",
+    "ring_id": 9.25,
+    "path": 37.07079331235956
+   },
+   "reservoir_lid_M": {
+    "kind": "face",
+    "ring": "2-030",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 131.38140477312515,
+    "groove_mat": "al",
+    "T": 45.0,
+    "closure": "reservoir M lid on its top frame",
+    "ring_id": 41.0,
+    "path": 138.60706787638168
+   },
+   "camera_adapter": {
+    "kind": "face",
+    "ring": "2-030",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "groove_id": 42.0,
+    "groove_mat": "al",
+    "T": 45.0,
+    "closure": "camera adapter on the lid",
+    "ring_id": 41.0,
+    "path": 139.1725545540278
+   },
+   "sae4_ports": {
+    "kind": "sae",
+    "ring": "3-904",
+    "cs": 1.83,
+    "n": 4,
+    "closure": "SAE-4 O-ring-boss ports: argon in, O2 sample, transducer, relief valve",
+    "ring_id": 8.92,
+    "path": 135.0884841043611
+   },
+   "door": {
+    "kind": "face",
+    "ring": "cord",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 655.2460153515901,
+    "groove_mat": "al",
+    "T": 60.0,
+    "dovetail": true,
+    "closure": "chamber door",
+    "path": 662.4716784548467
+   },
+   "gland_plate_S25": {
+    "kind": "face",
+    "ring": "2-024",
+    "cs": 1.78,
+    "depth": 1.3,
+    "width": 2.6,
+    "groove_id": 28.72,
+    "groove_mat": "ss",
+    "T": 60.0,
+    "closure": "gland plate on the welded collar (S25)",
+    "ring_id": 28.3,
+    "path": 98.39468191043233
+   },
+   "rod_S25": {
+    "kind": "rod",
+    "ring": "2-110",
+    "cs": 2.62,
+    "depth": 2.0575,
+    "width": 3.6,
+    "groove_d": 13.64,
+    "rod_d": 9.525,
+    "groove_mat": "ss",
+    "T": 110.0,
+    "n": 2,
+    "closure": "hollow rod through the gland plate (S25)",
+    "ring_id": 9.19,
+    "path": 72.77499382040756
+   },
+   "gland_plate_L75": {
+    "kind": "face",
+    "ring": "2-041",
+    "cs": 1.78,
+    "depth": 1.3,
+    "width": 2.6,
+    "groove_id": 78.4,
+    "groove_mat": "ss",
+    "T": 60.0,
+    "closure": "gland plate on the welded collar (L75)",
+    "ring_id": 75.92,
+    "path": 254.46900494077323
+   },
+   "rod_L75": {
+    "kind": "rod",
+    "ring": "2-114",
+    "cs": 2.62,
+    "depth": 2.0625,
+    "width": 3.6,
+    "groove_d": 20.0,
+    "rod_d": 15.875,
+    "groove_mat": "ss",
+    "T": 110.0,
+    "n": 2,
+    "closure": "hollow rod through the gland plate (L75)",
+    "ring_id": 15.54,
+    "path": 112.70463644753383
+   },
+   "reservoir_lid_S": {
+    "kind": "face",
+    "ring": "2-022",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 80.49514360733912,
+    "groove_mat": "al",
+    "T": 45.0,
+    "closure": "reservoir S lid on its top frame",
+    "ring_id": 25.12,
+    "path": 87.72080671059564
+   },
+   "reservoir_lid_L": {
+    "kind": "face",
+    "ring": "2-042",
+    "cs": 1.78,
+    "depth": 1.32,
+    "width": 2.3,
+    "inner_perimeter": 263.62800416304884,
+    "groove_mat": "al",
+    "T": 45.0,
+    "closure": "reservoir L lid on its top frame",
+    "ring_id": 82.27,
+    "path": 270.85366726630537
+   }
+  },
+  "door_path": 662.4716784548467,
+  "drawer_path": 169.1131891798,
+  "spigot_path": 292.4822760492097,
+  "gland_plate_path": 179.3849405199772,
+  "chamber_inside": [
+   280.0,
+   190.0,
+   120.0
+  ],
+  "door_opening": [
+   220.0,
+   92.0
+  ],
+  "door_seal_rect": [
+   232.0,
+   104.0
+  ],
+  "lid_seal_rect": [
+   290.6,
+   200.6
+  ],
+  "window_d": 50.8,
+  "v_chamber_L": 6.3839999999999995,
+  "v_filter_L": 2.334069965301108,
+  "bore_d": 50.8,
+  "stroke": 40.0,
+  "res": {
+   "S": {
+    "ix": 26.0,
+    "iy": 46.0,
+    "iz": 36.0,
+    "slot": 45.0,
+    "for_module": "S25",
+    "wedge_h": 12.853332060679032,
+    "vol_cm3": 37.73472052687888
+   },
+   "M": {
+    "ix": 26.0,
+    "iy": 72.0,
+    "iz": 56.0,
+    "slot": 70.0,
+    "for_module": "M50",
+    "wedge_h": 12.853332060679032,
+    "vol_cm3": 96.50304082468
+   },
+   "L": {
+    "ix": 48.0,
+    "iy": 110.0,
+    "iz": 56.0,
+    "slot": 95.0,
+    "for_module": "L75",
+    "wedge_h": 28.562960134842292,
+    "vol_cm3": 232.84148770334693
+   }
+  },
+  "slot_w": 8.0,
+  "rod_od": 15.875,
+  "area_walls_cm2": 2192.0,
+  "n_parts": 276
+ },
+ "sources": {
+  "1": "Parker O-Ring Handbook ORD 5700: Design Chart 4-3 (face glands), Design Table 4-2 (static radial glands), \u00a73.11 vacuum sealing and Table 3-20 (finish), \u00a73.12.1 leak-rate approximation and Fig. 3-11 (Q), Table 3-24 (permeability), Figs. 2-4..2-6 (compression load). https://nfc.arizona.edu/sites/default/files/2022-02/parker_o-ring_handbook.pdf",
+  "2": "Lindley, P. B. (1967). Compression characteristics of laterally-unrestrained rubber O-rings. J. Inst. Rubber Ind. 1, 209-213 (F/L = d E (1.25 e^1.5 + 50 e^6)); as used in e.g. https://doi.org/10.1016/j.triboint.2019.106062",
+  "3": "Gent, A. N. (1958). On the relation between indentation hardness and Young's modulus. Trans. IRI 34, 46-57 (E [MPa] = 0.0981 (56 + 7.62336 S) / (0.137505 (254 - 2.54 S)))",
+  "4": "Marco Rubber, O-ring permeation (FKM: H2O 40e-8 std cc cm/cm2 s bar): https://www.marcorubber.com/o-ring-permeation.htm",
+  "5": "O'Hanlon, J. F. A User's Guide to Vacuum Technology, 3rd ed. (Wiley, 2003), Table 4.5 and App. C.5: outgassing of unbaked Al ~6e-9 and Viton A ~1e-6 Torr L/s/cm2 after 1 h; and Ch. 2-3 (viscous conductance, C = 135 d^4 p/L for air)",
+  "6": "Kozeny-Carman permeability k = d^2 e^3 / (180 (1-e)^2); Klinkenberg (1941) slip k_a = k (1 + b/p), b = 4 c lambda p / r with c ~ 1 (API Drilling and Production Practice, 200-213)",
+  "7": "Ergun minimum fluidization: U_mf = (rho_p - rho_g) g d^2 e^3 / (150 mu (1 - e)) for small particles (Kunii & Levenspiel, Fluidization Engineering, 2nd ed., Ch. 3)",
+  "8": "McMaster-Carr 4396K21 (3 cfm, 1e-2 Torr) and the parts in ../../mcmaster-parts.csv, read through the lab Pi 2026-11-17",
+  "9": "Airgas/Linde argon 5.0 (UHP) typical limits: O2 <= 1-2 ppm, H2O <= 1-3 ppm",
+  "10": "Sturm et al. (2004), Permeation of atmospheric gases through polymer O-rings used in flasks for air sampling, J. Geophys. Res. 109, D04309, https://doi.org/10.1029/2003JD004073: Viton O2 1.0-1.1e-15 and H2O ~220e-15 m2/(s hPa) (= 1.05e-8 and 2.2e-6 std cc cm/(cm2 s bar)); via Edison",
+  "11": "Lubkowitz et al. (2024): new AlSi10Mg powder 0.015 wt% moisture (Karl Fischer); Van Cauwenbergh et al. (2019): AlSi7Mg0.6 powder 45 +/- 11 ppm H, parts 13 +/- 4 ppm; via Edison, desktop-lpbf/edison/followup-sealing-o2/answer.md",
+  "12": "Pauzon et al. (2021), control of residual oxygen in LPBF (TruPrint 1000): a zirconia lambda probe read +50 ppm where an electrochemical cell read +700 ppm (H2 cross-sensitivity); leak-plus-outgassing drift ~1.7 ppm O2/min; via Edison",
+  "13": "Solid Sealing Technology, General Product Specifications: every hermetic part helium leak-tested, guaranteed < 1e-10 atm cc/s He; 'weldable feedthroughs are designed to have the adapter welded on the vacuum side of flanges or chambers'. https://www.solidsealing.com/img/documents/SST_General_Product_Specifications-406829.pdf (linked from the FA11631 page; read 2026-11-25 through the lab Pi). FA11631: 10 V, -269 to 450 C, 3500 psig, weld mount, $44 (https://www.solidsealing.com/products/1851/)",
+  "14": "Solid Sealing Technology NS13003, 26482 circular connectors, welding instructions: mating hardware 304 or 316; 'preferred orientation is with the weld on the vacuum side'; pulsed TIG 20-25 A, heat sinks on both sides, tack welds, segments of 3-4 s (never over 4 s), inert gas on the far side. https://www.solidsealing.com/img/resources/NS13003_887844.pdf (read 2026-11-25; SST lists no sheet for the single-lead and 4-pin weld-ins)"
+ },
+ "inventory": [
+  {
+   "key": "lid",
+   "seal": "Lid O-ring, FKM 75A 3.53 mm cord in a face gland 2.65 x 4.6 in the body's top face",
+   "held_by": "20 x M5 316 into helical inserts (metal-to-metal)",
+   "status": "OK",
+   "in_model": "as before",
+   "note": "cord spliced into a ring: specify a vulcanized (hot) splice or a molded ring, never a glued joint, for vacuum"
+  },
+  {
+   "key": "door",
+   "seal": "Door: 1.78 mm FKM 75A cord (McMaster 96515K123) in a half-dovetail groove, depth 1.32, 2.3 wide at the bottom, 24 deg undercut",
+   "held_by": "2 x McMaster 1807A61 draw latches (800 lb) on 6061 brackets bolted to the door's two ears, pointing forward, pulling strikes on the chamber's side faces (since 2026-11-23); the hinge holds the bottom edge (round pin holes, knuckles shimmed at assembly, since 2026-11-25; they were slotted so the door floated)",
+   "status": "CHECK",
+   "in_model": "groove, cord, ears, latch brackets, latch bodies, strikes, hinge knuckles with round pin holes",
+   "note": "set each latch to ~0.75 kN and no more: the latches pull 12 mm outboard of the ears' tips, so more preload pries the door off its seal (door_seal_fea.md); the hinge pins need a close fit; the half-dovetail is overfilled at worst tolerance (gland table); the brackets' screws are not drawn (mech.md C); robot: a pneumatic clamp would go on the same brackets (not drawn)"
+  },
+  {
+   "key": "window",
+   "seal": "Window: O-ring sandwich, 2-031 FKM under the \u00d850.8 x 8 window, 1 mm FKM flat ring over it",
+   "held_by": "retaining ring whose spigot bottoms metal-to-metal on the flange (6 x M3)",
+   "status": "OK",
+   "in_model": "seat groove, both rings, stepped retaining ring",
+   "note": "squeeze set by geometry; the flat ring takes the window's thickness tolerance (FKM sheet not yet sourced)"
+  },
+  {
+   "key": "window_flange",
+   "seal": "Window flange to lid: 2-036 FKM face O-ring",
+   "held_by": "6 x M4 into helical inserts",
+   "status": "OK",
+   "in_model": "groove + ring",
+   "note": ""
+  },
+  {
+   "key": "drawer",
+   "seal": "Cover-slide drawer: 2-033 FKM ring in a half-dovetail groove on the front plate",
+   "held_by": "2 quarter-turn latches (envelope; stud in the plate, receptacle in the lid)",
+   "status": "CHECK",
+   "in_model": "groove, ring, latch studs and receptacles (envelope)",
+   "note": "no catalogue quarter-turn latch found that gives >= 0.4 kN in the 20 mm plate (McMaster 5210N21: 0.53 kN, needs a \u00d822 hole; Southco E3 compact 450 N, \u00d829 head)"
+  },
+  {
+   "key": "metering_base",
+   "seal": "Metering base to lid: 2-040 FKM face O-ring round the 12 x 100 dose slot",
+   "held_by": "4 x M4",
+   "status": "OK",
+   "in_model": "groove + ring",
+   "note": ""
+  },
+  {
+   "key": "reservoir",
+   "seal": "Reservoir: 2-040 FKM face O-ring in the dock face round a 12 x 100 opening; one 30 x 112 mm base plate for S/M/L; O-ring-sealed lid on a welded top frame",
+   "held_by": "dovetail-rail lips with a 2 deg ramp (robot push ~0.1 kN) + spring-plunger detent; lid on 2 x M3",
+   "status": "CHECK",
+   "in_model": "dock groove + ring, lips, single plate, top frame, lid groove + ring (2-023 / 2-030 / 2-042), shutter slot closed at both ends",
+   "note": "the ramps and the detent are not drawn; the shutter's drive through its closed slot (e.g. magnetic) is not designed"
+  },
+  {
+   "key": "roller_shaft",
+   "seal": "Metering-roller shaft: Ferrotec SSL-005-NN magnetic-fluid feedthrough, M8 x 1 nose, 2-012 FKM shoulder O-ring",
+   "held_by": "its nut",
+   "status": "OK",
+   "in_model": "feedthrough envelope, coupling, stepper moved back",
+   "note": "price not published; split of the 65.5 mm length assumed"
+  },
+  {
+   "key": "recoater_left",
+   "seal": "Recoater screw, left wall: Ferrotec SFL-006-NN magnetic-fluid feedthrough on a 9 mm spacer ring (2 x 2-024)",
+   "held_by": "its flange screws",
+   "status": "OK",
+   "in_model": "feedthrough, spacer, 2 rings, clamp coupling in the wall bore, motor moved out",
+   "note": "price not published; bearing load rating to be checked against the screw's axial load"
+  },
+  {
+   "key": "recoater_right",
+   "seal": "Recoater screw, right wall: blind bearing cap with a 2-020 FKM face O-ring",
+   "held_by": "4 x M4",
+   "status": "OK",
+   "in_model": "cap, groove, ring, screws",
+   "note": ""
+  },
+  {
+   "key": "vac_port",
+   "seal": "KF-25 vacuum port: stub welded into a 304 adapter plate, 2-024 FKM face O-ring on the 6061 wall",
+   "held_by": "4 x M5",
+   "status": "OK",
+   "in_model": "plate, groove, ring, screws",
+   "note": "other KF stubs are welded to 316L parts (plenums, funnel) or machined in 6061 (side reservoir port)"
+  },
+  {
+   "key": "plenums",
+   "seal": "Inlet (back wall) and outlet (under the floor) plenums, 316L on 6061: 2-044 FKM face O-rings",
+   "held_by": "9 x M4 and 6 x M4 (counterbored)",
+   "status": "OK",
+   "in_model": "bolting flanges, grooves, rings, screws",
+   "note": "never welded (dissimilar metals)"
+  },
+  {
+   "key": "funnel",
+   "seal": "Overflow funnel block (316L) under the floor: 2-042 FKM face O-ring",
+   "held_by": "4 x M4 (counterbored)",
+   "status": "OK",
+   "in_model": "groove, ring, screws",
+   "note": ""
+  },
+  {
+   "key": "threaded_ports",
+   "seal": "Argon in, O2 sample, pressure transducer, relief valve: SAE J1926 -4 (7/16-20) O-ring-boss ports, AS568-904 FKM",
+   "held_by": "straight thread",
+   "status": "OK",
+   "in_model": "ports (thread, 12 deg O-ring chamfer, \u00d84 drilling); stems of the transducer and valve",
+   "note": "fittings McMaster 5182K862; transducer and relief valve must be ordered with SAE-4 male ends (not confirmed)"
+  },
+  {
+   "key": "fibre_heads",
+   "seal": "Through-beam fibre heads: M6 threaded heads into tapped holes, 2-010 FKM face O-rings",
+   "held_by": "thread",
+   "status": "CHECK",
+   "in_model": "tapped holes, grooves, rings, heads",
+   "note": "a fibre head with an M6 body and a sealing flange is not yet chosen"
+  },
+  {
+   "key": "camera",
+   "seal": "Camera: adapter to lid 2-022, \u00d81 in. window on 2-017 + 1 mm FKM flat ring under a screwed retaining ring",
+   "held_by": "screws (not drawn)",
+   "status": "OK",
+   "in_model": "both grooves, rings, window, retaining ring; boss moved onto the line of sight",
+   "note": "the old \u00d822 bore broke through the boss wall: fixed"
+  },
+  {
+   "key": "spigot",
+   "seal": "Module spigot in the \u00d896 floor port: FKM 2-238 radial, groove root \u00d890.5 x 4.8",
+   "held_by": "radial; 2 captive M6",
+   "status": "OK",
+   "in_model": "groove and ring",
+   "note": ""
+  },
+  {
+   "key": "gland_plate",
+   "seal": "Gland plate on the welded collar: face groove 2.6 wide; 2-024 / 2-034 / 2-041 for S25 / M50 / L75",
+   "held_by": "6 x M4 x 20",
+   "status": "OK",
+   "in_model": "groove, ring; plate 14 mm (was 10)",
+   "note": ""
+  },
+  {
+   "key": "rod",
+   "seal": "Hollow rod through the gland plate: two Parker rod glands, groove \u00d820.0, throat \u00d815.93 (2-114; S25: 2-110, \u00d813.64)",
+   "held_by": "-",
+   "status": "CHECK",
+   "in_model": "two grooves, two rings; rod labelled seamless and polished",
+   "note": "friction counts against the Z coupling (mech.md); measure break-out"
+  },
+  {
+   "key": "rod_end",
+   "seal": "Rod end: 316L block, the rod TIG-welded into its top; seven Solid Sealing weld-in feedthroughs TIG-welded at its 72 x 16 mm front face: 3 x FA11631 (Chromel) + 3 x FA11632 (Alumel) single-lead type K in \u00d86.27 x 38 sleeves, 1 x FA10443 4-pin 16 A Cu in a \u00d812.62 x 24 sleeve. The six type K sleeves sit 26 mm deep in blind bores joined to the rod bore by one \u00d84 cross-drilling whose two ends are welded shut",
+   "held_by": "welds (metal, glass-ceramic and welds: no elastomer)",
+   "status": "CHECK",
+   "in_model": "block, rod socket, bores, cross-drilling, power pocket and channel, seven sleeves at the catalogue's diameters and lengths",
+   "note": "SST guarantees < 1e-10 atm cc/s He per part [13], so the seven parts are < 7e-10, far under the 1e-4 mbar L/s budget; the welds (7 sleeves + 2 cross-drilling plugs + the rod) set the real leak rate: helium-test the welded block before the module is assembled. SST designs its weld-ins to be welded on the vacuum side [13, 14]; here the welds are at the block's outer (air) face, so each type K sleeve's annulus in its 26 mm bore is a crevice open to the chamber gas (a slow virtual leak and a moisture trap; ~13 mm3 each at 0.05 mm clearance). Ask SST about the blind-bore weld, weld access and the weld side, and follow its pulsed-TIG procedure (heat sinks, segments <= 4 s) [14]"
+  },
+  {
+   "key": "gas_loop",
+   "seal": "Blower, cyclone + HEPA housing, valves, hoses (KF-25 bellows)",
+   "held_by": "KF clamps",
+   "status": "CHECK",
+   "in_model": "unchanged",
+   "note": "the HEPA housing in the BOM (McMaster 5169K72) is 1/2 NPSC threaded and its gas-tightness is not stated; the blower must be specified gas-tight"
+  },
+  {
+   "key": "o2_sample",
+   "seal": "O2 analyser sample loop",
+   "held_by": "fittings",
+   "status": "CHECK",
+   "in_model": "unchanged",
+   "note": "extractive analysers often have polymer tubing inside; return the sample to the loop, 316L lines, leak-check the analyser"
+  }
+ ],
+ "glands": {
+  "lid": {
+   "cs": 3.53,
+   "depth": 2.65,
+   "width": 4.6,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 24.929178470254957,
+   "squeeze_min": 21.236872812135363,
+   "squeeze_max": 28.414096916299552,
+   "fill_nom": 80.2852171803057,
+   "fill_max_cold": 87.57836164156399,
+   "fill_max_hot": 89.35590234643233,
+   "T_service": 70.0,
+   "kind": "face",
+   "ring": "3.53 mm cord",
+   "closure": "chamber lid (20 x M5)",
+   "path": 955.1902574037721,
+   "parker": {
+    "depth": [
+     2.57,
+     2.72
+    ],
+    "w_gas": [
+     4.01,
+     4.17
+    ],
+    "w_liq": [
+     4.5,
+     4.75
+    ],
+    "sq": [
+     20,
+     30
+    ]
+   },
+   "verdict": "OK"
+  },
+  "spigot": {
+   "cs": 3.53,
+   "depth": 2.75,
+   "width": 4.8,
+   "stretch_pct": 2.27144310091536,
+   "squeeze_nom": 21.327910831494737,
+   "squeeze_min": 17.48984701564931,
+   "squeeze_max": 24.94833454130589,
+   "fill_nom": 72.70093083777347,
+   "fill_max_cold": 79.25731722005663,
+   "fill_max_hot": 80.56953284699398,
+   "T_service": 60.0,
+   "kind": "radial",
+   "ring": "2-238",
+   "closure": "module spigot in the floor port",
+   "path": 292.9535149472482,
+   "stretch_signed_pct": 2.27144310091536,
+   "dovetail": false,
+   "parker": null,
+   "verdict": "OK"
+  },
+  "gland_plate_M50": {
+   "cs": 1.78,
+   "depth": 1.3,
+   "width": 2.6,
+   "stretch_pct": 1.4897579143389184,
+   "squeeze_nom": 26.49542483770241,
+   "squeeze_min": 20.240926422075837,
+   "squeeze_max": 32.23453503754687,
+   "fill_nom": 72.68271507248308,
+   "fill_max_cold": 83.83837826380729,
+   "fill_max_hot": 85.2264397571001,
+   "T_service": 60.0,
+   "kind": "face",
+   "ring": "2-034",
+   "closure": "gland plate on the welded collar (M50)",
+   "path": 179.3849405199772,
+   "stretch_signed_pct": 1.4897579143389184,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "squeeze > 32 % at tolerance"
+  },
+  "rod_M50": {
+   "cs": 2.62,
+   "depth": 2.0625,
+   "width": 3.6,
+   "stretch_pct": 2.1557271557271607,
+   "squeeze_nom": 20.542080698381344,
+   "squeeze_min": 16.161105827307857,
+   "squeeze_max": 24.67381171864667,
+   "fill_nom": 71.2700331990677,
+   "fill_max_cold": 78.47032194824685,
+   "fill_max_hot": 81.52029010515291,
+   "T_service": 110.0,
+   "kind": "rod",
+   "ring": "2-114",
+   "closure": "hollow rod through the gland plate (M50)",
+   "path": 112.70463644753383,
+   "stretch_signed_pct": 2.1557271557271607,
+   "dovetail": false,
+   "parker": null,
+   "verdict": "OK"
+  },
+  "overflow_funnel": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.0000000000000018,
+   "squeeze_nom": 25.199411568704335,
+   "squeeze_min": 18.872121144649217,
+   "squeeze_max": 31.004209286507468,
+   "fill_nom": 80.56120394521261,
+   "fill_max_cold": 93.1249155431072,
+   "fill_max_hot": 94.2503821183956,
+   "T_service": 50.0,
+   "kind": "face",
+   "ring": "2-042",
+   "closure": "overflow funnel block (316L) under the floor",
+   "path": 270.8536672663054,
+   "stretch_signed_pct": 2.0000000000000018,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "floor": {
+   "cs": 3.53,
+   "depth": 2.65,
+   "width": 4.6,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 24.929178470254957,
+   "squeeze_min": 21.236872812135363,
+   "squeeze_max": 28.414096916299552,
+   "fill_nom": 80.2852171803057,
+   "fill_max_cold": 87.57836164156399,
+   "fill_max_hot": 88.97836153373564,
+   "T_service": 60.0,
+   "kind": "face",
+   "ring": "cord",
+   "closure": "chamber floor plate on the frame (18 x M4)",
+   "path": 946.7079572390783,
+   "stretch_signed_pct": 0.0,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     2.57,
+     2.72
+    ],
+    "w_gas": [
+     4.01,
+     4.17
+    ],
+    "w_liq": [
+     4.5,
+     4.75
+    ],
+    "sq": [
+     20,
+     30
+    ]
+   },
+   "verdict": "OK"
+  },
+  "inlet_plenum": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.0000000000000018,
+   "squeeze_nom": 25.199411568704335,
+   "squeeze_min": 18.872121144649217,
+   "squeeze_max": 31.004209286507468,
+   "fill_nom": 80.56120394521261,
+   "fill_max_cold": 93.1249155431072,
+   "fill_max_hot": 94.04210900650185,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-044",
+   "closure": "inlet plenum (316L) on the back wall (6061)",
+   "path": 311.54985850090765,
+   "stretch_signed_pct": 2.0000000000000018,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "outlet_plenum": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.0000000000000018,
+   "squeeze_nom": 25.199411568704335,
+   "squeeze_min": 18.872121144649217,
+   "squeeze_max": 31.004209286507468,
+   "fill_nom": 80.56120394521261,
+   "fill_max_cold": 93.1249155431072,
+   "fill_max_hot": 94.04210900650185,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-044",
+   "closure": "outlet plenum (316L) under the floor (6061)",
+   "path": 311.54985850090765,
+   "stretch_signed_pct": 2.0000000000000018,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "vacuum_port": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.473498233215543,
+   "squeeze_nom": 25.04547714585313,
+   "squeeze_min": 18.697635560908935,
+   "squeeze_max": 30.868094840025844,
+   "fill_nom": 80.23064595291928,
+   "fill_max_cold": 92.7585675391014,
+   "fill_max_hot": 93.46463269003709,
+   "T_service": 40.0,
+   "kind": "face",
+   "ring": "2-024",
+   "closure": "KF-25 vacuum-port adapter plate on the right wall",
+   "path": 98.33185005736053,
+   "stretch_signed_pct": 2.473498233215543,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "fibre_heads": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.1416803953871577,
+   "squeeze_nom": 25.153417558624863,
+   "squeeze_min": 18.81999004664098,
+   "squeeze_max": 30.963537277576386,
+   "fill_nom": 80.46222295710335,
+   "fill_max_cold": 93.0152209978097,
+   "fill_max_hot": 93.89995601721827,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-010",
+   "closure": "threaded fibre heads in the side walls",
+   "path": 26.703537555513243,
+   "stretch_signed_pct": 2.1416803953871577,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "recoater_feedthrough": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.473498233215543,
+   "squeeze_nom": 25.04547714585313,
+   "squeeze_min": 18.697635560908935,
+   "squeeze_max": 30.868094840025844,
+   "fill_nom": 80.23064595291928,
+   "fill_max_cold": 92.7585675391014,
+   "fill_max_hot": 93.46463269003709,
+   "T_service": 40.0,
+   "kind": "face",
+   "ring": "2-024",
+   "closure": "recoater feedthrough flange on the left wall",
+   "path": 98.33185005736053,
+   "stretch_signed_pct": 2.473498233215543,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "recoater_cap": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.211302211302213,
+   "squeeze_nom": 25.130795346637285,
+   "squeeze_min": 18.79434824159522,
+   "squeeze_max": 30.943533456227456,
+   "fill_nom": 80.41360594626354,
+   "fill_max_cold": 92.96134073243127,
+   "fill_max_hot": 93.64476471360172,
+   "T_service": 40.0,
+   "kind": "face",
+   "ring": "2-019",
+   "closure": "blind bearing cap on the right wall",
+   "path": 72.57079029792422,
+   "stretch_signed_pct": 2.211302211302213,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "window_lower": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 1.652705456191983,
+   "squeeze_nom": 25.311915790787587,
+   "squeeze_min": 18.99962490766252,
+   "squeeze_max": 31.103704265758804,
+   "fill_nom": 80.80408878895494,
+   "fill_max_cold": 93.39407810666924,
+   "fill_max_hot": 95.6918906211406,
+   "T_service": 80.0,
+   "kind": "face",
+   "ring": "2-031",
+   "closure": "window on its seat",
+   "path": 148.28317324943822,
+   "stretch_signed_pct": 1.652705456191983,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "window_flange": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.5811823480432983,
+   "squeeze_nom": 25.010380536416164,
+   "squeeze_min": 18.657848820279995,
+   "squeeze_max": 30.83706437217565,
+   "fill_nom": 80.15556450202683,
+   "fill_max_cold": 92.67535256197633,
+   "fill_max_hot": 94.15683133323667,
+   "T_service": 60.0,
+   "kind": "face",
+   "ring": "2-036",
+   "closure": "window flange on the lid",
+   "path": 200.74777056438776,
+   "stretch_signed_pct": 2.5811823480432983,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "drawer": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.0000000000000018,
+   "squeeze_nom": 25.842696629213478,
+   "squeeze_min": 19.60093896713614,
+   "squeeze_max": 31.573275862068968,
+   "fill_nom": 93.97076328739978,
+   "fill_max_cold": 108.9030786300432,
+   "fill_max_hot": 110.6439686796107,
+   "T_service": 60.0,
+   "kind": "face",
+   "width_face": 1.712298135392732,
+   "retains": false,
+   "ring": "2-033",
+   "closure": "cover-slide drawer on the lid's front face",
+   "path": 169.1131891798,
+   "stretch_signed_pct": 2.0000000000000018,
+   "dovetail": true,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "overfilled at worst tolerance, warm; face opening does not retain the cord"
+  },
+  "metering_base": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.0000000000000018,
+   "squeeze_nom": 25.199411568704335,
+   "squeeze_min": 18.872121144649217,
+   "squeeze_max": 31.004209286507468,
+   "fill_nom": 80.56120394521261,
+   "fill_max_cold": 93.1249155431072,
+   "fill_max_hot": 94.0106939466482,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-040",
+   "closure": "metering base on the lid (4 x M4)",
+   "path": 240.34754596288712,
+   "stretch_signed_pct": 2.0000000000000018,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "reservoir_dock": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.0000000000000018,
+   "squeeze_nom": 25.199411568704335,
+   "squeeze_min": 18.872121144649217,
+   "squeeze_max": 31.004209286507468,
+   "fill_nom": 80.56120394521261,
+   "fill_max_cold": 93.1249155431072,
+   "fill_max_hot": 94.0106939466482,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-040",
+   "closure": "reservoir base plate on the dock face (wedge rails + detent)",
+   "path": 240.34754596288712,
+   "stretch_signed_pct": 2.0000000000000018,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "roller_feedthrough": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.7027027027026973,
+   "squeeze_nom": 24.970734899669097,
+   "squeeze_min": 18.612903122220324,
+   "squeeze_max": 30.802013353635733,
+   "fill_nom": 80.0708781118304,
+   "fill_max_cold": 92.58149021258919,
+   "fill_max_hot": 93.46209970490055,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-012",
+   "closure": "roller feedthrough in the metering base",
+   "path": 37.07079331235956,
+   "stretch_signed_pct": 2.7027027027026973,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "reservoir_lid_M": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.000000000000024,
+   "squeeze_nom": 25.199411568704335,
+   "squeeze_min": 18.872121144649217,
+   "squeeze_max": 31.004209286507468,
+   "fill_nom": 80.56120394521261,
+   "fill_max_cold": 93.1249155431072,
+   "fill_max_hot": 94.0106939466482,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-030",
+   "closure": "reservoir M lid on its top frame",
+   "path": 138.60706787638168,
+   "stretch_signed_pct": 2.000000000000024,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "camera_adapter": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 2.4390243902439046,
+   "squeeze_nom": 25.056705984662376,
+   "squeeze_min": 18.7103646094132,
+   "squeeze_max": 30.878023007914447,
+   "fill_nom": 80.25468985154994,
+   "fill_max_cold": 92.7852157574817,
+   "fill_max_hot": 93.66776303074954,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-030",
+   "closure": "camera adapter on the lid",
+   "path": 139.1725545540278,
+   "stretch_signed_pct": 2.4390243902439046,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "door": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 25.842696629213478,
+   "squeeze_min": 19.60093896713614,
+   "squeeze_max": 31.573275862068968,
+   "fill_nom": 93.97076328739978,
+   "fill_max_cold": 108.9030786300432,
+   "fill_max_hot": 110.6439686796107,
+   "T_service": 60.0,
+   "kind": "face",
+   "width_face": 1.712298135392732,
+   "retains": false,
+   "ring": "cord",
+   "closure": "chamber door",
+   "path": 662.4716784548467,
+   "stretch_signed_pct": 0.0,
+   "dovetail": true,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "overfilled at worst tolerance, warm; face opening does not retain the cord"
+  },
+  "gland_plate_S25": {
+   "cs": 1.78,
+   "depth": 1.3,
+   "width": 2.6,
+   "stretch_pct": 1.4840989399293125,
+   "squeeze_nom": 26.49722495557268,
+   "squeeze_min": 20.24296741504044,
+   "squeeze_max": 32.23612623040997,
+   "fill_nom": 72.68627518450111,
+   "fill_max_cold": 83.84231560056134,
+   "fill_max_hot": 85.23044228196545,
+   "T_service": 60.0,
+   "kind": "face",
+   "ring": "2-024",
+   "closure": "gland plate on the welded collar (S25)",
+   "path": 98.39468191043233,
+   "stretch_signed_pct": 1.4840989399293125,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "squeeze > 32 % at tolerance"
+  },
+  "rod_S25": {
+   "cs": 2.62,
+   "depth": 2.0575,
+   "width": 3.6,
+   "stretch_pct": 3.6452665941240525,
+   "squeeze_nom": 20.21892552058955,
+   "squeeze_min": 15.798765574169387,
+   "squeeze_max": 24.386022788224786,
+   "fill_nom": 70.52246150396697,
+   "fill_max_cold": 77.68066201987813,
+   "fill_max_hot": 80.6999378388848,
+   "T_service": 110.0,
+   "kind": "rod",
+   "ring": "2-110",
+   "closure": "hollow rod through the gland plate (S25)",
+   "path": 72.77499382040756,
+   "stretch_signed_pct": 3.6452665941240525,
+   "dovetail": false,
+   "parker": null,
+   "verdict": "OK"
+  },
+  "gland_plate_L75": {
+   "cs": 1.78,
+   "depth": 1.3,
+   "width": 2.6,
+   "stretch_pct": 3.2665964172813533,
+   "squeeze_nom": 25.92581918406602,
+   "squeeze_min": 19.594875912579166,
+   "squeeze_max": 31.731200081767174,
+   "fill_nom": 71.56920137484286,
+   "fill_max_cold": 82.60668167588015,
+   "fill_max_hot": 83.97435071120172,
+   "T_service": 60.0,
+   "kind": "face",
+   "ring": "2-041",
+   "closure": "gland plate on the welded collar (L75)",
+   "path": 254.46900494077323,
+   "stretch_signed_pct": 3.2665964172813533,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "OK"
+  },
+  "rod_L75": {
+   "cs": 2.62,
+   "depth": 2.0625,
+   "width": 3.6,
+   "stretch_pct": 2.1557271557271607,
+   "squeeze_nom": 20.542080698381344,
+   "squeeze_min": 16.161105827307857,
+   "squeeze_max": 24.67381171864667,
+   "fill_nom": 71.2700331990677,
+   "fill_max_cold": 78.47032194824685,
+   "fill_max_hot": 81.52029010515291,
+   "T_service": 110.0,
+   "kind": "rod",
+   "ring": "2-114",
+   "closure": "hollow rod through the gland plate (L75)",
+   "path": 112.70463644753383,
+   "stretch_signed_pct": 2.1557271557271607,
+   "dovetail": false,
+   "parker": null,
+   "verdict": "OK"
+  },
+  "reservoir_lid_S": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 1.9999999999999796,
+   "squeeze_nom": 25.199411568704345,
+   "squeeze_min": 18.872121144649228,
+   "squeeze_max": 31.00420928650747,
+   "fill_nom": 80.56120394521264,
+   "fill_max_cold": 93.12491554310722,
+   "fill_max_hot": 94.01069394664822,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-022",
+   "closure": "reservoir S lid on its top frame",
+   "path": 87.72080671059564,
+   "stretch_signed_pct": 1.9999999999999796,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "reservoir_lid_L": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 1.9999999999999796,
+   "squeeze_nom": 25.199411568704345,
+   "squeeze_min": 18.872121144649228,
+   "squeeze_max": 31.00420928650747,
+   "fill_nom": 80.56120394521264,
+   "fill_max_cold": 93.12491554310722,
+   "fill_max_hot": 94.01069394664822,
+   "T_service": 45.0,
+   "kind": "face",
+   "ring": "2-042",
+   "closure": "reservoir L lid on its top frame",
+   "path": 270.85366726630537,
+   "stretch_signed_pct": 1.9999999999999796,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   },
+   "verdict": "fill > 90 % at worst tolerance, warm"
+  }
+ },
+ "clamps": {
+  "E_75A_MPa": 7.052854049401784,
+  "door_3p53_25": {
+   "cs": 3.53,
+   "path_mm": 662.4716784548467,
+   "squeeze": 25.0,
+   "N_per_mm": 4.194003078156231,
+   "total_N": 2778.4082586309523,
+   "parker_range_N": [
+    1484.9380917251824,
+    6380.593362881643
+   ]
+  },
+  "door_3p53_15": {
+   "cs": 3.53,
+   "path_mm": 662.4716784548467,
+   "squeeze": 15.0,
+   "N_per_mm": 1.8221297440434894,
+   "total_N": 1207.1093498989906,
+   "parker_range_N": null
+  },
+  "door_1p78_25": {
+   "cs": 1.78,
+   "path_mm": 662.4716784548467,
+   "squeeze": 25.0,
+   "N_per_mm": 2.1148230819031424,
+   "total_N": 1401.0103967034265,
+   "parker_range_N": [
+    881.681991961827,
+    2436.226556736627
+   ]
+  },
+  "door_1p78_15": {
+   "cs": 1.78,
+   "path_mm": 662.4716784548467,
+   "squeeze": 15.0,
+   "N_per_mm": 0.9188076329737709,
+   "total_N": 608.6840347932588,
+   "parker_range_N": null
+  },
+  "door_vacuum_force_N": 2444.7696,
+  "door_overpressure_20mbar_N": 48.256,
+  "lid_3p53_25": {
+   "cs": 3.53,
+   "path_mm": 955.1902574037721,
+   "squeeze": 25.0,
+   "N_per_mm": 4.194003078156231,
+   "total_N": 4006.0708797762627,
+   "parker_range_N": [
+    2141.070243745249,
+    9199.911203592868
+   ]
+  },
+  "lid_vacuum_force_N": 5906.6760269999995,
+  "lid_screws_preload_N": 47925.0,
+  "drawer_1p78_25": {
+   "cs": 1.78,
+   "path_mm": 169.1131891798,
+   "squeeze": 25.0,
+   "N_per_mm": 2.1148230819031424,
+   "total_N": 357.6444759316938,
+   "parker_range_N": [
+    225.0723439994214,
+    621.9104242089276
+   ]
+  },
+  "drawer_out_force_20mbar_N": 2.3520000000000003,
+  "window_1p78_25": {
+   "cs": 1.78,
+   "path_mm": 148.28317324943822,
+   "squeeze": 25.0,
+   "N_per_mm": 2.1148230819031424,
+   "total_N": 313.59267744575453,
+   "parker_range_N": [
+    197.34972500246494,
+    545.3084506647058
+   ]
+  },
+  "window_lift_20mbar_N": 3.3238050274980004,
+  "window_weight_N": 0.3499443460442303,
+  "latch_rating_N": 3558.4000000000005,
+  "door_latch_preload_25_N": 724.6331983517133,
+  "door_latch_preload_15_N": 328.4700173966294,
+  "dock_1p78_25": {
+   "cs": 1.78,
+   "path_mm": 240.34754596288712,
+   "squeeze": 25.0,
+   "N_per_mm": 2.1148230819031424,
+   "total_N": 508.29253788109014,
+   "parker_range_N": [
+    319.87798117189794,
+    883.8733690276127
+   ]
+  },
+  "dock_push_N": 94.48879042236857,
+  "dock_pull_out_N": 58.18911284296476,
+  "dock_self_locking": true,
+  "reservoir_lid_L_1p78_25": {
+   "cs": 1.78,
+   "path_mm": 270.85366726630537,
+   "squeeze": 25.0,
+   "N_per_mm": 2.1148230819031424,
+   "total_N": 572.8075873528962,
+   "parker_range_N": [
+    360.4785059529134,
+    996.0590296067345
+   ]
+  },
+  "reservoir_lid_screws_N": 1697.625,
+  "drawer_latch_preload_25_N": 179.9982379658469
+ },
+ "permeation": {
+  "items": [
+   {
+    "seal": "lid",
+    "T_C": 50.0,
+    "O2_sccs": 9.3856177219538e-07,
+    "H2O_sccs": 8.45419737496857e-06
+   },
+   {
+    "seal": "spigot (2-238)",
+    "T_C": 56.0,
+    "O2_sccs": 4.5217878700315256e-07,
+    "H2O_sccs": 4.073049667425333e-06
+   },
+   {
+    "seal": "gland_plate_M50 (2-034)",
+    "T_C": 60.0,
+    "O2_sccs": 2.616340796066985e-07,
+    "H2O_sccs": 2.356697464717129e-06
+   },
+   {
+    "seal": "rod_M50 (2-114)",
+    "T_C": 117.0,
+    "O2_sccs": 6.444887910453272e-07,
+    "H2O_sccs": 5.805302971915448e-06
+   },
+   {
+    "seal": "overflow_funnel (2-042)",
+    "T_C": 50.0,
+    "O2_sccs": 2.637054474595628e-07,
+    "H2O_sccs": 2.3753555362293734e-06
+   },
+   {
+    "seal": "floor (cord)",
+    "T_C": 60.0,
+    "O2_sccs": 1.4085131312969088e-06,
+    "H2O_sccs": 1.2687335421051254e-05
+   },
+   {
+    "seal": "inlet_plenum (2-044)",
+    "T_C": 45.0,
+    "O2_sccs": 2.4476482869908273e-07,
+    "H2O_sccs": 2.204745850059673e-06
+   },
+   {
+    "seal": "outlet_plenum (2-044)",
+    "T_C": 45.0,
+    "O2_sccs": 2.4476482869908273e-07,
+    "H2O_sccs": 2.204745850059673e-06
+   },
+   {
+    "seal": "vacuum_port (2-024)",
+    "T_C": 40.0,
+    "O2_sccs": 5.929025220964146e-08,
+    "H2O_sccs": 5.340634036473732e-07
+   },
+   {
+    "seal": "fibre_heads (2-010)",
+    "T_C": 45.0,
+    "O2_sccs": 1.241550162310753e-08,
+    "H2O_sccs": 1.1183398295188986e-07
+   },
+   {
+    "seal": "recoater_feedthrough (2-024)",
+    "T_C": 40.0,
+    "O2_sccs": 5.929025220964146e-08,
+    "H2O_sccs": 5.340634036473732e-07
+   },
+   {
+    "seal": "recoater_cap (2-019)",
+    "T_C": 40.0,
+    "O2_sccs": 4.2820737706963273e-08,
+    "H2O_sccs": 3.857124581897694e-07
+   },
+   {
+    "seal": "window_lower (2-031)",
+    "T_C": 60.0,
+    "O2_sccs": 2.148123625404238e-07,
+    "H2O_sccs": 1.9349457492308742e-06
+   },
+   {
+    "seal": "window_flange (2-036)",
+    "T_C": 60.0,
+    "O2_sccs": 2.9379445092494773e-07,
+    "H2O_sccs": 2.646385511717788e-06
+   },
+   {
+    "seal": "drawer (2-033)",
+    "T_C": 50.0,
+    "O2_sccs": 1.6256184044191453e-07,
+    "H2O_sccs": 1.464293481205198e-06
+   },
+   {
+    "seal": "metering_base (2-040)",
+    "T_C": 45.0,
+    "O2_sccs": 1.878033114952855e-07,
+    "H2O_sccs": 1.6916587805829897e-06
+   },
+   {
+    "seal": "reservoir_dock (2-040)",
+    "T_C": 45.0,
+    "O2_sccs": 1.878033114952855e-07,
+    "H2O_sccs": 1.6916587805829897e-06
+   },
+   {
+    "seal": "roller_feedthrough (2-012)",
+    "T_C": 45.0,
+    "O2_sccs": 2.518285956751771e-08,
+    "H2O_sccs": 2.2683735003601958e-07
+   },
+   {
+    "seal": "reservoir_lid_M (2-030)",
+    "T_C": 45.0,
+    "O2_sccs": 1.0641140459967062e-07,
+    "H2O_sccs": 9.585123154216633e-07
+   },
+   {
+    "seal": "camera_adapter (2-030)",
+    "T_C": 45.0,
+    "O2_sccs": 1.0686379129848826e-07,
+    "H2O_sccs": 9.625872378773998e-07
+   },
+   {
+    "seal": "SAE-4 port O-rings (4 x 3-904)",
+    "T_C": 45.0,
+    "O2_sccs": 8.967309674341632e-08,
+    "H2O_sccs": 8.077401845593988e-07
+   },
+   {
+    "seal": "door (cord)",
+    "T_C": 45.0,
+    "O2_sccs": 5.255006443205265e-07,
+    "H2O_sccs": 4.733504282160401e-06
+   },
+   {
+    "seal": "KF-25 (7) + KF-40 (2) + KF-16 (1) centering rings",
+    "T_C": 35,
+    "O2_sccs": 4.493511302556772e-07,
+    "H2O_sccs": 4.0475792413329724e-06
+   }
+  ],
+  "total_O2_sccs": 6.982186613437703e-06,
+  "total_H2O_sccs": 6.289280629957055e-05,
+  "Ea_He_kJ": 37.1421382251633,
+  "Ea_N2_kJ": 58.29112969138964
+ },
+ "other_leaks": [
+  {
+   "src": "2 rotary shafts through elastomer V-rings / lip seals (recoater screw, metering roller)",
+   "air_mbarLs": [
+    1e-05,
+    0.001
+   ],
+   "fix": "magnetic-fluid feedthrough (helium leak < 1e-10 mbar L/s class) or a magnetic coupling through a can (zero leak)"
+  },
+  {
+   "src": "rod gland, 2 x 2-114 reciprocating",
+   "air_mbarLs": [
+    1e-06,
+    0.0001
+   ],
+   "fix": "edge-welded bellows over the rod"
+  },
+  {
+   "src": "rod end: 7 weld-in feedthroughs (SST: each < 1e-10 atm cc/s He [13]) and their welds; the potted stranded leads it replaced were 1e-5 to 1e-2",
+   "air_mbarLs": [
+    7e-10,
+    1e-09
+   ],
+   "fix": "helium-test the welded rod-end block before the module is assembled and accept < 1e-9 mbar L/s (the upper value): the welds, not the parts, set it"
+  },
+  {
+   "src": "threaded NPT ports (5-8 joints)",
+   "air_mbarLs": [
+    1e-06,
+    0.001
+   ],
+   "fix": "O-ring boss / VCR / KF"
+  },
+  {
+   "src": "gas-tight side-channel blower, shaft seal",
+   "air_mbarLs": [
+    0.0001,
+    0.001
+   ],
+   "fix": "hermetic (canned / magnetic-drive) blower"
+  }
+ ],
+ "envelope_L": {
+  "chamber": 6.3839999999999995,
+  "plenums": 0.6,
+  "hoses": 1.4971652489763858,
+  "filter": 2.334069965301108,
+  "blower": 0.5,
+  "total": 11.315235214277493
+ },
+ "budget": {
+  "V_L": 11.315235214277493,
+  "O2_permeation_ppm_per_h": 2.178419746458281,
+  "H2O_permeation_ppm_per_h": 19.622353102032662,
+  "area_al_cm2": 4605.28,
+  "area_fkm_cm2": 17.5267326447668,
+  "q_al_mbarLs": 3.6833029439999996e-05,
+  "q_fkm_mbarLs": 2.3363134615474143e-05,
+  "H2O_outgassing_ppm_per_h_1h": 18.53541515209338,
+  "powder_H2O_mg": [
+   22.5,
+   45.0
+  ],
+  "powder_H2O_ppm_if_released": [
+   2474.02471036637,
+   4948.04942073274
+  ]
+ },
+ "makeup": {
+  "O2_in_sccm": 0.0004189311968062622,
+  "H2O_in_sccm": 0.007338108070378326,
+  "f_for_O2_10ppm_sccm": 46.54791075625136,
+  "f_for_H2O_minus40C_sccm": 58.238952939510526
+ },
+ "purge": {
+  "S_pump_Ls": 1.4158499999999998,
+  "S_eff_at_800mbar_Ls": 1.415665903743135,
+  "S_eff_at_10mbar_Ls": 1.4012697266261072,
+  "S_eff_at_1mbar_Ls": 1.2822350255492507,
+  "t_to_1mbar_s": 56.140815557510365,
+  "tau_at_atm_s": 7.9928711882931545,
+  "cycles": [
+   {
+    "cycle": 1,
+    "O2_ppm_ideal": 207.81046396841066
+   },
+   {
+    "cycle": 2,
+    "O2_ppm_ideal": 1.2041564303735544
+   },
+   {
+    "cycle": 3,
+    "O2_ppm_ideal": 1.0002015364564398
+   },
+   {
+    "cycle": 4,
+    "O2_ppm_ideal": 1.000000198950105
+   }
+  ]
+ },
+ "powder_lift": {
+  "tau_s": 7.9928711882931545,
+  "k_m2": 4.011111111111112e-12,
+  "beds": {
+   "reservoir L (56 mm of powder)": {
+    "h_mm": 56.0,
+    "dp_over_weight_at_atm": 0.5911311848505907,
+    "dp_over_weight_at_10mbar": 0.19325657527435208,
+    "dp_Pa": 433.5330099922099,
+    "weight_Pa": 733.3956000000001,
+    "tau_needed_s_for_0p3": 15.749451386312936
+   },
+   "build cylinder, end of build (40 mm)": {
+    "h_mm": 40.0,
+    "dp_over_weight_at_atm": 0.4222365606075647,
+    "dp_over_weight_at_10mbar": 0.1380404109102515,
+    "dp_Pa": 221.1903112205152,
+    "weight_Pa": 523.854,
+    "tau_needed_s_for_0p3": 11.249608133080667
+   },
+   "overflow jar (47 mm, full to its joint)": {
+    "h_mm": 47.0,
+    "dp_over_weight_at_atm": 0.4961279587138886,
+    "dp_over_weight_at_10mbar": 0.1621974828195455,
+    "dp_Pa": 305.38087342882386,
+    "weight_Pa": 615.52845,
+    "tau_needed_s_for_0p3": 13.218289556369784
+   },
+   "reservoir M (40 mm)": {
+    "h_mm": 40.0,
+    "dp_over_weight_at_atm": 0.4222365606075647,
+    "dp_over_weight_at_10mbar": 0.1380404109102515,
+    "dp_Pa": 221.1903112205152,
+    "weight_Pa": 523.854,
+    "tau_needed_s_for_0p3": 11.249608133080667
+   }
+  },
+  "u_mf_mm_s": 2.799864978666667
+ },
+ "soft_pump": {
+  "bed": "reservoir L (56 mm of powder)",
+  "tau_needed_s": 15.749451386312936,
+  "S_soft_Ls": 0.7184526582374164,
+  "q_std_L_min": 43.10715949424499,
+  "Cv": 0.22251949183028885,
+  "t_to_100mbar_s": 36.46787544688871,
+  "t_total_to_1mbar_s": 74.09622806630753,
+  "note": "metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser"
+ },
+ "reservoir_open_path": {
+  "argon_out_at_20mbar_sccm": 299.4962962962963,
+  "superficial_mm_s": 8.91358024691358,
+  "u_mf_mm_s": 2.799864978666667,
+  "air_in_at_vacuum_sccm": 9430.875690607736
+ },
+ "rate_of_rise": {
+  "V_L": 11.315235214277493,
+  "leak_budget_mbarLs": 0.0001,
+  "rise_mbar_per_min_leak": 0.0005302585307664871,
+  "rise_mbar_per_min_outgassing": 0.00031919529509834136,
+  "note": "isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min"
+ }
+}

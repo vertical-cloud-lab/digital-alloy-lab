@@ -1,0 +1,228 @@
+{
+ "coaxial_camera": {
+  "f_theta_mm": 160.0,
+  "pupil_mm": 18.0,
+  "NA": 0.0561,
+  "rayleigh_um": 9.2,
+  "focal_shift_1070_to_850_mm": 1.05,
+  "band_850pm20_focal_spread_mm": 0.22,
+  "band_blur_um_full_NA": 12.4,
+  "band_blur_um_at_NA_0p03": 6.6,
+  "lateral_colour_at_L75_edge_um": 249.0,
+  "lateral_colour_at_M50_edge_um": 166.0,
+  "note": "singlet estimate for an all-fused-silica f-theta used off its 1064 nm design; the real lens corrects some of it",
+  "cameras_at_8um_per_px": {
+   "Raspberry Pi Global Shutter (IMX296)": {
+    "magnification": 0.431,
+    "tube_lens_f_mm": 69.0,
+    "field_mm": [
+     1.02,
+     0.77
+    ],
+    "fps": 536,
+    "sensor_refocus_mm": 0.19,
+    "source": "community measurement on a Pi 5 (Hermann-SW gist); 60 fps at 1456 x 1088"
+   },
+   "Kron Chronos 2.1-HD": {
+    "magnification": 1.25,
+    "tube_lens_f_mm": 200.0,
+    "field_mm": [
+     5.12,
+     0.77
+    ],
+    "fps": 24046,
+    "sensor_refocus_mm": 1.63,
+    "source": "Kron product page: 640 x 96 at 24,046 fps; 1920 x 1080 at 1,000 fps"
+   },
+   "Mikrotron EoSens 3CL (NIST AMMT's)": {
+    "magnification": 1.0,
+    "tube_lens_f_mm": 160.0,
+    "field_mm": [
+     0.96,
+     0.96
+    ],
+    "fps": 10000,
+    "sensor_refocus_mm": 1.05,
+    "source": "Lane & Yeung 2020, Table 1"
+   }
+  }
+ },
+ "off_axis": [
+  {
+   "case": "left wall (-156, -20, 40), Chronos 2.1-HD, 50 mm lens, full frame",
+   "wd_mm": 195.0,
+   "elevation_deg": 14.2,
+   "lens_f_mm": 50.0,
+   "f_number": 4.0,
+   "magnification": 0.345,
+   "um_per_px_across": 29.0,
+   "um_per_px_along_view": 118.2,
+   "field_mm_across": 55.7,
+   "field_mm_along_view": 127.7,
+   "rayleigh_um": 15.4,
+   "depth_of_field_mm": 2.6,
+   "in_focus_band_on_plate_mm": 2.68
+  },
+  {
+   "case": "left wall, Chronos 2.1-HD, 50 mm lens, 640 x 96 at 24 kfps",
+   "wd_mm": 195.0,
+   "elevation_deg": 14.2,
+   "lens_f_mm": 50.0,
+   "f_number": 4.0,
+   "magnification": 0.345,
+   "um_per_px_across": 29.0,
+   "um_per_px_along_view": 118.2,
+   "field_mm_across": 18.6,
+   "field_mm_along_view": 11.3,
+   "rayleigh_um": 15.4,
+   "depth_of_field_mm": 2.6,
+   "in_focus_band_on_plate_mm": 2.68
+  },
+  {
+   "case": "left wall, Chronos 2.1-HD, 75 mm lens at f/4, 640 x 96 at 24 kfps",
+   "wd_mm": 195.0,
+   "elevation_deg": 14.2,
+   "lens_f_mm": 75.0,
+   "f_number": 4.0,
+   "magnification": 0.625,
+   "um_per_px_across": 16.0,
+   "um_per_px_along_view": 65.2,
+   "field_mm_across": 10.2,
+   "field_mm_along_view": 6.3,
+   "rayleigh_um": 10.3,
+   "depth_of_field_mm": 1.02,
+   "in_focus_band_on_plate_mm": 1.05
+  },
+  {
+   "case": "left wall, Pi GS (IMX296), 50 mm C-mount lens, 128 x 96 at ~536 fps",
+   "wd_mm": 195.0,
+   "elevation_deg": 14.2,
+   "lens_f_mm": 50.0,
+   "f_number": 4.0,
+   "magnification": 0.345,
+   "um_per_px_across": 10.0,
+   "um_per_px_along_view": 40.8,
+   "field_mm_across": 1.3,
+   "field_mm_along_view": 3.9,
+   "rayleigh_um": 15.4,
+   "depth_of_field_mm": 1.41,
+   "in_focus_band_on_plate_mm": 1.46
+  },
+  {
+   "case": "lid (-60, -80, 136) through a bridge cut-out, Pi GS, 50 mm lens, full frame",
+   "wd_mm": 215.0,
+   "elevation_deg": 53.6,
+   "lens_f_mm": 50.0,
+   "f_number": 5.6,
+   "magnification": 0.303,
+   "um_per_px_across": 11.4,
+   "um_per_px_along_view": 14.1,
+   "field_mm_across": 16.6,
+   "field_mm_along_view": 15.4,
+   "rayleigh_um": 23.8,
+   "depth_of_field_mm": 2.98,
+   "in_focus_band_on_plate_mm": 5.01
+  },
+  {
+   "case": "for comparison: Infinity K2 DistaMax + CF-1 at 215 mm (1.28x), Chronos: does not fit (0.5 m long)",
+   "wd_mm": 215.0,
+   "elevation_deg": 53.6,
+   "lens_f_mm": 120.70175438596492,
+   "f_number": 5.0,
+   "magnification": 1.28,
+   "um_per_px_across": 7.8,
+   "um_per_px_along_view": 9.7,
+   "field_mm_across": 5.0,
+   "field_mm_along_view": 0.9,
+   "rayleigh_um": 5.6,
+   "depth_of_field_mm": 0.28,
+   "in_focus_band_on_plate_mm": 0.47
+  }
+ ],
+ "layer_camera": [
+  {
+   "case": "as drawn: Pi HQ (IMX477) + 12 mm, f/4",
+   "um_per_px": 24.9,
+   "field_mm": [
+    101.0,
+    76.0
+   ],
+   "pupil_mm": 3.0,
+   "rayleigh_um_550nm": 45.9,
+   "fits_window_aperture": true
+  },
+  {
+   "case": "20 MP 1 in. sensor (2.4 \u00b5m) + 25 mm, f/2.8",
+   "um_per_px": 17.3,
+   "field_mm": [
+    95.0,
+    63.0
+   ],
+   "pupil_mm": 8.9,
+   "rayleigh_um_550nm": 15.4,
+   "fits_window_aperture": true
+  },
+  {
+   "case": "20 MP 1 in. sensor (2.4 \u00b5m) + 50 mm, f/2.8",
+   "um_per_px": 7.4,
+   "field_mm": [
+    41.0,
+    27.0
+   ],
+   "pupil_mm": 17.9,
+   "rayleigh_um_550nm": 7.7,
+   "fits_window_aperture": true
+  }
+ ],
+ "si_band_camera_floor": {
+  "575 \u00b0C apparent at 0.80 \u00b5m": {
+   "eps 0.1": 678.0,
+   "eps 0.2": 645.0,
+   "eps 0.35": 619.0
+  },
+  "625 \u00b0C apparent at 0.80 \u00b5m": {
+   "eps 0.1": 742.0,
+   "eps 0.2": 703.0,
+   "eps 0.35": 675.0
+  },
+  "750 \u00b0C apparent at 0.80 \u00b5m": {
+   "eps 0.1": 904.0,
+   "eps 0.2": 853.0,
+   "eps 0.35": 815.0
+  }
+ },
+ "dynamic_range_melt_pool_vs_600C": {
+  "0.7 \u00b5m": 183753.0,
+  "0.9 \u00b5m": 12430.0,
+  "1.55 \u00b5m": 240.0,
+  "4.0 \u00b5m": 9.0
+ },
+ "al_solidification_range_C": {
+  "6061": [
+   582,
+   652
+  ],
+  "7075": [
+   477,
+   635
+  ],
+  "AlSi10Mg": [
+   557,
+   596
+  ]
+ },
+ "data_rate_GB_per_hour_of_lasing": {
+  "scan commands, XYPT-style (x, y as int32; power, trigger as int16) at 100 kHz": 4.3,
+  "two coaxial photodiodes, 16-bit, 200 kS/s each": 2.9,
+  "acoustic emission, 1 channel, 16-bit, 2 MS/s (continuous)": 14.4,
+  "coaxial camera, Pi GS 128 x 96, 10-bit packed, 536 fps": 29.6,
+  "coaxial camera, 120 x 120, 8-bit, 10 kHz (NIST AMMT)": 518.4,
+  "off-axis Chronos 2.1-HD 640 x 96, 12-bit, 24 kfps (into its RAM: 32 GB lasts 14 s)": 7977.9,
+  "layer camera video, 2028 x 1520, H.264 ~15 Mbit/s": 6.8
+ },
+ "layer_images_GB_per_500_layers": {
+  "Pi HQ 12.3 MP, 12-bit raw (~18.5 MB), 2 lights x before/after = 4 per layer": 37.0,
+  "20 MP, 12-bit raw (~30 MB), 4 per layer": 59.9
+ },
+ "chronos_32GB_record_s_at_640x96_24kfps": 14.0
+}

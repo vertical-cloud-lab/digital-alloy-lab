@@ -1,0 +1,2981 @@
+{
+ "results": [
+  {
+   "job": "overflow_jar",
+   "module": "M50",
+   "variant": {
+    "arm_x": 400.0,
+    "roll": 0.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "toggle clamp off (lever pushed, clamp lifted off forward; not simulated)",
+     "ok": true,
+     "why": "",
+     "frames": 2,
+     "secs": 4.0
+    },
+    {
+     "label": "to the jar's grip fin, in front of the door",
+     "ok": true,
+     "why": "",
+     "frames": 121,
+     "secs": 3.0,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 3,
+     "tried": [
+      {
+       "lookahead": "line to [ 100. -141.  -45.]: hits VLM tray 2450 x 864 mm (context) at s = 0.17"
+      },
+      {
+       "lookahead": "line to [ 100. -141.  -45.]: hits VLM front skin under the opening at s = 0.17"
+      },
+      {
+       "lookahead": "line to [ 100. -141.  -45.]: hits VLM front skin under the opening at s = 0.17"
+      }
+     ]
+    },
+    {
+     "label": "in level round the fin's web",
+     "ok": true,
+     "why": "",
+     "frames": 41,
+     "secs": 2.73,
+     "length_mm": 81.9,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the 40 mm web, between the flanges",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.3
+    },
+    {
+     "label": "lower 8 mm off the centring ring",
+     "ok": true,
+     "why": "",
+     "frames": 8,
+     "secs": 0.27,
+     "length_mm": 8.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "straight out 134 mm, under the floor's front edge and the hinge knuckles",
+     "ok": true,
+     "why": "",
+     "frames": 45,
+     "secs": 4.46,
+     "length_mm": 133.8,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lift 60 mm, the cup in front of the hinge knuckles",
+     "ok": true,
+     "why": "",
+     "frames": 20,
+     "secs": 2.0,
+     "length_mm": 60.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out 147 mm over the guard sill",
+     "ok": true,
+     "why": "",
+     "frames": 49,
+     "secs": 4.9,
+     "length_mm": 147.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up and out (to the MiR's jar rack)",
+     "ok": true,
+     "why": "",
+     "frames": 43,
+     "secs": 0.57,
+     "length_mm": 84.9,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": 400.0,
+   "n_frames": 334,
+   "robot_time_s": 22.7,
+   "max_force_N": 10.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.384,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 334,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 2.0,
+    "min_clearance_pair": [
+     "held: overflow jar + grip fin",
+     "Overflow-jar present sensor (inductive M12, PNP)"
+    ],
+    "min_clearance_frame": 177,
+    "peak_torque_pct": 30.8,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.2,
+     "cog_mm": [
+      -9,
+      29,
+      373
+     ],
+     "cog_margin_mm": 196.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.96
+    },
+    "tip_frame": 177
+   },
+   "plan_s": 46.3,
+   "audit_s": 14.2,
+   "note": "grip block web 40.0 mm at (100.0, -141.0, -45.0), z -65..-25",
+   "gif": "ops_overflow_jar_M50.gif",
+   "still": "ops_overflow_jar_M50_tightest.png",
+   "still_frame": 177,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 400.0,
+      "roll": 0.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "module_swap",
+   "module": "M50",
+   "variant": {
+    "arm_x": 300.0,
+    "roll": 0.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "release air opens both zero-point clamps; the Z arm drops 45 mm off the rod end",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 2.0
+    },
+    {
+     "label": "to the module's grip block, in front of the door",
+     "ok": true,
+     "why": "",
+     "frames": 156,
+     "secs": 3.87,
+     "branch": 2,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 4,
+     "tried": [
+      {
+       "lookahead": "line to [   0. -141.  -47.]: hits VLM tray 2450 x 864 mm (context) at s = 0.17"
+      },
+      {
+       "lookahead": "line to [   0. -141.  -47.]: hits VLM front skin under the opening at s = 0.17"
+      },
+      {
+       "lookahead": "line to [   0. -141.  -87.]: hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at s = 0.33"
+      },
+      {
+       "branch": 0,
+       "why": "goal pose hits VLM tray 2450 x 864 mm (context)"
+      }
+     ]
+    },
+    {
+     "label": "in level round the grip block's web",
+     "ok": true,
+     "why": "",
+     "frames": 41,
+     "secs": 2.73,
+     "length_mm": 81.9,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the 40 mm web, between the flanges",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.3
+    },
+    {
+     "label": "module path (0, 0, 0) -> (0, 0, -40)",
+     "ok": true,
+     "why": "",
+     "frames": 14,
+     "secs": 1.33,
+     "length_mm": 40.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, 0, -40) -> (0, -158, -40)",
+     "ok": true,
+     "why": "",
+     "frames": 53,
+     "secs": 5.27,
+     "length_mm": 158.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -158, -40) -> (0, -158, -22)",
+     "ok": true,
+     "why": "",
+     "frames": 6,
+     "secs": 0.6,
+     "length_mm": 18.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -158, -22) -> (0, -190, -22)",
+     "ok": true,
+     "why": "",
+     "frames": 11,
+     "secs": 1.07,
+     "length_mm": 32.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -190, -22) -> (0, -190, 4)",
+     "ok": true,
+     "why": "",
+     "frames": 9,
+     "secs": 0.87,
+     "length_mm": 26.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -190, 4) -> (0, -330, 4)",
+     "ok": true,
+     "why": "",
+     "frames": 47,
+     "secs": 4.67,
+     "length_mm": 140.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lift clear of the floor's front edge (0, -330, 4) -> (0, -330, 70)",
+     "ok": true,
+     "why": "",
+     "frames": 23,
+     "secs": 2.2,
+     "length_mm": 66.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out over the guard sill (0, -330, 70) -> (0, -330, 70)",
+     "ok": true,
+     "why": "",
+     "frames": 1,
+     "secs": 0.0,
+     "length_mm": 0.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up and out (to the MiR's module rack)",
+     "ok": true,
+     "why": "",
+     "frames": 43,
+     "secs": 0.57,
+     "length_mm": 84.9,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": 300.0,
+   "n_frames": 419,
+   "robot_time_s": 26.0,
+   "max_force_N": 158.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 3.456,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 419,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 0.5,
+    "min_clearance_pair": [
+     "held: build module",
+     "Z mounting flange (bolted under the floor)"
+    ],
+    "min_clearance_frame": 213,
+    "peak_torque_pct": 53.3,
+    "peak_torque_joint": "wrist 1",
+    "tip": {
+     "mass_kg": 303.2,
+     "cog_mm": [
+      -12,
+      37,
+      378
+     ],
+     "cog_margin_mm": 188.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.88
+    },
+    "tip_frame": 228
+   },
+   "plan_s": 46.6,
+   "audit_s": 19.7,
+   "note": "",
+   "gif": "ops_module_swap_M50.gif",
+   "still": "ops_module_swap_M50_tightest.png",
+   "still_frame": 213,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 300.0,
+      "roll": 0.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "liner_right",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the door",
+     "ok": true,
+     "why": "",
+     "frames": 124,
+     "secs": 3.08,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 4,
+     "tried": [
+      {
+       "lookahead": "line to [ 94. -76.  76.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [ 94. -76.  76.]: hits MiR250 cap stand (forks for the plate fingers) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [ 94. -76.  76.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      }
+     ]
+    },
+    {
+     "label": "in to the liner's tab, the blades either side of its grip plate",
+     "ok": true,
+     "why": "",
+     "frames": 73,
+     "secs": 7.21,
+     "length_mm": 216.4,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the grip plate",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 2.1
+    },
+    {
+     "label": "4 mm in off the wall (the clips let go)",
+     "ok": true,
+     "why": "",
+     "frames": 4,
+     "secs": 0.13,
+     "length_mm": 4.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "slide 21 mm forward along the wall: the ball screw leaves the slot",
+     "ok": true,
+     "why": "",
+     "frames": 21,
+     "secs": 0.7,
+     "length_mm": 21.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "in to x +/-105, inside the door opening",
+     "ok": true,
+     "why": "",
+     "frames": 16,
+     "secs": 1.03,
+     "length_mm": 31.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "down 6 mm, under the door opening's top",
+     "ok": true,
+     "why": "",
+     "frames": 6,
+     "secs": 0.2,
+     "length_mm": 6.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out through the door",
+     "ok": true,
+     "why": "",
+     "frames": 100,
+     "secs": 10.0,
+     "length_mm": 300.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up clear (to the MiR's rack)",
+     "ok": true,
+     "why": "",
+     "frames": 34,
+     "secs": 0.45,
+     "length_mm": 67.1,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 383,
+   "robot_time_s": 23.6,
+   "max_force_N": 20.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.07,
+   "tool_kg": 1.41,
+   "audit": {
+    "frames": 383,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 1.6,
+    "min_clearance_pair": [
+     "held: right side liner + its tab",
+     "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)"
+    ],
+    "min_clearance_frame": 267,
+    "peak_torque_pct": 33.7,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.0,
+     "cog_mm": [
+      22,
+      26,
+      373
+     ],
+     "cog_margin_mm": 199.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.99
+    },
+    "tip_frame": 195
+   },
+   "plan_s": 14.0,
+   "audit_s": 11.7,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "liner_left",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the door",
+     "ok": true,
+     "why": "",
+     "frames": 160,
+     "secs": 3.94,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 5,
+     "tried": [
+      {
+       "lookahead": "line to [-94. -76.  76.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [-94. -76.  76.]: hits VLM tray 2450 x 864 mm (context) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [-94. -76.  76.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      }
+     ]
+    },
+    {
+     "label": "in to the liner's tab, the blades either side of its grip plate",
+     "ok": true,
+     "why": "",
+     "frames": 73,
+     "secs": 7.21,
+     "length_mm": 216.4,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the grip plate",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 2.1
+    },
+    {
+     "label": "4 mm in off the wall (the clips let go)",
+     "ok": true,
+     "why": "",
+     "frames": 4,
+     "secs": 0.13,
+     "length_mm": 4.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "slide 21 mm forward along the wall: the ball screw leaves the slot",
+     "ok": true,
+     "why": "",
+     "frames": 21,
+     "secs": 0.7,
+     "length_mm": 21.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "in to x +/-105, inside the door opening",
+     "ok": true,
+     "why": "",
+     "frames": 16,
+     "secs": 1.03,
+     "length_mm": 31.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "down 6 mm, under the door opening's top",
+     "ok": true,
+     "why": "",
+     "frames": 6,
+     "secs": 0.2,
+     "length_mm": 6.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out through the door",
+     "ok": true,
+     "why": "",
+     "frames": 100,
+     "secs": 10.0,
+     "length_mm": 300.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up clear (to the MiR's rack)",
+     "ok": true,
+     "why": "",
+     "frames": 34,
+     "secs": 0.45,
+     "length_mm": 67.1,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 419,
+   "robot_time_s": 24.5,
+   "max_force_N": 20.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.073,
+   "tool_kg": 1.41,
+   "audit": {
+    "frames": 419,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 1.6,
+    "min_clearance_pair": [
+     "held: left side liner + its tab",
+     "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)"
+    ],
+    "min_clearance_frame": 327,
+    "peak_torque_pct": 33.7,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.0,
+     "cog_mm": [
+      14,
+      26,
+      374
+     ],
+     "cog_margin_mm": 199.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.99
+    },
+    "tip_frame": 234
+   },
+   "plan_s": 11.8,
+   "audit_s": 9.5,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "reservoir",
+   "module": "M50",
+   "variant": {
+    "arm_x": -390.0,
+    "roll": 0.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the reservoir's pull tab, in front of the bridge slot",
+     "ok": true,
+     "why": "",
+     "frames": 166,
+     "secs": 4.11,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 6,
+     "tried": [
+      {
+       "lookahead": "line to [-90. -84. 252.]: hits VLM front skin under the opening at s = 0.07"
+      },
+      {
+       "lookahead": "line to [-90. -84. 252.]: hits ur/wrist3 at s = 0.07"
+      },
+      {
+       "lookahead": "line to [-90. -84. 252.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      }
+     ]
+    },
+    {
+     "label": "in along the slot, the blades either side of the fin",
+     "ok": true,
+     "why": "",
+     "frames": 73,
+     "secs": 7.22,
+     "length_mm": 216.7,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the fin",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 8.1
+    },
+    {
+     "label": "pull 125 mm off the dock (40 N over the detents)",
+     "ok": true,
+     "why": "",
+     "frames": 42,
+     "secs": 4.17,
+     "length_mm": 125.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "carry it out of the bridge slot and the guard",
+     "ok": true,
+     "why": "",
+     "frames": 52,
+     "secs": 6.83,
+     "length_mm": 205.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lower it towards the MiR's rack",
+     "ok": true,
+     "why": "",
+     "frames": 34,
+     "secs": 0.45,
+     "length_mm": 67.1,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -390.0,
+   "n_frames": 372,
+   "robot_time_s": 23.6,
+   "max_force_N": 40.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.385,
+   "tool_kg": 1.38,
+   "audit": {
+    "frames": 372,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 3.5,
+    "min_clearance_pair": [
+     "held: reservoir",
+     "NFC reader antenna (in the dock's side face, reads the tag on the reservoir plate's edge)"
+    ],
+    "min_clearance_frame": 252,
+    "peak_torque_pct": 33.4,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 299.9,
+     "cog_mm": [
+      4,
+      26,
+      383
+     ],
+     "cog_margin_mm": 199.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.99
+    },
+    "tip_frame": 93
+   },
+   "plan_s": 13.5,
+   "audit_s": 9.4,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -390.0,
+      "roll": 0.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "blade_cartridge",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the door",
+     "ok": true,
+     "why": "",
+     "frames": 132,
+     "secs": 3.25,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 5,
+     "tried": [
+      {
+       "lookahead": "line to [  0. -71.  22.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [  0. -71.  22.]: hits VLM front skin under the opening at s = 0.07"
+      },
+      {
+       "lookahead": "line to [   0. -371.   34.]: hits ur/gr/camera at s = 1.00"
+      }
+     ]
+    },
+    {
+     "label": "in over the sill, blades either side of the fin",
+     "ok": true,
+     "why": "",
+     "frames": 73,
+     "secs": 7.22,
+     "length_mm": 216.5,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the fin",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 4.1
+    },
+    {
+     "label": "pull 10 mm out of the arm's pocket (40 N over the plungers, off the dowels)",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 0.33,
+     "length_mm": 10.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lift 12 mm (the blade's edge over the sill)",
+     "ok": true,
+     "why": "",
+     "frames": 12,
+     "secs": 0.4,
+     "length_mm": 12.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out through the door",
+     "ok": true,
+     "why": "",
+     "frames": 97,
+     "secs": 9.67,
+     "length_mm": 290.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up clear (to the MiR's tool rack)",
+     "ok": true,
+     "why": "",
+     "frames": 47,
+     "secs": 0.62,
+     "length_mm": 93.0,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 376,
+   "robot_time_s": 22.3,
+   "max_force_N": 40.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.197,
+   "tool_kg": 1.41,
+   "audit": {
+    "frames": 376,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 2.0,
+    "min_clearance_pair": [
+     "held: blade cartridge",
+     "Recoater ball nut (flange on the +x face)"
+    ],
+    "min_clearance_frame": 210,
+    "peak_torque_pct": 33.7,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.0,
+     "cog_mm": [
+      19,
+      26,
+      371
+     ],
+     "cog_margin_mm": 199.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.99
+    },
+    "tip_frame": 198
+   },
+   "plan_s": 15.1,
+   "audit_s": 12.7,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "overflow_jar",
+   "module": "S25",
+   "variant": {
+    "arm_x": 400.0,
+    "roll": 0.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "toggle clamp off (lever pushed, clamp lifted off forward; not simulated)",
+     "ok": true,
+     "why": "",
+     "frames": 2,
+     "secs": 4.0
+    },
+    {
+     "label": "to the jar's grip fin, in front of the door",
+     "ok": true,
+     "why": "",
+     "frames": 121,
+     "secs": 3.0,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 3,
+     "tried": [
+      {
+       "lookahead": "line to [ 100. -141.  -45.]: hits VLM tray 2450 x 864 mm (context) at s = 0.17"
+      },
+      {
+       "lookahead": "line to [ 100. -141.  -45.]: hits VLM front skin under the opening at s = 0.17"
+      },
+      {
+       "lookahead": "line to [ 100. -141.  -45.]: hits VLM front skin under the opening at s = 0.17"
+      }
+     ]
+    },
+    {
+     "label": "in level round the fin's web",
+     "ok": true,
+     "why": "",
+     "frames": 41,
+     "secs": 2.73,
+     "length_mm": 81.9,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the 40 mm web, between the flanges",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.3
+    },
+    {
+     "label": "lower 8 mm off the centring ring",
+     "ok": true,
+     "why": "",
+     "frames": 8,
+     "secs": 0.27,
+     "length_mm": 8.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "straight out 134 mm, under the floor's front edge and the hinge knuckles",
+     "ok": true,
+     "why": "",
+     "frames": 45,
+     "secs": 4.46,
+     "length_mm": 133.8,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lift 60 mm, the cup in front of the hinge knuckles",
+     "ok": true,
+     "why": "",
+     "frames": 20,
+     "secs": 2.0,
+     "length_mm": 60.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out 147 mm over the guard sill",
+     "ok": true,
+     "why": "",
+     "frames": 49,
+     "secs": 4.9,
+     "length_mm": 147.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up and out (to the MiR's jar rack)",
+     "ok": true,
+     "why": "",
+     "frames": 43,
+     "secs": 0.57,
+     "length_mm": 84.9,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": 400.0,
+   "n_frames": 334,
+   "robot_time_s": 22.7,
+   "max_force_N": 10.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.384,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 334,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 2.0,
+    "min_clearance_pair": [
+     "held: overflow jar + grip fin",
+     "Overflow-jar present sensor (inductive M12, PNP)"
+    ],
+    "min_clearance_frame": 177,
+    "peak_torque_pct": 30.8,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.2,
+     "cog_mm": [
+      -9,
+      29,
+      373
+     ],
+     "cog_margin_mm": 196.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.96
+    },
+    "tip_frame": 177
+   },
+   "plan_s": 30.6,
+   "audit_s": 12.6,
+   "note": "grip block web 40.0 mm at (100.0, -141.0, -45.0), z -65..-25",
+   "gif": "ops_overflow_jar_S25.gif",
+   "still": "ops_overflow_jar_S25_tightest.png",
+   "still_frame": 177,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 400.0,
+      "roll": 0.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "module_swap",
+   "module": "S25",
+   "variant": {
+    "arm_x": 300.0,
+    "roll": 0.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "release air opens both zero-point clamps; the Z arm drops 45 mm off the rod end",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 2.0
+    },
+    {
+     "label": "to the module's grip block, in front of the door",
+     "ok": true,
+     "why": "",
+     "frames": 156,
+     "secs": 3.87,
+     "branch": 2,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 4,
+     "tried": [
+      {
+       "lookahead": "line to [   0. -141.  -47.]: hits VLM tray 2450 x 864 mm (context) at s = 0.17"
+      },
+      {
+       "lookahead": "line to [   0. -141.  -47.]: hits VLM front skin under the opening at s = 0.17"
+      },
+      {
+       "lookahead": "line to [   0. -141.  -87.]: hits Module S25 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at s = 0.33"
+      },
+      {
+       "branch": 0,
+       "why": "goal pose hits VLM tray 2450 x 864 mm (context)"
+      }
+     ]
+    },
+    {
+     "label": "in level round the grip block's web",
+     "ok": true,
+     "why": "",
+     "frames": 41,
+     "secs": 2.73,
+     "length_mm": 81.9,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the 40 mm web, between the flanges",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.3
+    },
+    {
+     "label": "module path (0, 0, 0) -> (0, 0, -40)",
+     "ok": true,
+     "why": "",
+     "frames": 14,
+     "secs": 1.33,
+     "length_mm": 40.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, 0, -40) -> (0, -158, -40)",
+     "ok": true,
+     "why": "",
+     "frames": 53,
+     "secs": 5.27,
+     "length_mm": 158.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -158, -40) -> (0, -158, -22)",
+     "ok": true,
+     "why": "",
+     "frames": 6,
+     "secs": 0.6,
+     "length_mm": 18.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -158, -22) -> (0, -190, -22)",
+     "ok": true,
+     "why": "",
+     "frames": 11,
+     "secs": 1.07,
+     "length_mm": 32.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -190, -22) -> (0, -190, 4)",
+     "ok": true,
+     "why": "",
+     "frames": 9,
+     "secs": 0.87,
+     "length_mm": 26.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -190, 4) -> (0, -330, 4)",
+     "ok": true,
+     "why": "",
+     "frames": 47,
+     "secs": 4.67,
+     "length_mm": 140.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lift clear of the floor's front edge (0, -330, 4) -> (0, -330, 70)",
+     "ok": true,
+     "why": "",
+     "frames": 23,
+     "secs": 2.2,
+     "length_mm": 66.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out over the guard sill (0, -330, 70) -> (0, -330, 70)",
+     "ok": true,
+     "why": "",
+     "frames": 1,
+     "secs": 0.0,
+     "length_mm": 0.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up and out (to the MiR's module rack)",
+     "ok": true,
+     "why": "",
+     "frames": 43,
+     "secs": 0.57,
+     "length_mm": 84.9,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": 300.0,
+   "n_frames": 419,
+   "robot_time_s": 26.0,
+   "max_force_N": 158.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 3.143,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 419,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 0.5,
+    "min_clearance_pair": [
+     "held: build module",
+     "Z mounting flange (bolted under the floor)"
+    ],
+    "min_clearance_frame": 213,
+    "peak_torque_pct": 54.7,
+    "peak_torque_joint": "wrist 1",
+    "tip": {
+     "mass_kg": 302.9,
+     "cog_mm": [
+      -12,
+      36,
+      377
+     ],
+     "cog_margin_mm": 189.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.89
+    },
+    "tip_frame": 228
+   },
+   "plan_s": 37.6,
+   "audit_s": 19.1,
+   "note": "",
+   "gif": "ops_module_swap_S25.gif",
+   "still": "ops_module_swap_S25_tightest.png",
+   "still_frame": 213,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 300.0,
+      "roll": 0.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "overflow_jar",
+   "module": "L75",
+   "variant": {
+    "arm_x": 400.0,
+    "roll": 0.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "toggle clamp off (lever pushed, clamp lifted off forward; not simulated)",
+     "ok": true,
+     "why": "",
+     "frames": 2,
+     "secs": 4.0
+    },
+    {
+     "label": "to the jar's grip fin, in front of the door",
+     "ok": true,
+     "why": "",
+     "frames": 121,
+     "secs": 3.0,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 3,
+     "tried": [
+      {
+       "lookahead": "line to [ 100. -141.  -45.]: hits VLM tray 2450 x 864 mm (context) at s = 0.17"
+      },
+      {
+       "lookahead": "line to [ 100. -141.  -45.]: hits VLM front skin under the opening at s = 0.17"
+      },
+      {
+       "lookahead": "line to [ 100. -141.  -45.]: hits VLM front skin under the opening at s = 0.17"
+      }
+     ]
+    },
+    {
+     "label": "in level round the fin's web",
+     "ok": true,
+     "why": "",
+     "frames": 41,
+     "secs": 2.73,
+     "length_mm": 81.9,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the 40 mm web, between the flanges",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.3
+    },
+    {
+     "label": "lower 8 mm off the centring ring",
+     "ok": true,
+     "why": "",
+     "frames": 8,
+     "secs": 0.27,
+     "length_mm": 8.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "straight out 134 mm, under the floor's front edge and the hinge knuckles",
+     "ok": true,
+     "why": "",
+     "frames": 45,
+     "secs": 4.46,
+     "length_mm": 133.8,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lift 60 mm, the cup in front of the hinge knuckles",
+     "ok": true,
+     "why": "",
+     "frames": 20,
+     "secs": 2.0,
+     "length_mm": 60.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out 147 mm over the guard sill",
+     "ok": true,
+     "why": "",
+     "frames": 49,
+     "secs": 4.9,
+     "length_mm": 147.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up and out (to the MiR's jar rack)",
+     "ok": true,
+     "why": "",
+     "frames": 43,
+     "secs": 0.57,
+     "length_mm": 84.9,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": 400.0,
+   "n_frames": 334,
+   "robot_time_s": 22.7,
+   "max_force_N": 10.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.384,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 334,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 2.0,
+    "min_clearance_pair": [
+     "held: overflow jar + grip fin",
+     "Overflow-jar present sensor (inductive M12, PNP)"
+    ],
+    "min_clearance_frame": 177,
+    "peak_torque_pct": 30.8,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.2,
+     "cog_mm": [
+      -9,
+      29,
+      373
+     ],
+     "cog_margin_mm": 196.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.96
+    },
+    "tip_frame": 177
+   },
+   "plan_s": 36.6,
+   "audit_s": 13.7,
+   "note": "grip block web 40.0 mm at (100.0, -141.0, -45.0), z -65..-25",
+   "gif": "ops_overflow_jar_L75.gif",
+   "still": "ops_overflow_jar_L75_tightest.png",
+   "still_frame": 177,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 400.0,
+      "roll": 0.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "module_swap",
+   "module": "L75",
+   "variant": {
+    "arm_x": 300.0,
+    "roll": 0.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "release air opens both zero-point clamps; the Z arm drops 45 mm off the rod end",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 2.0
+    },
+    {
+     "label": "to the module's grip block, in front of the door",
+     "ok": true,
+     "why": "",
+     "frames": 156,
+     "secs": 3.87,
+     "branch": 2,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 4,
+     "tried": [
+      {
+       "lookahead": "line to [   0. -141.  -47.]: hits VLM tray 2450 x 864 mm (context) at s = 0.17"
+      },
+      {
+       "lookahead": "line to [   0. -141.  -47.]: hits VLM front skin under the opening at s = 0.17"
+      },
+      {
+       "lookahead": "line to [   0. -141.  -87.]: hits Module L75 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at s = 0.33"
+      },
+      {
+       "branch": 0,
+       "why": "goal pose hits VLM tray 2450 x 864 mm (context)"
+      }
+     ]
+    },
+    {
+     "label": "in level round the grip block's web",
+     "ok": true,
+     "why": "",
+     "frames": 41,
+     "secs": 2.73,
+     "length_mm": 81.9,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the 40 mm web, between the flanges",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.3
+    },
+    {
+     "label": "module path (0, 0, 0) -> (0, 0, -40)",
+     "ok": true,
+     "why": "",
+     "frames": 14,
+     "secs": 1.33,
+     "length_mm": 40.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, 0, -40) -> (0, -158, -40)",
+     "ok": true,
+     "why": "",
+     "frames": 53,
+     "secs": 5.27,
+     "length_mm": 158.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -158, -40) -> (0, -158, -22)",
+     "ok": true,
+     "why": "",
+     "frames": 6,
+     "secs": 0.6,
+     "length_mm": 18.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -158, -22) -> (0, -190, -22)",
+     "ok": true,
+     "why": "",
+     "frames": 11,
+     "secs": 1.07,
+     "length_mm": 32.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -190, -22) -> (0, -190, 4)",
+     "ok": true,
+     "why": "",
+     "frames": 9,
+     "secs": 0.87,
+     "length_mm": 26.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "module path (0, -190, 4) -> (0, -330, 4)",
+     "ok": true,
+     "why": "",
+     "frames": 47,
+     "secs": 4.67,
+     "length_mm": 140.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lift clear of the floor's front edge (0, -330, 4) -> (0, -330, 70)",
+     "ok": true,
+     "why": "",
+     "frames": 23,
+     "secs": 2.2,
+     "length_mm": 66.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out over the guard sill (0, -330, 70) -> (0, -330, 70)",
+     "ok": true,
+     "why": "",
+     "frames": 1,
+     "secs": 0.0,
+     "length_mm": 0.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up and out (to the MiR's module rack)",
+     "ok": true,
+     "why": "",
+     "frames": 43,
+     "secs": 0.57,
+     "length_mm": 84.9,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": 300.0,
+   "n_frames": 419,
+   "robot_time_s": 26.0,
+   "max_force_N": 158.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 3.732,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 419,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 0.5,
+    "min_clearance_pair": [
+     "held: build module",
+     "Z mounting flange (bolted under the floor)"
+    ],
+    "min_clearance_frame": 213,
+    "peak_torque_pct": 52.1,
+    "peak_torque_joint": "wrist 1",
+    "tip": {
+     "mass_kg": 303.5,
+     "cog_mm": [
+      -13,
+      37,
+      379
+     ],
+     "cog_margin_mm": 188.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.88
+    },
+    "tip_frame": 228
+   },
+   "plan_s": 31.5,
+   "audit_s": 16.1,
+   "note": "",
+   "gif": "ops_module_swap_L75.gif",
+   "still": "ops_module_swap_L75_tightest.png",
+   "still_frame": 213,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 300.0,
+      "roll": 0.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "guard_door",
+   "module": "M50",
+   "variant": {
+    "arm_x": 450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the handle",
+     "ok": true,
+     "why": "",
+     "frames": 82,
+     "secs": 2.01,
+     "branch": 1,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 4,
+     "tried": [
+      {
+       "lookahead": "line to [-312. -318.  105.]: hits MiR250 cabinet (UR control box) at s = 0.17"
+      },
+      {
+       "lookahead": "line to [ 203. -318.  105.]: hits Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061) at s = 0.06"
+      },
+      {
+       "lookahead": "line to [-312. -318.  105.]: hits ur/gr/camera at s = 0.17"
+      },
+      {
+       "branch": 0,
+       "why": "goal pose hits MiR250 cabinet (UR control box)"
+      }
+     ]
+    },
+    {
+     "label": "in round the bar",
+     "ok": true,
+     "why": "",
+     "frames": 40,
+     "secs": 0.52,
+     "length_mm": 78.2,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the \u00d812 bar",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 12.3
+    },
+    {
+     "label": "slide the door 515 mm open",
+     "ok": true,
+     "why": "",
+     "frames": 104,
+     "secs": 3.43,
+     "length_mm": 515.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "let go",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.0
+    },
+    {
+     "label": "back off",
+     "ok": true,
+     "why": "",
+     "frames": 45,
+     "secs": 0.6,
+     "length_mm": 90.0,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": 450.0,
+   "n_frames": 281,
+   "robot_time_s": 8.2,
+   "max_force_N": 30.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.0,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 281,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 1.9,
+    "min_clearance_pair": [
+     "ur/gr/camera",
+     "Guard-position switch IDEC HS6B-12B05 (2NC + 1NO, tongue actuator on the door; separate from the guard lock, ISO 14119)"
+    ],
+    "min_clearance_frame": 9,
+    "peak_torque_pct": 31.8,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 299.8,
+     "cog_mm": [
+      -30,
+      25,
+      370
+     ],
+     "cog_margin_mm": 200.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 2.0
+    },
+    "tip_frame": 114
+   },
+   "plan_s": 5.9,
+   "audit_s": 8.9,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "guard_door_close",
+   "module": "M50",
+   "variant": {
+    "arm_x": 450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the handle",
+     "ok": true,
+     "why": "",
+     "frames": 94,
+     "secs": 2.34,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 3,
+     "tried": [
+      {
+       "lookahead": "line to [-312. -318.  105.]: hits Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061) at s = 0.06"
+      },
+      {
+       "lookahead": "line to [ 203. -318.  105.]: hits MiR250 cabinet (UR control box) at s = 0.17"
+      },
+      {
+       "lookahead": "line to [-312. -318.  105.]: hits Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061) at s = 0.06"
+      }
+     ]
+    },
+    {
+     "label": "in round the bar",
+     "ok": true,
+     "why": "",
+     "frames": 40,
+     "secs": 0.52,
+     "length_mm": 78.2,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the bar",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 12.3
+    },
+    {
+     "label": "slide it closed",
+     "ok": true,
+     "why": "",
+     "frames": 104,
+     "secs": 3.43,
+     "length_mm": 515.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "let go",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.0
+    },
+    {
+     "label": "back off",
+     "ok": true,
+     "why": "",
+     "frames": 45,
+     "secs": 0.6,
+     "length_mm": 90.0,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": 450.0,
+   "n_frames": 293,
+   "robot_time_s": 8.5,
+   "max_force_N": 30.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.0,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 293,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 26.1,
+    "min_clearance_pair": [
+     "ur/gr/left_finger_tip",
+     "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)"
+    ],
+    "min_clearance_frame": 84,
+    "peak_torque_pct": 32.8,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 299.8,
+     "cog_mm": [
+      -30,
+      25,
+      370
+     ],
+     "cog_margin_mm": 200.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 2.0
+    },
+    "tip_frame": 243
+   },
+   "plan_s": 17.9,
+   "audit_s": 11.2,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "chamber_door_open",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "draw-latch cylinders throw both latches open",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 1.5
+    },
+    {
+     "label": "to the door handle",
+     "ok": true,
+     "why": "",
+     "frames": 157,
+     "secs": 3.86,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 5,
+     "tried": []
+    },
+    {
+     "label": "in round the bar",
+     "ok": true,
+     "why": "",
+     "frames": 40,
+     "secs": 2.61,
+     "length_mm": 78.2,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the bar",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 12.3
+    },
+    {
+     "label": "pull the door to 20 deg (balance 11.6 deg)",
+     "ok": true,
+     "why": "",
+     "frames": 20,
+     "secs": 1.32,
+     "length_mm": 39.6,
+     "turn_deg": 20.0
+    },
+    {
+     "label": "let go",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.0
+    },
+    {
+     "label": "straight off the bar (faster than the damped door follows)",
+     "ok": true,
+     "why": "",
+     "frames": 35,
+     "secs": 0.47,
+     "length_mm": 70.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up and away from the door's arc",
+     "ok": true,
+     "why": "",
+     "frames": 50,
+     "secs": 0.66,
+     "length_mm": 98.5,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "the door lowers itself to 95 deg on the damper",
+     "ok": true,
+     "why": "",
+     "frames": 15,
+     "secs": 3.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 337,
+   "robot_time_s": 15.0,
+   "max_force_N": 15.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.0,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 337,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 2.5,
+    "min_clearance_pair": [
+     "ur/gr/right_finger_tip",
+     "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)"
+    ],
+    "min_clearance_frame": 159,
+    "peak_torque_pct": 32.5,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 299.8,
+     "cog_mm": [
+      14,
+      26,
+      376
+     ],
+     "cog_margin_mm": 199.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.99
+    },
+    "tip_frame": 207
+   },
+   "plan_s": 15.2,
+   "audit_s": 15.6,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "chamber_door_powered",
+   "module": "M50",
+   "variant": {},
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "the door actuator closes the door (95 -> 0 deg)",
+     "ok": true,
+     "why": "",
+     "frames": 24,
+     "secs": 2.0
+    },
+    {
+     "label": "latch cylinders throw both latches shut",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 1.5
+    }
+   ],
+   "arm_x": 0.0,
+   "n_frames": 34,
+   "robot_time_s": 3.5,
+   "max_force_N": 0.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.0,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 34,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 20.1,
+    "min_clearance_pair": [
+     "ur/wrist2",
+     "Guard door rail (top + bottom)"
+    ],
+    "min_clearance_frame": 0,
+    "peak_torque_pct": 30.8,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 299.8,
+     "cog_mm": [
+      -5,
+      19,
+      378
+     ],
+     "cog_margin_mm": 206.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 2.06
+    },
+    "tip_frame": 0
+   },
+   "plan_s": 0.0,
+   "audit_s": 3.2,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {},
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "plate_drawbar",
+   "module": "M50",
+   "variant": {
+    "arm_x": 450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the door (lips 9.5 mm up, over the 8 mm sill)",
+     "ok": true,
+     "why": "",
+     "frames": 114,
+     "secs": 2.81,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 4,
+     "tried": [
+      {
+       "lookahead": "line to [   0. -300.   22.]: hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at s = 0.05"
+      },
+      {
+       "lookahead": "line to [ 0.  0. 12.]: hits MiR250 cabinet (UR control box) at s = 0.06"
+      },
+      {
+       "lookahead": "line to [   0. -300.   22.]: hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at s = 0.05"
+      }
+     ]
+    },
+    {
+     "label": "in over the sill, the plate between the blades",
+     "ok": true,
+     "why": "",
+     "frames": 85,
+     "secs": 8.43,
+     "length_mm": 253.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "down beside the plate to the groove",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 0.32,
+     "length_mm": 9.5,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close the lips into the rim groove",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 47.6
+    },
+    {
+     "label": "release cylinder pushes the drawbar: ball lock open",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 1.0
+    },
+    {
+     "label": "lift 20 mm: pull stud out of the ball lock",
+     "ok": true,
+     "why": "",
+     "frames": 20,
+     "secs": 0.67,
+     "length_mm": 20.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out over the sill and the open door",
+     "ok": true,
+     "why": "",
+     "frames": 100,
+     "secs": 10.0,
+     "length_mm": 300.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up clear of the machine (to the MiR's plate rack)",
+     "ok": true,
+     "why": "",
+     "frames": 53,
+     "secs": 0.7,
+     "length_mm": 104.4,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": 450.0,
+   "n_frames": 397,
+   "robot_time_s": 24.7,
+   "max_force_N": 5.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.053,
+   "tool_kg": 1.41,
+   "audit": {
+    "frames": 397,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 1.3,
+    "min_clearance_pair": [
+     "ur/cap/right_finger_tip",
+     "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)"
+    ],
+    "min_clearance_frame": 210,
+    "peak_torque_pct": 33.7,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.0,
+     "cog_mm": [
+      -17,
+      34,
+      370
+     ],
+     "cog_margin_mm": 191.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.91
+    },
+    "tip_frame": 198
+   },
+   "plan_s": 10.9,
+   "audit_s": 18.5,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "plate_bayonet",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the door (lips 9.5 mm up, over the 8 mm sill)",
+     "ok": true,
+     "why": "",
+     "frames": 135,
+     "secs": 3.35,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 4,
+     "tried": [
+      {
+       "lookahead": "line to [   0. -300.   22.]: hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at s = 0.05"
+      },
+      {
+       "lookahead": "line to [ 0.  0. 12.]: hits MiR250 cabinet (UR control box) at s = 0.06"
+      },
+      {
+       "lookahead": "line to [   0. -300.   22.]: hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at s = 0.05"
+      }
+     ]
+    },
+    {
+     "label": "in over the sill, the plate between the blades",
+     "ok": true,
+     "why": "",
+     "frames": 85,
+     "secs": 8.43,
+     "length_mm": 253.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "down beside the plate to the groove",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 0.32,
+     "length_mm": 9.5,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "skew -15 deg about the plate's axis (fingers open)",
+     "ok": true,
+     "why": "",
+     "frames": 8,
+     "secs": 0.35,
+     "length_mm": 0.0,
+     "turn_deg": 15.0
+    },
+    {
+     "label": "close the lips into the rim groove",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 47.6
+    },
+    {
+     "label": "twist the plate 30 deg (half)",
+     "ok": true,
+     "why": "",
+     "frames": 15,
+     "secs": 0.69,
+     "length_mm": 1.1,
+     "turn_deg": 30.0
+    },
+    {
+     "label": "open",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 56.5
+    },
+    {
+     "label": "skew -15 deg about the plate's axis (fingers open)",
+     "ok": true,
+     "why": "",
+     "frames": 16,
+     "secs": 0.69,
+     "length_mm": 0.0,
+     "turn_deg": 30.0
+    },
+    {
+     "label": "close the lips into the rim groove",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 47.6
+    },
+    {
+     "label": "twist the plate 30 deg (lugs at their slots)",
+     "ok": true,
+     "why": "",
+     "frames": 16,
+     "secs": 0.69,
+     "length_mm": 0.0,
+     "turn_deg": 30.0
+    },
+    {
+     "label": "lift 20 mm off the block",
+     "ok": true,
+     "why": "",
+     "frames": 20,
+     "secs": 0.67,
+     "length_mm": 20.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "turn back square",
+     "ok": true,
+     "why": "",
+     "frames": 8,
+     "secs": 0.33,
+     "length_mm": 0.0,
+     "turn_deg": 15.0
+    },
+    {
+     "label": "out over the sill and the open door",
+     "ok": true,
+     "why": "",
+     "frames": 100,
+     "secs": 10.0,
+     "length_mm": 300.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up clear of the machine (to the MiR's plate rack)",
+     "ok": true,
+     "why": "",
+     "frames": 53,
+     "secs": 0.7,
+     "length_mm": 104.4,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 481,
+   "robot_time_s": 28.6,
+   "max_force_N": 5.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.053,
+   "tool_kg": 1.41,
+   "audit": {
+    "frames": 481,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 0.6,
+    "min_clearance_pair": [
+     "held: build plate",
+     "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)"
+    ],
+    "min_clearance_frame": 252,
+    "peak_torque_pct": 33.7,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.0,
+     "cog_mm": [
+      17,
+      31,
+      370
+     ],
+     "cog_margin_mm": 194.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.94
+    },
+    "tip_frame": 237
+   },
+   "plan_s": 15.0,
+   "audit_s": 23.8,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": 450.0
+     },
+     "ok": false,
+     "failed_step": null,
+     "bad_frames": 63
+    },
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "drawer",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the left wing",
+     "ok": true,
+     "why": "",
+     "frames": 115,
+     "secs": 2.84,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 5,
+     "tried": [
+      {
+       "lookahead": "line to [ -51. -141.  128.]: hits Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg) at s = 0.11"
+      },
+      {
+       "lookahead": "line to [ -51. -141.  128.]: hits Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg) at s = 0.11"
+      },
+      {
+       "lookahead": "line to [ -51. -141.  128.]: hits VLM front skin under the opening at s = 0.20"
+      }
+     ]
+    },
+    {
+     "label": "round the wing",
+     "ok": true,
+     "why": "",
+     "frames": 34,
+     "secs": 2.21,
+     "length_mm": 66.3,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close across the wing",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 4.3
+    },
+    {
+     "label": "turn it 90 deg (cam off)",
+     "ok": true,
+     "why": "",
+     "frames": 31,
+     "secs": 2.0,
+     "length_mm": 0.0,
+     "turn_deg": 90.0
+    },
+    {
+     "label": "let go",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 16.0
+    },
+    {
+     "label": "back off",
+     "ok": true,
+     "why": "",
+     "frames": 40,
+     "secs": 0.53,
+     "length_mm": 80.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "to the right wing",
+     "ok": true,
+     "why": "",
+     "frames": 60,
+     "secs": 1.5,
+     "branch": 0,
+     "branches": 8,
+     "planned": false,
+     "waypoints": 2,
+     "tried": [
+      {
+       "lookahead": "line to [  51. -141.  128.]: hits Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg) at s = 0.11"
+      },
+      {
+       "lookahead": "line to [  51. -141.  128.]: hits Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg) at s = 0.11"
+      },
+      {
+       "lookahead": "line to [  51. -141.  128.]: hits VLM front skin under the opening at s = 0.17"
+      }
+     ]
+    },
+    {
+     "label": "round the wing",
+     "ok": true,
+     "why": "",
+     "frames": 40,
+     "secs": 2.67,
+     "length_mm": 80.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close across the wing",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 4.3
+    },
+    {
+     "label": "turn it 90 deg (cam off)",
+     "ok": true,
+     "why": "",
+     "frames": 31,
+     "secs": 2.0,
+     "length_mm": 0.0,
+     "turn_deg": 90.0
+    },
+    {
+     "label": "let go",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 16.0
+    },
+    {
+     "label": "back off",
+     "ok": true,
+     "why": "",
+     "frames": 40,
+     "secs": 0.53,
+     "length_mm": 80.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "to the pull tab",
+     "ok": true,
+     "why": "",
+     "frames": 4,
+     "secs": 0.08,
+     "branch": 0,
+     "branches": 8,
+     "planned": false,
+     "waypoints": 2,
+     "tried": [
+      {
+       "lookahead": "line to [   0. -143.  128.]: hits VLM front skin under the opening at s = 0.17"
+      },
+      {
+       "lookahead": "line to [   0. -143.  128.]: hits VLM front skin under the opening at s = 0.17"
+      },
+      {
+       "lookahead": "line to [   0. -143.  128.]: hits VLM front skin under the opening at s = 0.17"
+      }
+     ]
+    },
+    {
+     "label": "round the tab's posts",
+     "ok": true,
+     "why": "",
+     "frames": 43,
+     "secs": 2.82,
+     "length_mm": 84.6,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the posts",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 40.3
+    },
+    {
+     "label": "pull 120 mm (O-ring breakaway ~20 N)",
+     "ok": true,
+     "why": "",
+     "frames": 31,
+     "secs": 4.09,
+     "length_mm": 122.7,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "on out of the lid",
+     "ok": true,
+     "why": "",
+     "frames": 15,
+     "secs": 1.92,
+     "length_mm": 57.7,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lift it clear of the lid (on to the MiR's drawer rack)",
+     "ok": true,
+     "why": "",
+     "frames": 24,
+     "secs": 0.31,
+     "length_mm": 46.0,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 533,
+   "robot_time_s": 27.5,
+   "max_force_N": 20.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.0,
+   "tool_kg": 1.23,
+   "audit": {
+    "frames": 533,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 1.8,
+    "min_clearance_pair": [
+     "ur/gr/left_finger_tip",
+     "Drawer-closed sensor (inductive M12, on the lid's front face, sees the plate's end)"
+    ],
+    "min_clearance_frame": 369,
+    "peak_torque_pct": 31.7,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 299.8,
+     "cog_mm": [
+      15,
+      26,
+      377
+     ],
+     "cog_margin_mm": 199.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.99
+    },
+    "tip_frame": 324
+   },
+   "plan_s": 17.6,
+   "audit_s": 42.4,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "vacuum_clean",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the wand in its cradle",
+     "ok": true,
+     "why": "",
+     "frames": 121,
+     "secs": 3.0,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 3,
+     "tried": [
+      {
+       "lookahead": "line to [-710. -902. -162.]: hits MiR250 cabinet (UR control box) at s = 0.25"
+      },
+      {
+       "lookahead": "line to [-710. -902. -162.]: hits MiR250 cabinet (UR control box) at s = 0.25"
+      },
+      {
+       "lookahead": "line to [-710. -902. -162.]: hits MiR250 cabinet (UR control box) at s = 0.25"
+      }
+     ]
+    },
+    {
+     "label": "in round the wand's fin",
+     "ok": true,
+     "why": "",
+     "frames": 30,
+     "secs": 0.39,
+     "length_mm": 58.2,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the fin (30 mm)",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 30.3
+    },
+    {
+     "label": "lift it out of the cradle",
+     "ok": true,
+     "why": "",
+     "frames": 41,
+     "secs": 0.53,
+     "length_mm": 80.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "to the door with the wand",
+     "ok": true,
+     "why": "",
+     "frames": 119,
+     "secs": 2.93,
+     "branch": 1,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 4,
+     "tried": [
+      {
+       "branch": 0,
+       "why": "goal pose hits VLM front skin under the opening"
+      }
+     ]
+    },
+    {
+     "label": "in to the lane y = -55",
+     "ok": true,
+     "why": "",
+     "frames": 41,
+     "secs": 1.36,
+     "length_mm": 204.2,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "down to 3 mm over the floor",
+     "ok": true,
+     "why": "",
+     "frames": 15,
+     "secs": 1.0,
+     "length_mm": 30.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "sweep the lane y = -55",
+     "ok": true,
+     "why": "",
+     "frames": 33,
+     "secs": 4.33,
+     "length_mm": 130.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up",
+     "ok": true,
+     "why": "",
+     "frames": 11,
+     "secs": 1.0,
+     "length_mm": 30.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "in to the lane y = 0",
+     "ok": true,
+     "why": "",
+     "frames": 12,
+     "secs": 0.37,
+     "length_mm": 55.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "down to 3 mm over the floor",
+     "ok": true,
+     "why": "",
+     "frames": 15,
+     "secs": 1.0,
+     "length_mm": 30.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "sweep the lane y = 0",
+     "ok": true,
+     "why": "",
+     "frames": 33,
+     "secs": 4.33,
+     "length_mm": 130.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 1.0,
+     "length_mm": 30.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "in to the lane y = 50",
+     "ok": true,
+     "why": "",
+     "frames": 11,
+     "secs": 0.33,
+     "length_mm": 50.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "down to 3 mm over the floor",
+     "ok": true,
+     "why": "",
+     "frames": 15,
+     "secs": 1.0,
+     "length_mm": 30.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "sweep the lane y = 50",
+     "ok": true,
+     "why": "",
+     "frames": 33,
+     "secs": 4.33,
+     "length_mm": 130.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up",
+     "ok": true,
+     "why": "",
+     "frames": 11,
+     "secs": 1.0,
+     "length_mm": 30.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "straight back out through the door",
+     "ok": true,
+     "why": "",
+     "frames": 50,
+     "secs": 1.67,
+     "length_mm": 250.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "clear of the machine",
+     "ok": true,
+     "why": "",
+     "frames": 26,
+     "secs": 0.83,
+     "length_mm": 125.0,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 632,
+   "robot_time_s": 31.2,
+   "max_force_N": 0.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.0,
+   "tool_kg": 2.33,
+   "audit": {
+    "frames": 632,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 3.0,
+    "min_clearance_pair": [
+     "wand (ATEX vacuum wand, collar, crevice tool)",
+     "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)"
+    ],
+    "min_clearance_frame": 540,
+    "peak_torque_pct": 35.4,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.9,
+     "cog_mm": [
+      15,
+      27,
+      379
+     ],
+     "cog_margin_mm": 198.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.98
+    },
+    "tip_frame": 528
+   },
+   "plan_s": 45.2,
+   "audit_s": 22.9,
+   "note": "",
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  }
+ ],
+ "note": "round 6 (2026-11-25): the merged model (PR branch 4e95878)"
+}

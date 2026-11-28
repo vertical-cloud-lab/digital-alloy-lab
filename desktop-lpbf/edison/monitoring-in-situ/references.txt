@@ -1,0 +1,103 @@
+1. (seleznev2022insitudetection pages 2-3): Mikhail Seleznev, Tobias Gustmann, Judith Miriam Friebel, Urs Alexander Peuker, Uta Kühn, Julia Kristin Hufenbach, Horst Biermann, and Anja Weidner. In situ detection of cracks during laser powder bed fusion using acoustic emission monitoring. Additive Manufacturing Letters, 3:100099, Dec 2022. URL: https://doi.org/10.1016/j.addlet.2022.100099, doi:10.1016/j.addlet.2022.100099. This article has 58 citations and is from a peer-reviewed journal.
+
+2. (seleznev2022insitudetection pages 3-5): Mikhail Seleznev, Tobias Gustmann, Judith Miriam Friebel, Urs Alexander Peuker, Uta Kühn, Julia Kristin Hufenbach, Horst Biermann, and Anja Weidner. In situ detection of cracks during laser powder bed fusion using acoustic emission monitoring. Additive Manufacturing Letters, 3:100099, Dec 2022. URL: https://doi.org/10.1016/j.addlet.2022.100099, doi:10.1016/j.addlet.2022.100099. This article has 58 citations and is from a peer-reviewed journal.
+
+3. (seleznev2022insitudetection pages 5-7): Mikhail Seleznev, Tobias Gustmann, Judith Miriam Friebel, Urs Alexander Peuker, Uta Kühn, Julia Kristin Hufenbach, Horst Biermann, and Anja Weidner. In situ detection of cracks during laser powder bed fusion using acoustic emission monitoring. Additive Manufacturing Letters, 3:100099, Dec 2022. URL: https://doi.org/10.1016/j.addlet.2022.100099, doi:10.1016/j.addlet.2022.100099. This article has 58 citations and is from a peer-reviewed journal.
+
+4. (seleznev2022insitudetection pages 7-7): Mikhail Seleznev, Tobias Gustmann, Judith Miriam Friebel, Urs Alexander Peuker, Uta Kühn, Julia Kristin Hufenbach, Horst Biermann, and Anja Weidner. In situ detection of cracks during laser powder bed fusion using acoustic emission monitoring. Additive Manufacturing Letters, 3:100099, Dec 2022. URL: https://doi.org/10.1016/j.addlet.2022.100099, doi:10.1016/j.addlet.2022.100099. This article has 58 citations and is from a peer-reviewed journal.
+
+5. (fardan2026unveilingcrackmitigation pages 1-2): Ahmed Fardan, Gowtham Soundarapandiyan, Vigneashwara Pandiyan, Steven Van Petegem, Efthymios Polatidis, Sofia Kazi, Sneha Goel, Camille Pauzon, Federica Marone, Bharat Mehta, Annapaola Parrilli, Håkan Brodin, and Eduard Hryha. Unveiling crack mitigation pathways in powder bed fusion–laser beam of cm247lc: an operando x-ray radiography study of hf and nano-y2o3 additions. Progress in Additive Manufacturing, 11:9831-9849, Aug 2026. URL: https://doi.org/10.1007/s40964-026-01876-5, doi:10.1007/s40964-026-01876-5. This article has 1 citations and is from a peer-reviewed journal.
+
+6. (fleming2023insitucorrelative pages 1-2): Tristan G. Fleming, David Tien Rees, Sebastian Marussi, Thomas Connolley, Robert C. Atwood, Martyn A. Jones, James M. Fraser, Chu Lun Alex Leung, and Peter D. Lee. In situ correlative observation of humping-induced cracking in directed energy deposition of nickel-based superalloys. Jun 2023. URL: https://doi.org/10.1016/j.addma.2023.103579, doi:10.1016/j.addma.2023.103579. This article has 34 citations and is from a highest quality peer-reviewed journal.
+
+7. (fleming2023insitucorrelative pages 2-3): Tristan G. Fleming, David Tien Rees, Sebastian Marussi, Thomas Connolley, Robert C. Atwood, Martyn A. Jones, James M. Fraser, Chu Lun Alex Leung, and Peter D. Lee. In situ correlative observation of humping-induced cracking in directed energy deposition of nickel-based superalloys. Jun 2023. URL: https://doi.org/10.1016/j.addma.2023.103579, doi:10.1016/j.addma.2023.103579. This article has 34 citations and is from a highest quality peer-reviewed journal.
+
+8. (fleming2023insitucorrelative pages 3-4): Tristan G. Fleming, David Tien Rees, Sebastian Marussi, Thomas Connolley, Robert C. Atwood, Martyn A. Jones, James M. Fraser, Chu Lun Alex Leung, and Peter D. Lee. In situ correlative observation of humping-induced cracking in directed energy deposition of nickel-based superalloys. Jun 2023. URL: https://doi.org/10.1016/j.addma.2023.103579, doi:10.1016/j.addma.2023.103579. This article has 34 citations and is from a highest quality peer-reviewed journal.
+
+9. (nobari2026mechanismssensorsand pages 9-11): Sanae Tajalli Nobari, Fabian Hanning, Yongcui Mi, and Joerg Volpp. Mechanisms, sensors, and signals for defect formation and in situ monitoring in metal additive manufacturing. Eng, 7:129, Mar 2026. URL: https://doi.org/10.3390/eng7030129, doi:10.3390/eng7030129. This article has 7 citations.
+
+10. (lafirenza2025developmentofinsitu pages 44-46): M Lafirenza. Development of in-situ optical sensor-based monitoring methodologies for additive manufacturing processes. Unknown journal, 2025.
+
+11. (nobari2026mechanismssensorsand pages 11-12): Sanae Tajalli Nobari, Fabian Hanning, Yongcui Mi, and Joerg Volpp. Mechanisms, sensors, and signals for defect formation and in situ monitoring in metal additive manufacturing. Eng, 7:129, Mar 2026. URL: https://doi.org/10.3390/eng7030129, doi:10.3390/eng7030129. This article has 7 citations.
+
+12. (lafirenza2025developmentofinsitu pages 35-37): M Lafirenza. Development of in-situ optical sensor-based monitoring methodologies for additive manufacturing processes. Unknown journal, 2025.
+
+13. (hooper2018meltpooltemperature pages 4-6): Paul A. Hooper. Melt pool temperature and cooling rates in laser powder bed fusion. Additive Manufacturing, 22:548-559, Aug 2018. URL: https://doi.org/10.1016/j.addma.2018.05.032, doi:10.1016/j.addma.2018.05.032. This article has 1140 citations and is from a highest quality peer-reviewed journal.
+
+14. (hooper2018meltpooltemperature pages 22-24): Paul A. Hooper. Melt pool temperature and cooling rates in laser powder bed fusion. Additive Manufacturing, 22:548-559, Aug 2018. URL: https://doi.org/10.1016/j.addma.2018.05.032, doi:10.1016/j.addma.2018.05.032. This article has 1140 citations and is from a highest quality peer-reviewed journal.
+
+15. (sloane2025investigatingthevalue pages 104-109): A Sloane. Investigating the value of in-situ monitoring in the laser powder bed fusion of nickel-based superalloys. Unknown journal, 2025.
+
+16. (sloane2025investigatingthevaluea pages 104-109): A Sloane. Investigating the value of in-situ monitoring in the laser powder bed fusion of nickel-based superalloys. Unknown journal, 2025.
+
+17. (hooper2018meltpooltemperature pages 15-19): Paul A. Hooper. Melt pool temperature and cooling rates in laser powder bed fusion. Additive Manufacturing, 22:548-559, Aug 2018. URL: https://doi.org/10.1016/j.addma.2018.05.032, doi:10.1016/j.addma.2018.05.032. This article has 1140 citations and is from a highest quality peer-reviewed journal.
+
+18. (sun2019computationalfluiddynamics pages 53-56): Z Sun. Computational fluid dynamics modelling of powder-based laser additive manufacturing processes. Unknown journal, 2019.
+
+19. (grasso2017processdefectsand pages 18-20): Marco Grasso and Bianca Maria Colosimo. Process defects and in situ monitoring methods in metal powder bed fusion: a review. Measurement Science and Technology, 28:044005, Feb 2017. URL: https://doi.org/10.1088/1361-6501/aa5c4f, doi:10.1088/1361-6501/aa5c4f. This article has 1253 citations and is from a domain leading peer-reviewed journal.
+
+20. (hooper2018meltpooltemperature pages 1-4): Paul A. Hooper. Melt pool temperature and cooling rates in laser powder bed fusion. Additive Manufacturing, 22:548-559, Aug 2018. URL: https://doi.org/10.1016/j.addma.2018.05.032, doi:10.1016/j.addma.2018.05.032. This article has 1140 citations and is from a highest quality peer-reviewed journal.
+
+21. (hooper2018meltpooltemperature pages 9-12): Paul A. Hooper. Melt pool temperature and cooling rates in laser powder bed fusion. Additive Manufacturing, 22:548-559, Aug 2018. URL: https://doi.org/10.1016/j.addma.2018.05.032, doi:10.1016/j.addma.2018.05.032. This article has 1140 citations and is from a highest quality peer-reviewed journal.
+
+22. (hooper2018meltpooltemperature pages 6-9): Paul A. Hooper. Melt pool temperature and cooling rates in laser powder bed fusion. Additive Manufacturing, 22:548-559, Aug 2018. URL: https://doi.org/10.1016/j.addma.2018.05.032, doi:10.1016/j.addma.2018.05.032. This article has 1140 citations and is from a highest quality peer-reviewed journal.
+
+23. (sloane2025investigatingthevalue pages 118-122): A Sloane. Investigating the value of in-situ monitoring in the laser powder bed fusion of nickel-based superalloys. Unknown journal, 2025.
+
+24. (sloane2025investigatingthevaluea pages 118-122): A Sloane. Investigating the value of in-situ monitoring in the laser powder bed fusion of nickel-based superalloys. Unknown journal, 2025.
+
+25. (kozjek2026coaxialmonitoringof pages 12-13): Dominik Kozjek, Drago Bračun, Andrej Jeromen, Fred M. Carter III, Primož Podržaj, and Edvard Govekar. Coaxial monitoring of meltpool for laser powder bed fusion process control. Strojniški vestnik - Journal of Mechanical Engineering, 72(9-10):253-271, Nov 2026. URL: https://doi.org/10.5545/sv-jme.2026.1837, doi:10.5545/sv-jme.2026.1837. This article has 0 citations.
+
+26. (kozjek2026coaxialmonitoringof pages 10-12): Dominik Kozjek, Drago Bračun, Andrej Jeromen, Fred M. Carter III, Primož Podržaj, and Edvard Govekar. Coaxial monitoring of meltpool for laser powder bed fusion process control. Strojniški vestnik - Journal of Mechanical Engineering, 72(9-10):253-271, Nov 2026. URL: https://doi.org/10.5545/sv-jme.2026.1837, doi:10.5545/sv-jme.2026.1837. This article has 0 citations.
+
+27. (sakai2025insitucharacterizationof pages 4-5): Yoshiki Sakai, Hiroaki Suzuki, Liwei Chen, Yusuke Ito, and Keisuke Nagato. In-situ characterization of melt pool evolution in laser powder bed fusion using ultrahigh-speed imaging with multidirectional illumination. The International Journal of Advanced Manufacturing Technology, Dec 2025. URL: https://doi.org/10.1007/s00170-025-17107-0, doi:10.1007/s00170-025-17107-0. This article has 3 citations.
+
+28. (sakai2025insitucharacterizationof pages 2-4): Yoshiki Sakai, Hiroaki Suzuki, Liwei Chen, Yusuke Ito, and Keisuke Nagato. In-situ characterization of melt pool evolution in laser powder bed fusion using ultrahigh-speed imaging with multidirectional illumination. The International Journal of Advanced Manufacturing Technology, Dec 2025. URL: https://doi.org/10.1007/s00170-025-17107-0, doi:10.1007/s00170-025-17107-0. This article has 3 citations.
+
+29. (sakai2025insitucharacterizationof pages 1-2): Yoshiki Sakai, Hiroaki Suzuki, Liwei Chen, Yusuke Ito, and Keisuke Nagato. In-situ characterization of melt pool evolution in laser powder bed fusion using ultrahigh-speed imaging with multidirectional illumination. The International Journal of Advanced Manufacturing Technology, Dec 2025. URL: https://doi.org/10.1007/s00170-025-17107-0, doi:10.1007/s00170-025-17107-0. This article has 3 citations.
+
+30. (sun2019computationalfluiddynamics pages 95-99): Z Sun. Computational fluid dynamics modelling of powder-based laser additive manufacturing processes. Unknown journal, 2019.
+
+31. (thanki2024correlationbetweeninprocess pages 132-138): A Thanki, H Haitjema, and A Witvrouw. Correlation between in-process melt pool monitoring and post process characterization for laser powder bed fusion. Unknown journal, 2024.
+
+32. (sloane2025investigatingthevalue pages 109-114): A Sloane. Investigating the value of in-situ monitoring in the laser powder bed fusion of nickel-based superalloys. Unknown journal, 2025.
+
+33. (sloane2025investigatingthevaluea pages 109-114): A Sloane. Investigating the value of in-situ monitoring in the laser powder bed fusion of nickel-based superalloys. Unknown journal, 2025.
+
+34. (hou2022onlinemonitoringtechnology pages 3-5): Zhuo-Jun Hou, Qing Wang, Chen-Guang Zhao, Jun Zheng, Ju-Mei Tian, Xiao-Hong Ge, and Yuan-Gang Liu. Online monitoring technology of metal powder bed fusion processes: a review. Materials, 15:7598, Oct 2022. URL: https://doi.org/10.3390/ma15217598, doi:10.3390/ma15217598. This article has 34 citations.
+
+35. (zhang2016insitusurface pages 8-11): Bin Zhang, John Ziegert, Faramarz Farahi, and Angela Davies. In situ surface topography of laser powder bed fusion using fringe projection. Additive manufacturing, 12:100-107, Oct 2016. URL: https://doi.org/10.1016/j.addma.2016.08.001, doi:10.1016/j.addma.2016.08.001. This article has 237 citations and is from a highest quality peer-reviewed journal.
+
+36. (suresh2025recentadvancesinin pages 22-23): Vignesh Suresh, Badrinath Balasubramaniam, Li-Hsin Yeh, and Beiwen Li. Recentadvances in in situ 3d surface topographical monitoring for additive manufacturing processes. Journal of Manufacturing and Materials Processing, 9:133, Apr 2025. URL: https://doi.org/10.3390/jmmp9040133, doi:10.3390/jmmp9040133. This article has 30 citations.
+
+37. (fleming2020trackingandcontrolling pages 10-13): Tristan G. Fleming, Stephen G.L. Nestor, Troy R. Allen, Mark A. Boukhaled, Nathan J. Smith, and James M. Fraser. Tracking and controlling the morphology evolution of 3d powder-bed fusion in situ using inline coherent imaging. Additive manufacturing, 32:100978, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.100978, doi:10.1016/j.addma.2019.100978. This article has 105 citations and is from a highest quality peer-reviewed journal.
+
+38. (fleming2023synchrotronvalidationof pages 2-3): Tristan G. Fleming, Samuel J. Clark, Xianqiang Fan, Kamel Fezzaa, Chu Lun Alex Leung, Peter D. Lee, and James M. Fraser. Synchrotron validation of inline coherent imaging for tracking laser keyhole depth. Additive Manufacturing, 77:103798, Sep 2023. URL: https://doi.org/10.1016/j.addma.2023.103798, doi:10.1016/j.addma.2023.103798. This article has 39 citations and is from a highest quality peer-reviewed journal.
+
+39. (fleming2020trackingandcontrolling pages 6-10): Tristan G. Fleming, Stephen G.L. Nestor, Troy R. Allen, Mark A. Boukhaled, Nathan J. Smith, and James M. Fraser. Tracking and controlling the morphology evolution of 3d powder-bed fusion in situ using inline coherent imaging. Additive manufacturing, 32:100978, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.100978, doi:10.1016/j.addma.2019.100978. This article has 105 citations and is from a highest quality peer-reviewed journal.
+
+40. (barrett2019highspeedstereovision pages 48-52): C Barrett. High speed stereovision in situ monitoring of spatter during laser powder bed fusion. Unknown journal, 2019.
+
+41. (suresh2025recentadvancesinin pages 19-20): Vignesh Suresh, Badrinath Balasubramaniam, Li-Hsin Yeh, and Beiwen Li. Recentadvances in in situ 3d surface topographical monitoring for additive manufacturing processes. Journal of Manufacturing and Materials Processing, 9:133, Apr 2025. URL: https://doi.org/10.3390/jmmp9040133, doi:10.3390/jmmp9040133. This article has 30 citations.
+
+42. (chechik2022processmonitoringand pages 46-49): L Chechik. Process monitoring and control during additive manufacturing. Unknown journal, 2022.
+
+43. (chechik2022processmonitoringanda pages 46-49): L Chechik. Process monitoring and control during additive manufacturing. Unknown journal, 2022.
+
+44. (altenburg2020insitumonitoringof pages 16-18): Simon J. Altenburg, Anne Straße, Andrey Gumenyuk, and Christiane Maierhofer. In-situ monitoring of a laser metal deposition (lmd) process: comparison of mwir, swir and high-speed nir thermography. Quantitative InfraRed Thermography Journal, 19:97-114, Nov 2020. URL: https://doi.org/10.1080/17686733.2020.1829889, doi:10.1080/17686733.2020.1829889. This article has 108 citations.
+
+45. (hooper2018meltpooltemperature pages 19-22): Paul A. Hooper. Melt pool temperature and cooling rates in laser powder bed fusion. Additive Manufacturing, 22:548-559, Aug 2018. URL: https://doi.org/10.1016/j.addma.2018.05.032, doi:10.1016/j.addma.2018.05.032. This article has 1140 citations and is from a highest quality peer-reviewed journal.
+
+46. (yang2025afullyregistered pages 8-13): Z Yang, N Van Handel, Y Lu, H Yeung, and B Lane. A fully registered in‐situ and ex‐situ dataset for metal powder bed fusion additive manufacturing. Unknown journal, 2025.
+
+47. (hocker2023powderbedfusion pages 11-25): SJA Hocker, JN Zalameda, and B Richter. Powder bed fusion laser beam metals additive manufacturing: process monitoring approaches for qualification and certification. Unknown journal, 2023.
+
+48. (hocker2023powderbedfusion pages 1-11): SJA Hocker, JN Zalameda, and B Richter. Powder bed fusion laser beam metals additive manufacturing: process monitoring approaches for qualification and certification. Unknown journal, 2023.
+
+49. (yang2025afullyregistered pages 5-8): Z Yang, N Van Handel, Y Lu, H Yeung, and B Lane. A fully registered in‐situ and ex‐situ dataset for metal powder bed fusion additive manufacturing. Unknown journal, 2025.
+
+50. (kozjek2026coaxialmonitoringof pages 13-13): Dominik Kozjek, Drago Bračun, Andrej Jeromen, Fred M. Carter III, Primož Podržaj, and Edvard Govekar. Coaxial monitoring of meltpool for laser powder bed fusion process control. Strojniški vestnik - Journal of Mechanical Engineering, 72(9-10):253-271, Nov 2026. URL: https://doi.org/10.5545/sv-jme.2026.1837, doi:10.5545/sv-jme.2026.1837. This article has 0 citations.
+
+51. (yang2025afullyregistered pages 1-5): Z Yang, N Van Handel, Y Lu, H Yeung, and B Lane. A fully registered in‐situ and ex‐situ dataset for metal powder bed fusion additive manufacturing. Unknown journal, 2025.
+
+52. (nobari2026mechanismssensorsand pages 6-7): Sanae Tajalli Nobari, Fabian Hanning, Yongcui Mi, and Joerg Volpp. Mechanisms, sensors, and signals for defect formation and in situ monitoring in metal additive manufacturing. Eng, 7:129, Mar 2026. URL: https://doi.org/10.3390/eng7030129, doi:10.3390/eng7030129. This article has 7 citations.

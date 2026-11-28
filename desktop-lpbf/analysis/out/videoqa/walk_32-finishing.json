@@ -1,0 +1,120 @@
+{
+ "chapter": "32-finishing",
+ "frames_recorded": 1001,
+ "recordings": [
+  "/tmp/robotbuild/frames/32-finishing/audit"
+ ],
+ "people": [
+  {
+   "person": "op",
+   "frames": 216,
+   "walked_mm": 0,
+   "stances": 4,
+   "slip_per_stance_mm": {
+    "max": 0.0,
+    "p95": 0.0,
+    "mean": 0.0
+   },
+   "worst_stances": [
+    {
+     "foot": "L",
+     "start": 0,
+     "end": 119,
+     "frames": 120,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 0,
+     "end": 119,
+     "frames": 120,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "L",
+     "start": 784,
+     "end": 879,
+     "frames": 96,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    },
+    {
+     "foot": "R",
+     "start": 784,
+     "end": 879,
+     "frames": 96,
+     "slip_mm": 0.0,
+     "max_frame_mm": 0.0
+    }
+   ],
+   "slipping_frames": 0,
+   "slipping_frame_list": [],
+   "gliding_frames": 0,
+   "gliding_ranges": [],
+   "gliding_worst": [],
+   "jumps": []
+  }
+ ],
+ "mirs": [
+  {
+   "mir": "mirA",
+   "frames": 550,
+   "driven_mm": 1390,
+   "forward": "local +x",
+   "forward_mm": 1390,
+   "reverse_mm": 0,
+   "reverse_legs": 0,
+   "longest_reverse_leg_mm": 0,
+   "reverse_leg_list": [],
+   "sideways_mm": {
+    "total": 0.0,
+    "max_frame": 0.0,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 0,
+   "turned_deg": 0.0,
+   "jumps": [
+    [
+     880,
+     9578,
+     -8401,
+     4600
+    ]
+   ]
+  },
+  {
+   "mir": "mirB",
+   "frames": 186,
+   "driven_mm": 0,
+   "forward": "local +x",
+   "forward_mm": 0,
+   "reverse_mm": 0,
+   "reverse_legs": 0,
+   "longest_reverse_leg_mm": 0,
+   "reverse_leg_list": [],
+   "sideways_mm": {
+    "total": 0.0,
+    "max_frame": 0.0,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 0,
+   "turned_deg": 0.0,
+   "jumps": []
+  }
+ ],
+ "limits": {
+  "foot_down_mm": 4.0,
+  "contact_mm": 2.0,
+  "slip_frame_mm": 5.0,
+  "glide_mm": 1.0,
+  "glide_deg": 0.3,
+  "legs_still_mm": 0.5,
+  "jump_mm": 250.0,
+  "mir_jump_mm": 150.0
+ },
+ "seconds": 0.5
+}

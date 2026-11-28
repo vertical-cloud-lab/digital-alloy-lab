@@ -1,0 +1,61 @@
+{
+ "chapter": "31-machining-parts",
+ "frames_recorded": 1088,
+ "recordings": [
+  "/tmp/robotbuild/frames/31-machining-parts/audit"
+ ],
+ "people": [],
+ "mirs": [
+  {
+   "mir": "mirA",
+   "frames": 816,
+   "driven_mm": 4253,
+   "forward": "local +x",
+   "forward_mm": 4253,
+   "reverse_mm": 0,
+   "reverse_legs": 0,
+   "longest_reverse_leg_mm": 0,
+   "reverse_leg_list": [],
+   "sideways_mm": {
+    "total": 0.0,
+    "max_frame": 0.0,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 10,
+   "turned_deg": 4.6,
+   "jumps": []
+  },
+  {
+   "mir": "mirB",
+   "frames": 152,
+   "driven_mm": 0,
+   "forward": "local +x",
+   "forward_mm": 0,
+   "reverse_mm": 0,
+   "reverse_legs": 0,
+   "longest_reverse_leg_mm": 0,
+   "reverse_leg_list": [],
+   "sideways_mm": {
+    "total": 0.0,
+    "max_frame": 0.0,
+    "frames_over_1mm": 0
+   },
+   "sideways_worst": [],
+   "pivot_frames": 0,
+   "turned_deg": 0.0,
+   "jumps": []
+  }
+ ],
+ "limits": {
+  "foot_down_mm": 4.0,
+  "contact_mm": 2.0,
+  "slip_frame_mm": 5.0,
+  "glide_mm": 1.0,
+  "glide_deg": 0.3,
+  "legs_still_mm": 0.5,
+  "jump_mm": 250.0,
+  "mir_jump_mm": 150.0
+ },
+ "seconds": 0.4
+}
