@@ -5710,6 +5710,2676 @@
    ],
    "utc": "2026-11-28 10:03",
    "commit": "e3853cf"
+  },
+  "variant_front_diagonal_h12_kr3e6_kt2e4": {
+   "freqs_hz": [
+    50.16,
+    70.14,
+    130.65,
+    160.23,
+    184.39,
+    221.22
+   ],
+   "modes": [
+    {
+     "f_hz": 50.15732,
+     "head_translation_dir": [
+      -0.99,
+      0.12,
+      -0.05
+     ],
+     "head_rotation_dir": [
+      0.15,
+      0.36,
+      -0.92
+     ],
+     "max_at": [
+      210.0,
+      -173.0,
+      484.0
+     ],
+     "dominant_head_axis": "x (along the cross-beams)",
+     "head_share": 0.8305143141297809,
+     "max_in": "post 3 (front right)"
+    },
+    {
+     "f_hz": 70.13869,
+     "head_translation_dir": [
+      0.13,
+      0.99,
+      0.01
+     ],
+     "head_rotation_dir": [
+      0.1,
+      -0.21,
+      -0.97
+     ],
+     "max_at": [
+      -4.0,
+      -145.0,
+      453.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.8153038451845863,
+     "max_in": "front beam"
+    },
+    {
+     "f_hz": 130.6453,
+     "head_translation_dir": [
+      -0.14,
+      0.69,
+      0.71
+     ],
+     "head_rotation_dir": [
+      -0.14,
+      0.11,
+      0.98
+     ],
+     "max_at": [
+      -310.0,
+      201.0,
+      484.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.12601979412170292,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 160.234,
+     "head_translation_dir": [
+      -0.05,
+      -0.07,
+      1.0
+     ],
+     "head_rotation_dir": [
+      -0.52,
+      0.79,
+      -0.33
+     ],
+     "max_at": [
+      -129.0,
+      -166.0,
+      465.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.6126943879503763,
+     "max_in": "head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)"
+    },
+    {
+     "f_hz": 184.3855,
+     "head_translation_dir": [
+      0.0,
+      0.95,
+      0.32
+     ],
+     "head_rotation_dir": [
+      0.13,
+      0.57,
+      0.81
+     ],
+     "max_at": [
+      -57.0,
+      -165.0,
+      234.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.03428950329436017,
+     "max_in": "added brace 0"
+    },
+    {
+     "f_hz": 221.2162,
+     "head_translation_dir": [
+      0.97,
+      0.23,
+      -0.1
+     ],
+     "head_rotation_dir": [
+      -0.4,
+      -0.89,
+      0.2
+     ],
+     "max_at": [
+      -37.0,
+      -180.0,
+      227.0
+     ],
+     "dominant_head_axis": "x (along the cross-beams)",
+     "head_share": 0.013998907769318572,
+     "max_in": "added brace 0"
+    }
+   ],
+   "ccx_s": 37,
+   "nodes": 102704,
+   "elements": 51017,
+   "kind": "variant",
+   "variant": "front_diagonal",
+   "extra_braces": [
+    [
+     [
+      -302.25,
+      -165.1,
+      160.0
+     ],
+     [
+      217.75,
+      -165.1,
+      285.0
+     ]
+    ]
+   ],
+   "hmax": 12.0,
+   "inertia": true,
+   "stiffness": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "n_joints": 22,
+   "joints": [
+    {
+     "name": "post 0 (back left) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 0 (back left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      132,
+      224
+     ],
+     "at": [
+      -288.1,
+      161.3,
+      -34.8
+     ]
+    },
+    {
+     "name": "post 0 (back left) / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      97,
+      264
+     ],
+     "at": [
+      -272.6,
+      178.3,
+      299.2
+     ]
+    },
+    {
+     "name": "post 1 (back right) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 1 (back right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      135,
+      239
+     ],
+     "at": [
+      231.9,
+      161.2,
+      -34.6
+     ]
+    },
+    {
+     "name": "post 1 (back right) / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      97,
+      268
+     ],
+     "at": [
+      216.4,
+      178.1,
+      299.5
+     ]
+    },
+    {
+     "name": "post 2 (front left) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      -150.7,
+      438.0
+     ]
+    },
+    {
+     "name": "post 2 (front left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      135,
+      270
+     ],
+     "at": [
+      -288.1,
+      -134.3,
+      455.6
+     ]
+    },
+    {
+     "name": "post 2 (front left) / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      94,
+      262
+     ],
+     "at": [
+      -272.6,
+      -150.7,
+      339.2
+     ]
+    },
+    {
+     "name": "post 2 (front left) / added brace 0",
+     "cls": "brace",
+     "nodes": [
+      150,
+      356
+     ],
+     "at": [
+      -283.4,
+      -163.1,
+      165.2
+     ]
+    },
+    {
+     "name": "post 3 (front right) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      -151.0,
+      438.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      133,
+      261
+     ],
+     "at": [
+      232.0,
+      -134.3,
+      456.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      94,
+      279
+     ],
+     "at": [
+      216.8,
+      -150.8,
+      339.4
+     ]
+    },
+    {
+     "name": "post 3 (front right) / added brace 0",
+     "cls": "brace",
+     "nodes": [
+      73,
+      99
+     ],
+     "at": [
+      213.5,
+      -162.5,
+      282.1
+     ]
+    },
+    {
+     "name": "back beam / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      141,
+      260
+     ],
+     "at": [
+      -141.8,
+      178.2,
+      429.9
+     ]
+    },
+    {
+     "name": "back beam / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      133,
+      259
+     ],
+     "at": [
+      85.7,
+      178.5,
+      430.0
+     ]
+    },
+    {
+     "name": "back beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      116,
+      310
+     ],
+     "at": [
+      -88.7,
+      171.7,
+      446.5
+     ]
+    },
+    {
+     "name": "back beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      163.4,
+      433.4
+     ]
+    },
+    {
+     "name": "front beam / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      136,
+      268
+     ],
+     "at": [
+      -181.5,
+      -150.8,
+      429.9
+     ]
+    },
+    {
+     "name": "front beam / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      140,
+      276
+     ],
+     "at": [
+      126.1,
+      -150.7,
+      430.1
+     ]
+    },
+    {
+     "name": "front beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      117,
+      325
+     ],
+     "at": [
+      -89.3,
+      -144.5,
+      446.7
+     ]
+    },
+    {
+     "name": "front beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      -135.9,
+      433.4
+     ]
+    }
+   ],
+   "utc": "2026-11-28 10:24",
+   "commit": "d68249f"
+  },
+  "variant_front_diagonal_h12_kr1e6_kt1e4": {
+   "freqs_hz": [
+    45.0,
+    61.99,
+    114.29,
+    130.07,
+    171.85,
+    201.0
+   ],
+   "modes": [
+    {
+     "f_hz": 44.99723,
+     "head_translation_dir": [
+      -0.99,
+      0.09,
+      -0.05
+     ],
+     "head_rotation_dir": [
+      0.16,
+      0.35,
+      -0.92
+     ],
+     "max_at": [
+      210.0,
+      -128.0,
+      484.0
+     ],
+     "dominant_head_axis": "x (along the cross-beams)",
+     "head_share": 0.829864660975823,
+     "max_in": "post 3 (front right)"
+    },
+    {
+     "f_hz": 61.98676,
+     "head_translation_dir": [
+      0.1,
+      0.99,
+      0.01
+     ],
+     "head_rotation_dir": [
+      0.21,
+      -0.2,
+      -0.96
+     ],
+     "max_at": [
+      2.0,
+      -146.0,
+      453.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.8491664247950436,
+     "max_in": "front beam"
+    },
+    {
+     "f_hz": 114.2855,
+     "head_translation_dir": [
+      -0.15,
+      0.47,
+      0.87
+     ],
+     "head_rotation_dir": [
+      -0.19,
+      0.14,
+      0.97
+     ],
+     "max_at": [
+      -277.0,
+      201.0,
+      484.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.15813932651305876,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 130.0694,
+     "head_translation_dir": [
+      0.04,
+      0.07,
+      -1.0
+     ],
+     "head_rotation_dir": [
+      0.58,
+      -0.61,
+      0.54
+     ],
+     "max_at": [
+      -129.0,
+      -166.0,
+      465.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.6277049754457372,
+     "max_in": "head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)"
+    },
+    {
+     "f_hz": 171.8459,
+     "head_translation_dir": [
+      -0.0,
+      0.98,
+      0.18
+     ],
+     "head_rotation_dir": [
+      0.54,
+      0.62,
+      0.58
+     ],
+     "max_at": [
+      -51.0,
+      -165.0,
+      236.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.029823090369699913,
+     "max_in": "added brace 0"
+    },
+    {
+     "f_hz": 201.0027,
+     "head_translation_dir": [
+      0.97,
+      0.19,
+      0.15
+     ],
+     "head_rotation_dir": [
+      -0.39,
+      -0.9,
+      0.18
+     ],
+     "max_at": [
+      -37.0,
+      -180.0,
+      227.0
+     ],
+     "dominant_head_axis": "x (along the cross-beams)",
+     "head_share": 0.014142612708253137,
+     "max_in": "added brace 0"
+    }
+   ],
+   "ccx_s": 39,
+   "nodes": 102704,
+   "elements": 51017,
+   "kind": "variant",
+   "variant": "front_diagonal",
+   "extra_braces": [
+    [
+     [
+      -302.25,
+      -165.1,
+      160.0
+     ],
+     [
+      217.75,
+      -165.1,
+      285.0
+     ]
+    ]
+   ],
+   "hmax": 12.0,
+   "inertia": true,
+   "stiffness": {
+    "kr": 1000000.0,
+    "kt": 10000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "n_joints": 22,
+   "joints": [
+    {
+     "name": "post 0 (back left) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 0 (back left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      132,
+      224
+     ],
+     "at": [
+      -288.1,
+      161.3,
+      -34.8
+     ]
+    },
+    {
+     "name": "post 0 (back left) / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      97,
+      264
+     ],
+     "at": [
+      -272.6,
+      178.3,
+      299.2
+     ]
+    },
+    {
+     "name": "post 1 (back right) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 1 (back right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      135,
+      239
+     ],
+     "at": [
+      231.9,
+      161.2,
+      -34.6
+     ]
+    },
+    {
+     "name": "post 1 (back right) / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      97,
+      268
+     ],
+     "at": [
+      216.4,
+      178.1,
+      299.5
+     ]
+    },
+    {
+     "name": "post 2 (front left) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      -150.7,
+      438.0
+     ]
+    },
+    {
+     "name": "post 2 (front left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      135,
+      270
+     ],
+     "at": [
+      -288.1,
+      -134.3,
+      455.6
+     ]
+    },
+    {
+     "name": "post 2 (front left) / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      94,
+      262
+     ],
+     "at": [
+      -272.6,
+      -150.7,
+      339.2
+     ]
+    },
+    {
+     "name": "post 2 (front left) / added brace 0",
+     "cls": "brace",
+     "nodes": [
+      150,
+      356
+     ],
+     "at": [
+      -283.4,
+      -163.1,
+      165.2
+     ]
+    },
+    {
+     "name": "post 3 (front right) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      -151.0,
+      438.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      133,
+      261
+     ],
+     "at": [
+      232.0,
+      -134.3,
+      456.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      94,
+      279
+     ],
+     "at": [
+      216.8,
+      -150.8,
+      339.4
+     ]
+    },
+    {
+     "name": "post 3 (front right) / added brace 0",
+     "cls": "brace",
+     "nodes": [
+      73,
+      99
+     ],
+     "at": [
+      213.5,
+      -162.5,
+      282.1
+     ]
+    },
+    {
+     "name": "back beam / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      141,
+      260
+     ],
+     "at": [
+      -141.8,
+      178.2,
+      429.9
+     ]
+    },
+    {
+     "name": "back beam / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      133,
+      259
+     ],
+     "at": [
+      85.7,
+      178.5,
+      430.0
+     ]
+    },
+    {
+     "name": "back beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      116,
+      310
+     ],
+     "at": [
+      -88.7,
+      171.7,
+      446.5
+     ]
+    },
+    {
+     "name": "back beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      163.4,
+      433.4
+     ]
+    },
+    {
+     "name": "front beam / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      136,
+      268
+     ],
+     "at": [
+      -181.5,
+      -150.8,
+      429.9
+     ]
+    },
+    {
+     "name": "front beam / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      140,
+      276
+     ],
+     "at": [
+      126.1,
+      -150.7,
+      430.1
+     ]
+    },
+    {
+     "name": "front beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      117,
+      325
+     ],
+     "at": [
+      -89.3,
+      -144.5,
+      446.7
+     ]
+    },
+    {
+     "name": "front beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      -135.9,
+      433.4
+     ]
+    }
+   ],
+   "utc": "2026-11-28 10:25",
+   "commit": "d68249f"
+  },
+  "variant_front_diagonal_h12_kr3e6_kt2e4_base3e7": {
+   "freqs_hz": [
+    35.01,
+    59.44,
+    103.96,
+    151.25,
+    162.06,
+    194.02
+   ],
+   "modes": [
+    {
+     "f_hz": 35.00877,
+     "head_translation_dir": [
+      -1.0,
+      0.05,
+      -0.04
+     ],
+     "head_rotation_dir": [
+      0.16,
+      0.38,
+      -0.91
+     ],
+     "max_at": [
+      210.0,
+      -128.0,
+      484.0
+     ],
+     "dominant_head_axis": "x (along the cross-beams)",
+     "head_share": 0.8691615253661245,
+     "max_in": "post 3 (front right)"
+    },
+    {
+     "f_hz": 59.4429,
+     "head_translation_dir": [
+      0.05,
+      1.0,
+      0.02
+     ],
+     "head_rotation_dir": [
+      -0.11,
+      -0.12,
+      -0.99
+     ],
+     "max_at": [
+      -288.0,
+      201.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.6949131375444738,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 103.9559,
+     "head_translation_dir": [
+      0.05,
+      0.88,
+      0.46
+     ],
+     "head_rotation_dir": [
+      -0.13,
+      0.04,
+      0.99
+     ],
+     "max_at": [
+      -310.0,
+      201.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.10693130895009144,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 151.2485,
+     "head_translation_dir": [
+      -0.04,
+      -0.1,
+      0.99
+     ],
+     "head_rotation_dir": [
+      -0.55,
+      0.83,
+      -0.1
+     ],
+     "max_at": [
+      -129.0,
+      -166.0,
+      465.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.6408083226469646,
+     "max_in": "head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)"
+    },
+    {
+     "f_hz": 162.0578,
+     "head_translation_dir": [
+      -0.05,
+      0.58,
+      0.81
+     ],
+     "head_rotation_dir": [
+      -0.02,
+      0.88,
+      -0.47
+     ],
+     "max_at": [
+      -75.0,
+      -165.0,
+      200.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.07842745335845908,
+     "max_in": "added brace 0"
+    },
+    {
+     "f_hz": 194.0169,
+     "head_translation_dir": [
+      -0.01,
+      0.99,
+      0.15
+     ],
+     "head_rotation_dir": [
+      0.35,
+      -0.13,
+      -0.93
+     ],
+     "max_at": [
+      -310.0,
+      156.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.04941978572612627,
+     "max_in": "post 0 (back left)"
+    }
+   ],
+   "ccx_s": 31,
+   "nodes": 102704,
+   "elements": 51017,
+   "kind": "variant",
+   "variant": "front_diagonal",
+   "extra_braces": [
+    [
+     [
+      -302.25,
+      -165.1,
+      160.0
+     ],
+     [
+      217.75,
+      -165.1,
+      285.0
+     ]
+    ]
+   ],
+   "hmax": 12.0,
+   "inertia": true,
+   "stiffness": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": 30000000.0,
+    "kt_base": 50000.0,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "n_joints": 22,
+   "joints": [
+    {
+     "name": "post 0 (back left) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 0 (back left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      132,
+      224
+     ],
+     "at": [
+      -288.1,
+      161.3,
+      -34.8
+     ]
+    },
+    {
+     "name": "post 0 (back left) / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      97,
+      264
+     ],
+     "at": [
+      -272.6,
+      178.3,
+      299.2
+     ]
+    },
+    {
+     "name": "post 1 (back right) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 1 (back right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      135,
+      239
+     ],
+     "at": [
+      231.9,
+      161.2,
+      -34.6
+     ]
+    },
+    {
+     "name": "post 1 (back right) / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      97,
+      268
+     ],
+     "at": [
+      216.4,
+      178.1,
+      299.5
+     ]
+    },
+    {
+     "name": "post 2 (front left) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      -150.7,
+      438.0
+     ]
+    },
+    {
+     "name": "post 2 (front left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      135,
+      270
+     ],
+     "at": [
+      -288.1,
+      -134.3,
+      455.6
+     ]
+    },
+    {
+     "name": "post 2 (front left) / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      94,
+      262
+     ],
+     "at": [
+      -272.6,
+      -150.7,
+      339.2
+     ]
+    },
+    {
+     "name": "post 2 (front left) / added brace 0",
+     "cls": "brace",
+     "nodes": [
+      150,
+      356
+     ],
+     "at": [
+      -283.4,
+      -163.1,
+      165.2
+     ]
+    },
+    {
+     "name": "post 3 (front right) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      -151.0,
+      438.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      133,
+      261
+     ],
+     "at": [
+      232.0,
+      -134.3,
+      456.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      94,
+      279
+     ],
+     "at": [
+      216.8,
+      -150.8,
+      339.4
+     ]
+    },
+    {
+     "name": "post 3 (front right) / added brace 0",
+     "cls": "brace",
+     "nodes": [
+      73,
+      99
+     ],
+     "at": [
+      213.5,
+      -162.5,
+      282.1
+     ]
+    },
+    {
+     "name": "back beam / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      141,
+      260
+     ],
+     "at": [
+      -141.8,
+      178.2,
+      429.9
+     ]
+    },
+    {
+     "name": "back beam / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      133,
+      259
+     ],
+     "at": [
+      85.7,
+      178.5,
+      430.0
+     ]
+    },
+    {
+     "name": "back beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      116,
+      310
+     ],
+     "at": [
+      -88.7,
+      171.7,
+      446.5
+     ]
+    },
+    {
+     "name": "back beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      163.4,
+      433.4
+     ]
+    },
+    {
+     "name": "front beam / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      136,
+      268
+     ],
+     "at": [
+      -181.5,
+      -150.8,
+      429.9
+     ]
+    },
+    {
+     "name": "front beam / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      140,
+      276
+     ],
+     "at": [
+      126.1,
+      -150.7,
+      430.1
+     ]
+    },
+    {
+     "name": "front beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      117,
+      325
+     ],
+     "at": [
+      -89.3,
+      -144.5,
+      446.7
+     ]
+    },
+    {
+     "name": "front beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      -135.9,
+      433.4
+     ]
+    }
+   ],
+   "utc": "2026-11-28 10:25",
+   "commit": "d68249f"
+  },
+  "variant_front_diagonal_h12_kr3e6_braces1e8": {
+   "freqs_hz": [
+    58.29,
+    78.02,
+    148.17,
+    195.27,
+    209.74,
+    245.7
+   ],
+   "modes": [
+    {
+     "f_hz": 58.28615,
+     "head_translation_dir": [
+      -0.98,
+      0.17,
+      -0.05
+     ],
+     "head_rotation_dir": [
+      0.18,
+      0.35,
+      -0.92
+     ],
+     "max_at": [
+      254.0,
+      -173.0,
+      484.0
+     ],
+     "dominant_head_axis": "x (along the cross-beams)",
+     "head_share": 0.8286365422250064,
+     "max_in": "post 3 (front right)"
+    },
+    {
+     "f_hz": 78.0207,
+     "head_translation_dir": [
+      0.18,
+      0.98,
+      0.02
+     ],
+     "head_rotation_dir": [
+      0.08,
+      -0.26,
+      -0.96
+     ],
+     "max_at": [
+      -266.0,
+      156.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.8032420244627585,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 148.1686,
+     "head_translation_dir": [
+      -0.19,
+      0.78,
+      0.6
+     ],
+     "head_rotation_dir": [
+      -0.12,
+      0.11,
+      0.99
+     ],
+     "max_at": [
+      -310.0,
+      201.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.12079264913936227,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 195.2714,
+     "head_translation_dir": [
+      -0.05,
+      -0.11,
+      0.99
+     ],
+     "head_rotation_dir": [
+      -0.48,
+      0.83,
+      -0.28
+     ],
+     "max_at": [
+      -129.0,
+      -166.0,
+      465.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.6312477164238579,
+     "max_in": "head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)"
+    },
+    {
+     "f_hz": 209.743,
+     "head_translation_dir": [
+      -0.05,
+      0.4,
+      0.91
+     ],
+     "head_rotation_dir": [
+      -0.16,
+      0.99,
+      0.06
+     ],
+     "max_at": [
+      -68.0,
+      -165.0,
+      232.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.08903567091533286,
+     "max_in": "added brace 0"
+    },
+    {
+     "f_hz": 245.6974,
+     "head_translation_dir": [
+      0.12,
+      0.9,
+      0.41
+     ],
+     "head_rotation_dir": [
+      0.35,
+      -0.16,
+      -0.92
+     ],
+     "max_at": [
+      -310.0,
+      156.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.03535994837103467,
+     "max_in": "post 0 (back left)"
+    }
+   ],
+   "ccx_s": 30,
+   "nodes": 102704,
+   "elements": 51017,
+   "kind": "variant",
+   "variant": "front_diagonal",
+   "extra_braces": [
+    [
+     [
+      -302.25,
+      -165.1,
+      160.0
+     ],
+     [
+      217.75,
+      -165.1,
+      285.0
+     ]
+    ]
+   ],
+   "hmax": 12.0,
+   "inertia": true,
+   "stiffness": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {
+     "brace": 100000000.0
+    },
+    "kt_by": {
+     "brace": 100000.0
+    }
+   },
+   "n_joints": 22,
+   "joints": [
+    {
+     "name": "post 0 (back left) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 0 (back left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      132,
+      224
+     ],
+     "at": [
+      -288.1,
+      161.3,
+      -34.8
+     ]
+    },
+    {
+     "name": "post 0 (back left) / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      97,
+      264
+     ],
+     "at": [
+      -272.6,
+      178.3,
+      299.2
+     ]
+    },
+    {
+     "name": "post 1 (back right) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 1 (back right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      135,
+      239
+     ],
+     "at": [
+      231.9,
+      161.2,
+      -34.6
+     ]
+    },
+    {
+     "name": "post 1 (back right) / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      97,
+      268
+     ],
+     "at": [
+      216.4,
+      178.1,
+      299.5
+     ]
+    },
+    {
+     "name": "post 2 (front left) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      -150.7,
+      438.0
+     ]
+    },
+    {
+     "name": "post 2 (front left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      135,
+      270
+     ],
+     "at": [
+      -288.1,
+      -134.3,
+      455.6
+     ]
+    },
+    {
+     "name": "post 2 (front left) / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      94,
+      262
+     ],
+     "at": [
+      -272.6,
+      -150.7,
+      339.2
+     ]
+    },
+    {
+     "name": "post 2 (front left) / added brace 0",
+     "cls": "brace",
+     "nodes": [
+      150,
+      356
+     ],
+     "at": [
+      -283.4,
+      -163.1,
+      165.2
+     ]
+    },
+    {
+     "name": "post 3 (front right) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      -151.0,
+      438.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      133,
+      261
+     ],
+     "at": [
+      232.0,
+      -134.3,
+      456.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      94,
+      279
+     ],
+     "at": [
+      216.8,
+      -150.8,
+      339.4
+     ]
+    },
+    {
+     "name": "post 3 (front right) / added brace 0",
+     "cls": "brace",
+     "nodes": [
+      73,
+      99
+     ],
+     "at": [
+      213.5,
+      -162.5,
+      282.1
+     ]
+    },
+    {
+     "name": "back beam / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      141,
+      260
+     ],
+     "at": [
+      -141.8,
+      178.2,
+      429.9
+     ]
+    },
+    {
+     "name": "back beam / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      133,
+      259
+     ],
+     "at": [
+      85.7,
+      178.5,
+      430.0
+     ]
+    },
+    {
+     "name": "back beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      116,
+      310
+     ],
+     "at": [
+      -88.7,
+      171.7,
+      446.5
+     ]
+    },
+    {
+     "name": "back beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      163.4,
+      433.4
+     ]
+    },
+    {
+     "name": "front beam / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      136,
+      268
+     ],
+     "at": [
+      -181.5,
+      -150.8,
+      429.9
+     ]
+    },
+    {
+     "name": "front beam / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      140,
+      276
+     ],
+     "at": [
+      126.1,
+      -150.7,
+      430.1
+     ]
+    },
+    {
+     "name": "front beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      117,
+      325
+     ],
+     "at": [
+      -89.3,
+      -144.5,
+      446.7
+     ]
+    },
+    {
+     "name": "front beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      -135.9,
+      433.4
+     ]
+    }
+   ],
+   "utc": "2026-11-28 10:26",
+   "commit": "d68249f"
+  },
+  "joints_h12_kr3e6_kt2e4_base1e8": {
+   "freqs_hz": [
+    41.11,
+    64.43,
+    117.27,
+    141.98,
+    209.24,
+    216.5
+   ],
+   "modes": [
+    {
+     "f_hz": 41.10649,
+     "head_translation_dir": [
+      -1.0,
+      0.08,
+      -0.01
+     ],
+     "head_rotation_dir": [
+      0.03,
+      0.43,
+      -0.9
+     ],
+     "max_at": [
+      -288.0,
+      -125.0,
+      479.0
+     ],
+     "dominant_head_axis": "x (along the cross-beams)",
+     "head_share": 0.8497533563649571,
+     "max_in": "diagonal 0"
+    },
+    {
+     "f_hz": 64.43154,
+     "head_translation_dir": [
+      0.08,
+      1.0,
+      0.03
+     ],
+     "head_rotation_dir": [
+      -0.05,
+      -0.14,
+      -0.99
+     ],
+     "max_at": [
+      -266.0,
+      201.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.7568114319131984,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 117.2746,
+     "head_translation_dir": [
+      0.07,
+      0.78,
+      0.62
+     ],
+     "head_rotation_dir": [
+      -0.14,
+      0.07,
+      0.99
+     ],
+     "max_at": [
+      -310.0,
+      201.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.1217795047370864,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 141.9843,
+     "head_translation_dir": [
+      -0.03,
+      -0.08,
+      1.0
+     ],
+     "head_rotation_dir": [
+      -0.63,
+      0.73,
+      -0.26
+     ],
+     "max_at": [
+      -129.0,
+      -166.0,
+      465.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.6022124559948866,
+     "max_in": "head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)"
+    },
+    {
+     "f_hz": 209.2378,
+     "head_translation_dir": [
+      0.17,
+      -0.94,
+      -0.29
+     ],
+     "head_rotation_dir": [
+      -0.45,
+      -0.06,
+      0.89
+     ],
+     "max_at": [
+      -303.0,
+      -16.0,
+      267.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.05120094044835674,
+     "max_in": "diagonal 0"
+    },
+    {
+     "f_hz": 216.505,
+     "head_translation_dir": [
+      0.07,
+      -0.99,
+      -0.08
+     ],
+     "head_rotation_dir": [
+      -0.42,
+      0.09,
+      0.9
+     ],
+     "max_at": [
+      -310.0,
+      156.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.02686600018350579,
+     "max_in": "post 0 (back left)"
+    }
+   ],
+   "ccx_s": 45,
+   "nodes": 96572,
+   "elements": 47957,
+   "kind": "joints",
+   "hmax": 12.0,
+   "inertia": true,
+   "stiffness": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": 100000000.0,
+    "kt_base": 100000.0,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "n_joints": 20,
+   "joints": [
+    {
+     "name": "post 0 (back left) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 0 (back left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      133,
+      224
+     ],
+     "at": [
+      -288.1,
+      161.3,
+      -34.8
+     ]
+    },
+    {
+     "name": "post 0 (back left) / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      97,
+      264
+     ],
+     "at": [
+      -272.6,
+      178.3,
+      299.1
+     ]
+    },
+    {
+     "name": "post 1 (back right) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 1 (back right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      136,
+      239
+     ],
+     "at": [
+      232.0,
+      161.2,
+      -34.6
+     ]
+    },
+    {
+     "name": "post 1 (back right) / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      97,
+      268
+     ],
+     "at": [
+      216.4,
+      178.1,
+      299.5
+     ]
+    },
+    {
+     "name": "post 2 (front left) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      -150.7,
+      438.0
+     ]
+    },
+    {
+     "name": "post 2 (front left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      135,
+      270
+     ],
+     "at": [
+      -288.1,
+      -134.3,
+      455.6
+     ]
+    },
+    {
+     "name": "post 2 (front left) / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      94,
+      262
+     ],
+     "at": [
+      -272.6,
+      -150.7,
+      339.2
+     ]
+    },
+    {
+     "name": "post 3 (front right) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      -150.7,
+      438.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      135,
+      261
+     ],
+     "at": [
+      232.0,
+      -134.3,
+      455.9
+     ]
+    },
+    {
+     "name": "post 3 (front right) / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      94,
+      279
+     ],
+     "at": [
+      216.8,
+      -150.6,
+      339.4
+     ]
+    },
+    {
+     "name": "back beam / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      138,
+      260
+     ],
+     "at": [
+      -141.6,
+      178.1,
+      430.0
+     ]
+    },
+    {
+     "name": "back beam / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      133,
+      259
+     ],
+     "at": [
+      85.7,
+      178.5,
+      430.0
+     ]
+    },
+    {
+     "name": "back beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      116,
+      310
+     ],
+     "at": [
+      -88.7,
+      171.7,
+      446.5
+     ]
+    },
+    {
+     "name": "back beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      163.4,
+      433.4
+     ]
+    },
+    {
+     "name": "front beam / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      133,
+      268
+     ],
+     "at": [
+      -181.7,
+      -150.8,
+      430.0
+     ]
+    },
+    {
+     "name": "front beam / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      143,
+      276
+     ],
+     "at": [
+      126.0,
+      -150.6,
+      430.1
+     ]
+    },
+    {
+     "name": "front beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      117,
+      325
+     ],
+     "at": [
+      -89.4,
+      -144.5,
+      446.6
+     ]
+    },
+    {
+     "name": "front beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      25,
+      80
+     ],
+     "at": [
+      164.2,
+      -135.9,
+      433.5
+     ]
+    }
+   ],
+   "utc": "2026-11-28 10:27",
+   "commit": "d68249f"
+  },
+  "joints_h12_kr3e6_kt2e4_base3e7": {
+   "freqs_hz": [
+    34.11,
+    59.43,
+    105.2,
+    136.99,
+    191.29,
+    199.58
+   ],
+   "modes": [
+    {
+     "f_hz": 34.11496,
+     "head_translation_dir": [
+      -1.0,
+      0.05,
+      -0.01
+     ],
+     "head_rotation_dir": [
+      0.03,
+      0.45,
+      -0.89
+     ],
+     "max_at": [
+      -288.0,
+      -125.0,
+      479.0
+     ],
+     "dominant_head_axis": "x (along the cross-beams)",
+     "head_share": 0.8664939458697155,
+     "max_in": "diagonal 0"
+    },
+    {
+     "f_hz": 59.43145,
+     "head_translation_dir": [
+      0.05,
+      1.0,
+      0.03
+     ],
+     "head_rotation_dir": [
+      -0.14,
+      -0.1,
+      -0.99
+     ],
+     "max_at": [
+      -282.0,
+      201.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.6938889535482634,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 105.2044,
+     "head_translation_dir": [
+      0.15,
+      0.86,
+      0.49
+     ],
+     "head_rotation_dir": [
+      -0.14,
+      0.04,
+      0.99
+     ],
+     "max_at": [
+      -310.0,
+      201.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.11596342116491581,
+     "max_in": "post 0 (back left)"
+    },
+    {
+     "f_hz": 136.9878,
+     "head_translation_dir": [
+      -0.04,
+      -0.08,
+      1.0
+     ],
+     "head_rotation_dir": [
+      -0.65,
+      0.74,
+      -0.17
+     ],
+     "max_at": [
+      -129.0,
+      -166.0,
+      465.0
+     ],
+     "dominant_head_axis": "z (vertical)",
+     "head_share": 0.6083758602103602,
+     "max_in": "head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)"
+    },
+    {
+     "f_hz": 191.2854,
+     "head_translation_dir": [
+      0.21,
+      -0.94,
+      -0.25
+     ],
+     "head_rotation_dir": [
+      -0.41,
+      -0.07,
+      0.91
+     ],
+     "max_at": [
+      -303.0,
+      -10.0,
+      257.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.07184482899999732,
+     "max_in": "diagonal 0"
+    },
+    {
+     "f_hz": 199.5779,
+     "head_translation_dir": [
+      -0.16,
+      0.99,
+      -0.03
+     ],
+     "head_rotation_dir": [
+      0.35,
+      -0.11,
+      -0.93
+     ],
+     "max_at": [
+      -310.0,
+      156.0,
+      484.0
+     ],
+     "dominant_head_axis": "y (fore-aft)",
+     "head_share": 0.029104750393360076,
+     "max_in": "post 0 (back left)"
+    }
+   ],
+   "ccx_s": 49,
+   "nodes": 96572,
+   "elements": 47957,
+   "kind": "joints",
+   "hmax": 12.0,
+   "inertia": true,
+   "stiffness": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": 30000000.0,
+    "kt_base": 50000.0,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "n_joints": 20,
+   "joints": [
+    {
+     "name": "post 0 (back left) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 0 (back left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      133,
+      224
+     ],
+     "at": [
+      -288.1,
+      161.3,
+      -34.8
+     ]
+    },
+    {
+     "name": "post 0 (back left) / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      97,
+      264
+     ],
+     "at": [
+      -272.6,
+      178.3,
+      299.1
+     ]
+    },
+    {
+     "name": "post 1 (back right) / back beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      178.6,
+      438.0
+     ]
+    },
+    {
+     "name": "post 1 (back right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      136,
+      239
+     ],
+     "at": [
+      232.0,
+      161.2,
+      -34.6
+     ]
+    },
+    {
+     "name": "post 1 (back right) / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      97,
+      268
+     ],
+     "at": [
+      216.4,
+      178.1,
+      299.5
+     ]
+    },
+    {
+     "name": "post 2 (front left) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      -265.5,
+      -150.7,
+      438.0
+     ]
+    },
+    {
+     "name": "post 2 (front left) / diagonal 0",
+     "cls": "brace",
+     "nodes": [
+      135,
+      270
+     ],
+     "at": [
+      -288.1,
+      -134.3,
+      455.6
+     ]
+    },
+    {
+     "name": "post 2 (front left) / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      94,
+      262
+     ],
+     "at": [
+      -272.6,
+      -150.7,
+      339.2
+     ]
+    },
+    {
+     "name": "post 3 (front right) / front beam",
+     "cls": "beam-post",
+     "nodes": [
+      25,
+      72
+     ],
+     "at": [
+      209.5,
+      -150.7,
+      438.0
+     ]
+    },
+    {
+     "name": "post 3 (front right) / diagonal 1",
+     "cls": "brace",
+     "nodes": [
+      135,
+      261
+     ],
+     "at": [
+      232.0,
+      -134.3,
+      455.9
+     ]
+    },
+    {
+     "name": "post 3 (front right) / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      94,
+      279
+     ],
+     "at": [
+      216.8,
+      -150.6,
+      339.4
+     ]
+    },
+    {
+     "name": "back beam / knee brace 2",
+     "cls": "brace",
+     "nodes": [
+      138,
+      260
+     ],
+     "at": [
+      -141.6,
+      178.1,
+      430.0
+     ]
+    },
+    {
+     "name": "back beam / knee brace 3",
+     "cls": "brace",
+     "nodes": [
+      133,
+      259
+     ],
+     "at": [
+      85.7,
+      178.5,
+      430.0
+     ]
+    },
+    {
+     "name": "back beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      116,
+      310
+     ],
+     "at": [
+      -88.7,
+      171.7,
+      446.5
+     ]
+    },
+    {
+     "name": "back beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      27,
+      80
+     ],
+     "at": [
+      164.6,
+      163.4,
+      433.4
+     ]
+    },
+    {
+     "name": "front beam / knee brace 4",
+     "cls": "brace",
+     "nodes": [
+      133,
+      268
+     ],
+     "at": [
+      -181.7,
+      -150.8,
+      430.0
+     ]
+    },
+    {
+     "name": "front beam / knee brace 5",
+     "cls": "brace",
+     "nodes": [
+      143,
+      276
+     ],
+     "at": [
+      126.0,
+      -150.6,
+      430.1
+     ]
+    },
+    {
+     "name": "front beam / head mount, entrance side (MK-09 flange plate, brackets, top flange, gussets)",
+     "cls": "mount",
+     "nodes": [
+      117,
+      325
+     ],
+     "at": [
+      -89.4,
+      -144.5,
+      446.6
+     ]
+    },
+    {
+     "name": "front beam / head mount, far side (support plate and brackets)",
+     "cls": "mount",
+     "nodes": [
+      25,
+      80
+     ],
+     "at": [
+      164.2,
+      -135.9,
+      433.5
+     ]
+    }
+   ],
+   "utc": "2026-11-28 10:28",
+   "commit": "d68249f"
   }
  },
  "meta": {
@@ -5875,6 +8545,98 @@
     "kt_by": {
      "mount": 100000.0
     }
+   },
+   "kr3e6_kt1e5": {
+    "kr": 3000000.0,
+    "kt": 100000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "kr3e6_bracekt1e5": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {},
+    "kt_by": {
+     "brace": 100000.0
+    }
+   },
+   "kr3e6_braces_rigid": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {
+     "brace": 1000000000000.0
+    },
+    "kt_by": {
+     "brace": 10000000.0
+    }
+   },
+   "kr3e6_braces1e8_beampost1e8": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {
+     "brace": 100000000.0,
+     "beam-post": 100000000.0
+    },
+    "kt_by": {
+     "brace": 100000.0,
+     "beam-post": 100000.0
+    }
+   },
+   "krstiff_kt5e4": {
+    "kr": 1000000000000.0,
+    "kt": 50000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "krstiff_kt1e5": {
+    "kr": 1000000000000.0,
+    "kt": 100000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "kr3e6_kt2e4_base1e8": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": 100000000.0,
+    "kt_base": 100000.0,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "kr3e6_kt2e4_base3e7": {
+    "kr": 3000000.0,
+    "kt": 20000.0,
+    "kr_base": 30000000.0,
+    "kt_base": 50000.0,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "kr1e6_kt1e4": {
+    "kr": 1000000.0,
+    "kt": 10000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {},
+    "kt_by": {}
+   },
+   "kr1e7_kt5e4": {
+    "kr": 10000000.0,
+    "kt": 50000.0,
+    "kr_base": null,
+    "kt_base": null,
+    "kr_by": {},
+    "kt_by": {}
    }
   }
  }

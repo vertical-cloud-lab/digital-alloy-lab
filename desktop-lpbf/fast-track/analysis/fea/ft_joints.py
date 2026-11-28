@@ -83,6 +83,15 @@ SWEEP = {
     "kr3e6_braces1e8_beampost1e8": case(3e6, 2e4, kr_by={"brace": 1e8, "beam-post": 1e8}, kt_by={"brace": 1e5, "beam-post": 1e5}),
     "krstiff_kt5e4": case(STIFF, 5e4),
     "krstiff_kt1e5": case(STIFF, 1e5),
+    # the bench mounting: frame joints at the baseline, the feet much stiffer than one bracket (a foot plate bolted down)
+    "kr3e6_kt2e4_base1e8": case(3e6, 2e4, 1e8, 1e5),
+    "kr3e6_kt2e4_base3e7": case(3e6, 2e4, 3e7, 5e4),
+    # round 3 finish: the corners of the estimated range for single-bracket T-slot joints (kr 1-10 kN m/rad, kt 10-50 kN/mm)
+    "kr1e6_kt1e4": case(1e6, 1e4),
+    "kr1e7_kt5e4": case(1e7, 5e4),
+    # the brace ends stiffened (two brackets, or a pinned and bolted end plate, at each end) with the feet on a bolted plate
+    "kr3e6_braces1e8_base3e7": case(3e6, 2e4, 3e7, 5e4, kr_by={"brace": 1e8}, kt_by={"brace": 1e5}),
+    "kr3e6_braces1e8_base1e8": case(3e6, 2e4, 1e8, 1e5, kr_by={"brace": 1e8}, kt_by={"brace": 1e5}),
 }
 
 
@@ -526,6 +535,14 @@ VARIANTS = {
     # z 285: under the front right knee brace (its lower end runs into the post at z 329), over MON3 (z <= 125 at x +-20)
     # and 60 mm over the latch (x -28); the box's front face is 43 mm behind the portal's centre plane
     "front_diagonal": lambda yf, yb, xl, xr: [((xl, yf, 160.0), (xr, yf, 285.0))],
+    # the same plus a lower diagonal from the right post at z 140 down to the left post's foot (z -240): the front portal
+    # triangulated from the feet to the cross-beam; the lower one passes 60 mm under MON3 (z >= 60.7 at x +-20)
+    "front_zigzag": lambda yf, yb, xl, xr: [((xl, yf, 160.0), (xr, yf, 285.0)), ((xl, yf, -240.0), (xr, yf, 140.0))],
+    # round 3 finish: the front zigzag plus one diagonal in the back portal, over the box: the box (z <= 139, door to
+    # z 150, hinges at the back) fills the back portal below z 150, so it runs from the left post at z 185 to the right
+    # post at z 275, under the back right knee brace (its lower end at z ~300); 30 mm over the door at the box's left edge
+    "portals_braced": lambda yf, yb, xl, xr: [((xl, yf, 160.0), (xr, yf, 285.0)), ((xl, yf, -240.0), (xr, yf, 140.0)),
+                                             ((xl, yb, 185.0), (xr, yb, 275.0))],
 }
 
 
