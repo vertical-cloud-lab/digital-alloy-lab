@@ -24,7 +24,7 @@ DEST = HERE / "vl"
 FILES = ["scene.py", "lab_models/common.py", "instruments.py", "instruments_lab.py", "instruments_r7.py",
          "instruments_char.py", "r8_prep.py", "r8_specimens.py", "r8_char.py", "r8_test.py", "r8_store.py",
          "register.py", "frames.py", "runner_guard.py", "openflexure.py", "alloy_models.py", "lab_models/labware.py",
-         "lab_models/equipment.py", "lab_models/vendor.py", "people.py", "props.py"]
+         "lab_models/equipment.py", "lab_models/vendor.py", "people.py", "props.py", "lab.py", "vlm.py"]
 
 
 def main() -> None:
