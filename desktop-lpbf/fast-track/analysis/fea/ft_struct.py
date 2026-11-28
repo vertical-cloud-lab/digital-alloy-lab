@@ -736,10 +736,15 @@ def case4b(R):
     op = P["cube_open"]
     top = surfaces(m, planar("z", z_top))
     land = surfaces(m, planar("z", z_land))
-    rc = lambda c: np.hypot(c[:, 0], c[:, 1])
+    wx, wy = P["win_c"]["cube"]                                   # CAD v2: window stack at (0, -21), not on the plate centre
+    cam = M.camera_geometry("FT-1V")["W"]                         # and the layer camera's port (MK-19), a tilted r 13 bore
+    rc = lambda c: np.hypot(c[:, 0] - wx, c[:, 1] - wy)
+    rcam = lambda c: np.hypot(c[:, 0] - cam[0], c[:, 1] - cam[1])
     f_top = faces_on(m, top)
     f_ring = faces_on(m, top, lambda c: (rc(c) >= 26.5) & (rc(c) <= 50.0))
+    f_cring = faces_on(m, top, lambda c: (rcam(c) >= 15.0) & (rcam(c) <= 22.0))
     F_win = P_ATM * math.pi * 26.5 ** 2
+    F_cam = P_ATM * math.pi * 13.0 ** 2                            # the camera port ring's load on the plate (bore radius)
     cheb = lambda q: np.maximum(np.abs(q[:, 0] - xc), np.abs(q[:, 1] - yc))
     clamped = nodes_on(m, land, lambda q: cheb(q) >= op / 2)
     ss = nodes_on(m, land, lambda q: (cheb(q) >= op / 2) & (cheb(q) <= op / 2 + 4.0))
@@ -748,18 +753,24 @@ def case4b(R):
     n1 = nearest(m, (xc + pw, yc + pw, z_land))
     n2 = nearest(m, (xc - pw, yc + pw, z_land))
     bore = m["idx"][nodes_on(m, top, lambda q: rc(q) <= 27.0)]
+    cbore = m["idx"][nodes_on(m, top, lambda q: rcam(q) <= 15.0)]
     out = {}
     for tag, ids in (("clamped", clamped), ("simply_supported", ss)):
         job = f"c4b_plate_{tag}"
         write_model(job, m, [MAT["al6061"]], nset("LAND", ids))
         sol = solver_for(len(m["ntags"]))
         append(job, f"*STEP\n*STATIC, SOLVER={sol}\n*BOUNDARY\nLAND,3,3\n{n1},1,2\n{n2},2,2\n*DLOAD\n" + dload_lines(f_top, P_ATM)
-               + dload_lines(f_ring, F_win / f_ring["area"].sum()) + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
+               + dload_lines(f_ring, F_win / f_ring["area"].sum()) + dload_lines(f_cring, F_cam / f_cring["area"].sum())
+               + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
         run_ccx(job)
         U, S, vm = step_results(m, job)[-1]
         i = int(np.argmax(vm))
+        qb = m["xyz"][bore]
+        Ab = np.column_stack([np.ones(len(bore)), qb[:, 0] - wx, qb[:, 1] - wy])
+        cb = np.linalg.lstsq(Ab, U[bore, 2], rcond=None)[0]          # the bore rim's plane: tilt of the window ring's seat
         out[tag] = dict(u_max_mm=float(np.abs(U[:, 2]).max()), u_max_at=m["xyz"][int(np.argmax(np.abs(U[:, 2])))].tolist(),
-                        bore_uz_mm=float(U[bore, 2].mean()), vm_max=float(vm[i]), vm_max_at=m["xyz"][i].tolist(),
+                        bore_uz_mm=float(U[bore, 2].mean()), bore_tilt_urad=[float(cb[2] * 1e6), float(-cb[1] * 1e6)],
+                        camera_bore_uz_mm=float(U[cbore, 2].mean()), vm_max=float(vm[i]), vm_max_at=m["xyz"][i].tolist(),
                         vm_p995=float(np.percentile(vm, 99.5)), sf_yield=MAT["al6061"]["sy"] / float(vm[i]))
         print(f"  4b plate {tag}: u max {out[tag]['u_max_mm'] * 1000:.1f} um, bore {out[tag]['bore_uz_mm'] * 1000:.1f} um, vm {vm[i]:.1f} MPa")
     # Roark check: clamped / simply supported square plate of side = the frame opening, the full 22.9 mm thick
@@ -767,7 +778,9 @@ def case4b(R):
     D = MAT["al6061"]["E"] * pt ** 3 / (12 * (1 - MAT["al6061"]["nu"] ** 2))
     roark = dict(side_mm=a, t_mm=pt, ss_w_mm=0.00406 * P_ATM * a ** 4 / D, cl_w_mm=0.00126 * P_ATM * a ** 4 / D,
                  ss_sigma=0.2874 * P_ATM * a ** 2 / pt ** 2, cl_sigma=0.3078 * P_ATM * a ** 2 / pt ** 2)
-    plate = dict(load=f"{P_ATM} MPa on the outer face; the window ring's {F_win:.0f} N spread round the bore (r 26.5-50 mm)",
+    plate = dict(load=f"{P_ATM} MPa on the outer face; the window ring's {F_win:.0f} N spread round the bore (r 26.5-50 mm) at "
+                      f"({wx:g}, {wy:g}); the camera port ring's {F_cam:.0f} N round the camera bore (r 15-22 mm) at ({cam[0]:g}, {cam[1]:g})",
+                 window_xy=[wx, wy], camera_xy=[cam[0], cam[1]],
                  supports="clamped: z fixed on the land outside the frame opening (bolted flange); simply supported: z fixed on a 4 mm band at the opening's edge; two corners pinned in-plane",
                  frame_opening_mm_est=op, roark_square_plate=roark, **out)
     stamp(plate, m, solver_for(len(m["ntags"])), hmax=8.0)
@@ -1231,20 +1244,42 @@ def case4d(R):
     A = math.pi / 4 * (od ** 2 - idd ** 2)
     I = math.pi / 64 * (od ** 4 - idd ** 4)
     E20, E200 = 193e3, 193e3 * 27.0 / 28.3          # ASME BPVC II-D Table TM-1, 304: 28.3e6 psi at 70 F, 27.0e6 at 400 F
-    rho = dict(al=2.70e-3, ss=8.0e-3, heater=6.0e-3, rope=0.6e-3)   # g/mm3; heater (sheath, MgO, coil) and rope are estimates
+    # g/mm3; heater (sheath, MgO, coil), rope, the potted plug (filled vacuum epoxy) and the terminal block are estimates
+    rho = dict(al=2.70e-3, ss=8.0e-3, heater=6.0e-3, rope=0.6e-3, epoxy=1.8e-3, terminal=1.5e-3)
     vol = lambda st, prefix: part(parts[st], prefix).shape.Volume()
+    # CAD v2: the rod's lower end carries a potted plug (MK-06) and sits in the rod-end block (MK-15: clamp, lead pocket,
+    # AE face) with its clamp screw and the leads' terminal block, all on the stage's platform
     mass_g = dict(substrate=vol("FT-1", "Substrate disc") * rho["al"], heater_plate=vol("FT-1", "Heater plate") * rho["al"],
                   plate_heaters=vol("FT-1", "Plate heaters") * rho["heater"], rope=vol("FT-1", "Fibreglass rope") * rho["rope"],
-                  rod_box=vol("FT-1", "Piston rod") * rho["ss"], rod_cube=vol("FT-1V", "Piston rod") * rho["ss"],
-                  rod_clamp=vol("FT-1", "Rod clamp") * rho["al"], leads_est=15.0, build_45g_est=45.0)
+                  rod_box=vol("FT-1", "Piston rod (MK-06)") * rho["ss"], rod_cube=vol("FT-1V", "Piston rod, long") * rho["ss"],
+                  plug=vol("FT-1", "Potted lead plug") * rho["epoxy"], rod_end_block=vol("FT-1", "Rod-end block") * rho["al"],
+                  clamp_screw=vol("FT-1", "Rod clamp screw") * rho["ss"], terminal_block=vol("FT-1", "Lead terminal block") * rho["terminal"],
+                  leads_est=15.0, build_45g_est=45.0)
     m_box = sum(v for k, v in mass_g.items() if k not in ("rod_cube",))
     m_cube = m_box - mass_g["rod_box"] + mass_g["rod_cube"]
-    out = dict(section=dict(od_mm=od, wall_mm=wall, A_mm2=A, I_mm4=I, E20_MPa=E20, E200_MPa=E200), mass_g={k: round(v, 1) for k, v in mass_g.items()},
-               payload_N=dict(box=m_box * 9.81e-3, cube=m_cube * 9.81e-3))
+    # the three lead notches at the rod's top (3 mm wide, through the wall, from 1 mm below the plate's underside into the
+    # socket): the section there, on a 0.01 mm grid, about the weaker centroidal axis
+    gw_, ro_, ri_ = P["lead_groove"][0], od / 2, idd / 2
+    xs = np.arange(-ro_, ro_, 0.01) + 0.005
+    X, Y = np.meshgrid(xs, xs)
+    inside = (np.hypot(X, Y) <= ro_) & (np.hypot(X, Y) >= ri_)
+    for k in range(3):
+        a_ = math.radians(30 + 120 * k)
+        xr, yr = X * math.cos(a_) + Y * math.sin(a_), -X * math.sin(a_) + Y * math.cos(a_)
+        inside &= ~((xr >= ro_ - 2) & (np.abs(yr) <= gw_ / 2))
+    dA = 0.01 ** 2
+    An = inside.sum() * dA
+    cx_, cy_ = (X[inside].sum() * dA / An, Y[inside].sum() * dA / An)
+    Ixx_, Iyy_, Ixy_ = (((Y[inside] - cy_) ** 2).sum() * dA, ((X[inside] - cx_) ** 2).sum() * dA, ((X[inside] - cx_) * (Y[inside] - cy_)).sum() * dA)
+    In = float(min(np.linalg.eigvalsh(np.array([[Ixx_, Ixy_], [Ixy_, Iyy_]]))))
+    notch = dict(width_mm=gw_, A_mm2=float(An), I_min_mm4=In, A_ratio=float(An / A), I_ratio=float(In / I), length_in_free_span_mm=1.0)
+    out = dict(section=dict(od_mm=od, wall_mm=wall, A_mm2=A, I_mm4=I, E20_MPa=E20, E200_MPa=E200), notch=notch,
+               mass_g={k: round(v, 1) for k, v in mass_g.items()}, payload_N=dict(box=m_box * 9.81e-3, cube=m_cube * 9.81e-3))
     cases = {}
     for st in ("FT-1", "FT-1V"):
         Lv = M.levels(st)["rod_vis"]
-        Lfree = Lv - (P["clamp_h"] - 2.0)                # clamp grips the bottom 23 mm; socket the top 8 mm (not in rod_vis)
+        grip = P["blk_h"] - P["rod_end_z"]               # CAD v2: the rod-end block grips the rod's bottom 22 mm; socket the top 8 mm
+        Lfree = Lv - grip                                 # (not in rod_vis)
         h = P["sub_t"] + P["hp_t"]                       # socket bottom to substrate top: the plate as a rigid lever
         Pcr = {k: math.pi ** 2 * E * I / (2.0 * Lfree) ** 2 for k, E in (("20C", E20), ("200C", E200))}   # fixed-free, K = 2
         lat = {}
@@ -1254,8 +1289,10 @@ def case4d(R):
             th = F * Lfree ** 2 / (2 * EI) + F * h * Lfree / EI
             lat[f"{F:g}N"] = dict(top_shift_um=(d + th * h) * 1000, socket_shift_um=d * 1000, tilt_urad=th * 1e6,
                                   edge_lift_um=th * P["plate_d"] / 2 * 1000)
-        cases[st] = dict(rod_vis_mm=Lv, free_length_mm=Lfree, lever_mm=h, euler_fixed_free_N=Pcr, lateral=lat,
-                         stiffness_N_per_um=1.0 / lat["1N"]["top_shift_um"])
+        cases[st] = dict(rod_vis_mm=Lv, grip_mm=grip, free_length_mm=Lfree, lever_mm=h, euler_fixed_free_N=Pcr, lateral=lat,
+                         stiffness_N_per_um=1.0 / lat["1N"]["top_shift_um"],
+                         notch_stress_5N_MPa=5.0 * h * (od / 2) / notch["I_min_mm4"],
+                         root_stress_5N_MPa=5.0 * (Lfree + h) * (od / 2) / I)
     # axial load on the X-VSR20A
     cs, shore = 2.62, 70.0                         # AS568-110/-111 class O-ring (0.103 in.) on a 1/2 in. rod; 70A FKM (assumed)
     fr = {}

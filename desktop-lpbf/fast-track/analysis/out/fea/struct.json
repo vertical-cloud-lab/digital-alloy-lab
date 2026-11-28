@@ -24,71 +24,88 @@
    "E20_MPa": 193000.0,
    "E200_MPa": 184134.27561837455
   },
+  "notch": {
+   "width_mm": 3.0,
+   "A_mm2": 24.921400000000002,
+   "I_min_mm4": 437.5077830749814,
+   "A_ratio": 0.7547144390623755,
+   "I_ratio": 0.7556605837938986,
+   "length_in_free_span_mm": 1.0
+  },
   "mass_g": {
    "substrate": 19.9,
-   "heater_plate": 83.8,
-   "plate_heaters": 9.7,
+   "heater_plate": 71.4,
+   "plate_heaters": 6.8,
    "rope": 0.6,
-   "rod_box": 21.6,
-   "rod_cube": 27.1,
-   "rod_clamp": 51.3,
+   "rod_box": 22.1,
+   "rod_cube": 27.7,
+   "plug": 2.5,
+   "rod_end_block": 233.5,
+   "clamp_screw": 1.2,
+   "terminal_block": 11.5,
    "leads_est": 15.0,
    "build_45g_est": 45.0
   },
   "payload_N": {
-   "box": 2.421610525922138,
-   "cube": 2.476031719934309
+   "box": 4.2148837352235695,
+   "cube": 4.269291971808594
   },
   "cases": {
    "FT-1": {
-    "rod_vis_mm": 73.60000000000001,
-    "free_length_mm": 50.60000000000001,
-    "lever_mm": 34.0,
+    "rod_vis_mm": 76.605,
+    "grip_mm": 22.0,
+    "free_length_mm": 54.605000000000004,
+    "lever_mm": 30.0,
     "euler_fixed_free_N": {
-     "20C": 107684.9580650849,
-     "200C": 102738.29921403859
+     "20C": 92467.95523093893,
+     "200C": 88220.31064435869
     },
     "lateral": {
      "1N": {
-      "top_shift_um": 1.7703071360042058,
-      "socket_shift_um": 0.8133544280483043,
-      "tilt_urad": 28.14566788105593,
-      "edge_lift_um": 0.560098790833013
+      "top_shift_um": 1.809113646958895,
+      "socket_shift_um": 0.9286050827281614,
+      "tilt_urad": 29.350285474357786,
+      "edge_lift_um": 0.5840706809397199
      },
      "5N": {
-      "top_shift_um": 8.85153568002103,
-      "socket_shift_um": 4.066772140241521,
-      "tilt_urad": 140.72833940527966,
-      "edge_lift_um": 2.800493954165065
+      "top_shift_um": 9.045568234794477,
+      "socket_shift_um": 4.643025413640808,
+      "tilt_urad": 146.75142737178894,
+      "edge_lift_um": 2.9203534046985995
      }
     },
-    "stiffness_N_per_um": 0.564873732733812,
-    "thermal_growth_um_est": 108.07310000000003
+    "stiffness_N_per_um": 0.5527568716763547,
+    "notch_stress_5N_MPa": 2.1771041267093474,
+    "root_stress_5N_MPa": 4.6396021985039635,
+    "thermal_growth_um_est": 114.65531750000001
    },
    "FT-1V": {
-    "rod_vis_mm": 94.60000000000001,
-    "free_length_mm": 71.60000000000001,
-    "lever_mm": 34.0,
+    "rod_vis_mm": 97.6,
+    "grip_mm": 22.0,
+    "free_length_mm": 75.6,
+    "lever_mm": 30.0,
     "euler_fixed_free_N": {
-     "20C": 53781.14354099451,
-     "200C": 51310.63164688522
+     "20C": 48240.57613720237,
+     "200C": 46024.57794008707
     },
     "lateral": {
      "1N": {
-      "top_shift_um": 3.5590496979152784,
-      "socket_shift_um": 1.965176710193888,
-      "tilt_urad": 46.87861728592324,
-      "edge_lift_um": 0.9328844839898726
+      "top_shift_um": 3.5975205155137093,
+      "socket_shift_um": 2.155142505816544,
+      "tilt_urad": 48.07926698990553,
+      "edge_lift_um": 0.9567774130991198
      },
      "5N": {
-      "top_shift_um": 17.795248489576394,
-      "socket_shift_um": 9.825883550969438,
-      "tilt_urad": 234.39308642961626,
-      "edge_lift_um": 4.664422419949363
+      "top_shift_um": 17.98760257756855,
+      "socket_shift_um": 10.775712529082718,
+      "tilt_urad": 240.3963349495276,
+      "edge_lift_um": 4.783887065495599
      }
     },
-    "stiffness_N_per_um": 0.28097387923123196,
-    "thermal_growth_um_est": 142.5866
+    "stiffness_N_per_um": 0.2779692278856135,
+    "notch_stress_5N_MPa": 2.1771041267093474,
+    "root_stress_5N_MPa": 5.790934249299905,
+    "thermal_growth_um_est": 149.16060000000002
    }
   },
   "oring": {
@@ -131,20 +148,20 @@
   "stage_rating_N": 100.0,
   "axial_load_ranges_N": {
    "FT-1, lifting: push": [
-    11.9,
-    49.7
+    13.7,
+    51.4
    ],
    "FT-1, lowering: pull (friction exceeds the weight)": [
-    7.0,
-    44.8
+    5.2,
+    43.0
    ],
    "FT-1V, lifting: push (the vacuum helps; < 0 = hold back)": [
-    -0.9,
-    36.9
+    0.9,
+    38.7
    ],
    "FT-1V, lowering: pull (against the vacuum)": [
-    19.8,
-    57.6
+    18.0,
+    55.8
    ]
   },
   "stages": {
@@ -166,53 +183,53 @@
     },
     "loads_N": {
      "FT-1 lifting (push)": {
-      "run_lo": 11.9,
-      "run_hi": 32.8,
-      "breakout": 49.7
+      "run_lo": 13.7,
+      "run_hi": 34.6,
+      "breakout": 51.4
      },
      "FT-1 lowering (pull)": {
-      "run_lo": 7.0,
-      "run_hi": 27.9,
-      "breakout": 44.8
+      "run_lo": 5.2,
+      "run_hi": 26.1,
+      "breakout": 43.0
      },
      "FT-1V lifting (push; < 0 = hold back)": {
-      "run_lo": -0.9,
-      "run_hi": 20.0,
-      "breakout": 36.9
+      "run_lo": 0.9,
+      "run_hi": 21.8,
+      "breakout": 38.7
      },
      "FT-1V lowering (pull, against the vacuum)": {
-      "run_lo": 19.8,
-      "run_hi": 40.7,
-      "breakout": 57.6
+      "run_lo": 18.0,
+      "run_hi": 38.9,
+      "breakout": 55.8
      }
     },
     "stages": {
      "X-VSR20A in FT-1": {
-      "running_max_N": 32.8,
-      "breakout_max_N": 49.7,
-      "running_pct": 33,
-      "breakout_pct": 50,
+      "running_max_N": 34.6,
+      "breakout_max_N": 51.4,
+      "running_pct": 35,
+      "breakout_pct": 51,
       "verdict": "yes"
      },
      "X-VSR20A in FT-1V": {
-      "running_max_N": 40.7,
-      "breakout_max_N": 57.6,
-      "running_pct": 41,
-      "breakout_pct": 58,
+      "running_max_N": 38.9,
+      "breakout_max_N": 55.8,
+      "running_pct": 39,
+      "breakout_pct": 56,
       "verdict": "yes"
      },
      "MTS50/M-Z8 in FT-1": {
-      "running_max_N": 32.8,
-      "breakout_max_N": 49.7,
-      "running_pct": 74,
-      "breakout_pct": 113,
+      "running_max_N": 34.6,
+      "breakout_max_N": 51.4,
+      "running_pct": 78,
+      "breakout_pct": 116,
       "verdict": "only while friction stays at running levels"
      },
      "MTS50/M-Z8 in FT-1V": {
-      "running_max_N": 40.7,
-      "breakout_max_N": 57.6,
-      "running_pct": 92,
-      "breakout_pct": 130,
+      "running_max_N": 38.9,
+      "breakout_max_N": 55.8,
+      "running_pct": 88,
+      "breakout_pct": 126,
       "verdict": "only while friction stays at running levels"
      }
     }
@@ -225,61 +242,61 @@
     },
     "loads_N": {
      "FT-1 lifting (push)": {
-      "run_lo": 5.7,
-      "run_hi": 14.3,
-      "breakout": 18.8
+      "run_lo": 7.5,
+      "run_hi": 16.1,
+      "breakout": 20.6
      },
      "FT-1 lowering (pull)": {
-      "run_lo": 0.9,
-      "run_hi": 9.4,
-      "breakout": 14.0
+      "run_lo": -0.9,
+      "run_hi": 7.6,
+      "breakout": 12.2
      },
      "FT-1V lifting (push; < 0 = hold back)": {
-      "run_lo": -7.1,
-      "run_hi": 1.5,
-      "breakout": 6.1
+      "run_lo": -5.3,
+      "run_hi": 3.3,
+      "breakout": 7.9
      },
      "FT-1V lowering (pull, against the vacuum)": {
-      "run_lo": 13.6,
-      "run_hi": 22.2,
-      "breakout": 26.8
+      "run_lo": 11.9,
+      "run_hi": 20.4,
+      "breakout": 25.0
      }
     },
     "stages": {
      "X-VSR20A in FT-1": {
-      "running_max_N": 14.3,
-      "breakout_max_N": 18.8,
-      "running_pct": 14,
-      "breakout_pct": 19,
+      "running_max_N": 16.1,
+      "breakout_max_N": 20.6,
+      "running_pct": 16,
+      "breakout_pct": 21,
       "verdict": "yes"
      },
      "X-VSR20A in FT-1V": {
-      "running_max_N": 22.2,
-      "breakout_max_N": 26.8,
-      "running_pct": 22,
-      "breakout_pct": 27,
+      "running_max_N": 20.4,
+      "breakout_max_N": 25.0,
+      "running_pct": 20,
+      "breakout_pct": 25,
       "verdict": "yes"
      },
      "MTS50/M-Z8 in FT-1": {
-      "running_max_N": 14.3,
-      "breakout_max_N": 18.8,
-      "running_pct": 32,
-      "breakout_pct": 43,
+      "running_max_N": 16.1,
+      "breakout_max_N": 20.6,
+      "running_pct": 36,
+      "breakout_pct": 47,
       "verdict": "yes"
      },
      "MTS50/M-Z8 in FT-1V": {
-      "running_max_N": 22.2,
-      "breakout_max_N": 26.8,
-      "running_pct": 50,
-      "breakout_pct": 61,
+      "running_max_N": 20.4,
+      "breakout_max_N": 25.0,
+      "running_pct": 46,
+      "breakout_pct": 57,
       "verdict": "yes"
      }
     }
    }
   },
   "run": {
-   "utc": "2026-11-27 09:43",
-   "commit": "d117ba8",
+   "utc": "2026-11-28 09:53",
+   "commit": "973e56f",
    "method": "analytic"
   }
  },
@@ -287,7 +304,15 @@
   "case": "4b FT-1V: cube top plate MK-13 and the window at 1 atm",
   "material": "6061-T6 aluminium; UV fused silica (Corning 7980)",
   "plate": {
-   "load": "0.101325 MPa on the outer face; the window ring's 224 N spread round the bore (r 26.5-50 mm)",
+   "load": "0.101325 MPa on the outer face; the window ring's 224 N spread round the bore (r 26.5-50 mm) at (0, -21); the camera port ring's 54 N round the camera bore (r 15-22 mm) at (-100, -50)",
+   "window_xy": [
+    0.0,
+    -21.0
+   ],
+   "camera_xy": [
+    -100.0,
+    -50.0
+   ],
    "supports": "clamped: z fixed on the land outside the frame opening (bolted flange); simply supported: z fixed on a 4 mm band at the opening's edge; two corners pinned in-plane",
    "frame_opening_mm_est": 266.0,
    "roark_square_plate": {
@@ -299,44 +324,54 @@
     "cl_sigma": 4.208017492534468
    },
    "clamped": {
-    "u_max_mm": 0.0213224,
+    "u_max_mm": 0.0198831,
     "u_max_at": [
-     -13.24764484796724,
-     22.951032786829597,
-     259.30251791591206
+     -24.280726731893104,
+     31.990850013797818,
+     256.6615921560971
     ],
-    "bore_uz_mm": -0.01715365238095238,
-    "vm_max": 5.735893072135629,
+    "bore_uz_mm": -0.013966260476190475,
+    "bore_tilt_urad": [
+     -184.31194491772015,
+     -61.42545631397592
+    ],
+    "camera_bore_uz_mm": -0.005718628181818183,
+    "vm_max": 5.925027760123913,
     "vm_max_at": [
-     110.01518432227962,
-     48.98070175438582,
-     255.49999999999994
+     -166.01622544844605,
+     52.961403508771895,
+     255.49499999999995
     ],
-    "vm_p995": 4.1814121526601555,
-    "sf_yield": 48.11805180622687
+    "vm_p995": 4.100612738338097,
+    "sf_yield": 46.582060232276085
    },
    "simply_supported": {
-    "u_max_mm": 0.0348762,
+    "u_max_mm": 0.0327788,
     "u_max_at": [
-     -13.24764484796724,
-     22.951032786829597,
-     259.30251791591206
+     -23.80479339205673,
+     28.44409616295798,
+     259.9539334412333
     ],
-    "bore_uz_mm": -0.029109178571428574,
-    "vm_max": 8.063031521866492,
+    "bore_uz_mm": -0.02471642380952381,
+    "bore_tilt_urad": [
+     -261.7794733699468,
+     -92.284440934793
+    ],
+    "camera_bore_uz_mm": -0.011248405454545455,
+    "vm_max": 8.561140072820086,
     "vm_max_at": [
-     -9.573402374921267,
-     24.392631436552932,
-     247.89999999999995
+     -88.21015338069535,
+     -42.05154952186571,
+     270.79499999999996
     ],
-    "vm_p995": 5.5769840644256,
-    "sf_yield": 34.230301500310816
+    "vm_p995": 5.275822922521956,
+    "sf_yield": 32.238696908633116
    },
    "run": {
-    "utc": "2026-11-27 08:44",
-    "commit": "d117ba8",
-    "nodes": 33655,
-    "elements": 19160,
+    "utc": "2026-11-28 09:52",
+    "commit": "973e56f",
+    "nodes": 33944,
+    "elements": 19279,
     "solver": "SPOOLES",
     "hmax": 8.0
    }
@@ -345,13 +380,13 @@
    "window": "\u00d850.8 x 9.53 mm fused silica (Edmund 38-990)",
    "seat_r_mm": 23.7,
    "seat": "O-ring on the window ring's ledge (r 22.0-25.65 mm as drawn): support circle at its middle, r = 23.7 mm",
-   "fe_s1_max_MPa": 0.7056362235469863,
+   "fe_s1_max_MPa": 0.7056972527912106,
    "fe_s1_at": [
-    -0.16448173925315895,
-    -1.1536993876998958,
+    0.7012950654329013,
+    0.6429798997468466,
     0.0
    ],
-   "fe_u_max_um": 0.45552654795640773,
+   "fe_u_max_um": 0.4563593357078575,
    "roark_at_seat": {
     "ss_sigma": 0.7425844548033548,
     "ss_w": 0.0004128831347939936,
@@ -366,17 +401,17 @@
    },
    "mor_MPa": 52.4,
    "design_MPa": 6.9,
-   "sf_mor_fe": 74.25922628603665,
-   "sf_design_fe": 9.778409568199484,
+   "sf_mor_fe": 74.25280429071358,
+   "sf_design_fe": 9.777563923777173,
    "box_plus50mbar": {
-    "s1_MPa": 0.034820440342807124,
-    "sf_design": 198.1594698995625
+    "s1_MPa": 0.034823451901860876,
+    "sf_design": 198.14233291534438
    },
    "run": {
-    "utc": "2026-11-27 08:44",
-    "commit": "d117ba8",
-    "nodes": 18236,
-    "elements": 11155,
+    "utc": "2026-11-28 09:53",
+    "commit": "973e56f",
+    "nodes": 18372,
+    "elements": 11257,
     "solver": "SPOOLES",
     "hmax": 2.0
    }
