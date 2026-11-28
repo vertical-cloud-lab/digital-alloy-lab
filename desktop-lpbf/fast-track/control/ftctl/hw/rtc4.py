@@ -19,9 +19,16 @@ Differences used here (RTC5 manual Rev. 1.9 e, 2.7 "Notes for RTC4 users", pp. 3
 - 9-pin laser connector (RTC5 manual p. 48, the laser adapter that copies it): 1 LASER1, 2 LASERON, 3 LASER2,
   4 ANALOG OUT1, 5 GND, 6-7 GND2, 8 /START, 9 /STOP. No BUSY OUT or 2-bit digital output: the layer marker goes
   on the 16-bit digital output port (EXTENSION 1, write_io_port_list, bit 0; RTC4 manual p. 123).
-NOT CONFIRMED from a document opened here (check against SCANLAB's RTC4 header RTC4expl.h before the first run):
-the 64-bit DLL's file name (RTC4DLLx64.dll by SCANLAB's naming for RTC5/RTC6; the 2006 manual covers 32-bit Windows
-XP/2000 only), the exact argument list of load_correction_file, and enable_laser/disable_laser on the RTC4.
+Checked in round 3 (2026-11-28) against SCANLAB's own RTC4expl.h and RTC4expl.cpp (explicit-linking header and
+loader, (c) SCANLAB AG, v1.0 of 24 Jul 2013), as published in the public repo always-walking/rtctestcase
+(src/include/; its bin/ also carries RTC4DLL.dll, RTC4DLLx64.dll and the RTC4D2/RTC4D3 program files):
+- the 64-bit DLL is RTC4DLLx64.DLL: RTC4open() loads it `#if defined(_WIN64) || defined(WIN64)`, RTC4DLL.DLL otherwise;
+- load_correction_file(const char* filename, short cortable, double kx, double ky, double phi, double xoffset,
+  double yoffset) returns short; load_program_file(const char* name) returns short;
+- enable_laser(void) and disable_laser(void) exist on the RTC4;
+- select_rtc(unsigned short cardno) returns void on the RTC4 (the RTC5's returns the card number);
+- every other prototype below matches the header. SpiralLab's Sirius2 SDK (Windows x64 only) lists
+  "SCANLAB RTC4 2023.11.02" from SCANLAB's download page as a dependency, so the package is still distributed.
 """
 from __future__ import annotations
 
@@ -36,12 +43,12 @@ US, S16, D, P = C.c_ushort, C.c_short, C.c_double, C.c_char_p
 PUS = C.POINTER(C.c_ushort)
 PROTOTYPES4 = {
     "rtc4_count_cards": (US, []),
-    "select_rtc": (US, [US]),
-    "load_correction_file": (US, [P, S16, D, D, D, D, D]),     # (file, table, kx, ky, phi, xoffset, yoffset): unconfirmed
-    "load_program_file": (US, [P]),
+    "select_rtc": (None, [US]),                                # void on the RTC4 (RTC4expl.h)
+    "load_correction_file": (S16, [P, S16, D, D, D, D, D]),    # (file, cortable, kx, ky, phi, xoffset, yoffset): RTC4expl.h
+    "load_program_file": (S16, [P]),
     "select_cor_table": (None, [US, US]),
     "set_laser_mode": (None, [US]),
-    "enable_laser": (None, []),                                # unconfirmed on the RTC4
+    "enable_laser": (None, []),                                # in RTC4expl.h
     "disable_laser": (None, []),
     "set_delay_mode": (None, [US, US, US, US, US]),
     "get_head_status": (US, [US]),

@@ -313,22 +313,31 @@ MODULATION INPUT and RESET connectors instead, so the guide gives the functions 
 | Laser power output | 10-bit, OUT1 jumpered to 0-10 V (0.4 W steps at 400 W) | 12-bit | own DAC |
 | List memory | 2 × 4,000 commands; a layer here needs up to ~2,250 (estimate) | 2²⁰ positions | firmware |
 | Head-error laser suppression in hardware | no (the supervisor checks the head at 5 Hz) | yes (`set_laser_control`) | no |
-| Software | DLL for Windows; the 2006 manual covers XP/2000 only; **a 64-bit DLL is not confirmed** from a document opened here | 64-bit DLL, current | weeks of firmware; OPAL warns it is pre-alpha |
-| In `ftctl` | `hw/rtc4.py`: tested against a fake DLL; three signatures unconfirmed | `hw/rtc5.py`: 40 functions from the manual | not written |
+| Software | `RTC4DLLx64.DLL` for 64-bit Windows: SCANLAB's own loader (`RTC4expl.cpp`, 2013) loads it under `_WIN64`; SCANLAB's download page still carries an RTC4 package (2023.11.02, per SpiralLab's x64 SDK) | 64-bit DLL, current | weeks of firmware; OPAL warns it is pre-alpha |
+| In `ftctl` | `hw/rtc4.py`: tested against a fake DLL; every prototype checked against SCANLAB's `RTC4expl.h` (round 3) | `hw/rtc5.py`: 40 functions from the manual | not written |
 
 **Recommendation: buy the RTC4 PCIe now.** It is cheaper, returnable, and drives the head without a part nobody has
-priced. Before paying, ask the seller or SCANLAB for its driver package and a 64-bit Windows 10/11 DLL. Buy the RTC5
+priced. Before paying, ask the seller whether the card's DLL/driver package comes with it; SCANLAB's current RTC4
+package has the 64-bit DLL (below). Buy the RTC5
 only if its seller includes a converter. The Teensy is the fallback if both fail.
 
 Evidence for the RTC4:
 - XY2-100 on the head connector: the RTC4 manual, p. 54. The RTC5 manual's notes for RTC4 users (pp. 31-34) list
   exactly what changed: the RTC4 had no `init_rtc5_dll`, used 16-bit coordinates, 10-bit analog outputs and 1 µs
   laser delays, and loaded `.ctb` correction files with its own arguments.
-- The 64-bit RTC4 DLL is not confirmed. SCANLAB names its 64-bit DLLs `RTCnDLLx64.dll` for the RTC5 and RTC6, and a
-  search snippet of a SCANLAB product sheet mentions 32- and 64-bit RTC4 drivers, but the sheet itself did not open.
-- `rtc4.py` marks three items as unconfirmed: the 64-bit DLL's file name, `load_correction_file`'s argument list, and
-  `enable_laser`/`disable_laser` on the RTC4. Check them against `RTC4expl.h` from SCANLAB's package before the
-  first run.
+- **The 64-bit RTC4 DLL exists (round 3, 2026-11-28).** SCANLAB's own explicit-linking loader and header
+  (`RTC4expl.cpp` / `RTC4expl.h`, (c) SCANLAB AG, v1.0 of 24 Jul 2013), published in the public repo
+  [always-walking/rtctestcase](https://github.com/always-walking/rtctestcase/tree/master/src/include), load
+  `RTC4DLLx64.DLL` when built for 64-bit Windows (`#if defined(_WIN64) || defined(WIN64)`); that repo's `bin/` carries
+  `RTC4DLLx64.dll` beside `RTC4DLL.dll` and the RTC4D2/RTC4D3 program files. SpiralLab's commercial Sirius2 SDK,
+  which targets Windows x64 only, lists "SCANLAB RTC4 2023.11.02" from
+  [SCANLAB's download page](https://www.scanlab.de/en/products/software/rtc-software/download) as a dependency
+  ([labspiral/sirius2](https://github.com/labspiral/sirius2)), and ships `RTC4DLLx64.dll` in its x64 folder (seen in
+  a project that bundles it, [gyn7972/SLD200_MSL](https://github.com/gyn7972/SLD200_MSL)).
+- `rtc4.py`'s three open items are closed against that header: the DLL name above; `load_correction_file(filename,
+  short cortable, kx, ky, phi, xoffset, yoffset)` returning `short`; and `enable_laser()`/`disable_laser()`, which exist
+  on the RTC4. Two prototypes were wrong and are fixed: `select_rtc` returns `void` on the RTC4 (not the card number),
+  and `load_program_file`/`load_correction_file` return a signed `short`. All 54 tests pass.
 
 ## 7. Heat and argon: the dwell study (`out/dwell-study.csv`)
 
@@ -383,7 +392,7 @@ worker puts the scan-head plate's first modes at 13-30 Hz as drawn.
 | back-reflection protection in this unit | IPG, with the serial number |
 | air- or water-cooled | inspection on arrival (if water: chiller and circuit C) |
 | power against the set point | the calorimetric check (water-cooled dump, flow, two thermocouples) |
-| a 64-bit RTC4 driver | the seller or SCANLAB, before paying |
+| that the card's driver package comes with it (SCANLAB's current RTC4 package has the 64-bit DLL) | the seller, before paying |
 | plate-block conductance and absorptivity | the decay test in §7, the first builds' plate log, and an FEA |
 | hot O-ring drag on the piston | the hot piston test |
 | the trace cell's response time and the sample flow at +5-10 mbar | a step from argon to a calibration gas; a flowmeter on the sample line |

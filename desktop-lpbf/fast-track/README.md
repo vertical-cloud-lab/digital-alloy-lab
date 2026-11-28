@@ -257,9 +257,10 @@ by its datasheet), with interference, beam, travel and fit checks. The structura
   6. back reflection (round 2): with the head 30 mm in front of the plate's centre, 50 W on a bead-blasted plate while
      the supervisor watches the laser's back-reflection status bit; ask IPG, with the serial number, whether this unit
      has back-reflection protection.
-- **Scan-card software** (the RTC4 DLL and correXion) comes from SCANLAB's download portal after registration; whether a
-  64-bit RTC4 DLL exists is to be confirmed with SCANLAB or the seller before paying. The correction file for this head
-  and lens has to be made with correXion and a burned grid.
+- **Scan-card software** (the RTC4 DLL and correXion) comes from SCANLAB's download portal after registration. **A
+  64-bit RTC4 DLL exists** (round 3): SCANLAB's own loader `RTC4expl.cpp` (2013) loads `RTC4DLLx64.DLL` on 64-bit
+  Windows, and SCANLAB's download page still carries an RTC4 package (2023.11.02); see [`control/`](control/README.md)
+  §6. The correction file for this head and lens has to be made with correXion and a burned grid.
 - **The new alternatives are slower or dearer:** Thorlabs' QS20XY-Y1 galvo is "Available: Today" at $5,893.56 but needs
   a PO; a new SCANLAB head and RTC6 are quote-only.
 
@@ -551,7 +552,7 @@ spot works.
 | Risk | Check | Fallback |
 |---|---|---|
 | The used laser is faulty or EOS-locked | interface, hours, power check on arrival, inside "Free returns" | the YLR-200-SM-EOS backup; the new IPG (12–15 weeks) |
-| The RTC4 or its 64-bit DLL won't run with this head | ask SCANLAB before paying; guide-laser test in week 1; correXion grid | the RTC5 with SCANLAB's XY2-100 converter (quote), or a Teensy XY2-100 controller (OPAL / DTU) |
+| The RTC4 won't run with this head (the 64-bit DLL exists: round 3) | ask the seller for the card's driver package; guide-laser test in week 1; correXion grid | the RTC5 with SCANLAB's XY2-100 converter (quote), or a Teensy XY2-100 controller (OPAL / DTU) |
 | Back reflection damages the used laser | the 30 mm lens offset; 50 W test on a bead-blasted plate watching the status bit; ask IPG about protection | tilt the head 3° (defocuses the edges ±1 mm) |
 | The shop can't give 8–12 hours a working day | book it on day 0 | send the plates and sheet parts out (fab/'s outsourced split) |
 | The scan-head frame rings (50 Hz braced as drawn; 60 Hz is the minimum) | build the g3 frame (the head's far side supported: 62 Hz in the FEA, bonded joints); tap-test the built frame before first light | a stiffer frame or the head on the deck's own posts |
@@ -652,7 +653,8 @@ commissioning happens while the shop makes FT-1's parts.
 2. Is a purge-only O₂ of 100–1000 ppm acceptable for the first coupons? EOS M 290 work on Al uses a 1000 ppm threshold.
 3. Buy the used laser chain now? The laser, the hurrySCAN 25, the LINOS lens and the **RTC4** (not the RTC5) come to
    about $4.1k–5.5k with freight and a collimator if needed; three of the four are returnable, and every route uses
-   them, including PR 266's. Before paying for the RTC4, confirm with SCANLAB or the seller that a 64-bit DLL exists.
+   them, including PR 266's. SCANLAB's RTC4 package has a 64-bit DLL (round 3); ask the seller whether the card's
+   driver package comes with it.
 4. **Staff the shop.** FT-1's parts are 59–123 shop hours ([`fab/`](fab/)). Two people for the first 2–3 weeks (12 shop
    hours a working day) keep FT-1's coupons at 3.2–6.4 weeks; one person part-time (5 h a day) gives 4.5–9.3 weeks.
    Sending the plates and sheet parts out is the alternative.
