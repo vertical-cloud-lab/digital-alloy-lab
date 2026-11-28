@@ -117,10 +117,12 @@ P = dict(
     # --- frame: 30 mm T-slot (McMaster 5537T101 class, study) ---
     bench_z=-272.6,               # bench top: leaves a 10 mm riser under the X-VSR20A
     rail_dy=5.25 * IN,            # support rails at the box's mounting holes (10.50 in. apart)
-    gantry="four_post_braced_front",  # structural FEA (analysis/out/fea/struct.md 4c): four 45 mm posts, a front
+    gantry="four_post_braced_front_g3",  # structural FEA (analysis/out/fea/struct.md 4c): four 45 mm posts, a front
                                   # cross-beam, a diagonal per side, knee braces at the back ("four_post": 43.1 Hz as drawn,
-                                  # FEA addendum) and at the front, MK-09 with a top flange on both beams and three gussets;
-                                  # "two_post" = round 1's frame (13 Hz)
+                                  # FEA addendum) and at the front, MK-09 with a top flange on both beams and gussets under
+                                  # the head (g2), and a 10 mm plate on the head's far (+x) face from both beams (g3):
+                                  # 62.0 / 100.6 / 179.4 Hz, the only variant over the 60 Hz minimum (default since round 3);
+                                  # "four_post_braced_front" 50.0 Hz, "four_post" 43.1 Hz, "two_post" = round 1's frame (13 Hz)
     post=45.0, front_post_gap=25.0, knee=120.0,   # post size; front posts this far in front of the front rail; knee brace
     knee_front=80.0,              # front knee braces ("four_post_braced_front"): clear of the collimator
     head_flange=60.0, head_gussets_y=(-10.0, 40.0, 90.0),   # MK-09's top flange depth (-x) on both beams, gusset positions
