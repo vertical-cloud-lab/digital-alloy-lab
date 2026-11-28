@@ -18,8 +18,8 @@ round: what it changes in each piece, and an estimate of its hours, are in
 
 **Round 3 (2026-11-28):** this folder now builds CAD v2 with the g3 gantry: 47 pieces in 85 mill setups. The CAM
 review's fixes ([`review-r3.md`](review-r3.md)) are in, and were checked. Everything in `out/`, `gcode/` and
-`drawings/` is v2 now. The round-2 sections after the next one describe v1 and keep v1's numbers; v1's hours, shop
-plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#round-3-2026-11-28-cad-v2-and-the-cam-reviews-fixes).
+`drawings/` is v2 now. The sections after Round 3 are round 2's: they describe v1 and keep v1's numbers. v1's
+hours, shop plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#round-3-2026-11-28-cad-v2-and-the-cam-reviews-fixes).
 
 ![The 47 drawing sheets, CAD v2 (round 3)](img/drawings-contact.png)
 
@@ -27,19 +27,21 @@ plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#round-3-2026-11
 
 **Short answer:**
 
-- **CAD v2 makes 47 pieces** (v1 35) in 85 mill setups (v1 63) and 21 lathe setups (v1 15): 262 FreeCAD operations,
+- **CAD v2 makes 47 pieces** (v1 35) in 85 mill setups (v1 63) and 21 lathe setups (v1 15): 261 FreeCAD operations,
   all posted, no errors and no empty operations.
 - **The CAM review's fixes are in and checked,** except ramp entries into pockets and profiles, setup sheets and a
   Haas post. Checked with the review's own checkers on all 85 programs:
   - no Adaptive link would cut material as a Haas dogleg rapid (v1: 194 links in 12 setups);
-  - the review's six setups that couldn't run with the tools pass the holder and flute checks;
+  - the review's six setups that couldn't run with the tools now pass the holder and flute checks (MK-09b_C, one of
+    the six, is not in v2);
   - every G83 pecks 1.0 D or 0.5 D, as intended (v1: 0.75 D on all).
 - **The checks found new problems on v2,** not in the review:
   - four drills too short for v2's deep holes, now long-series drills;
   - one outline too deep for T2's flutes, now split;
-  - MK-10c is still open: 62 cm³ left in the voxel check, and a 3.3 mm tap drill set 128 mm deep (below).
-- **Hours, cumulative, low / expected / high:** S1 19.3 / 45.8 / 62.8 h; S2 34.8 / 74.9 / 107.9 h; FT-0 65.9 /
-  133.1 / 202.5 h; **FT-1 81.3 / 166.0 / 248.9 h**; FT-1V 99.3 / 199.8 / 295.9 h. The fixes moved them by 0.1-0.3 h.
+  - MK-10c's lens bore left a 50 × 34 mm pillar (62 cm³), and its set-screw holes ran 128 mm across the bore. Both
+    are fixed.
+- **Hours, cumulative, low / expected / high:** S1 19.3 / 45.8 / 62.8 h; S2 34.8 / 74.9 / 107.8 h; FT-0 65.9 /
+  133.1 / 202.4 h; **FT-1 81.2 / 165.9 / 248.9 h**; FT-1V 99.3 / 199.8 / 295.9 h. The fixes moved them by 0.1-0.3 h.
   Against v1, FT-1 is 44 h (36 %) more at the expected allowances.
 - **New reviewed case:** the review's sensitivity, per piece, on v2's setups. FT-1 takes 107-137 h with the programs
   proven out and a machinist doing the floor work. It takes 129-178 h if a student does half the setups, lathe work
@@ -48,8 +50,8 @@ plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#round-3-2026-11
 
 **What was run** (shared runner, 2026-11-28):
 
-- `parts.py` (15 s) and `cam.py` in FreeCAD 1.0.2 (about 3.5 min for the 85 setups). Both ran twice: the second pass
-  took the first pass's check findings (the drills and MK-15c).
+- `parts.py` (15 s) and `cam.py` in FreeCAD 1.0.2 (about 3.5 min for the 85 setups). A second pass took the first
+  pass's check findings (the drills and MK-15c), and a third, MK-10c's alone (`FT_CAM_ONLY=MK-10c`).
 - The review's two checkers, on all 85 programs of each pass, with their tool table read from `tools.py`. They are
   not in this repo:
   - `gcheck.py` has its own G-code parser and a 2.5D stock, and runs the modal checks and a cycle-time recount;
@@ -63,12 +65,12 @@ plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#round-3-2026-11
 | Review §7 item | What was done | Checked after |
 |---|---|---|
 | 1. Helix start height | every bore and counterbore helix starts 1 mm above its surface | the moves into each helix start are 1 mm above the surface (v1: 104 at the surface's exact height, in 17 setups). The 220 low-clearance rapids left are the moves back to the hole's centre at the bottom of each helix, inside the cut hole. The in-process check finds none of them in material |
-| 2. Adaptive links | after posting, each Adaptive `G0` that has only X and Y and runs below the operation's safe height becomes a `G1` at 5000 mm/min (`cam.py` `g0_links_to_g1`): 12,783 links in 35 setups | Haas dogleg check: **0** links into material (v1: 194 in 12 setups) |
+| 2. Adaptive links | after posting, each Adaptive `G0` that has only X and Y and runs below the operation's safe height becomes a `G1` at 5000 mm/min (`cam.py` `g0_links_to_g1`): 11,221 links in 35 setups | Haas dogleg check: **0** links into material (v1: 194 in 12 setups) |
 | 3. Peck depth | `setExpression("PeckDepth", None)` before setting it | G83 Q is 1.0 D on 247 cycles and 0.5 D on 3, as `cam.py` intends (v1: 0.75 D on all) |
 | 4. Outline depths and holding | B's outline cuts only through what A left, plus 0.5 mm: MK-02a, MK-07, MK-15b, MK-15c (split at z 10) and MK-18a (split at z 25). MK-08e's 39 mm L and MK-10c's outline are split between two setups. MK-03's bore is roughed from both sides. Each changed setup's label says how it is held | no flute or holder problem left on these pieces, except MK-15c_C's T3 wall (below) |
 | 5. Ramp entries | the 304 notch (a custom op) ramps down along the slot | `Pocket` and `Profile` still plunge: **not done** |
 | 6. Setup sheets and a Haas post | – | **not done.** The programs are still `linuxcnc` posts, with G54 at the model's origin |
-| 7. Tools | T5: 15 mm stick-out. **T8:** 2.0 mm carbide for the 304 notch, 5000 rpm (31 m/min) and 76 mm/min with a ramp. The notch is 3.0 mm wide, so the review's 1/8 in. T4 doesn't fit. **T9:** 1/8 in. long reach (66 mm) for MK-08e's foot counterbores. MK-10c's 34 mm lens bore is on the 3/4 in. T6 (38 mm flutes). Every drill has a flute length and a stick-out: DIN 338 jobber, and DIN 340 long series for 2.0, 3.4, 4.5 and 5.5 mm. The drills' speed comment is corrected (60000/d rpm is about 19 m/min). No long-flute 1/2 in. cutter was added: the splits keep T2 within its 32 mm. The adaptive feeds were not raised (optional) | holder check: the review's six setups pass (MK-03_A and _D, MK-08e_A, MK-18a_A and _B; MK-09b is not in v2). The first pass found holder hits on five more v2 setups (MK-02f_B, MK-08e_C, MK-15c_D, MK-22b_D, MK-10c_C). The long-series drills clear the first four |
+| 7. Tools | T5: 15 mm stick-out. **T8:** 2.0 mm carbide for the 304 notch, 5000 rpm (31 m/min) and 76 mm/min with a ramp. The notch is 3.0 mm wide, so the review's 1/8 in. T4 doesn't fit. **T9:** 1/8 in. long reach (66 mm) for MK-08e's foot counterbores. MK-10c's 34 mm lens bore is on the 3/4 in. T6 (38 mm flutes). Every drill has a flute length and a stick-out: DIN 338 jobber, and DIN 340 long series for 2.0, 3.4, 4.5 and 5.5 mm. The drills' speed comment is corrected (60000/d rpm is about 19 m/min). No long-flute 1/2 in. cutter was added: the splits keep T2 within its 32 mm. The adaptive feeds were not raised (optional) | holder check: the review's six setups pass (MK-03_A and _D, MK-08e_A, MK-18a_A and _B; MK-09b is not in v2). The first pass found holder hits on five more v2 setups (MK-02f_B, MK-08e_C, MK-15c_D, MK-22b_D, MK-10c_C). The long-series drills clear the first four. MK-10c_C's M4 set-screw holes were set `through=True`, so they ran 128 mm, across the bore and through the far wall: now 9 mm, through the near wall |
 | 8. MK-09b's counterbores | MK-09b is gone in v2: the collimator hangs in MK-22's clamp block | – |
 | 9. Holding the through-cut plates; fixtures | fixtures, loading the tools and sawing are in the reviewed hours case below, not in low / expected / high | holding not yet recorded per plate |
 
@@ -88,8 +90,11 @@ plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#round-3-2026-11
     with exact stop.
 - **Voxel cut (`sim.py`, 10 pieces):**
   - no gouges, and no rapids through a piece;
-  - MK-10c leaves 62 cm³, up to 34.6 mm thick. The v2 programs from before the fixes leave the same (61.8 cm³), so
-    this came with the v2 port, not the fixes. Not traced yet.
+  - MK-10c first left 62 cm³, a pillar 50 mm across and 34 mm tall in the lens bore. The v2 programs from before
+    the fixes leave the same (61.8 cm³), so it came with the v2 port. The lens bore's Adaptive kept the floor's 50 mm
+    tube-bore hole as an island; at the machine the pillar would have come loose when the tube bore broke through
+    from below. Now the Adaptive clears the face's whole outline (`UseOutline`, a `use_outline` flag in `parts.py`):
+    99.4 % removed, nothing left.
 
 <!-- R3_SIM -->
 | Piece | Setups | Voxel mm | Removed of blank - piece, cm³ | Gouge cm³ (deepest mm) | Left cm³ (thickest mm) | Slugs dropped cm³ | Rapids through the piece | Minutes: recount / from moves / FreeCAD |
@@ -100,11 +105,11 @@ plan and voxel check are in [`out/v1/`](out/v1/). See [Round 3](#round-3-2026-11
 | MK-06b | 2 | 0.13 | 0.0 of 0.0 (88.4 %) | 0.000 (0.00) | 0.000 (0.52) | 0.0 | 0 | 0.7 / 0.7 / 2.6 |
 | MK-07 | 2 | 0.18 | 11.5 of 11.7 (98.8 %) | 0.000 (0.18) | 0.000 (0.72) | 0.0 | 0 | 13.1 / 12.9 / 14.1 |
 | MK-08e | 3 | 0.24 | 118.1 of 118.3 (99.9 %) | 0.000 (0.00) | 0.017 (1.38) | 0.0 | 0 | 10.1 / 10.0 / 21.9 |
-| MK-10c | 3 | 0.43 | 624.7 of 695.7 (89.8 %) | 0.000 (0.43) | 61.773 (34.59) | 0.0 | 0 | 28.3 / 28.2 / 35.9 |
+| MK-10c | 3 | 0.43 | 691.1 of 695.5 (99.4 %) | 0.000 (0.43) | 0.000 (0.86) | 0.0 | 0 | 26.7 / 26.7 / 33.3 |
 | MK-15b | 2 | 0.23 | 45.3 of 45.5 (99.6 %) | 0.000 (0.23) | 0.000 (0.66) | 0.0 | 0 | 2.7 / 2.7 / 3.2 |
 | MK-15c | 4 | 0.24 | 46.6 of 48.0 (97.1 %) | 0.000 (0.24) | 0.040 (1.06) | 0.0 | 0 | 19.9 / 19.5 / 26.0 |
 | MK-18a | 2 | 0.28 | 48.1 of 50.5 (95.2 %) | 0.000 (0.28) | 0.000 (0.55) | 0.0 | 0 | 2.3 / 2.3 / 3.5 |
-| **All** | 25 | | | | | | | **111.8 / 110.9 / 152.6** |
+| **All** | 25 | | | | | | | **110.3 / 109.4 / 150.1** |
 <!-- /R3_SIM -->
 
 ### Hours on v2
@@ -115,24 +120,24 @@ Cumulative, at the round-2 allowances (unchanged):
 | State | Pieces, v1 -> v2 (cumulative) | v1 (round 2), low / expected / high h | v2 estimated in round 2 | **v2, round 3** (CAM fixed), low / expected / high h | Change from v1, expected |
 |---|---|---|---|---|---:|
 | S1 | 5 -> 10 | 8.6 / 19.7 / 26.9 | 11.6 / 25.5 / 35.0 | 19.3 / **45.8** / 62.8 | +26.1 h (+133 %) |
-| S2 | 12 -> 18 | 21.2 / 41.8 / 62.5 | 26.5 / 53.1 / 77.7 | 34.8 / **74.9** / 107.9 | +33.2 h (+79 %) |
-| FT-0 | 22 -> 32 | 43.8 / 90.7 / 145.5 | 60.3 / 122.2 / 189.4 | 65.9 / **133.1** / 202.5 | +42.4 h (+47 %) |
-| FT-1 | 31 -> 41 | 58.5 / 121.9 / 189.3 | 75.3 / 154.8 / 235.3 | 81.3 / **166.0** / 248.9 | +44.0 h (+36 %) |
-| FT-1V | 35 -> 47 | 67.6 / 140.0 / 214.1 | 90.5 / 188.2 / 280.6 | 99.3 / **199.8** / 295.9 | +59.8 h (+43 %) |
+| S2 | 12 -> 18 | 21.2 / 41.8 / 62.5 | 26.5 / 53.1 / 77.7 | 34.8 / **74.9** / 107.8 | +33.1 h (+79 %) |
+| FT-0 | 22 -> 32 | 43.8 / 90.7 / 145.5 | 60.3 / 122.2 / 189.4 | 65.9 / **133.1** / 202.4 | +42.3 h (+47 %) |
+| FT-1 | 31 -> 41 | 58.5 / 121.9 / 189.3 | 75.3 / 154.8 / 235.3 | 81.2 / **165.9** / 248.9 | +44.0 h (+36 %) |
+| FT-1V | 35 -> 47 | 67.6 / 140.0 / 214.1 | 90.5 / 188.2 / 280.6 | 99.3 / **199.8** / 295.9 | +59.7 h (+43 %) |
 <!-- /V1V2_TABLE -->
 
 <!-- R3_STATE_ROWS -->
 | State | Pieces | This state, low / expected / high h | Cumulative (the machine), low / **expected** / high h | Cumulative at $65/h, low / expected / high | Study (`fast_track.py`) | BYU h with sheet and flat plates out, cumulative (expected) |
 |---|---:|---|---|---|---|---:|
 | S1 | 10 | 19.3 / 45.8 / 62.8 | 19.3 / **45.8** / 62.8 | $1,260 / 2,980 / 4,080 | - | 30.3 |
-| S2 | 8 | 15.5 / 29.1 / 45.1 | 34.8 / **74.9** / 107.9 | $2,260 / 4,870 / 7,010 | - | 56.7 |
-| FT-0 | 14 | 31.1 / 58.1 / 94.6 | 65.9 / **133.1** / 202.5 | $4,280 / 8,650 / 13,160 | 10-15 h | 114.8 |
-| FT-1 | 9 | 15.4 / 32.9 / 46.5 | 81.3 / **166.0** / 248.9 | $5,280 / 10,790 / 16,180 | 25-40 h | 142.5 |
-| FT-1V | 6 | 18.1 / 33.8 / 47.0 | 99.3 / **199.8** / 295.9 | $6,460 / 12,990 / 19,230 | 30-48 h | 176.3 |
+| S2 | 8 | 15.5 / 29.1 / 45.1 | 34.8 / **74.9** / 107.8 | $2,260 / 4,870 / 7,010 | - | 56.6 |
+| FT-0 | 14 | 31.1 / 58.1 / 94.6 | 65.9 / **133.1** / 202.4 | $4,280 / 8,650 / 13,160 | 10-15 h | 114.8 |
+| FT-1 | 9 | 15.4 / 32.9 / 46.5 | 81.2 / **165.9** / 248.9 | $5,280 / 10,790 / 16,180 | 25-40 h | 142.4 |
+| FT-1V | 6 | 18.1 / 33.8 / 47.0 | 99.3 / **199.8** / 295.9 | $6,450 / 12,980 / 19,230 | 30-48 h | 176.2 |
 <!-- /R3_STATE_ROWS -->
 
 - **The fixes moved the hours by 0.1-0.3 h.** The Adaptive links now run at 5000 mm/min, not at the 25.4 m/min
-  rapid, so the programs total 309 min (292 before the fixes).
+  rapid, so the programs total 308 min (292 before the fixes).
 - **The reviewed case** (`hours.py` `REVIEWED`) is new. It is the review's §4 sensitivity, applied per piece:
   - a piece's first mill setup 0.75 h (1.25 h over 200 mm), its further setups 0.25-0.5 h, 0.5 h a lathe setup;
   - 0.25 h of CAM review and prove-out a mill setup;
@@ -147,13 +152,13 @@ Cumulative, at the round-2 allowances (unchanged):
 | State | Mill / lathe setups (cumulative) | Machinist, h | Machinist and student, h | The set's low / expected / high, h |
 |---|---|---|---|---|
 | S1 | 22 / 0 | 27.3-34.8 | 32.5-44.0 | 19.3 / 45.8 / 62.8 |
-| S2 | 35 / 2 | 46.4-58.6 | 55.9-74.9 | 34.8 / 74.9 / 107.9 |
-| FT-0 | 58 / 15 | 86.2-110.8 | 105.0-144.6 | 65.9 / 133.1 / 202.5 |
-| FT-1 | 75 / 15 | 106.8-137.4 | 128.9-177.5 | 81.3 / 166.0 / 248.9 |
-| FT-1V | 85 / 21 | 131.9-173.2 | 161.1-227.9 | 99.3 / 199.8 / 295.9 |
+| S2 | 35 / 2 | 46.4-58.6 | 55.8-74.9 | 34.8 / 74.9 / 107.8 |
+| FT-0 | 58 / 15 | 86.2-110.7 | 104.9-144.5 | 65.9 / 133.1 / 202.4 |
+| FT-1 | 75 / 15 | 106.8-137.4 | 128.9-177.5 | 81.2 / 165.9 / 248.9 |
+| FT-1V | 85 / 21 | 131.9-173.1 | 161.1-227.8 | 99.3 / 199.8 / 295.9 |
 <!-- /R3_REVIEWED -->
 
-  The set's expected FT-1 (166.0 h) sits inside the student band, as it did on v1. The extras still count the
+  The set's expected FT-1 (165.9 h) sits inside the student band, as it did on v1. The extras still count the
   review's 3-6 h of CAM fixes, since setup sheets, a Haas post and ramp entries are still to do.
 
 <details><summary>Hours per piece, v2 (round 3)</summary>
@@ -187,7 +192,7 @@ Cumulative, at the round-2 allowances (unchanged):
 | MK-09f | Head far-side support plate, between both cross-beams (g3) | S1 | CNC mill | 1/2 in. 6061-T651 plate, 309 x 130, faced to 10.0 | 2 / 0 | 12.1 / 13.2 | 1.8 | **4.8** | 6.3 |
 | MK-10a | Beam tube centre section, long (121.5 long), split in two half-shells | S2 | saw + lathe + CNC mill + slitting saw | 6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in. | 2 / 2 | 0.1 / 0.6 | 3.0 | **6.2** | 9.1 |
 | MK-10b | Beam tube centre section, short (21.7 long), split in two half-shells | FT-1V | saw + lathe + CNC mill + slitting saw | 6061 round tube 60.3 x 3.18 wall (2-3/8 x 0.125 in. | 2 / 2 | 0.1 / 0.4 | 3.0 | **6.2** | 9.1 |
-| MK-10c | Lens collar with the tube's upper spigot (on the lens) | S2 | CNC mill | 1-3/4 in. 6061 plate (44.45), 140 x 140 | 3 / 0 | 28.3 / 35.9 | 2.4 | **5.3** | 7.7 |
+| MK-10c | Lens collar with the tube's upper spigot (on the lens) | S2 | CNC mill | 1-3/4 in. 6061 plate (44.45), 140 x 140 | 3 / 0 | 26.7 / 33.3 | 2.4 | **5.3** | 7.7 |
 | MK-11a | Slot nozzle 45 x 4 | FT-0 | CNC mill | 6061 bar 3/4 x 1-1/4 in. (19.05 x 31.75) sawn 65 long | 4 / 0 | 12.1 / 18.6 | 2.5 | **6.4** | 9.5 |
 | MK-11b | Exhaust collector | FT-0 | CNC mill | 6061 bar 3/4 x 1-1/4 in. sawn 70 long | 4 / 0 | 11.9 / 19.3 | 2.5 | **6.4** | 9.5 |
 | MK-12 | Stage shield | FT-1 | sheet: laser-cut and bent (SendCutSend) | SendCutSend 304 stainless, 0.036 in. class (their gauge list not read) | 0 / 0 | 0.0 / 0.0 | 0.8 | **0.8** | 0.8 |
@@ -208,7 +213,7 @@ Cumulative, at the round-2 allowances (unchanged):
 | MK-22a | Coaxial branch plate: SM1 bore and 30 mm cage on the mirror block's back face | S1 | CNC mill | 3/8 in. 6061 plate (9.53), 64 x 64, faced to 8.0 | 2 / 0 | 6.6 / 9.2 | 1.7 | **3.7** | 5.2 |
 | MK-22b | Collimator clamp block, hung under the front cross-beam | S1 | CNC mill + saw slit | 6061 bar 1 x 3-1/2 in. (25.4 x 88.9) sawn 72 long | 4 / 0 | 14.7 / 18.7 | 2.7 | **6.6** | 9.8 |
 | MK-23 | Deck clamps on the box's panel studs (4) | S2 | saw + CNC mill | 6061 bar 3/16 x 3/4 in. (4.76 x 19.05) sawn 42 long | 1 / 0 | 0.5 / 0.9 | 1.4 | **2.3** | 3.0 |
-| **All** | 47 pieces | | | | 85 / 21 | 327 / 435 | 99.3 | **199.8** | 295.9 |
+| **All** | 47 pieces | | | | 85 / 21 | 326 / 432 | 99.3 | **199.8** | 295.9 |
 <!-- /R3_PIECE_TABLE -->
 
 </details>
@@ -251,12 +256,6 @@ in [`drawings/v1/`](drawings/v1/).
   - setup sheets with touch-off datums;
   - a Haas post, and a prove-out on the Haas's graphics;
   - higher adaptive chip loads.
-- **MK-10c:**
-  - the voxel check leaves 62 cm³, before and after the fixes;
-  - MK-10c_C's M4 tap drill is set 128 mm deep, so it needs 138 mm of 3.3 mm drill clear of the holder. The hole's
-    depth probably runs through the whole part.
-
-  Neither was traced in time.
 - **MK-15c_C:** T3 cuts beside a 28 mm wall with 25.4 mm of flute.
 - **The voxel cut ran on 10 of v2's 37 milled pieces.** The other 27 have only the two G-code checks.
 
