@@ -581,6 +581,10 @@ model's checks cover the half-shell version only.
   so the plate is a pad or strap (estimate). `P["gantry"]` selects `"four_post_braced_front_g3"` (default),
   `"four_post_braced_front"` (50.0 Hz), `"four_post_braced_front_g2"`, `"four_post"` (the FEA addendum's model, 43.1 Hz)
   or `"two_post"` (round 1, 13 Hz).
+- **The cube's inside** is drawn as the billet frame with one through-pocket per face, as big as the face opening,
+  which a billet frame with interchangeable plates has to be unless it is undercut inside; the cassette's numbers
+  rest on that. If the real frame's cavity is bigger than its openings, the rolled-insertion numbers in the cassette
+  section apply instead (196.9-207.3 mm). The face opening and its corner radius are still estimates (266 mm, sharp).
 - **Not drawn:** the Lesker BX1212S (no STEP without a login); the gas plumbing outside the enclosure; O-ring grooves;
   the face seal under the gland; the half-shells' toggle clamps and their seam; wiring outside the enclosure.
 - **Not run here:** FEA, CFD and thermal FE are in [`../analysis/`](../analysis/) (round 2 workers). The heat numbers in
