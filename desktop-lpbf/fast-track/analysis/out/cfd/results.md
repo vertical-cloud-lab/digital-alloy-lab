@@ -24,11 +24,11 @@ checked against a measurement.
   v1 2.6 / ≈ 5.0; well mixed 6.4 / 9.1). The Saginaw's dished door and rim lip hold 1.2 L above the highest a wall
   vent can go, and the last third of the O₂ waits there. **Put the vent through the door,** at its top.
 - **Leaks set the floor the exhaust reads at a few ppm, if the lid is seated and the box is at +5–10 mbar** (0-D,
-  estimates): argon 5.0
-  gives 2 ppm, permeation through the silicone sponge gasket 0.1–0.5 ppm at 27 L/min, the X-LSM100B's trapped air
-  up to ~2 ppm in the first hour; the worst gap under the gasket (≈ 3 µm, Péclet ≈ 1) along the whole seam adds
-  2.9 ppm. Larger gaps blow argon out too fast for O₂ to diffuse back. At a 2 L/min dwell the same sources give
-  9–48 ppm; with the vent open (no overpressure) a 30 µm gap along the seam would hold the purge at ~60 ppm.
+  estimates): argon 5.0 gives 2 ppm, permeation through the silicone sponge gasket 0.1–0.5 ppm at 27 L/min, the
+  X-LSM100B's trapped air up to ~2.4 ppm in the first hour; the worst gap under the gasket (≈ 3 µm, Péclet ≈ 1)
+  along the whole seam adds 2.9 ppm. Larger gaps blow argon out too fast for O₂ to diffuse back. At a 2 L/min dwell
+  the same sources give 9–48 ppm; with the vent open (no overpressure) a 30 µm gap along the seam would hold the
+  purge at ~60 ppm.
 - **With the cross-flow on, O₂ that leaks in at the lid stays in the box, not over the plate** (CFD, R3.5): 1 mm over
   the build area it is about a tenth of what the exhaust analyzer reads (a hundredth at the plate's centre), while
   the box holds 5–10× the exhaust's value. The exhaust reading is the conservative number for the process.
