@@ -159,9 +159,10 @@ than the top plate's two bores, so the top plate bounds them (not run).
 
 ![g3 gantry with its bolted joints as springs: modes 1-3 against joint stiffness](struct-joints-mode1.png)
 
-![g3 gantry, mode 1 of each option, feet fixed and on a bolted plate](struct-joints-options.png)
+![g3 gantry, mode 1 of each option: feet fixed, on a bolted plate and on a thick plate](struct-joints-options.png)
 
-**What was run** (`ft_joints.py`; struct-joints.json). The bonded g3 model fuses every member into one mesh, so
+**What was run** (`ft_joints.py`; struct-joints.json; 8 runs of the first round-3 attempt were recovered from its
+run log, frequencies only). The bonded g3 model fuses every member into one mesh, so
 each joint is as stiff as solid metal. Here each member is meshed on its own: 4 posts, 2 cross-beams, 6 braces and
 the two head-mount assemblies, each bonded inside itself (14 groups, 97k nodes, 12 mm mesh). Where two members touch,
 each side's nodes are tied to a rigid patch, and the two patches are joined by three translational springs (kt,
@@ -186,8 +187,8 @@ estimate). Each ccx run took 25-90 s.
   one or two brackets: 23-46 kN/mm. The slot lips bending under the T-nut add compliance, so 10-50 kN/mm.
 - **Rotational, 1-10 kN·m/rad per joint.** The same bolt stiffness on a 15-20 mm lever from a 30-series bracket's
   heel gives 5-9 kN·m/rad, less the cast bracket's own bending.
-- **Published check.** Güler and Karagülle ([DOI 10.1590/1679-78252755](https://doi.org/10.1590/1679-78252755))
-  measured three Bosch Rexroth profile frames. Beam models with each connector as an elastic solid (in effect
+- **Published check.** Güler and Karagülle (2016, Lat. Am. J. Solids Struct. 13, 1499-1514,
+  [DOI 10.1590/1679-78252755](https://doi.org/10.1590/1679-78252755)) tap-tested three Bosch Rexroth profile frames. Beam models with each connector as an elastic solid (in effect
   bonded) ran 0-16 % above the measured frequencies (43.7 against 38.9 Hz, 50.6 against 43.5 Hz, for example). Here
   the single-bracket range puts mode 1 12-29 % under the bonded model, the same direction and a little more.
 - **The bench.** The back posts stand on the T-slot base rails and the front posts on 6 mm L foot brackets; neither
@@ -219,13 +220,15 @@ estimate). Each ccx run took 25-90 s.
 | Every joint's kr 0.3 / 1 / 3 / 10 / 30 / 100 kN·m/rad / rigid (kt 20 kN/mm) | 47.1 / 47.8 / 48.8 / 50.4 / 52.1 / 53.6 / 55.0 Hz |
 | Every joint's kt 5 / 20 / 50 / 100 kN/mm / rigid (kr 10 kN·m/rad) | 43.2 / 50.4 / 54.4 / 56.5 / 59.4 Hz |
 
-- **Mode 1 is the same shape in every run:** the frame sways along the beams (x) and the head yaws, with the largest
-  motion at a front post's top, as in the bonded model. Mode 2 is fore-aft (y).
+- **Mode 1 is the same shape in every run whose mode shapes were kept:** the frame sways along the beams (x) and the
+  head yaws, with the largest motion at a front post's top, as in the bonded model. (With both portals braced and
+  stiff brace ends it moves to the head mount's front corner.) Mode 2 is fore-aft (y).
 - **The translational stiffness matters more than the rotational.** The braces carry the frame's racking as axial
   force through their end joints, so the 12 brace ends matter most. The beam-to-post and head-mount joints matter
   little.
-- **The bench matters most of all.** The front posts are 751 mm tall, from the bench to above the beams, and in x only
-  the front beam and two short knee braces at their tops hold them. On a bolted foot plate, mode 1 drops from 48.8 to 34.1 Hz.
+- **The bench matters most of all.** The front posts are 751 mm tall, from the bench to above the beams, and in x
+  only the front beam and two short knee braces at their tops hold them. On a bolted foot plate, mode 1 drops from
+  48.8 to 34.1 Hz.
 
 **Options to get back over 60 Hz** (`ft_joints.py variant <name>`; the added braces are 30-series members on the
 drawn posts' axes, with the same joints as the rest). None is drawn in the CAD yet.
