@@ -57,7 +57,7 @@ Hopper parks and the travel it needs (cassette frame, mm):
 
 | beam_r_at_hopper_top_mm | left_park | right_park | travel_needed_mm | stage_travel_mm | travel_range | spare_left_mm | spare_right_mm |
 |---|---|---|---|---|---|---|---|
-| 18.13 | -31.1 | 35.5 | 66.6 | 101.6 | [-45.8, 55.8] | 14.7 | 20.3 |
+| 18.13 | -31.1 | 35.5 | 66.6 | 101.6 | (-45.8, 55.8) | 14.7 | 20.3 |
 
 **FT-1**: recoater swept over its 101.6 mm (exact booleans, 13 positions), 0 clashes. Smallest gaps:
 
@@ -213,7 +213,7 @@ Camera (IMX477, 1.55 um pixels; f/2.8; circle of confusion two pixels):
 
 | check | value |
 |---|---|
-| deck_mm | [245.0, 245.0] |
+| deck_mm | (245.0, 245.0) |
 | box_inside_mm | [402.6, 301.0, 210.8] |
 | box_door_opening_mm_est | [358.6, 257.0] |
 | deck_in_box_margins_mm | [78.8, 28.0] |
