@@ -37,6 +37,12 @@ checked against a measurement.
   2.4 / ≈ 3.7 min), against the box's 3.1 / ≈ 4.9 min. The last air again waits above the vent, under the top
   plate. Two pump cycles to 1 mbar reach the argon's own 2 ppm in 5.0 min with 45 L of argon (0-D); the flow purge
   needs ≈ 75 L for 100 ppm.
+- **A 200 °C bed leaves the jet over the plate as it was, but sends a plume to the lid** (CFD, R3.7): 2.52 m/s 3 mm
+  up and 0.056 Pa bed shear (isothermal 2.50 m/s, 0.055 Pa); fume from 0.5–3 mm is still all caught or held at
+  the collector. Above the jet the gas rises at up to 0.3 m/s; the box averages 39 °C, the gas under the cover
+  slide 54–56 °C, the exhaust 47 °C. Fume that escapes above the jet now passes the slide at 42 mm (median;
+  isothermal 103 mm), 9 % of it within 30 mm: expect the slide to foul faster. The plate loses 3.9 W by
+  convection, the thermal FEA's figure.
 
 ### R3.1 The model, ported to CAD v2
 
@@ -302,6 +308,134 @@ to pump down from 1 atm. Right: pump plus backfill time to 1000, 100 and 10 ppm 
   for 100 ppm. The flow purge is the fallback if the pump is not in use: ≈ 3.7 min to 100 ppm at 20 L/min, ≈ 75 L.
 - The pump-purge numbers assume the cube holds vacuum to the acceptance rate of rise (1 × 10⁻³ mbar/min) and that
   the backfill mixes. Neither is checked here.
+
+### R3.7 Heat: the cross-flow over a 200 °C bed (CFD)
+
+Round 2's runs and the purges above are isothermal. Here the v2 cross-flow (R3.2: k-ω SST, 27 L/min of argon at
+25 °C) runs again with the bed (the block's top and the plate) and the well block's other faces at 200 °C:
+buoyantSimpleFoam (steady, gravity on), argon as a perfect gas (c_p 520 J/kg K, Sutherland viscosity fitted to
+22.6 µPa s at 25 °C, Pr 0.67), on the same 245,939-cell mesh. The enclosure's walls and the deck are held at 25 °C;
+the nozzle, collector, hopper, recoater, window, cover slide and lid are adiabatic; no radiation. The thermal FEA
+holds the cassette at 195–202 °C ([`../fea/thermal.md`](../fea/thermal.md)), so a fixed 200 °C is close. Started from
+the isothermal solution: 500 iterations by the first round-3 run, 1,000 more here (0.7–0.8 s an iteration on two
+shared cores). The run is `v2-heat` in [`cfd.json`](cfd.json) (`cross` → `heat` for the temperatures and heat flows).
+
+**Converged over the plate; the box's temperature to a few kelvin.** The probe speeds over the plate were steady to
+0.5 % (std 3–8 mm/s over the last 20 %), and the bed's and block's heat flows to 2 % from iteration 500. The box took
+longer: the heat into the walls rose from 15 W at iteration 500 to 20 W at 1,000, then held at 20.3–21.1 W. At the
+end, heat in (32.2 W) and out (walls and deck 22.0 W, the exhaust's enthalpy 8.6 W) balance to 1.6 W (5 %). The plume
+moves: 2 mm under the cover slide the gas speed varies by ±0.05 m/s and its temperature between 50 and 58 °C over the
+last 600 iterations, still creeping up (52 °C at iteration 600, 56 °C at 1,500). At iteration 500 the box mean was
+5 K cooler (34.6 °C) and the jet's numbers the same to 2 %. Final initial residuals 1–8 × 10⁻³ (U, p_rgh, h). Read the
+box's temperatures to ±3 K.
+
+| | isothermal (R3.2) | bed and well block at 200 °C |
+|---|---|---|
+| speed 1 / 3 / 5 mm over the Ø30 build area, mean | 1.69 / 2.50 / 1.55 m/s | 1.53 / 2.52 / 1.70 m/s |
+| upward speed there, 1 / 3 / 5 mm up, mean | 2 / 16 / 34 mm/s | 10 / 33 / 51 mm/s |
+| bed shear, Ø30 build area: mean / max; area over 0.053 Pa | 0.055 / 0.071 Pa; 59 % | 0.056 / 0.078 Pa; 58 % |
+| Ø40 plate: mean / max; area over 0.053 Pa | 0.050 / 0.083 Pa; 48 % | 0.052 / 0.078 Pa; 49 % |
+| gas over the build area, 1 / 3 / 5 / 10 mm up, mean | 25 °C | 84 / 29 / 33 / 45 °C |
+| tracers 0.5–3 mm into the collector (held under its lower lip) | 94 % (6 %) | 89 % (11 %) |
+| tracers 4–15 mm: into the collector / escaped to the box | 50 % / 28 % | 51 % / 30 % |
+| escaped tracers: median closest approach to the cover slide | 103 mm | 42 mm |
+| tracers 4–15 mm that come within 30 / 10 mm of the slide | 1.4 % / 0 | 9 % / 3 % |
+| fastest upward gas within 80 mm of the plate's axis, 20 / 50 / 100 mm up | 0.53 / 0.18 / 0.11 m/s | 0.62 / 0.32 / 0.29 m/s |
+| box gas speed, volume mean | 30 mm/s | 59 mm/s |
+| gas speed 2 mm under the slide, mean | 3.8 mm/s | 134 mm/s |
+| gas temperature: box mean; 30 mm up to the rim lip; under the slide; exhaust | 25 °C | 39; 43; 54–56; 47 °C |
+| jet flow at y = 25 mm, forward / back | 42.4 / 1.7 L/min | 48.6 / 2.6 L/min |
+
+| Heat into the gas | CFD (convection only, walls at 25 °C) | thermal FEA (FT-1, fan, box air 39 °C; convection and radiation) |
+|---|---|---|
+| the plate's top (Ø40) | 3.9 W (3,150 W/m², h ≈ 18 W/m²K) | 3.9 W |
+| the bed: the plate and the block's top round it | 8.9 W | 8.2 W (the faces under the jet) |
+| all the 200 °C faces (block and plate) | 32.2 W | 39.2 W |
+| through the nozzle and collector | none (adiabatic here) | 11.1 W |
+| out: to the walls and deck; with the exhaust gas | 22.0 W; 8.6 W | – |
+
+![Heat section](heat_section.png)
+
+*x = 0 section, 1,500 iterations. Left: temperature (the 200 °C block is white; the box's gas is at 35–55 °C, warmest
+under the lid). Right: gas speed (log) and streamlines: the jet's surplus and the plume rise over the collector and
+sweep the top of the box past the cover slide (red). Orange: the plate.*
+
+- **The jet over the plate hardly changes.** 2.52 m/s 3 mm up (+1 %) and 0.056 Pa mean bed shear over the build area
+  (+2 %). The gas 1 mm up is at 84 °C and 9 % slower (hot argon is more viscous); the jet lifts a little (33 mm/s
+  upward 3 mm up, against 16). The powder's pick-up margin is unchanged: the Shao and Lu threshold does not depend on
+  the gas's density, and the shear moved by 2 %.
+- **The bed drives a plume that reaches the lid.** Over the plate the gas rises at up to 0.3 m/s 50–100 mm up
+  (0.11–0.18 m/s isothermal, the jet's surplus alone), and the box's gas moves twice as fast on average. Warm gas
+  collects at the top: the box averages 39 °C, the gas 2 mm under the cover slide 54–56 °C, moving at 0.13 m/s
+  (isothermal 4 mm/s). The exhaust leaves at 47 °C.
+- **Fume that rises above the jet now passes close to the cover slide.** Fume that stays within 3 mm of the bed is
+  still all caught or held at the collector (89 % in, 11 % under its lower lip, against 94 / 6 %; that vortex is the
+  least converged part of the jet). Of the fume released 4–15 mm up, about the same share escapes (30 %, against
+  28 %), but the plume carries it up: its median closest approach to the slide falls from 103 to 42 mm, and 9 % of
+  it comes within 30 mm (1.4 % isothermal). So expect the slide to foul faster than round 2's isothermal tracers
+  suggested. If it does, a small argon flow across the slide's face is the usual fix (not modelled).
+- **The heat losses agree with the thermal FEA.** The plate's top loses 3.9 W by convection alone (h ≈ 18 W/m²K),
+  the FEA's figure for convection and radiation together. With ~0.9 W of radiation (ε 0.3, an estimate) the plate
+  heater would need ~1 W more than the FEA's 11.0 W. All the 200 °C faces lose 32 W by convection, against the FEA's
+  39 W by convection and radiation (and 11 W more through the nozzle and collector, adiabatic here). So the FEA's
+  heater powers stand.
+- **The box mean, 39 °C, is the thermal FEA's "fan" box air,** with the walls held at 25 °C. Real walls run warmer
+  than the room (21 W through 0.44 m² of wall), so the box will be warmer than this; the FEA's still-air case
+  (71 °C) is the bound.
+
+### R3.8 What round 3 did not do
+
+- **The laminar cross-flow on v2.** Only k-ω SST was re-run (600 iterations on a runner at load 12–14); v1's laminar
+  and SST runs bracketed the jet within 6 % at 3 mm, and the jet's parts did not change.
+- **A mesh check of the v2 cases.** The cross-flow, leak and heat cases ran on one mesh (245,939 cells), the buoyant
+  purges on the coarse purge meshes (35,374 cells in the box, 34,681 in the cube), as in round 2.
+- **The vent through the door (box) or the top plate (cube).** R3.3 and R3.6 both find the last air above the highest
+  a wall vent can go. The fix is not run.
+- **The purge diffuser and vent in the CAD model.** Still this CFD's assumption (parts.csv G9).
+- **Leaks in a purge run.** The leak CFD is on the build's cross-flow; the purge with a leaking lid is the 0-D table.
+  The leak CFD stopped before the box filled (R3.5: the exhaust carried 35–41 % of the source); its ratios are to one
+  figure.
+- **Heat beyond one steady case** (R3.7): no radiation; the walls and deck held at 25 °C and the lid, window and slide
+  adiabatic; the bed and block at a fixed 200 °C, not coupled to the thermal FEA's heaters; no laser heat and no melt
+  pool plume; FT-1V and the purges not run hot. The plume moves, so the steady solver gives its mean only roughly.
+- **Fume as particles.** Fume and condensate are tracers that follow the gas. Their inertia, settling and
+  thermophoresis (which pushes them away from the hot bed) are left out.
+
+### Re-run (round 3)
+
+```bash
+D=desktop-lpbf/fast-track/analysis/cfd; PY=/tmp/venv/bin/python; export FT_CFD_SCR=/tmp/r3-cfd/post
+$PY $D/geom.py --state FT-1 --out /tmp/r3-cfd/geom/ft1          # and --state FT-1V --out /tmp/r3-cfd/geom/ft1v
+$PY $D/o2_budget.py                                              # 0-D: leak budget, pump-purge (< 10 s)
+# cross-flow, k-omega SST (600 iterations: set endTime 600 in system/controlDict)
+$PY $D/make_case.py --geom /tmp/r3-cfd/geom/ft1 --kind cross --model sst --iters 600 --out /tmp/r3-cfd/v2-cross-sst
+MEM=3g /tmp/tools/capmem 3 bash $D/run_case.sh /tmp/r3-cfd/v2-cross-sst mesh solve
+/tmp/tools/capmem 3 $PY $D/post.py cross /tmp/r3-cfd/v2-cross-sst --name v2-sst --figs
+# buoyant purge, low diffuser + high vent, 3.5 min: the box (v2-*), then the cube (v2c-*, geom/ft1v)
+$PY $D/make_case.py --geom /tmp/r3-cfd/geom/ft1 --res coarse --profile purge --kind purge --iters 10 --nozzle-lpm 0 \
+    --purge-lpm 20 --inlet purge_low --outlet vent_high --out /tmp/r3-cfd/v2-pmesh
+$PY $D/make_case.py --geom /tmp/r3-cfd/geom/ft1 --res coarse --profile purge --kind buoyant --nozzle-lpm 0 --purge-lpm 20 \
+    --inlet purge_low --outlet vent_high --t-end 210 --t-write 30 --max-co 30 --out /tmp/r3-cfd/v2-buoy-LH
+MEM=1g /tmp/tools/capmem 1 bash $D/run_case.sh /tmp/r3-cfd/v2-pmesh mesh
+MEM=1g /tmp/tools/capmem 1 bash $D/run_case.sh /tmp/r3-cfd/v2-buoy-LH copymesh /tmp/r3-cfd/v2-pmesh buoyant
+$PY $D/post.py purge /tmp/r3-cfd/v2-buoy-LH --name v2-buoyant-LH
+#   the cube: the same two make_case lines with --geom /tmp/r3-cfd/geom/ft1v --out /tmp/r3-cfd/v2c-pmesh, v2c-buoy-LH
+$PY $D/post.py purge /tmp/r3-cfd/v2c-buoy-LH --name v2-ft1v-buoyant-LH
+$PY $D/post.py purgefigs --name purge_ft1v_v2.png --tmax 3.5 --cases "v2-buoyant-LH=FT-1 box (23.9 L of gas)" \
+    "v2-ft1v-buoyant-LH=FT-1V cube (22.2 L of gas)"
+$PY $D/post.py snaps --name purge_sections_ft1v_v2.png --times 60 120 180 210 \
+    --cases "FT-1V cube (CAD v2), low diffuser, high vent=/tmp/r3-cfd/v2c-buoy-LH=O2"
+# O2 leaking in at the lid seam, on the solved cross-flow (the run used deltaT 1, then 10, then 30 to t = 2400)
+$PY $D/make_case.py --geom /tmp/r3-cfd/geom/ft1 --kind leak --model sst --iters 250 --out /tmp/r3-cfd/v2-leak
+MEM=1500m /tmp/tools/capmem 1.5 bash $D/run_case.sh /tmp/r3-cfd/v2-leak leak /tmp/r3-cfd/v2-cross-sst
+$PY $D/post.py leak /tmp/r3-cfd/v2-leak --name v2-leak --figname leak_section.png
+# heat: bed and well block at 200 C, from the isothermal solution; 500 iterations, then on to 1,500 (endTime 1500,
+# startFrom latestTime, decomposePar -latestTime, mpirun -np 2 buoyantSimpleFoam -parallel, reconstructPar)
+$PY $D/make_case.py --geom /tmp/r3-cfd/geom/ft1 --kind heat --model sst --iters 500 --out /tmp/r3-cfd/v2-heat
+MEM=1500m /tmp/tools/capmem 1.5 bash $D/run_case.sh /tmp/r3-cfd/v2-heat heat /tmp/r3-cfd/v2-cross-sst
+/tmp/tools/capmem 2 $PY $D/post.py heat /tmp/r3-cfd2/v2-heat-c --name v2-heat --figname heat_section.png \
+    --ref /tmp/r3-cfd/v2-cross-sst
+```
 
 # Round 2 (2026-11-27): the CAD v1 model
 

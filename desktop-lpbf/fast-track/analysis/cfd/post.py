@@ -811,7 +811,9 @@ def fig_purge_snap(items, t_snaps, fname):
     """O2 (ppm, log) on the y = mid-depth section (through the purge ports): one row per case, one column per time
     in t_snaps (s; the nearest written time is shown)."""
     n, m = len(items), len(t_snaps)
-    fig, axs = plt.subplots(n, m, figsize=(3.6 * m + 0.8, 2.0 * n + 0.3), squeeze=False, constrained_layout=True)
+    e0 = json.loads((pathlib.Path(items[0][1]) / "case_meta.json").read_text())["geom"]["enclosure"]
+    row_h = max(2.0, 3.6 * (e0[5] - e0[4]) / (e0[1] - e0[0]) + 0.3)       # 2.0 in. for the box, taller for the cube
+    fig, axs = plt.subplots(n, m, figsize=(3.6 * m + 0.8, row_h * n + 0.3), squeeze=False, constrained_layout=True)
     for (i, (lab, path, field)), (j, t_snap) in ((a, b) for a in enumerate(items) for b in enumerate(t_snaps)):
         ax = axs[i, j]
         r = pv.OpenFOAMReader(str(pathlib.Path(path) / "case.foam"))
@@ -1028,7 +1030,9 @@ def do_leak(a):
 
 def do_heat(a):
     """The heated cross-flow (make_case --kind heat): the cross-flow numbers (do_cross) plus temperatures, the
-    plume's speed and a section figure."""
+    plume's speed (against the isothermal case it started from, --ref), where the heat goes (wallHeatFlux on each
+    patch, the plate's own share, the exhaust's enthalpy, the balance), how settled the probes are, and a section
+    figure."""
     a.figs = False
     do_cross(a)
     cs = Case(a.case)
@@ -1053,11 +1057,62 @@ def do_heat(a):
     for z in (20.0, 50.0, 100.0):
         msk = (np.abs(cc[:, 2] - (cs.zb + z)) < 3.0) & (np.hypot(cc[:, 0], cc[:, 1]) < 80)
         out[f"Uz_max_within_80mm_z{z:g}_mm_s"] = float(U[msk, 2].max() * 1000) if msk.any() else None
-    up = U[:, 2] > 0
+        out[f"T_max_within_80mm_z{z:g}_C"] = float(T[msk].max() - 273.15) if msk.any() else None
     out["box_speed_mean_mm_s"] = float((np.linalg.norm(U, axis=1) * vol).sum() / vol.sum() * 1000)
+    for lab, msk in (("below_bed", cc[:, 2] < cs.zb), ("bed_to_30mm", (cc[:, 2] >= cs.zb) & (cc[:, 2] < cs.zb + 30)),
+                     ("30mm_to_lip", (cc[:, 2] >= cs.zb + 30) & (cc[:, 2] < cs.g["wall_top"])),
+                     ("above_lip", cc[:, 2] >= cs.g["wall_top"])):
+        out[f"T_band_{lab}_C"] = float((T[msk] * vol[msk]).sum() / vol[msk].sum() - 273.15)
     f = fo_file(cs, "tOut", "surfaceFieldValue.dat")
     if f:
         out["T_exhaust_C"] = last_line(f)[1] - 273.15
+    # where the heat goes (W): wallHeatFlux on each patch (positive = wall to gas), the bed split by zone, and the
+    # enthalpy the exhaust carries out (phi is a mass flux in buoyantSimpleFoam)
+    q = {}
+    for pn in cs.bnd.keys():
+        b = cs.bnd[pn]
+        if "wallHeatFlux" not in b.cell_data or b.n_cells == 0:
+            continue
+        w = np.asarray(b.cell_data["wallHeatFlux"])
+        ar = np.asarray(b.compute_cell_sizes(length=False, volume=False).cell_data["Area"])
+        if np.abs(w).max() > 0:
+            q[pn] = float((w * ar).sum())
+        if pn == "bed":
+            c = np.asarray(b.cell_centers().points) * 1000.0
+            r = np.hypot(c[:, 0], c[:, 1])
+            for zl, mk in (("build_area_d30", r < 15.0), ("plate_d40", r < cs.g["plate_d"] / 2)):
+                q[f"bed_{zl}"] = float((w[mk] * ar[mk]).sum())
+                q[f"bed_{zl}_mean_W_m2"] = float((w[mk] * ar[mk]).sum() / ar[mk].sum())
+                q[f"bed_{zl}_h_W_m2K"] = q[f"bed_{zl}_mean_W_m2"] / (th - 25.0)
+    f = fo_file(cs, "qOut", "surfaceFieldValue.dat")
+    if f and "T_exhaust_C" in out:
+        mdot = last_line(f)[1]
+        q["exhaust_mass_flow_kg_s"] = float(mdot)
+        q["exhaust_enthalpy_W"] = float(mdot * 520.0 * (out["T_exhaust_C"] - 25.0))
+    q["in_from_hot_W"] = float(q.get("bed", 0.0) + q.get("block", 0.0))
+    q["out_to_walls_W"] = float(-(q.get("walls", 0.0) + q.get("deck", 0.0)))
+    q["imbalance_W"] = q["in_from_hot_W"] - q["out_to_walls_W"] - q.get("exhaust_enthalpy_W", 0.0)
+    out["heat_W"] = q
+    # how settled: the temperature probes over the last 40 % of the iterations
+    f = fo_series(cs.path, "probes", "T")
+    lab = ["z1", "z3", "z5", "y-15 z3", "y+15 z3", "under slide"]
+    last = f[:, 0] >= 0.6 * f[-1, 0]
+    out["probe_T_last40pct_C"] = {lab[i]: dict(mean=float(f[last, i + 1].mean() - 273.15), min=float(f[last, i + 1].min() - 273.15),
+                                               max=float(f[last, i + 1].max() - 273.15)) for i in range(min(6, f.shape[1] - 1))}
+    if a.ref:
+        # the same plume numbers on the isothermal solution this case started from
+        rc = Case(a.ref)
+        Ur = np.asarray(rc.mesh.cell_data["U"])
+        ccr = np.asarray(rc.mesh.cell_centers().points) * 1000.0
+        ref = {}
+        for z in (20.0, 50.0, 100.0):
+            msk = (np.abs(ccr[:, 2] - (rc.zb + z)) < 3.0) & (np.hypot(ccr[:, 0], ccr[:, 1]) < 80)
+            ref[f"Uz_max_within_80mm_z{z:g}_mm_s"] = float(Ur[msk, 2].max() * 1000)
+        volr = np.asarray(rc.mesh.compute_cell_sizes(length=False, area=False, volume=True).cell_data["Volume"])
+        ref["box_speed_mean_mm_s"] = float((np.linalg.norm(Ur, axis=1) * volr).sum() / volr.sum() * 1000)
+        s = rc.sample(disc(19.0, rc.g["z_slide"] - 2.0, n=10) + sc, fields=("U",))
+        ref["Uz_under_slide_mean_mm_s"] = float(s["U"][s["valid"]][:, 2].mean() * 1000)
+        out["isothermal_ref"] = dict(case=str(rc.path), **ref)
     res["heat"] = dict(t_hot_C=th, **out)
     d["cross"][a.name] = res
     save_json(d)
@@ -1096,6 +1151,7 @@ def main():
     ap.add_argument("case", nargs="?")
     ap.add_argument("--name", default="", help="case name in cfd.json (figures: the PNG's file name)")
     ap.add_argument("--figs", action="store_true")
+    ap.add_argument("--ref", default="", help="heat: the isothermal case it started from, for the plume numbers")
     ap.add_argument("--cases", nargs="*", default=[], help="figures: label=case_path ...")
     a = ap.parse_args()
     SCR.mkdir(parents=True, exist_ok=True)
