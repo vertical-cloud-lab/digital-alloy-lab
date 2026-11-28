@@ -30,22 +30,22 @@ Optics (f = 254 mm, M2 1.1):
 
 Cost by alternative (parts.csv):
 
-- **FT0**: $22,600-39,539 (without the monitoring group: $17,901-33,092); vendors at or over $3,500 (PO): McMaster ($4,010); on cards (every other vendor, high prices): $26,891, 2.7x one card's $10,000 monthly limit (1.3x a department custodian card's $20,000)
+- **FT0**: $22,660-39,739 (without the monitoring group: $17,961-33,292); vendors at or over $3,500 (PO): McMaster ($4,210); on cards (every other vendor, high prices): $26,891, 2.7x one card's $10,000 monthly limit (1.3x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,183-2,473
   - Motion: $30-80
-  - Enclosure and chamber: $1,194-1,660
+  - Enclosure and chamber: $1,254-1,860
   - Heated plate: $610-1,010
   - Gas and O2: $2,731-4,320
   - Safety: $2,772-3,634
   - Stock and fabrication: $4,623-9,238
   - Powder handling: $0-2,730
   - Monitoring: $4,699-6,447
-- **FT1**: $30,573-49,590 (without the monitoring group: $25,369-41,960); vendors at or over $3,500 (PO): Zaber ($5,896), McMaster ($3,930); on cards (every other vendor, high prices): $28,992, 2.9x one card's $10,000 monthly limit (1.4x a department custodian card's $20,000)
+- **FT1**: $30,633-49,790 (without the monitoring group: $25,429-42,160); vendors at or over $3,500 (PO): Zaber ($5,896), McMaster ($4,130); on cards (every other vendor, high prices): $28,992, 2.9x one card's $10,000 monthly limit (1.4x a department custodian card's $20,000)
   - Laser and optics (used): $4,757-7,946
   - Scan control and computing: $1,375-2,794
   - Motion: $5,976-6,096
-  - Enclosure and chamber: $1,194-1,660
+  - Enclosure and chamber: $1,254-1,860
   - Heated plate: $946-1,406
   - Gas and O2: $2,731-4,320
   - Safety: $2,772-3,634
