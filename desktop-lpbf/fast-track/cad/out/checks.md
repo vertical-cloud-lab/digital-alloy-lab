@@ -8,12 +8,12 @@ envelopes (sizes marked in `ft_model.P`). A clash with an envelope means 'check 
 
 | State | Parts | Clashes | Designed contacts | Beam envelope hits | Nearest parts to the beam (mm) |
 |---|---:|---:|---:|---:|---|
-| S1 | 27 | 0 | 6 | 0 | - |
-| S2 | 51 | 0 | 8 | 0 | Water-cooled beam dump, 1 kW 2.7, Cover-slide holder, Ø44 opening 5.6, Window retaining flange 7.04, Window ring 7.53 |
-| FT-0 | 86 | 0 | 10 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder, Ø44 opening 5.6, FT-0 spreader bar, 48 mm, ground edge, parked 5.9 |
-| FT-1 | 104 | 0 | 10 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
-| FT-1V | 106 | 0 | 11 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
-| FT-1 (Thorlabs piston) | 103 | 0 | 10 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| S1 | 29 | 0 | 6 | 0 | - |
+| S2 | 53 | 0 | 8 | 0 | Water-cooled beam dump, 1 kW 2.7, Cover-slide holder, Ø44 opening 5.6, Window retaining flange 7.04, Window ring 7.53 |
+| FT-0 | 88 | 0 | 10 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cover-slide holder, Ø44 opening 5.6, FT-0 spreader bar, 48 mm, ground edge, parked 5.9 |
+| FT-1 | 106 | 0 | 10 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| FT-1V | 108 | 0 | 11 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
+| FT-1 (Thorlabs piston) | 105 | 0 | 10 | 0 | Well block, Ø40.00 bore 0.0, Substrate disc Ø39.8 x 6 0.0, Cord clamp 3.52, Silicone-cord blade, 3 mm 3.96 |
 
 Designed contacts (FT-1):
 
@@ -282,4 +282,4 @@ Pump speed (1 L/s effective) and base pressures are estimates; the floor is set 
 | cube (FT-1V) | 0.675 | still air | 25-36 | 61 | 50.0 |
 | cube (FT-1V) | 0.675 | fan | 8-11 | 36 | 50.0 |
 
-Run time 770 s.
+Run time 655 s.

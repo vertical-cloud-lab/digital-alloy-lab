@@ -1,7 +1,7 @@
 {
  "states": {
   "S1": {
-   "n_parts": 27,
+   "n_parts": 29,
    "clashes": [],
    "contacts": [
     {
@@ -45,7 +45,7 @@
    "beam_nearest": []
   },
   "S2": {
-   "n_parts": 51,
+   "n_parts": 53,
    "clashes": [],
    "contacts": [
     {
@@ -171,7 +171,7 @@
    }
   },
   "FT-0": {
-   "n_parts": 86,
+   "n_parts": 88,
    "clashes": [],
    "contacts": [
     {
@@ -284,7 +284,7 @@
    }
   },
   "FT-1": {
-   "n_parts": 104,
+   "n_parts": 106,
    "clashes": [],
    "contacts": [
     {
@@ -671,7 +671,7 @@
    }
   },
   "FT-1V": {
-   "n_parts": 106,
+   "n_parts": 108,
    "clashes": [],
    "contacts": [
     {
@@ -1064,7 +1064,7 @@
    }
   },
   "FT-1 (Thorlabs piston)": {
-   "n_parts": 103,
+   "n_parts": 105,
    "clashes": [],
    "contacts": [
     {
@@ -1578,5 +1578,5 @@
    "stage_limit_C": 50.0
   }
  ],
- "runtime_s": 770
+ "runtime_s": 655
 }
