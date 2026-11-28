@@ -586,6 +586,9 @@ def case4a(R):
         f_cam = faces_on(m, surfaces(m, planar("z", g["cam_top"])))
         a_ceil, a_cam = f_ceil["area"].sum(), f_cam["area"].sum()
         gb = nodes_on(m, surfaces(m, planar("z", z_gb)))
+        in_bed = np.zeros(len(m["xyz"]), bool)                     # the bed's own bottom only (a 10 mm door return ends there too)
+        in_bed[np.unique(m["idx"][m["tets"][m["body"] == 1]].ravel())] = True
+        gb = gb[in_bed[m["idx"][gb]]]
         q = m["xyz"]
         door_nodes = np.unique(m["idx"][m["tets"][m["body"] == 0]].ravel())
         in_door = np.zeros(len(q), bool)

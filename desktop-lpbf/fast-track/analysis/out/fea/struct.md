@@ -29,13 +29,16 @@ What v2 changed for these cases:
 - **Box door (4a): as drawn, it does not hold the gasket at a +50 mbar fault, and only just at +10 mbar.** Between
   one latch and two hinges, the 1.9 mm door with a 5.5 mm return bows up at both front corners. The foam gasket
   (ASTM D1056 2A2 grade, 25 % squeeze) takes 507 N to close. Closed, the corners keep only 0.16 mm of the 1.0 mm
-  squeeze, and 0.09 mm at +10 mbar. At +50 mbar (NLGEOM) 155 mm of the line opens: about 120 mm round the front-left
-  corner (the side with the camera bore) and 35 mm at the front-right corner. A
-  stiffer foam (2A4) opens 20 mm as soon as the door is latched. **With a 20 mm return the same door and gasket
-  keep ≥ 0.70 mm everywhere at +50 mbar** (v1's lid on four clamps: ≥ 0.67 mm of 0.75 mm).
-  **Change: measure the delivered door's return.** If it is shallow, add a toggle clamp over the gasket near each
-  front corner, and keep the purge relief below +10 mbar. The door's stress peaks at 112 MPa (+50 mbar, NLGEOM) at
-  its return next to the latch: safety factor 1.9 on 304's 215 MPa yield (v1: 3.6).
+  squeeze, and 0.09 mm at +10 mbar; the line starts to open at about +22 mbar. At +50 mbar (NLGEOM) 155 mm of it is
+  open: about 120 mm round the front-left corner (the side with the camera bore) and 35 mm at the front-right
+  corner. A stiffer foam (2A4) opens 20 mm as soon as the door is latched. v1's lid on four clamps kept ≥ 0.67 mm of
+  0.75 mm at +50 mbar. **A deeper door return or two more clamps fix it** (+50 mbar, linear): a 10 mm return keeps
+  ≥ 0.18 mm, 15 mm ≥ 0.51 mm, 20 mm ≥ 0.68 mm; the drawn door with a clamp over the gasket 47 mm in from each front
+  corner keeps ≥ 0.54 mm, at about 90 N per clamp closed and 140 N at +50 mbar. **Change: measure the delivered
+  door's return** (the CAD draws an envelope, and the maker's render shows a deeper one). If it is under about 15 mm,
+  add the two front clamps (toggle clamps on the body's front wall); either way set the purge's relief below
+  +20 mbar. The door's stress peaks at 112 MPa (+50 mbar, NLGEOM) at its return next to the latch: safety factor 1.9
+  on 304's 215 MPa yield (v1: 3.6).
 - **Cube top plate and window (4b): still pass by a wide margin.** Moving the window bore to (0, -21) and adding
   the camera bore change little: 20-33 µm and 8.6 MPa at 1 atm (bolted to simply supported), against v1's 21-35 µm
   and 8.1 MPa. The peak moved to the camera bore's edge. Safety factor 32 on yield (v1: 34). The window ring's seat
@@ -64,6 +67,8 @@ door with a deeper formed return than the CAD envelope's 5.5 mm, so a 20 mm retu
 
 ![Door gasket compression (v2)](struct-lid-gasket-v2.png)
 
+![Door at +50 mbar (v2, as drawn, foam 2A2, linear; deformation x50)](struct-lid-v2.png)
+
 | | v1: 14 ga lid, 4 clamps + hinge line, sponge 3 x 7.9 mm (2A2) | **v2 as drawn: 5.5 mm return, foam 2A2** | v2 as drawn, foam 2A4 | v2, 20 mm return, foam 2A2 |
 |---|---|---|---|---|
 | Force to close at the full squeeze | 536 N | **507 N** | 1,087 N | 507 N |
@@ -76,6 +81,16 @@ door with a deeper formed return than the CAD envelope's 5.5 mm, so a 20 mm retu
 | Peak von Mises in the lid more than 30 mm from the latch, hinges or clamps, +50 mbar NLGEOM | 60 MPa | **112 MPa** (the return next to the latch; 96 MPa on the panel at the window ring's edge) | 128 MPa | 69 MPa |
 | Safety factor on 304's 215 MPa yield | 3.6 | **1.9** | 1.7 | 3.1 |
 
+Door return and extra clamps, foam 2A2 (linear; struct.json `4a_extra`):
+
+| Door | Least compression: closed / +10 mbar / +50 mbar (of 1.0 mm) | Length under half the squeeze at +50 mbar | Latch / hinge / extra clamp loads at +50 mbar |
+|---|---|---|---|
+| 5.5 mm return, as drawn | 0.157 / 0.088 / -0.192 mm (open 180 mm) | – | 316 / 221, 237 N |
+| 10 mm return | 0.440 / 0.388 / 0.180 mm | 420 mm | 368 / 229, 245 N |
+| 15 mm return | 0.669 / 0.637 / 0.506 mm | 0 mm | 415 / 235, 250 N |
+| 20 mm return | 0.791 / 0.769 / 0.683 mm | 0 mm | 441 / 238, 253 N |
+| 5.5 mm return + a clamp over the gasket 47 mm in from each front corner (Ø25 pads) | 0.720 / 0.684 / 0.541 mm | 0 mm | 195 / 223, 234 / 142, 134 N |
+
 - **Why it opens:** the gasket's reaction acts round the edge, and the door is held at three points inside that line,
   so the edges between them bow up. The front corners are 190 mm from the latch along the edge. A 1.9 mm sheet with a
   5.5 mm return is too soft to carry the foam's 0.39 N/mm (2A2) that far. A 20 mm return makes the edge (a 30 mm
@@ -84,6 +99,9 @@ door with a deeper formed return than the CAD envelope's 5.5 mm, so a 20 mm retu
 - **The supports are idealised:** the latch and hinges pull their patches down by exactly the squeeze. A real latch
   has some play, and a formed door may also bottom on the body's rim, which would help. The peak stress at the return
   next to the latch comes from that idealised patch. It drops to 61 MPa (closed) and 96 MPa (+50 mbar) 50 mm away.
+- **Left out, as in v1:** the cover-slide holder (now open to Ø44) hangs under the inner clamp ring and carries no
+  pressure load; the layer camera (MON1) on its post, the window-stack screws and the latch's own body are not
+  modelled (the stack is bonded).
 - **Mesh check:** the plate check of v1 repeated at the door's 1.905 mm gauge: a clamped 400 x 300 mm plate at 1 kPa
   deflects 130.2 µm against Timoshenko's 131.0 µm (ratio 0.994). The door model has 53k nodes (58k with the 20 mm return).
 
