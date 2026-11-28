@@ -32,6 +32,11 @@ checked against a measurement.
 - **With the cross-flow on, O₂ that leaks in at the lid stays in the box, not over the plate** (CFD, R3.5): 1 mm over
   the build area it is about a tenth of what the exhaust analyzer reads (a hundredth at the plate's centre), while
   the box holds 5–10× the exhaust's value. The exhaust reading is the conservative number for the process.
+- **FT-1V's cube purges faster than the box, but the pump-purge is still the way to purge it** (CFD and 0-D, R3.6):
+  with the same low diffuser and high vent at 20 L/min, 2.1 / ≈ 3.5 min to 1000 / 100 ppm (box average; exhaust
+  2.4 / ≈ 3.7 min), against the box's 3.1 / ≈ 4.9 min. The last air again waits above the vent, under the top
+  plate. Two pump cycles to 1 mbar reach the argon's own 2 ppm in 5.0 min with 45 L of argon (0-D); the flow purge
+  needs ≈ 75 L for 100 ppm.
 
 ### R3.1 The model, ported to CAD v2
 
@@ -234,6 +239,69 @@ over the plate (dark) stays clean. Left: the whole seam; right: 20 mm of it at t
 - **The analyzer on the collector's exhaust under-reads the box during a build** (by 5–10× for O₂ that leaks in at
   the walls) and over-reads the plate (by ~10×). For the box, sample under the lid; for the process, the exhaust is
   the conservative number.
+
+### R3.6 FT-1V's purge: the cube, low diffuser, high vent (CFD), against the pump-purge (0-D)
+
+As R3.3, on FT-1V's cube (CAD v2: 289.6 mm inside, 22.22 L of gas): nozzle off, 20 L/min of argon in through a
+40 × 40 mm diffuser low on the left plate (its bottom 15 mm over the floor), out through a 40 × 20 mm vent high on the
+right plate at the back (its top 15 mm under the top plate, clear of the frame's bars; outflow only),
+rhoReactingBuoyantFoam from air at rest, on the coarse purge mesh (34,681 cells; max skewness 4.6 on 26 faces, "Failed
+1 mesh checks" as in the box). 3.5 min of purge (1,009 steps, 328 s on two shared cores), then the run's own
+exponential tail for 100 ppm. The diffuser and vent are this CFD's assumption, as in the box. FT-1V is meant to be
+pump-purged (§3); this is the flow purge, set against the 0-D pump-purge of
+[`o2_budget.py`](../../cfd/o2_budget.py) (`cube_pump_purge` in [`o2_budget.json`](o2_budget.json)).
+
+| | FT-1 box (R3.3) | FT-1V cube |
+|---|---|---|
+| gas volume | 23.88 L | 22.22 L |
+| box average to 1000 / 100 ppm | 3.1 / (≈ 4.9) min | 2.1 / (≈ 3.5) min |
+| exhaust (the analyzer on the vent line) | 3.4 / (≈ 4.9) min | 2.4 / (≈ 3.7) min |
+| 1 mm over the plate | 1.5 / 2.5 min | 1.0 / 1.5 min |
+| well mixed, same flow and volume | 6.4 / 9.1 min | 5.9 / 8.5 min |
+| argon used to 1000 ppm (box average), in gas volumes | 2.6 | 1.9 |
+| O₂ at 3.5 min: box / exhaust / plate / under the slide | 620 / 851 / 46 / 168 ppm | 107 / 149 / 2 / 10 ppm |
+| gas above the vent's top: volume; O₂ at 2 / 3 / 3.5 min | 1.38 L; 35,800 / 7,200 / 3,600 ppm | 0.95 L; 14,300 / 1,700 / 780 ppm |
+| that layer's share of all the O₂, 1.5–3.5 min | 34–41 % | 32–48 % |
+
+![FT-1V purge against the box](purge_ft1v_v2.png)
+
+*O₂ against time, CAD v2, 20 L/min, low diffuser and high vent. Left: FT-1's box (R3.3); right: FT-1V's cube. Grey
+dashes: well mixed. The exhaust's 100 ppm is past the end of both runs (the table's values in brackets are the runs'
+own exponential tails).*
+
+![FT-1V purge sections](purge_sections_ft1v_v2.png)
+
+*O₂ on the cube's y = 45 mm section (through the diffuser) at 1, 2, 3 and 3.5 min, log scale: argon (white) fills from
+the floor; the last air is in the layer under the top plate, above the vent.*
+
+- **The cube purges faster than the box: 2.1 / ≈ 3.5 min to 1000 / 100 ppm** (box average), against the box's 3.1 /
+  ≈ 4.9 min, and 5.9 / 8.5 min well mixed. The exhaust reads 1000 ppm at 2.4 min and 100 ppm at ≈ 3.7 min; the plate
+  is under 100 ppm after 1.5 min and the gas under the cover slide after 1.7 min. It takes 1.9 gas volumes of argon
+  to reach 1000 ppm, against 2.6 in the box. Argon fills the cube from the floor up, as in the box; the run does not
+  isolate why the cube does better (it is 290 mm tall against the box's 211 mm of gas, and its top is flat where the
+  box has the door's dish).
+- **The last air waits above the vent, as in the box.** The vent's top is 15 mm under the top plate, and the 0.95 L
+  above it (4 % of the gas) holds a third to a half of the cube's O₂ from 1.5 min on: 780 ppm at 3.5 min, against a
+  105 ppm average. A vent through the top plate would drain it, as R3.3 found for the box's door. Not run.
+- **The pump-purge is still the better way to purge FT-1V** (0-D, estimates: the McMaster 4396K21 pump, 3 cfm, through
+  1 m of KF-25 hose; backfill at the regulator's 33 L/min; argon 5.0):
+
+| FT-1V, from air | flow purge, 20 L/min (CFD) | pump-purge (0-D) |
+|---|---|---|
+| to ~1000 ppm | 2.4 min at the exhaust, 49 L of argon | 1 cycle to 1 mbar: 2.5 min, 22 L, 207 ppm |
+| to ~100 ppm | ≈ 3.7 min at the exhaust, ≈ 75 L | 1 cycle to 0.5 mbar: 2.7 min, 22 L, 105 ppm; to 0.1 mbar: 3.3 min, 22 L, 23 ppm |
+| to the argon's own ~2 ppm | ≈ 13 ppm at 5.0 min (the run's tail, extrapolated), 100 L | 2 cycles to 1 mbar: 5.0 min, 45 L, 2.3 ppm |
+
+![Pump-purge](pump_purge.png)
+
+*0-D pump-purge of the cube ([`o2_budget.py`](../../cfd/o2_budget.py)). Left: pumping speed at the cube and the time
+to pump down from 1 atm. Right: pump plus backfill time to 1000, 100 and 10 ppm against each cycle's base pressure
+(labels: cycles).*
+
+- So two pump cycles to 1 mbar reach the argon's floor in 5.0 min with less than half the argon the flow purge needs
+  for 100 ppm. The flow purge is the fallback if the pump is not in use: ≈ 3.7 min to 100 ppm at 20 L/min, ≈ 75 L.
+- The pump-purge numbers assume the cube holds vacuum to the acceptance rate of rise (1 × 10⁻³ mbar/min) and that
+  the backfill mixes. Neither is checked here.
 
 # Round 2 (2026-11-27): the CAD v1 model
 
